@@ -1,0 +1,81 @@
+# Pipeline manifest — declares the ordered artifacts that make up the R&D pipeline
+# and the prerequisites each phase requires before its slash command will run.
+#
+# Slash commands call scripts/check-prereqs.sh <artifact-name> before doing any work.
+# Missing prerequisites abort with a named error and a hint at the command to run.
+#
+# Absence of this file == "no enforcement" — pi-llm-wiki commands run as before.
+version: 1
+
+defaults:
+  trunk_branch: main
+  enforcement: strict   # strict | warn | off
+
+artifacts:
+  strategy:
+    produces: wiki/vision/{slug}.md
+    also_produces:
+      - wiki/contexts/*.md
+      - wiki/context-maps/{slug}.md
+    requires: []
+    command: /wiki-strategy
+
+  grill:
+    produces: wiki/grills/{slug}.md
+    requires: [strategy]
+    command: /wiki-grill
+    optional_in_v1: true    # tighten to required in v2
+
+  architecture:
+    produces: wiki/architecture/{slug}.md
+    requires: [grill]
+    command: /wiki-architecture
+    optional_in_v1: true
+
+  adr:
+    produces: wiki/decisions/NNNN-{kebab-title}.md
+    requires: [architecture]
+    command: /wiki-adr
+    cardinality: many       # multiple ADRs per architecture page allowed
+
+  spec:
+    produces: wiki/specs/{slug}.md
+    requires: [adr]
+    command: /wiki-spec
+
+  project_init:
+    produces: project/README.md
+    requires: []
+    command: /wiki-project-init
+
+  board_bound:
+    produces: kanban/board.yaml
+    requires: [project_init]
+    command: /wiki-kanban-board
+
+  kanban_emit:
+    produces: kanban://{board}/{tenant}/{slug}
+    requires: [spec, board_bound, "git:spec-on-trunk"]
+    command: /wiki-kanban-emit
+
+  kanban_ingest:
+    produces: "wiki/specs/{slug}.md#implementation-evidence"
+    requires: [board_bound, "git:worker-branch-merged"]
+    command: /wiki-kanban-ingest
+
+  refine:
+    produces: "wiki/decisions/NNNN-superseding.md"
+    requires: [kanban_ingest]
+    command: /wiki-refine
+
+git_checks:
+  spec-on-trunk:
+    description: Spec page committed to trunk_branch.
+    test: |
+      git fetch --quiet origin {{trunk_branch}} &&
+      git merge-base --is-ancestor $(git log -1 --format=%H -- {{spec_path}}) origin/{{trunk_branch}}
+  worker-branch-merged:
+    description: Worker's branch landed on trunk_branch.
+    test: |
+      git fetch --quiet origin {{trunk_branch}} &&
+      git merge-base --is-ancestor {{branch_head}} origin/{{trunk_branch}}

@@ -1,0 +1,15 @@
+# Build artifacts — extend per language during /wiki-project-init
+/target/
+/dist/
+/build/
+/node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# Hermes worktrees should never be created here — they go in
+# ../kanban/.worktrees/ — but guard against accidents.
+/.worktrees/
+
+# Re-include this file in npm pack (npm-packlist's default would drop it).
+!/.gitignore

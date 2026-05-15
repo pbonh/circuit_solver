@@ -1,0 +1,21 @@
+# Hermes Kanban binding for this wiki. Edited by /wiki-kanban-board;
+# read by /wiki-kanban-emit, /wiki-kanban-ingest, and /wiki-lint.
+#
+# CUSTOMIZE via `/wiki-kanban-board <slug>`. Do not hand-edit this file
+# unless you know what you are doing — the slash command validates
+# everything against `hermes kanban` before writing.
+
+# <!-- CUSTOMIZE: filled in by /wiki-kanban-board <slug>. Remove this marker line when done. -->
+
+board:               # <slug> — lowercase alphanumerics + hyphens + underscores, 1-64 chars
+workspace_default:   # one of: dir:./project | worktree
+project_root: ./project
+
+profiles:
+  orchestrator:      # Hermes profile that fans out into kanban_create calls
+  worker:            # Hermes profile that implements one task (P1 fan-out, P2 pipeline)
+  reviewer:          # Hermes profile used by P3 quorum and review steps
+
+# Optional: collaboration-pattern → profile-set overrides. If absent,
+# /wiki-kanban-emit picks from ADR status using the defaults above.
+patterns: {}
