@@ -1,36 +1,48 @@
 ---
 title: "Order Reduction"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [ode, numerical-integration, stiff, dae, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Prothero-Robinson (1974) phenomenon: on stiff or DAE problems the effective order of convergence drops to the stage order q.
+Order reduction (Prothero–Robinson 1974) is the phenomenon that the *effective* order of a numerical method on stiff problems collapses from its classical order p to the [[concepts/stage-order]] q = min(p, max η in C(η)). The global error behaves like h^q rather than h^p for stiff modes, even though h^p convergence is recovered on the nonstiff limit.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+On the linear test problem y' = λ(y − φ(x)) + φ'(x) with very negative Re λ (Prothero–Robinson), the local error decomposes into a smooth-component piece of order p and a stiff-component piece of order q. As h |λ| → ∞ only the order-q piece survives, because the stage equations cannot match the smooth derivatives beyond their stage-order accuracy. The same effect appears on nonlinear stiff problems satisfying [[concepts/one-sided-lipschitz-condition]] and on [[concepts/singular-perturbation-problem]]s / [[concepts/differential-algebraic-equation]]s, where the algebraic component sees only stage-order convergence. Implicit Gauss methods (p = 2s, q = s) suffer the strongest reduction; [[concepts/lobatto-iiia-method]] and [[concepts/lobatto-iiib-method]] (p = 2s − 2, q = s) also lose order; collocation Radau IIA (p = 2s − 1, q = s) recovers superconvergence in the differential component but not the algebraic.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Classical order p.
+- Stage order q.
+- Method's [[concepts/butcher-simplifying-assumptions]] C(η), D(ζ).
+- Stiffness scale h |λ|.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Predicting effective convergence behaviour of an IRK method on stiff problems.
+- Choosing between methods of equal classical order but different stage order.
+- Designing Rosenbrock methods that avoid order reduction (Σ b_i ω_{ij} α_j = 1 condition).
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- The observed order on a stiff problem can mislead method comparisons if h is reduced enough that one moves into the nonstiff regime mid-experiment.
+- Order reduction is not the same as instability; the method still converges, just slowly.
+- [[concepts/dense-output]] can suffer additional order loss at the boundary-layer regions.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/stage-order]]
+- [[concepts/b-convergence]]
+- [[concepts/butcher-simplifying-assumptions]]
+- [[concepts/runge-kutta-method]]
+- [[concepts/singular-perturbation-problem]]
+- [[concepts/differential-algebraic-equation]]
 
 ## Sources
 

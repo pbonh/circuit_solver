@@ -1,36 +1,47 @@
 ---
 title: "W-Transformation"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [ode, numerical-integration, runge-kutta, order-conditions, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Hairer-Wanner (1981) similarity transformation of the Butcher matrix using shifted Legendre polynomials; reduces A-stability to continued-fraction positivity arguments.
+The W-transformation (Hairer–Wanner 1981) is a change of basis on the Runge–Kutta stage space using the shifted Legendre polynomials evaluated at the nodes c_i: W_{ij} = P_{j−1}(c_i), with P_j the j-th shifted Legendre polynomial on [0, 1] normalised so ∫_0^1 P_j P_k = δ_{jk}/(2j+1). The transformed coefficient matrix Ã = W^{−1} A W has block-tridiagonal structure that makes order, stability, and algebraic-stability conditions much easier to analyse than in the original basis.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+In the W-basis the [[concepts/butcher-simplifying-assumptions]] B(p), C(η), D(ζ) translate into tractable conditions on the first few rows / columns of Ã. The [[concepts/algebraic-stability]] matrix M reduces to a continued-fraction positivity check (Wanner 1980), which Hairer–Wanner use to verify B-stability of Gauss, Radau IA, Radau IIA, and Lobatto IIIC by inspection. The W-transformation is also the construction tool for new method families: choosing Ã with prescribed structure and inverting gives A with guaranteed order and stability.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Node vector c.
+- Legendre polynomial degrees up to s − 1.
+- Transformed matrix Ã = W^{−1} A W.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Designing high-order IRK methods with prescribed stability.
+- Verifying algebraic stability via continued-fraction tests.
+- Translating Butcher's tree-based order conditions into polynomial conditions.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- The transformation depends on the chosen polynomial basis; cross-family comparisons need consistent normalisation.
+- For non-Lobatto / non-Radau nodes the structure of Ã is not block-tridiagonal, and the simplification is lost.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/runge-kutta-method]]
+- [[concepts/butcher-simplifying-assumptions]]
+- [[concepts/algebraic-stability]]
+- [[concepts/gauss-method]]
+- [[concepts/radau-iia-method]]
+- [[concepts/lobatto-iiic-method]]
+- [[concepts/collocation-method]]
 
 ## Sources
 

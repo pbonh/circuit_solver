@@ -1,36 +1,48 @@
 ---
-title: "Epsilon-Embedding Method"
+title: "Epsilon Embedding Method"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [ode, dae, singular-perturbation, runge-kutta, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Apply a numerical method to the full singular-perturbation problem epsilon z'=g and then set epsilon=0. Equivalent to state-space-form method for stiffly accurate RK.
+The ε-embedding method applies an implicit Runge–Kutta or multistep formula to the full [[concepts/singular-perturbation-problem]] y' = f(y, z), ε z' = g(y, z) and then sets ε = 0, producing a method directly applicable to the limiting index-1 [[concepts/differential-algebraic-equation]]. Originally developed in Hairer–Lubich–Roche (1988); Griepentrog–März call the resulting RK scheme IRK(DAE).
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+For an IRK method with invertible coefficient matrix A, setting ε = 0 in the discretised stage equations gives a system that can be reduced via the substitution w_{ij} = (A^{−1})_{ij}: the algebraic part collapses to g(Y_i, Z_i) = 0 at each stage, while the differential part is the usual IRK step on y. The output approximation y_{n+1} = y_n + h ∑ b_i f(Y_i, Z_i) and z_{n+1} = ∑ d_i Z_i (or Z_s for [[concepts/stiffly-accurate-method]]s) inherits the order of the underlying IRK on the smooth components. For stiffly accurate methods (a_{si} = b_i) the ε-embedding approach and the direct [[concepts/state-space-form]] method coincide.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Underlying IRK or LMS method.
+- Invertibility of A (the coefficient matrix).
+- Stiffly accurate flag.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Solving index-1 DAEs by reusing existing IRK code (RADAU5, RODAS) with ε set to zero.
+- Mass-matrix DAEs M u' = φ(u) with constant (possibly singular) M.
+- Singular-perturbation problems where one wants the same solver to handle ε = 0 and ε > 0 transparently.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- The z-component achieves only stage-order convergence for non-stiffly-accurate methods.
+- For methods with |R(∞)| > 1, the algebraic z-component diverges; check L-stability first.
+- Inconsistent initial conditions on z (z_0 ≠ G(y_0)) produce a delta-function-like initial transient that the method must absorb.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/singular-perturbation-problem]]
+- [[concepts/state-space-form]]
+- [[concepts/index-1-dae]]
+- [[concepts/implicit-runge-kutta]]
+- [[concepts/stiffly-accurate-method]]
+- [[concepts/differential-algebraic-equation]]
+- [[concepts/order-reduction]]
 
 ## Sources
 

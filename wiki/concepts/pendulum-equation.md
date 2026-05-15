@@ -1,36 +1,47 @@
 ---
-title: "Pendulum Equation"
+title: "Pendulum Equation (DAE Form)"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [mechanical, dae, benchmark, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Mathematical pendulum in Cartesian coordinates; standard index-3 test problem for constrained-mechanical solvers.
+The pendulum equation in DAE form is the [[concepts/index-3-dae]] description of a planar pendulum: a point mass m at position q = (x, y) suspended from the origin by a massless rod of length ℓ. The equations are q' = u, m u' = (0, −m g)^T − G(q)^T λ, 0 = x² + y² − ℓ², where G(q) = (2x, 2y) is the constraint Jacobian. It is the simplest non-trivial constrained mechanical system and the canonical pedagogical example for higher-index DAEs.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The constraint g(q) = x² + y² − ℓ² = 0 confines the mass to a circle. Differentiating once gives the velocity-level constraint G u = 2x u_x + 2y u_y = 0 (tangency); differentiating again gives the acceleration-level constraint, from which λ can be solved as a Lagrange multiplier. Numerical experiments compare half-explicit, projected RK, BDF + projection, and symplectic methods (the [[concepts/lobatto-iiia-iiib-pair]] preserves the energy almost exactly while drift-control methods slowly bleed energy).
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Mass m, length ℓ, gravity g.
+- Initial angle and angular velocity.
+- Period ≈ 2π √(ℓ/g) for small oscillations.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Pedagogical illustration of index-3 DAE and constraint handling.
+- Quick test of new DAE / symplectic integrators.
+- Demonstration of [[concepts/drift-off]] and stabilisation techniques.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Simple enough that some methods (Baumgarte with bad parameters) look acceptable on it but fail on real multibody problems.
+- For long-time integration, only symplectic-on-manifold methods preserve the energy.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/index-3-dae]]
+- [[concepts/constrained-mechanical-system]]
+- [[concepts/multibody-system]]
+- [[concepts/symplectic-method]]
+- [[concepts/lobatto-iiia-iiib-pair]]
+- [[concepts/lagrange-multiplier]]
+- [[concepts/drift-off]]
 
 ## Sources
 

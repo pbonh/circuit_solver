@@ -1,36 +1,46 @@
 ---
-title: "Control Problem (DAE)"
+title: "Control Problem DAE"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [dae, optimal-control, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-DAE arising from optimal-control problems via Pontryagin's principle; index depends on regularity of phi_uu and B^T C B.
+A control-problem DAE (Eq. 1.39 in Hairer–Wanner VII) arises when Pontryagin's minimum principle is applied to an optimal-control problem min ∫ φ(y, u) dx subject to y' = f(y, u): the necessary conditions form a DAE in (y, v, u), where v is the adjoint / costate. Specifically y' = f(y, u), v' = −f_y^T v − φ_y^T, 0 = B^T v + φ_u with B = f_u.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The algebraic equation 0 = B^T v + φ_u is the *stationarity condition* of the Hamiltonian H = φ(y, u) + v^T f(y, u) with respect to the control u: ∂H/∂u = 0. The system's index depends on the regularity of D = φ_uu (singular Hessian) and B^T C B (control-Jacobian rank): index 1 if D is invertible, index 2 if D is singular but B^T D' B is, and so on. Boundary conditions split between y at the initial time and v at the final time, making the problem a *boundary-value* DAE — standard shooting / collocation BVP codes apply with appropriate index handling.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- State dim(y), control dim(u), costate dim(v) = dim(y).
+- Hessian D = φ_uu (invertibility ⇒ index 1).
+- Control Jacobian B = f_u (rank).
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Trajectory optimisation in aerospace, robotics, chemical-process control.
+- Theoretical analysis of nonlinear optimal-control problems.
+- DAE / BVP solver benchmarking with constraint-rich systems.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Variable index along the trajectory (bang–bang controls switch between active sets, each with its own index).
+- Singular arcs require special handling — naive collocation fails.
+- Direct collocation can suffer order reduction due to the algebraic component.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/differential-algebraic-equation]]
+- [[concepts/index-of-a-dae]]
+- [[concepts/euler-lagrange-equation]]
+- [[concepts/lagrange-multiplier]]
+- [[concepts/index-2-dae]]
 
 ## Sources
 

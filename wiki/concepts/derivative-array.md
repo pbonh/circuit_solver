@@ -1,36 +1,46 @@
 ---
 title: "Derivative Array"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [dae, mathematical-tool, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Sequence F(u',u)=0, dF/dx=0, ..., d^m F/dx^m=0 from which an underlying ODE can be extracted; basis of Campbell's unstructured higher-index DAE method.
+For a general implicit DAE F(u', u, x) = 0 the derivative array (Campbell 1985, 1989) is the stacked system [F; dF/dx; d^2F/dx^2; …; d^m F/dx^m] obtained by repeatedly differentiating F with respect to x. The smallest m for which the array determines u' explicitly (after algebraic manipulation) is the [[concepts/differentiation-index]].
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+Each differentiation introduces higher derivatives u^{(k)} as new unknowns while also adding equations. The arrays at successive m form a growing rectangular linear (in derivatives) system; QR or SVD factorisation of the array's Jacobian with respect to (u', u'', …, u^{(m+1)}) yields an underlying ODE u' = φ(u, x) once the rank stabilises. Campbell's unstructured-higher-index approach uses the derivative array to compute the underlying ODE directly, bypassing the need for closed-form differentiation steps. The construction is the formal substrate for [[concepts/overdetermined-dae]] formulations and Pantelides' algorithm in Modelica-style tools.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Differentiation depth m.
+- Jacobian-array rank.
+- Smoothness class of F.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Index determination of arbitrary implicit DAEs.
+- Constructing underlying ODEs for non-standard DAE forms.
+- Pantelides-style index-reduction in equation-based modelling tools (Dymola, OpenModelica).
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- The derivative array grows large quickly; m = 3 already produces a system of size O(m · n).
+- Rank determination is numerically delicate; SVD-based ranks are sensitive to tolerance.
+- Construction is symbolic / automatic-differentiation heavy.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/differential-algebraic-equation]]
+- [[concepts/differentiation-index]]
+- [[concepts/index-reduction]]
+- [[concepts/overdetermined-dae]]
+- [[concepts/index-of-a-dae]]
 
 ## Sources
 

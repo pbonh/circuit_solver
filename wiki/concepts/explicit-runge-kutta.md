@@ -1,36 +1,49 @@
 ---
-title: "Explicit Runge-Kutta"
+title: "Explicit Runge–Kutta"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [ode, numerical-integration, runge-kutta, nonstiff, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Runge-Kutta method with strictly lower-triangular A matrix; each stage k_i is computed by direct evaluation.
+A Runge–Kutta method is explicit if its coefficient matrix A is strictly lower triangular (a_{ij} = 0 for j ≥ i). Each stage Y_i is then computable from previously evaluated stages without solving a system. Classical examples include the four-stage classical RK4, the embedded Dormand–Prince DOPRI5(4) and DOPRI8(5,3) pairs, and Cash–Karp methods.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The [[concepts/stability-function]] of an explicit s-stage method is a polynomial R(z) = 1 + z + … + z^p/p! + O(z^{s+1}) of degree at most s. The [[concepts/stability-region]] is therefore *bounded*, so explicit RK methods are not A-stable and require h |λ| inside a finite region for stable integration. Embedded pairs (b, b̂) of orders p and p̂ enable cheap local error estimation: err_n = ‖y_n − ŷ_n‖. Adaptive step control then drives the error to a user tolerance, often paired with [[concepts/pi-step-size-control]] to damp oscillations near the stability boundary on mildly stiff problems. [[concepts/chebyshev-method]] families (Lebedev's DUMKA, van der Houwen–Sommeijer's RKC, Abdulle–Medovikov's ROCK4) construct R(z) from shifted Chebyshev polynomials to extend the stability region along the negative real axis, making explicit integration tractable on mildly stiff parabolic problems.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Number of stages s.
+- Order p of the principal method, p̂ of the embedded estimator.
+- Stability region (longest real-axis / imaginary-axis interval).
+- FSAL (first-same-as-last) flag for tableau efficiency.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Nonstiff problems where step size is set by accuracy, not stability.
+- Smooth right-hand sides where many derivative evaluations per step are inexpensive.
+- Wave / hyperbolic PDE method-of-lines with eigenvalues on the imaginary axis.
+- Mildly stiff parabolic problems via stabilised explicit ([[concepts/chebyshev-method]]).
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Useless on stiff problems — step-size restrictions become catastrophic.
+- The [[concepts/automatic-stiffness-detection]] machinery is a runtime guard against this failure mode.
+- Embedded estimators can underestimate the true error on stiff or boundary-layer problems.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/runge-kutta-method]]
+- [[concepts/stability-region]]
+- [[concepts/chebyshev-method]]
+- [[concepts/pi-step-size-control]]
+- [[concepts/automatic-stiffness-detection]]
+- [[concepts/implicit-runge-kutta]]
 
 ## Sources
 

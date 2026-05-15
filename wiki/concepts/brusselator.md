@@ -1,37 +1,48 @@
 ---
 title: "Brusselator"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [ode, pde, stiff, benchmark, reaction-diffusion, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Lefever-Prigogine reaction-diffusion model exhibiting oscillatory chemical kinetics; standard benchmark for stiff solvers.
+The Brusselator (Prigogine–Lefever 1968) is a two-species autocatalytic chemical-reaction model exhibiting limit-cycle oscillations and (with diffusion) Turing patterns. The ODE form is u̇ = A + u^2 v − (B + 1) u, v̇ = B u − u^2 v. The PDE form adds diffusion: u_t = D_1 ∂_xx u + (kinetics), v_t = D_2 ∂_xx v + (kinetics).
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+For 1 < B < 1 + A^2 the ODE has a single unstable fixed point and a stable limit cycle. The PDE on a finite interval with appropriate D_1, D_2 develops Turing instabilities — spatial patterns from a uniform initial state. Discretising the PDE in space by finite differences gives a stiff ODE system whose stiffness scales as (Δx)^{−2}; this is the canonical [[concepts/method-of-lines]] benchmark in Hairer–Wanner. The 1D Brusselator on N spatial points with second-derivative finite differences is *the* standard test problem for stabilised explicit ([[concepts/chebyshev-method]], RKC, ROCK4) and implicit (RADAU5, RODAS, BDF) stiff codes.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Rate constants A, B.
+- Diffusion coefficients D_1, D_2.
+- Spatial grid size Δx (sets stiffness for the MOL system).
+- System size N after discretisation.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Stiff-method benchmarking with controllable stiffness ratio.
+- Pedagogical example of pattern-forming reaction–diffusion.
+- Testing implicit / Rosenbrock codes against stabilised explicit codes on parabolic problems.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Stiffness grows quadratically with N — code timing comparisons must scale carefully.
+- The PDE solution becomes spatially complex; verify with grid refinement.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/method-of-lines]]
+- [[concepts/chebyshev-method]]
+- [[concepts/singular-perturbation-problem]]
+- [[concepts/stiff-circuit]]
+- [[concepts/burgers-equation]]
 
 ## Sources
 
+- [[summaries/hairer-ode-ii-03-chapter-iv-stiff-problems-one-step-methods]]
 - [[summaries/hairer-ode-ii-05-chapter-vi-singular-perturbation-problems]]

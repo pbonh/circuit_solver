@@ -1,36 +1,50 @@
 ---
 title: "Manifold Differential Equation"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [dae, mechanical, geometric, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-ODE y'=v(y) restricted to a smooth manifold M with v(y) in T_yM. Index-2 DAEs are equivalent to such equations.
+A manifold differential equation is an ODE y' = f(y) whose solutions are required to lie on a smooth submanifold M ⊂ ℝ^n. Tangency f(y) ∈ T_y M for all y ∈ M ensures that solutions starting on M stay on M. Equivalently, the system can be written as a DAE with explicit constraint c(y) = 0 defining M and right-hand side f tangent to the constraint manifold.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+Constrained Hamiltonian / Lagrangian systems are the prototypical manifold ODEs: the constraint manifold M = {(q, p) : g(q) = 0, G(q) H_p = 0} carries the constrained Hamiltonian flow. Numerical integration on M requires either: (i) parametrising M locally (e.g. by [[concepts/tangent-space-parametrization]] or [[concepts/generalized-coordinate-partitioning]]) and integrating in the reduced space; (ii) integrating in ℝ^n and projecting back to M after each step ([[concepts/projection-method-dae]]); or (iii) using a manifold-aware integrator that respects the geometry intrinsically (Lie-group integrators, [[concepts/lobatto-iiia-iiib-pair]]). [[concepts/backward-error-analysis-manifolds]] explains long-time near-preservation of M by [[concepts/symplectic-integrator]]s.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Manifold M and its dimension dim M.
+- Codimension (= number of constraints).
+- Tangency condition f(y) ∈ T_y M.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Constrained mechanical / Hamiltonian systems.
+- Lie-group dynamics (rotations, SE(3)).
+- Reduction of geometric / topological invariants in numerical integration.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Local parametrisations are valid only on coordinate patches; integration across patches needs chart-switching.
+- Projection methods cost extra Newton iterations.
+- Lie-group integrators have their own zoo (RK-MK, Munthe-Kaas) that differ from Euclidean RK.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/differential-algebraic-equation]]
+- [[concepts/constrained-hamiltonian-system]]
+- [[concepts/constrained-mechanical-system]]
+- [[concepts/projection-method-dae]]
+- [[concepts/tangent-space-parametrization]]
+- [[concepts/generalized-coordinate-partitioning]]
+- [[concepts/symplectic-method]]
+- [[concepts/backward-error-analysis-manifolds]]
+- [[concepts/state-space-form]]
 
 ## Sources
 

@@ -1,36 +1,48 @@
 ---
-title: "Transistor Amplifier (DAE)"
+title: "Transistor Amplifier (Hairer–Wanner DAE)"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [dae, circuit, benchmark, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Five-node bipolar-transistor amplifier modelled by Kirchhoff's laws and Ebers-Moll equations; implicit DAE M u' = phi(u) with singular constant M.
+The Hairer–Wanner "transistor amplifier" is a benchmark DAE (Equation 1.14, Section VI.1 of *Solving Ordinary Differential Equations II*) modelling a two-stage common-emitter audio amplifier with capacitors, resistors, and Ebers–Moll-like transistor models. The system has the linear-implicit form M u' = φ(u) with constant *singular* mass matrix M — the capacitor topology makes some node equations algebraic and others differential.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+After Gaussian elimination M = S · diag(I, 0) · T (Eq. 1.19), the system decomposes into a differential part (rank-(m)) and an algebraic part (rank-(n − m)), the standard semi-explicit reduction. RADAU5 with its M-option handles the constant singular M directly — without explicit reduction — because the ε-embedding diagram (1.23) commutes with the Gaussian decomposition. The amplifier is the canonical stiff-DAE benchmark across the Hairer–Wanner II treatment, the IFAC test set, and standard SPICE-comparison literature.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Capacitor values (set the algebraic / differential split).
+- Transistor Ebers–Moll parameters.
+- Input sine-wave amplitude / frequency.
+- Time scale: tens of milliseconds for an audio-band input.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Benchmarking DAE solvers (RADAU5, DASSL, RODAS) against a realistic circuit problem.
+- Cross-checking circuit-simulation tools (SPICE family).
+- Pedagogical example of an implicit-form DAE arising from modified nodal analysis.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- The Ebers–Moll model is exponential; nonlinear-solver damping is essential.
+- Stiffness is moderate; results discriminate between equally stable but differently efficient methods, not catastrophic failures.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/differential-algebraic-equation]]
+- [[concepts/index-1-dae]]
+- [[concepts/stiff-circuit]]
+- [[concepts/modified-nodal-analysis]]
+- [[entities/spice]]
+- [[entities/radau5]]
+- [[entities/rodas]]
 
 ## Sources
 

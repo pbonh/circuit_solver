@@ -1,36 +1,47 @@
 ---
 title: "Differential-Algebraic Tree"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [dae, runge-kutta, order-conditions, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Tree with both meagre and fat vertices used to derive order conditions for Runge-Kutta and Rosenbrock methods on DAEs.
+Differential-algebraic trees (DATs) are the rooted-tree analogues of Butcher trees adapted for DAE order conditions. They have two kinds of vertices — *meagre* (corresponding to differential components) and *fat* (corresponding to algebraic components) — and the order conditions for a Runge–Kutta / Rosenbrock method on a DAE are indexed by elementary differentials evaluated on DAT_y, DAT_z, and (for index 2) the larger set LDAT.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+For an [[concepts/index-1-dae]] y' = f(y, z), 0 = g(y, z), order conditions on f are computed via the classical Butcher tree τ(t) over y plus its z-derivative branches; the DAT y / z partition keeps track of which vertices contribute differential-state derivatives and which contribute algebraic-state derivatives. For [[concepts/rosenbrock-method]]s on DAEs (Section VI.4) the tree class is enriched with the γ-vertex marking. For [[concepts/index-2-dae]]s (Section VII.5) the set DAT_2 generalises further; new trees introduce additional order conditions. RODAS satisfies these new conditions automatically by design.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Meagre / fat vertex partition.
+- Tree-set size as a function of order (grows factorially).
+- DAE index.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Designing high-order RK / Rosenbrock methods for DAEs.
+- Theoretical analysis of order reduction on DAEs.
+- Verifying order conditions of new method families.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- The combinatorics explodes faster than for ODE trees; computer-algebra support is essential beyond order 4.
+- Different conventions (Hairer–Wanner vs. Brasey–Hairer) for fat / meagre marking; cross-reference carefully.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/butcher-simplifying-assumptions]]
+- [[concepts/runge-kutta-method]]
+- [[concepts/rosenbrock-method]]
+- [[concepts/index-1-dae]]
+- [[concepts/index-2-dae]]
+- [[concepts/order-reduction]]
+- [[entities/rodas]]
 
 ## Sources
 

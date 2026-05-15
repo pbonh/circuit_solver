@@ -1,37 +1,48 @@
 ---
-title: "Runge-Kutta Collocation"
+title: "Runge–Kutta Collocation"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [ode, numerical-integration, runge-kutta, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Class of Runge-Kutta methods derived as polynomial collocation; satisfies C(s) and includes Gauss, Radau, Lobatto IIIA methods.
+Runge–Kutta collocation refers to the equivalence (Wright 1970, Guillou–Soulé 1969) between [[concepts/collocation-method]]s on s nodes and s-stage [[concepts/implicit-runge-kutta]] methods. Every collocation method *is* an RK method whose Butcher tableau is determined by Lagrange interpolation on the nodes; conversely, an s-stage IRK method is a collocation method iff its tableau satisfies the simplifying assumption C(s).
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The equivalence formalises one direction (collocation → RK) by integrating the interpolating polynomial via the s-point quadrature induced by the nodes: a_{ij} = ∫_0^{c_i} ℓ_j(τ) dτ, b_i = ∫_0^1 ℓ_i(τ) dτ. The reverse direction holds when C(s) is exactly satisfied: the IRK stages Y_i form an order-s polynomial fitting the derivative constraints. This identifies Gauss, Radau IA, Radau IIA, and Lobatto IIIA as collocation methods; Lobatto IIIB and IIIC are *not* (they have stage order s − 1 with extra structure conditions that prevent collocation-polynomial existence). The Hairer–Wanner treatment uses the equivalence to lift superconvergence and stage-order arguments cleanly between the two viewpoints.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Node count s.
+- Node positions c_i (determine which collocation family).
+- Stage order q = s.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Constructing high-order IRK methods from quadrature nodes (Gauss / Radau / Lobatto IIIA).
+- Generating natural [[concepts/dense-output]] from the collocation polynomial.
+- Lifting boundary-value-problem collocation theory to initial-value-problem stiff integration.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- The equivalence is one-way for Lobatto IIIB / IIIC; do not assume every IRK method has a collocation interpretation.
+- Stage order ≤ s; classical order can be up to 2s but only with extra structure (Gauss).
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/collocation-method]]
+- [[concepts/runge-kutta-method]]
+- [[concepts/implicit-runge-kutta]]
+- [[concepts/butcher-simplifying-assumptions]]
+- [[concepts/multistep-collocation]]
+- [[concepts/dense-output]]
 
 ## Sources
 
+- [[summaries/hairer-ode-ii-03-chapter-iv-stiff-problems-one-step-methods]]
 - [[summaries/hairer-ode-ii-06-chapter-vii-differential-algebraic-equations]]

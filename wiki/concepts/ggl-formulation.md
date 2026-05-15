@@ -1,36 +1,48 @@
 ---
 title: "GGL Formulation"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [dae, mechanical, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Gear-Gupta-Leimkuhler (1985) stabilised index-2 form appending the velocity constraint with an extra multiplier.
+The Gear–Gupta–Leimkuhler (GGL) formulation (Eq. 1.48 in Hairer–Wanner Chapter VII) augments the index-2 form of a [[concepts/constrained-mechanical-system]] with an extra Lagrange multiplier μ to keep *both* the position-level g(q) = 0 and the velocity-level G(q) u = 0 constraints exactly satisfied. The augmented system is q' = u + G^T μ, M u' = f − G^T λ, 0 = g(q), 0 = G u.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The system is index 2 — but unlike a plain index-2 reduction it has both position and velocity constraints, so the constraint manifold {(q, u) : g(q) = 0, G u = 0} is exactly preserved by the continuous flow and (with proper discretisation) by the numerical scheme too. The extra multiplier μ is non-zero only when discretisation error would otherwise push the state off the position manifold; in exact arithmetic μ = 0. GGL avoids [[concepts/drift-off]] without the parameter-tuning of [[concepts/baumgarte-stabilization]] or the post-step cost of [[concepts/projection-method-dae]] — it is closer in spirit to projection but uses an extra differential variable instead of a separate projection step.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Original multiplier λ (constraint force).
+- GGL multiplier μ (position-correction).
+- Solve cost: an extra block in the augmented linear system.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Multibody dynamics where drift is unacceptable and explicit projection is awkward.
+- Long-time integration with mid-range accuracy requirements.
+- Compatibility with index-2 BDF / RK convergence theory.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Larger augmented system per step than plain index-2; cost per step grows by ≈ rank(G).
+- The hidden constraint G u = 0 must be enforced exactly — and is, by construction; this is what makes GGL drift-free.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/drift-off]]
+- [[concepts/index-reduction]]
+- [[concepts/baumgarte-stabilization]]
+- [[concepts/projection-method-dae]]
+- [[concepts/constrained-mechanical-system]]
+- [[concepts/index-2-dae]]
+- [[concepts/overdetermined-dae]]
+- [[concepts/lagrange-multiplier]]
 
 ## Sources
 

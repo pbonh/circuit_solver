@@ -1,36 +1,46 @@
 ---
 title: "Perturbation Index"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [dae, classification, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Hairer-Lubich-Roche (1989) sensitivity-based index for DAEs; may differ from differentiation index on nonlinear problems.
+The perturbation index pi of a DAE (Hairer–Lubich–Roche 1989, "HLR89") is the smallest non-negative integer m such that for every perturbation δ(x) of the equation and every Δy_0 of the initial conditions, the perturbed solution ŷ satisfies ‖ŷ(x) − y(x)‖ ≤ C (‖Δy_0‖ + ‖δ‖_∞ + ‖δ'‖_∞ + … + ‖δ^{(m−1)}‖_∞) on a compact interval.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The perturbation index quantifies *sensitivity* to perturbations: index 1 means errors in the equation propagate at the same scale (good); higher indices mean each unit of perturbation produces errors scaling with derivatives of the perturbation, which is bad numerically (round-off and discretisation error always have non-zero derivative content). Lubich (1989) showed that for the implicit-form DAE M(y) y' = f(y) the perturbation and differentiation indices can differ arbitrarily — Campbell–Gear's nilpotent-Jordan example (Eq. 1.32 in Hairer–Wanner) makes this concrete with di = 2 and pi = 1. Numerical-method choice is best guided by perturbation index because round-off enters as a perturbation.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Number of derivatives of δ that appear in the error bound.
+- Compact interval of definition.
+- Constant C in the bound.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Predicting numerical sensitivity of a DAE.
+- Choosing solver tolerance: high pi requires tighter tolerance to keep the derivative norms small.
+- Theoretical convergence analysis (HLR89 theorems use pi explicitly).
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- pi can be lower than di (sensitivity is benign even when many differentiations are needed); also higher (rare).
+- The bound is asymptotic; explicit constants C are problem-dependent.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/index-of-a-dae]]
+- [[concepts/differentiation-index]]
+- [[concepts/index-of-nilpotency]]
+- [[concepts/index-1-dae]]
+- [[concepts/index-2-dae]]
+- [[concepts/index-3-dae]]
 
 ## Sources
 

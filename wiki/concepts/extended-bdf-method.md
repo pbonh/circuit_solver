@@ -1,36 +1,47 @@
 ---
-title: "Extended BDF (EBDF)"
+title: "Extended BDF Method"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [ode, numerical-integration, multistep, stiff, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Cash's (1980, 1983) generalisation of BDF using a super-future value at x_{n+k+1}; A-stable for p <= 4 and stiffly stable for p <= 9.
+Cash's Extended BDF (EBDF, 1980) and Modified EBDF (MEBDF, 1983) are multistep schemes for stiff problems that augment the BDF formula with one "super-future" point at x_{n+k+1} computed by a separate predictor. The composite is solved by a three-stage predictor–corrector–corrector scheme: (i) BDF predicts y_{n+k}^*, (ii) the super-future predictor produces y_{n+k+1}^*, (iii) the modified formula uses both to compute y_{n+k}.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The super-future point gives the corrector access to a one-step-ahead derivative estimate, which acts like a virtual order-boost similar to [[concepts/enright-method]]'s second-derivative term but using only f-evaluations. EBDF/MEBDF reach order p with A-stability up to p = 4 and stiff stability up to p = 9. Implementation requires nesting two predictor stages within one step, raising the cost over plain BDF; the trade-off is good stability margins and modest extra storage compared to the second-derivative families.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Step count k (order p = k + 1).
+- Predictor / corrector coefficients.
+- Super-future point evaluation at x_{n+k+1}.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Stiff problems where extending past BDF6 is needed.
+- Code lineages preferring f-evaluations over f'-evaluations (no analytic Jacobian).
+- Theoretical study of barrier-circumventing predictor–corrector designs.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Three stages per step ≈ 3× the cost of plain BDF.
+- Variable step is intricate.
+- Stability sector still narrows for very high orders.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/gear-bdf]]
+- [[concepts/enright-method]]
+- [[concepts/sdbdf-method]]
+- [[concepts/blended-multistep-method]]
+- [[concepts/predictor-corrector-method]]
+- [[concepts/linear-multistep-methods]]
 
 ## Sources
 

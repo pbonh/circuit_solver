@@ -1,36 +1,49 @@
 ---
 title: "Drift-Off"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [dae, numerical-integration, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Numerical phenomenon that when an index-3 mechanical system is reduced to index 1 by differentiating constraints, the constraint errors grow polynomially with time.
+Drift-off is the numerical phenomenon in which the discrete solution of an index-reduced DAE wanders away from the original (higher-index) constraint manifold over time. For a [[concepts/constrained-mechanical-system]] reduced by differentiation to index 1, integrating g̈ = 0 numerically lets g(q(t)) grow as O(t^2) and G(q) u(t) grow as O(t) (Hairer–Wanner Theorem VII.2.1, Eq. 2.6).
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The drift is essentially the double integration of round-off in the acceleration-level constraint: each step picks up a tiny error in g̈ ≈ 0, the position-level constraint integrates this twice, so position error grows quadratically. The Hairer–Wanner numerical experiments (Section VII.2) show g(q(t)) reaching O(10^{−5}) after a few seconds and worse over hours of simulated time. Remedies: [[concepts/baumgarte-stabilization]] (replace g̈ = 0 with g̈ + 2αġ + β²g = 0, damping the drift exponentially), [[concepts/projection-method-dae]] (after each step, project (q, u) back to the constraint manifold), [[concepts/ggl-formulation]] (extra multiplier maintains both position and velocity constraints), and [[concepts/overdetermined-dae]] formulations that solve all constraint levels by least squares. Numerical experiments show velocity-level projection alone is essentially as good as combined position + velocity projection.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Drift rate in position level ≈ const · t^2.
+- Drift rate in velocity level ≈ const · t.
+- Integrator step size and accumulated round-off.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Diagnosing why a constrained-mechanical-system simulation diverges from the constraint over time.
+- Comparing index-reduction methods (Baumgarte vs. projection vs. GGL vs. overdetermined).
+- Validating long-time integration accuracy.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Untreated drift makes any naive index-reduction approach unsuitable for long-time integration.
+- Baumgarte stabilisation with too-large α, β stiffens the system; too-small fails to damp.
+- Projection adds computational cost but is robust.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/index-reduction]]
+- [[concepts/baumgarte-stabilization]]
+- [[concepts/projection-method-dae]]
+- [[concepts/ggl-formulation]]
+- [[concepts/overdetermined-dae]]
+- [[concepts/constrained-mechanical-system]]
+- [[concepts/index-3-dae]]
+- [[concepts/hidden-constraint]]
 
 ## Sources
 

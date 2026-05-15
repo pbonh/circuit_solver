@@ -1,36 +1,46 @@
 ---
 title: "Tangent Space Parametrization"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [dae, mechanical, geometric, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Potra-Rheinboldt (1991) parametrisation of the constraint manifold using basis vectors of the tangent space.
+A tangent-space parametrisation (Potra–Rheinboldt 1990) of a [[concepts/manifold-differential-equation]] near a point y_0 ∈ M is a local chart that identifies the manifold with an open neighbourhood of the origin in the tangent space T_{y_0} M ≃ ℝ^{dim M}. Combined with a retraction map back to M, it lets standard ODE integrators operate in the reduced (dim M)-dimensional Euclidean space.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+Choose a basis B = (b_1, …, b_d) of T_{y_0} M (e.g. by QR / SVD of the constraint Jacobian G). The chart is η ↦ y_0 + B η + R(η) where R is a higher-order correction (the *retraction*) chosen to land on M. The reduced ODE η' = (BᵀM B)^{−1} Bᵀ M f̃(y_0 + B η + R(η)) is a plain ODE in η, integrated by any standard method. Chart switching (re-anchoring at the current y_n) is needed when η leaves the validity ball of the current parametrisation. This is the geometric analogue of [[concepts/generalized-coordinate-partitioning]] (which picks a coordinate subset rather than a tangent basis).
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Tangent basis B and reference point y_0.
+- Retraction R(η) (often quadratic correction toward M).
+- Chart-switch threshold.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Geometric integration on constraint manifolds.
+- Lie-group integrators (the tangent space is the Lie algebra).
+- Multibody dynamics codes that prefer reduced-coordinate formulations.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Chart switching is delicate; bad heuristics cause discontinuities in η.
+- Retraction must be at least order p − 1 to preserve a method of order p.
+- For high-dimensional manifolds the basis computation can dominate cost.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/manifold-differential-equation]]
+- [[concepts/state-space-form]]
+- [[concepts/generalized-coordinate-partitioning]]
+- [[concepts/constrained-mechanical-system]]
+- [[concepts/symplectic-integrator]]
 
 ## Sources
 

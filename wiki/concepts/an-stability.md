@@ -1,36 +1,45 @@
 ---
 title: "AN-Stability"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [ode, numerical-integration, stiff, stability, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Stability for the scalar nonautonomous linear test problem y' = lambda(x) y. For non-confluent Runge-Kutta methods equivalent to algebraic stability.
+AN-stability extends [[concepts/a-stability]] from the scalar linear autonomous [[concepts/dahlquist-test-equation]] y' = λy to scalar linear *non-autonomous* problems y' = λ(x)y with Re λ(x) ≤ 0 on the integration interval. A Runge–Kutta method is AN-stable if, applied to this class of test equations, it produces |y_{n+1}| ≤ |y_n| for every choice of step h > 0 and every admissible λ(·).
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+Burrage–Butcher (1979) introduced AN-stability as a stepping stone between A-stability (constant λ) and [[concepts/b-stability]] (nonlinear contractivity). For an irreducible RK method AN-stability is equivalent to the matrix M = BA + A^T B − bb^T being non-negative definite together with b_i ≥ 0 — the [[concepts/algebraic-stability]] condition. AN-stability therefore sits between A-stability and B-stability in strength, and for many method families (Gauss, Radau IA, Radau IIA, Lobatto IIIC) all three coincide.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Diagonal matrix B = diag(b_i) and the algebraic-stability test matrix M.
+- Non-negativity of the weights b_i.
+- Method irreducibility (no redundant stages).
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Analytical setting for time-varying linear stiff systems where μ(λ(x)) ≤ 0.
+- Intermediate step when proving B-stability for a method family — show algebraic stability ⇒ AN-stability ⇒ B-stability under one-sided Lipschitz contractivity.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- AN-stability is strictly weaker than B-stability for reducible methods; check S-irreducibility before equating them.
+- It does not control behaviour on nonlinear or coupled systems by itself.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/a-stability]]
+- [[concepts/b-stability]]
+- [[concepts/algebraic-stability]]
+- [[concepts/dahlquist-test-equation]]
+- [[concepts/one-sided-lipschitz-condition]]
+- [[concepts/contractivity]]
 
 ## Sources
 

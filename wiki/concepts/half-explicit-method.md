@@ -1,36 +1,49 @@
 ---
 title: "Half-Explicit Method"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [dae, mechanical, runge-kutta, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Method discretising differential variables explicitly and algebraic variables implicitly; efficient for constrained mechanical systems.
+A half-explicit method (Hairer–Lubich–Roche 1989; Brasey–Hairer 1993; Murua 1995; Arnold 1995) is a numerical integrator for index-2 / index-3 DAEs in which the differential variable y is advanced *explicitly* by a Runge–Kutta step while the algebraic variable z (or the Lagrange multiplier λ) is determined *implicitly* by enforcing the algebraic constraint at each stage: 0 = g(Y_i).
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+For [[concepts/constrained-mechanical-system]]s the per-stage linear system is the saddle-point system (M, G^T; G, 0) (Δu, λ) = (h f − M(u_{n,i} − u_n), 0), Eq. 6.17 in Hairer–Wanner. This is just one linear-system solve per stage — far cheaper than a fully implicit RK on the same system. Coupling the half-explicit framework with Dormand–Prince RK5(4) pairs gives Murua's order-5 [[entities/phem56|PHEM56]] code, dominant in the nonstiff regime of multibody benchmarks (Andrews [[concepts/squeezer-mechanism]]). The GBS-type extrapolation (Lubich 1989, Eq. 6.18) achieves h² expansion for index-2 problems whose f is linear in z.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Underlying explicit RK method (DOPRI, Verner, …).
+- Per-stage saddle-point linear-system solver.
+- Index of the DAE being treated (2 or 3).
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Multibody dynamics in the nonstiff regime (vehicle simulation, biomechanics).
+- Constrained mechanical systems where Jacobian-LU cost dominates the budget.
+- Index-2 DAEs with linear-in-z right-hand sides.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Useless on stiff DAEs — explicit RK part loses stability.
+- Saddle-point linear systems can be ill-conditioned near constraint singularities.
+- Index-3 variants need extra projection or velocity-level enforcement.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/index-2-dae]]
+- [[concepts/index-3-dae]]
+- [[concepts/constrained-mechanical-system]]
+- [[concepts/runge-kutta-method]]
+- [[concepts/explicit-runge-kutta]]
+- [[concepts/projected-runge-kutta]]
+- [[concepts/multibody-system]]
+- [[entities/phem56]]
 
 ## Sources
 

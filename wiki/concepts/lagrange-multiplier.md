@@ -1,36 +1,48 @@
 ---
 title: "Lagrange Multiplier"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [optimization, mechanical, dae, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Variable lambda appended to a Lagrangian to enforce holonomic constraints.
+A Lagrange multiplier λ is an auxiliary variable introduced to enforce an algebraic constraint g(q) = 0 in a dynamical or optimisation problem. In a [[concepts/constrained-mechanical-system]] M q̈ = f − G^T λ, λ is the *generalised force* required to keep the trajectory on the constraint manifold {g(q) = 0}; in optimisation problems it is the dual variable / KKT multiplier.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+For a constrained Lagrangian L̃ = L − λ^T g, stationarity gives the unconstrained dynamics plus the constraint: M q̈ + G^T λ = f, g = 0. The multiplier is solved from the equation obtained by differentiating g twice along the trajectory: G M^{−1} G^T λ = G M^{−1} f − Ġ q̇ (assuming G M^{−1} G^T invertible). The vector λ is the *constraint reaction force* in mechanical terms, the dual / shadow-price in optimisation terms, and the costate / adjoint in optimal-control terms. In numerical DAE codes, λ is solved as a stage variable in each step alongside the differential variables.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Multiplier vector λ (one per constraint).
+- Constraint Jacobian G.
+- Mass / metric matrix M.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Constrained mechanical systems.
+- Constrained optimisation (KKT conditions).
+- Optimal control (Pontryagin's minimum principle).
+- Constrained variational principles.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Multipliers can become very large near singular constraint configurations.
+- Computing λ requires solving a linear system at each step; conditioning depends on G M^{−1} G^T.
+- For [[concepts/ggl-formulation]] systems a *second* multiplier μ appears, enforcing the velocity-level constraint.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/constrained-mechanical-system]]
+- [[concepts/constrained-hamiltonian-system]]
+- [[concepts/euler-lagrange-equation]]
+- [[concepts/index-3-dae]]
+- [[concepts/ggl-formulation]]
+- [[concepts/control-problem-dae]]
 
 ## Sources
 

@@ -1,36 +1,51 @@
 ---
-title: "Lobatto IIIA-IIIB Pair"
+title: "Lobatto IIIA–IIIB Pair"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [runge-kutta, symplectic, mechanical, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Jay's symplectic partitioned RK method for constrained Hamiltonian systems; order 2s-2 on the constraint manifold.
+The Lobatto IIIA–IIIB pair is a partitioned Runge–Kutta scheme using [[concepts/lobatto-iiia-method]] for the position-like variables and [[concepts/lobatto-iiib-method]] for the velocity-like variables, both on the same Lobatto nodes. Jay (1994/96) proved that the s-stage pair is symplectic on the constraint manifold of a constrained Hamiltonian system, with order 2s − 2 (Theorem 8.5 in Hairer–Wanner VII).
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+For a [[concepts/constrained-hamiltonian-system]] q' = H_p, p' = −H_q − G^T λ, g(q) = 0, the pair updates q via Lobatto IIIA (coefficients (b_i, a_{ij})) and p via Lobatto IIIB (coefficients (b̂_i, â_{ij})). Together they preserve a discrete symplectic 2-form *restricted to the constraint manifold M*. The 2-stage case (s = 2) recovers the trapezoidal-rule + symplectic-Euler pairing; the 3-stage case is the order-4 Jay pair used in long-time molecular and celestial-mechanics simulations. Coupled with [[concepts/composition-method]]s (Yoshida, Reich), arbitrarily high-order symplectic-on-manifold methods are achievable.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Number of stages s ≥ 2.
+- Order p = 2s − 2.
+- Partition: q ↦ IIIA, p ↦ IIIB.
+- Constraint-aware projection inside each stage.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Long-time integration of constrained Hamiltonian systems (molecular dynamics with bond constraints).
+- High-order symplectic-on-manifold integration where SHAKE / RATTLE order 2 is insufficient.
+- Theoretical study of symplectic integration on constraint manifolds.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Implementation is significantly more complex than unconstrained symplectic methods.
+- Variable step destroys symplecticity.
+- Lobatto IIIB has singular A — the velocity-stage equations need careful linear-algebra treatment.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/lobatto-iiia-method]]
+- [[concepts/lobatto-iiib-method]]
+- [[concepts/symplectic-method]]
+- [[concepts/symplectic-integrator]]
+- [[concepts/composition-method]]
+- [[concepts/constrained-hamiltonian-system]]
+- [[concepts/shake-algorithm]]
+- [[concepts/rattle-algorithm]]
+- [[concepts/runge-kutta-method]]
 
 ## Sources
 

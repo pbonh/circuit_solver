@@ -1,36 +1,47 @@
 ---
 title: "Asymptotic Expansion"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [mathematical-tool, ode, singular-perturbation, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Series expansion of a function or numerical error in powers of a small parameter (h or epsilon). Foundation for extrapolation methods and singular-perturbation analysis.
+An asymptotic expansion in a small parameter ε is a formal series y(x; ε) ∼ ∑_{j=0}^N ε^j y_j(x) + O(ε^{N+1}) whose partial sums approximate the true y to better and better accuracy as ε → 0 for *fixed* x, but typically diverge if N → ∞ at fixed ε > 0. For SPPs (Vasil'eva 1963), the expansion of the smooth (outer) solution is supplemented by boundary-layer terms ε^j η_j((x − x_0)/ε) that decay exponentially in the stretched variable.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+Substituting the formal series into the ODE and matching powers of ε determines the y_j recursively: y_0 satisfies the [[concepts/reduced-system]]; y_1, y_2, … are obtained as solutions of linear systems involving the previous y_j and the perturbed right-hand sides. Theorem 3.2 in Hairer–Wanner gives a rigorous remainder estimate O(ε^{N+1}) for the truncated expansion of an SPP under μ(g_z) ≤ −1. Numerical methods (IRK, multistep) applied to the SPP admit a *parallel* expansion (Hairer–Lubich–Roche 1988): the numerical y_n^j, z_n^j are the same recursive structure with the IRK / LMS solution of each cascade step.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Small parameter ε.
+- Truncation order N.
+- Smooth (outer) and singular (inner / [[concepts/boundary-layer]]) terms.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Theoretical analysis of [[concepts/singular-perturbation-problem]]s.
+- Constructing reduced-order models with quantitative error bounds.
+- Numerical-analysis convergence proofs (matched discrete / continuous expansions).
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- The series typically diverges for fixed ε > 0; optimal truncation N* depends on ε.
+- Inconsistent initial conditions force inclusion of boundary-layer terms — pure outer expansions miss them.
+- For [[concepts/perturbed-asymptotic-expansion]]s (DAE extrapolation context), additional localised perturbation terms appear that must be tracked carefully.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/singular-perturbation-problem]]
+- [[concepts/boundary-layer]]
+- [[concepts/perturbed-asymptotic-expansion]]
+- [[concepts/reduced-system]]
+- [[concepts/extrapolation-method]]
+- [[concepts/order-reduction]]
 
 ## Sources
 

@@ -372,3 +372,38 @@ Resolved the six duplicates flagged by the prior lint sweep. For each pair, cont
 - Dangling-link sweep: clean (the one regex hit, ``\[\[wiki/index.md\]\]`` in this log file's prior section, is a backtick-quoted code example, not a real link).
 - Orphan sweep: clean.
 - Required-section schema: every survivor still satisfies its page-type schema (`## Definition`, `## How It Works`, `## Key Parameters`, `## When To Use`, `## Risks & Pitfalls`, `## Related Concepts`, `## Sources`).
+
+## 2026-05-15 — Hairer–Wanner low-confidence stub buildout
+
+Promoted **all 126** `confidence: low` concept stubs derived from `raw/solving_ordinary_differential_equations_ii/` from boilerplate placeholders to substantive concept pages. Source: the four chapter summaries (`summaries/hairer-ode-ii-03..06-*.md`) — already at `confidence: high` and dense with method-specific detail — were the primary input; chapter txt files were consulted for specific entries where additional precision was needed.
+
+### Scope
+
+| Chapter | Concepts promoted | Confidence after |
+|---------|-------------------|------------------|
+| IV — Stiff Problems / One-Step Methods | 47 | medium (most) / high (core: A-stability, B-stability, Runge–Kutta, IRK, Radau IIA, stage order, order reduction, dense output, extrapolation, order star, stability function/region/domain, stiffly accurate, simplified Newton, PI / predictive step control, Rosenbrock, Chebyshev) |
+| V — Multistep Methods for Stiff Problems | 22 | medium / high (Dahlquist barrier, Daniel–Moore conjecture, G-stability, one-leg method, error constant, root-locus curve, Kreiss matrix theorem) |
+| VI — Singular Perturbation Problems | 18 | medium / high (singular-perturbation-problem, differential-algebraic-equation, index-1-dae, boundary-layer, asymptotic-expansion, ε-embedding, state-space form, van der Pol, Brusselator, transistor amplifier, method of lines) |
+| VII — Differential-Algebraic Equations / Higher Index | 39 | medium / high (DAE indices and definitions, Weierstrass–Kronecker, drift-off, Baumgarte, GGL, projection-method-dae, half-explicit, projected RK, constrained mechanical / Hamiltonian systems, symplectic methods, SHAKE / RATTLE, Lobatto IIIA-IIIB pair, composition methods, backward error analysis on manifolds, multibody, squeezer, Kepler, pendulum DAE) |
+
+### Page-by-page treatment
+
+For each stub I overwrote the placeholder body with a real:
+- `## Definition` — 2–4 sentences with the precise mathematical statement (test equation, condition, family).
+- `## How It Works` — mechanics drawn from the chapter summaries, with named theorems (Burrage–Butcher, Wanner–Hairer–Nørsett, Hairer–Lubich–Roche, Vasil'eva, Dahlquist) and standard codes (RADAU5, RODAS, SEULEX, PHEM56, LIMEX, RKC) cited where they apply.
+- `## Key Parameters` — concrete dimensionful quantities (orders p, q; sector angle α; γ for SDIRK; the matrix M of algebraic stability; etc).
+- `## When To Use` — domain-specific use cases (stiff ODE, DAE, SPP, multibody, parabolic PDE).
+- `## Risks & Pitfalls` — order reduction, drift-off, conditioning gotchas, regime-of-validity warnings.
+- `## Related Concepts` — actual `[[concepts/...]]` / `[[entities/...]]` cross-links.
+
+Confidence bumped from `low` to `medium` (concepts whose treatment is grounded in the chapter summary alone) or `high` (concepts already broadly covered in the surrounding wiki literature plus the Hairer–Wanner detail).
+
+### Acceptance gate
+
+- **Zero dangling links** — scanned every `[[…]]` reference in all 126 rewritten pages against the filesystem; one initial dangler (`concepts/spice-engine` in `transistor-amplifier`) was repointed to `[[entities/spice]]`. Re-scan returned 0 missing targets across 149 unique link slugs.
+- `## Definition` / `## How It Works` / `## Key Parameters` / `## When To Use` / `## Risks & Pitfalls` / `## Related Concepts` / `## Sources` present on every page.
+- All pages still cite the appropriate `summaries/hairer-ode-ii-*` summary under `## Sources`.
+
+### Statistics impact
+
+No new pages created; only the 126 existing stubs were rewritten in place. `wiki/index.md` rows pointing at these concepts continue to resolve. No new orphans.

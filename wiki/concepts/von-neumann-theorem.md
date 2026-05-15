@@ -1,36 +1,45 @@
 ---
-title: "Von Neumann Theorem"
+title: "Von Neumann's Theorem"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [ode, numerical-integration, stability, linear-algebra, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Bound on ||f(A)|| via the logarithmic norm and the maximum of |f(z)| in a half-plane; foundational for Euclidean contractivity estimates.
+Von Neumann's theorem (1951; see also Riesz–Sz.-Nagy 1955) bounds the spectral norm of a rational function R applied to a contraction A: if A is a Hilbert-space contraction (‖A‖ ≤ 1) and R is rational, bounded by 1 on the closed unit disk, then ‖R(A)‖ ≤ 1. Equivalently, ‖R(A)‖ ≤ sup_{|z| ≤ 1} |R(z)|. In numerical-ODE form, the bound transfers to ‖R(hA)‖ ≤ sup_{z ∈ S} |R(z)| whenever the spectrum and pseudo-spectrum of hA lie inside the [[concepts/stability-region]] S.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The theorem links scalar-stability-function arguments to operator-norm bounds, bypassing the eigenvalue / non-normality gap that ordinary spectral arguments suffer from. In Hairer–Wanner IV.11, it justifies that A-stability of R(z) implies ‖R(hA)‖ ≤ 1 for any matrix A with logarithmic norm μ(A) ≤ 0 — the *correct* operator bound for stiff linear systems, where the spectrum can mislead because A is non-normal.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Norm on the matrix space (Hilbert-space / spectral).
+- Logarithmic norm μ(A).
+- Sup of |R(z)| on the relevant region.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Operator-norm stability proofs for IRK / multistep methods on linear systems with non-normal Jacobians.
+- Justification for replacing scalar |R(hλ)| arguments with matrix ‖R(hA)‖ bounds.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Strict spectral norm only; transfers to other norms with constants.
+- For Banach-space settings (e.g. PDE method-of-lines on non-Hilbert function spaces) the [[concepts/kreiss-matrix-theorem]] is the sharper tool.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/kreiss-matrix-theorem]]
+- [[concepts/logarithmic-norm]]
+- [[concepts/stability-function]]
+- [[concepts/stability-region]]
+- [[concepts/a-stability]]
+- [[concepts/holomorphic-semigroup]]
 
 ## Sources
 

@@ -1,36 +1,47 @@
 ---
 title: "Enright Method"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [ode, numerical-integration, multistep, stiff, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Second-derivative multistep method (Enright 1974) of order k+2; A-stable for k=1,2 and stiffly stable up to k=7.
+Enright's (1974) second-derivative multistep methods are generalised LMS schemes that include a second-derivative term: ∑_i α_i y_{n+i} = h ∑_i β_i f_{n+i} + h^2 γ_k g_{n+k}, where g = f' = f_x + f_y f. Including g lets the method circumvent the [[concepts/dahlquist-barrier]] and reach order k + 2 for a k-step formula.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The added g_{n+k} term carries information about the curvature of the solution, allowing A-stable methods up to order 4 (k = 1, 2) and stiffly stable methods up to order 9 (k = 7). The price is the need to evaluate (or approximate) f' — analytically when feasible, by finite differences otherwise. [[concepts/sdbdf-method]] (second-derivative BDF) extends the idea to higher orders (up to 11), and Cash's [[concepts/extended-bdf-method]] uses "super-future" points instead of g to similar effect.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Step count k.
+- Coefficients α_i, β_i, γ_k.
+- Method order p = k + 2.
+- Cost of evaluating f'.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Stiff problems where f' is cheap to evaluate (analytical Jacobian + chain rule).
+- Codes needing higher A-stable order than BDF can offer.
+- Classroom-level study of multistep order barriers and their workarounds.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Evaluating f' by finite differences is expensive and noisy.
+- Variable-step implementation is more complex than for plain BDF.
+- Stiff stability range still degrades with order.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/sdbdf-method]]
+- [[concepts/extended-bdf-method]]
+- [[concepts/gear-bdf]]
+- [[concepts/linear-multistep-methods]]
+- [[concepts/dahlquist-barrier]]
 
 ## Sources
 

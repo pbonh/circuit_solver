@@ -1,36 +1,46 @@
 ---
-title: "PI Step Size Control"
+title: "PI Step-Size Control"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [ode, numerical-integration, adaptive-control, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: high
 ---
 
 ## Definition
 
-Gustafsson-Lundh-Soderlind (1988) proportional-integral step-size controller; damps step-size oscillations near the stability boundary.
+PI step-size control (Gustafsson, Lundh, Söderlind 1988) is a proportional-integral feedback controller for adaptive ODE integration. Replacing the standard I-controller h_{n+1} = h_n · (Tol/err_n)^{1/(p+1)} with the PI form h_{n+1} = h_n · (Tol/err_n)^α · (err_{n−1}/err_n)^β damps the ragged step-size oscillations that the simple I-controller produces near a method's stability boundary.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The exponent α plays the role of the integral gain (it pulls h toward the accuracy-optimal value); β is the proportional gain on the rate of error change (it damps overshoot when err_n is swinging). Typical values are α = 0.7/(p+1), β = 0.4/(p+1) for embedded RK pairs of order p. The controller is robust whether the step is accuracy-limited or stability-limited: in the accuracy regime it behaves like an I-controller; near the stability boundary it spots the err-swing pattern and slows the response. This was a substantial practical improvement over the 1970s-era I-controllers, especially for explicit RK codes on mildly stiff problems.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- α (integral gain), typically 0.7/(p+1) to 1/(p+1).
+- β (proportional gain), typically 0.4/(p+1) to 0.5/(p+1).
+- Method order p.
+- Safety factor (≈ 0.9) on the step prediction.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Embedded RK codes integrating mildly stiff or accuracy-critical problems.
+- Solvers that exhibit ragged step rejection patterns under simple I-control.
+- DAE / SPP codes where the boundary-layer transition makes naive control oscillate.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Tuning α, β too aggressively can de-stabilise the controller itself.
+- The predictive variant ([[concepts/predictive-step-size-control]], Gustafsson 1994) is better for stiff codes; PI alone is the explicit-RK default.
+- For deeply stiff regimes, step-size selection should depend on Newton-convergence health, not just error.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/predictive-step-size-control]]
+- [[concepts/explicit-runge-kutta]]
+- [[concepts/automatic-stiffness-detection]]
+- [[concepts/runge-kutta-method]]
 
 ## Sources
 

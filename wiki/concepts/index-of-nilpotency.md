@@ -1,36 +1,46 @@
 ---
 title: "Index of Nilpotency"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [dae, linear-algebra, classification, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-For a regular linear matrix pencil A+lambda B, the size of the largest nilpotent Jordan block in the Weierstrass-Kronecker form.
+For a regular linear constant-coefficient matrix pencil B u' + A u = d with det(A + λ B) ≢ 0, the [[concepts/weierstrass-kronecker-form]] yields P A Q = diag(C, I), P B Q = diag(I, N) with N block-nilpotent. The index of nilpotency is the size of the largest Jordan block of N — equivalently the smallest k such that N^k = 0.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The nilpotent block N produces the algebraic part of the solution; differentiating it k times gives the underlying ODE, so the index of nilpotency equals the [[concepts/differentiation-index]] of the linear pencil. For nonlinear DAEs the analogous local concept involves the *matrix pencil at a point*: ∂F/∂u' + λ ∂F/∂u, and its nilpotency index gives the local linear-pencil approximation to the differentiation index.
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Pencil (A, B).
+- Jordan-block sizes of N.
+- Index k (largest block size).
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Linear constant-coefficient DAE analysis (circuit theory, control-system descriptors).
+- Local linearisation of nonlinear DAEs around a solution branch.
+- Theoretical bridge between linear pencil theory and the differentiation index.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Only defined for *regular* pencils (det(A + λ B) ≢ 0); singular pencils need a different theory.
+- The Jordan structure is sensitive to perturbations — small generic perturbations regularise the pencil and shift the index.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/weierstrass-kronecker-form]]
+- [[concepts/matrix-pencil]]
+- [[concepts/differentiation-index]]
+- [[concepts/index-of-a-dae]]
+- [[concepts/perturbation-index]]
+- [[concepts/differential-algebraic-equation]]
 
 ## Sources
 

@@ -1,36 +1,47 @@
 ---
 title: "Blended Multistep Method"
 type: concept
-tags: [ode, numerical-integration, foundational, well-established]
+tags: [ode, numerical-integration, multistep, stiff, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Skeel-Kong (1977): linear combination of Adams and BDF methods; allows A(alpha)-stable methods up to order 12.
+A blended multistep method (Skeel & Kong 1977) combines an Adams and a BDF formula in a weighted linear combination with a Jacobian-dependent weight, so the method automatically behaves like Adams in nonstiff regimes and like BDF on stiff modes. The weight is typically (I − h J γ)^{−1} multiplying the BDF term, producing a Rosenbrock-flavoured multistep hybrid.
 
 ## How It Works
 
-Discussed and applied in the cited Hairer-Wanner chapter; see the source summary for the role this concept plays in the broader theory.
+The blend ratio is controlled by −h J γ: when h‖J‖ is small (nonstiff) the BDF contribution is suppressed and the method recovers Adams accuracy; when h‖J‖ is large (stiff) the blend approaches BDF and inherits its stability. Skeel–Kong showed the construction yields A-stability and stiffly-stable behaviour together, at the cost of an extra Jacobian-linear system per step (similar to a [[concepts/rosenbrock-method]]'s I − h γ J). Brugnano–Magherini and others extended the family later (BIM, GBE methods).
 
 ## Key Parameters
 
-- See cited chapter for method-specific parameters, coefficients, and assumptions.
+- Blend weight γ (analogous to Rosenbrock γ).
+- Adams and BDF orders being blended.
+- Per-step LU cost.
 
 ## When To Use
 
-- When the cited Hairer-Wanner setting applies (stiff ODE, DAE, singular perturbation) and this concept is needed for stability, convergence, or order analysis.
+- Code unifying nonstiff and stiff regimes without switching algorithms.
+- Problems with transient stiffness (e.g. chemical kinetics during ignition / quench).
+- Theoretical comparison with predictor–corrector and second-derivative methods.
 
 ## Risks & Pitfalls
 
-- Subtleties beyond a low-confidence stub are not captured here; consult the cited chapter for proofs, counterexamples, and limitations.
+- Per-step Jacobian + LU cost like Rosenbrock; no longer "pure" LMS.
+- Variable-step implementation is delicate.
+- For very stiff problems, plain BDF or IRK is more economical.
 
 ## Related Concepts
 
-- See the citing summary for the surrounding network of related concepts.
+- [[concepts/adams-method]]
+- [[concepts/gear-bdf]]
+- [[concepts/linear-multistep-methods]]
+- [[concepts/rosenbrock-method]]
+- [[concepts/general-linear-method]]
+- [[concepts/extended-bdf-method]]
 
 ## Sources
 
