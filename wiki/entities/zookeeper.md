@@ -29,8 +29,8 @@ Apache ZooKeeper is a distributed coordination service modeled after Google's Ch
 ## Related Entities
 
 - [[entities/etcd]]
-- [[entities/raft]]
-- [[entities/paxos]]
+- [[concepts/raft]]
+- [[concepts/paxos]]
 - [[entities/apache-kafka]]
 
 ## Sources

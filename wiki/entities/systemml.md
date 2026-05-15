@@ -33,7 +33,7 @@ SystemML (Ghoting et al., ICDE 2011; Boehm et al., PVLDB 2016) began as an IBM R
 - [[entities/pegasus]]
 - [[entities/gbase]]
 - [[entities/apache-spark]]
-- [[entities/mapreduce]]
+- [[concepts/mapreduce]]
 
 ## Sources
 

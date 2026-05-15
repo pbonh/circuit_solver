@@ -41,8 +41,8 @@ In nonlinear circuit simulation, Newton-Raphson replaces fixed-point iteration f
 
 ## Related Concepts
 
-- [[concepts/forward-euler-method]]
-- [[concepts/backward-euler-method]]
+- [[concepts/forward-euler]]
+- [[concepts/backward-euler]]
 - [[concepts/trapezoidal-rule]]
 - [[concepts/newton-raphson-method]]
 

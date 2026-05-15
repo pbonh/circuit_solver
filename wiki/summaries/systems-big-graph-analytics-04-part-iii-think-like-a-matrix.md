@@ -36,7 +36,7 @@ confidence: high
 - [[entities/pegasus]] — CMU's MapReduce-based peta-scale graph mining system.
 - [[entities/gbase]] — IBM's MapReduce graph system with built-in operations and compressed grid storage.
 - [[entities/systemml]] — Apache project for declarative machine learning on MR/Spark, including graph analytics.
-- [[entities/mapreduce]] — the underlying batch dataflow engine for PEGASUS and GBASE.
+- [[concepts/mapreduce]] — the underlying batch dataflow engine for PEGASUS and GBASE.
 - [[entities/apache-spark]] — alternative SystemML backend; also hosts GraphX.
 
 ## Source Metadata

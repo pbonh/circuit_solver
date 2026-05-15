@@ -32,8 +32,8 @@ confidence: high
 
 ## Relevant Concepts
 
-- [[concepts/forward-euler-method]] — Explicit one-step LMS formula.
-- [[concepts/backward-euler-method]] — Implicit A-stable one-step formula.
+- [[concepts/forward-euler]] — Explicit one-step LMS formula.
+- [[concepts/backward-euler]] — Implicit A-stable one-step formula.
 - [[concepts/trapezoidal-rule]] — Implicit A-stable second-order formula.
 - [[concepts/predictor-corrector]] — Explicit predictor + implicit corrector + fixed-point iteration.
 - [[concepts/a-stability]] — Stability for all Re lambda < 0 regardless of h.

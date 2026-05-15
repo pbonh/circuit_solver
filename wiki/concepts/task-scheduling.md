@@ -37,7 +37,7 @@ For sequential scheduling, any topological order of the task DAG is valid; choic
 ## Related Concepts
 
 - [[concepts/directed-acyclic-graph]]
-- [[concepts/topological-sorting]]
+- [[concepts/topological-sort]]
 - [[concepts/graph-theory]]
 
 ## Sources

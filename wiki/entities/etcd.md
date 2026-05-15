@@ -29,7 +29,7 @@ etcd is a distributed key-value store implementing linearizable storage on top o
 ## Related Entities
 
 - [[entities/zookeeper]]
-- [[entities/raft]]
+- [[concepts/raft]]
 - [[entities/kubernetes]]
 
 ## Sources

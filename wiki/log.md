@@ -280,3 +280,95 @@ Parallel-agent ingest of every textbook and paper under `raw/`. Each per-book ag
 - 2026-05-15 sze-physics-semiconductor-devices 20-appendix-a-list-of-symbols: wrote short reference summary; 0 new concepts/entities
 - 2026-05-15 sze-physics-semiconductor-devices 21-appendix-e-properties-of-important-semiconductors: wrote short reference summary; 0 new concepts/entities
 - 2026-05-15 sze-physics-semiconductor-devices: dangling-link sweep passed (0 missing concept/entity targets in 21 summaries)
+
+
+## Lint sweep (2026-05-15)
+
+Ran the full Lint workflow (per `AGENTS.md`). Inventory: 1152 concepts, 183 entities, 207 summaries, 0 syntheses; no specs, ADRs, contexts, context-maps, vision, grills, or architecture pages yet (R&D pipeline is at the ingest stage only).
+
+### Auto-fixed
+
+- **Bad wiki-link path in scaffold examples.** `flashcards/example.md` and `presentations/example.md` cited `[[wiki/index.md]]` (the `wiki/` prefix is wrong — wiki links are relative to wiki root). Rewrote both to `[[index]]` and updated their `sources:` frontmatter from `"wiki/index.md"` to `"index.md"`.
+- **Orphan example pages.** `flashcards/example.md` and `presentations/example.md` had zero inbound links because the index's Flashcards / Presentations tables contained only HTML-comment placeholder rows. Added real rows so the examples are now discoverable from the index. Orphan count: 2 → 0.
+
+### Categorized findings
+
+- **Orphans:** 0 remaining (was 2 before auto-fix).
+- **Sections:** 0 concept / entity / summary pages missing required sections (1152 + 183 + 207 spot-checked). Frontmatter `type:` and `confidence:` present on every page.
+- **Pipeline compliance:** `wiki/.pipeline.yaml` is present but the pipeline beyond Ingest has not been started — no vision, no contexts, no context-maps, no grills, no architecture, no ADRs, no specs. None of the spec/ADR/architecture lint checks have anything to evaluate. Two infrastructure artifacts are not green: `project_init` still has the CUSTOMIZE marker in `project/README.md`, and `board_bound` still has the CUSTOMIZE marker in `kanban/board.yaml` with an empty `board:` slug. `scripts/check-prereqs.sh` was not found in the repo, so the manifest's gate semantics could not be exercised — slash commands relying on it would currently no-op (back-compat path).
+- **Mermaid:** skipped — `mmdc` not on `PATH` and there are no architecture pages anyway.
+- **ADR backlinks:** skipped — no ADRs and no architecture pages.
+- **Triage:** skipped — no triage cross-link annotations exist yet.
+- **Hermes-skipped:** Kanban-board drift, kanban↔spec backlinks, handoff completeness, and deprecated-ADR active-task checks all skipped — `hermes` not on `PATH`. `kanban/board.yaml` is also still in its unbound CUSTOMIZE state, so even with Hermes the board-drift check would no-op.
+
+### Issues requiring human judgment (not auto-fixed)
+
+1. **Stub pages.** 6 reconciliation stubs (`To be expanded` content, `sources: ["raw/_reconciled"]`, `confidence: low`) exist and are cited from real pages — they should be filled or removed:
+   - `concepts/concept-name.md` — pure schema placeholder cited only from `index.md` and `journal/template.md`. Recommend **deleting** (and dropping the index row + template's example link) once the template can use a different exemplar.
+   - `concepts/display-trait.md` — cited from `concepts/debug-trait.md`. Has a clear home in the Rust Book corpus (`summaries/rust-book-20-chapter-19-advanced-features.md` references `Display`).
+   - `concepts/raii.md` — cited from `concepts/drop-trait.md`. Rust Book corpus covers this (ownership / Drop chapter).
+   - `concepts/raw-pointers.md` — cited from `concepts/unsafe-rust.md` and `concepts/ffi.md`. Rust Book chapter 19 covers this.
+   - `entities/ngspice.md` — cited from `entities/spice.md` and `entities/hspice.md`. Plenty of context in the SPICE family pages.
+   - `entities/opencl.md` — cited from `entities/nvidia-cuda.md`. CUDA/GPU material exists in the summaries.
+   - Next step: run `/wiki-refine` (or a small targeted `/wiki-ingest` on the citing pages) to populate these from existing sources rather than fabricating.
+2. **Duplicate concept pages — different slugs, same concept.** Parallel-agent ingest produced both:
+   - `concepts/backward-euler.md` *and* `concepts/backward-euler-method.md`
+   - `concepts/forward-euler.md` *and* `concepts/forward-euler-method.md`
+   - `concepts/topological-sort.md` *and* `concepts/topological-sorting.md`
+   Each pair describes the same concept from two different source books. Recommendation: pick the canonical slug (probably the `-method` variant for Euler, since it matches the wider numerical-integration concept family; `topological-sort` is shorter), merge `## Sources` + `## How It Works` + cross-links into the survivor, redirect the citing pages, and delete the loser.
+3. **Concept/Entity slug collisions.** Three slugs exist as *both* a concept page and an entity page:
+   - `raft.md` — concept = "Raft" (algorithm), entity = "Raft Consensus Algorithm". Same idea, different page-type framing.
+   - `paxos.md` — same pattern.
+   - `mapreduce.md` — concept = "MapReduce" (the algorithm), entity = "MapReduce" (the system). This one might legitimately want both, but the slug collision will confuse `[[raft]]`-style links (Obsidian resolves to whichever directory it picks first).
+   Recommendation: keep one page per slug. For Raft / Paxos, fold the entity into the concept page's `## How It Works` and delete the entity. For MapReduce, rename the entity to `entities/mapreduce-framework` (or similar) to disambiguate.
+4. **`concepts/concept-name.md` is referenced from `journal/template.md` as a literal example.** The template should either point at a real concept (e.g. `[[concepts/nodal-analysis]]`) or use an explicit `<placeholder>` syntax to avoid teaching new users that a `concept-name` page exists.
+5. **No syntheses pages.** `wiki/syntheses/` is empty. With 1152 concepts spanning circuit simulation, graph algorithms, distributed systems, semiconductor physics, ODE numerical-integration, and Rust language features, there is enormous synthesis opportunity (the AGENTS vision explicitly calls out unifying analog / digital / mixed-signal simulation under a single graph + solver framing). Recommend running `/wiki-query` on cross-cutting questions like *"how does graph partitioning in big-graph systems compare to circuit branch-tearing"* and dropping the resulting syntheses.
+6. **Low-confidence cluster.** 235 pages (15 %) are at `confidence: low`; about half are ODE-numerical-integration concepts ingested from Hairer/Wanner *Solving ODE II* but never fleshed out (`a-alpha-stability`, `algebraic-stability`, `an-stability`, `ao-stability`, `b-convergence`, …). The source material exists under `raw/solving_ordinary_differential_equations_ii/` — running `/wiki-ingest` more deeply on those chapters would lift confidence across that whole cluster.
+
+### Suggested next sources / topics
+
+- **Run `/wiki-project-init`** to remove the `CUSTOMIZE` marker from `project/README.md` (declare language = Rust, build/test commands, entry point) so the `project_init` pipeline artifact flips green.
+- **Run `/wiki-kanban-board <slug>`** once the board has been created in Hermes — this will populate `kanban/board.yaml`'s `board:` / `profiles:` fields and flip `board_bound` green. Without this, no `/wiki-kanban-emit` or `/wiki-kanban-ingest` invocation can succeed.
+- **Run `/wiki-strategy <topic>`** for the differentiating R&D theme (the AGENTS preamble says "unified view of analog, digital, and mixed-signal circuit simulation" — a good first vision page). That unblocks the whole strategy → grill → architecture → ADR → spec chain.
+- **Install `mmdc` (`npm i -g @mermaid-js/mermaid-cli`)** so future architecture-page Mermaid blocks are validated by lint.
+- **Install `hermes`** and bind the kanban board so the round-trip checks (board drift, handoff completeness, kanban↔spec backlinks) can run.
+- **Ingest `raw/solving_ordinary_differential_equations_ii/`** chapter-by-chapter to lift the ODE-stability low-confidence cluster.
+
+### Summary line
+
+Auto-fixed: 2 dangling links + 2 orphan example pages (now in index). Outstanding: 6 stubs, 3 same-concept-different-slug duplicates, 3 concept/entity slug collisions, an empty syntheses corpus, 235 low-confidence pages, and two pipeline-infrastructure artifacts (`project_init`, `board_bound`) still carrying their CUSTOMIZE markers. Hermes-dependent and Mermaid-dependent checks skipped cleanly (tools not on `PATH`).
+
+
+## Duplicate-page merges (2026-05-15)
+
+Resolved the six duplicates flagged by the prior lint sweep. For each pair, content from both pages was merged into the surviving canonical page (preserving every distinct claim, source citation, and cross-link), inbound links were rewritten across the wiki, the loser file was deleted, and the index was reconciled.
+
+### Same-concept / different-slug merges (concept ↔ concept)
+
+| Survivor | Removed | Notes |
+|----------|---------|-------|
+| `concepts/backward-euler` | `concepts/backward-euler-method` | Survivor had 12 inbound, loser had 7. Merged numerical-analysis rigor from the loser (truncation-error coefficient c₂ = +1/2, linear-system form `(I − hA) x_{n+1} = x_n + h w_{n+1}`, A-stability geometry) into the analog-simulation framing of the survivor. Combined sources from both books (Kundert + Hairer/Wanner + Vlach/Singhal). Tags now `analog, transient, numerical-integration, foundational, well-established`. |
+| `concepts/forward-euler` | `concepts/forward-euler-method` | Survivor had 10 inbound, loser had 5. Merged stability-region geometry (unit disk centred at −1) and predictor-corrector usage from the loser into the timing-simulation framing of the survivor. Both source books cited. |
+| `concepts/topological-sort` | `concepts/topological-sorting` | Tie at 5 inbound each; picked the shorter, more common slug. Merged the DFS-based variant, tie-breaking discussion (queue vs stack vs priority queue), and the betweenness-NP-completeness caveat from `topological-sorting` into `topological-sort`. |
+
+### Concept ↔ entity slug-collision merges (concept survives)
+
+| Survivor | Removed | Notes |
+|----------|---------|-------|
+| `concepts/raft` | `entities/raft` | Algorithms are concepts in this wiki. Merged the entity page's implementation details (etcd, Consul, CockroachDB, TiKV, RethinkDB; pre-vote optimization; joint-consensus membership change; snapshotting) and DDIA's safety-property framing (log-matching, term numbers, randomized timeouts) into the concept page. Cross-links to `[[entities/etcd]]`, `[[entities/zookeeper]]`, `[[entities/cockroachdb]]`, `[[entities/yugabytedb]]`, `[[entities/neo4j]]`, `[[entities/spanner]]` added under Related Concepts. Confidence high. |
+| `concepts/paxos` | `entities/paxos` | Same approach. Merged DDIA's three-role framing (proposers, acceptors, learners), the two-phase Prepare/Accept structure, ballot-number ordering, Multi-Paxos amortization, and the EPaxos/Mencius leaderless variants. FLP-impossibility / liveness caveat from the entity page preserved. Cross-links to `[[entities/zookeeper]]`, `[[entities/spanner]]`, `[[entities/etcd]]`. Confidence bumped medium → high. |
+| `concepts/mapreduce` | `entities/mapreduce` | Concept survives because the same slug was both. Preserved the entity page's big-graph systems context (PEGASUS, GBASE, SystemML, nscale, HDFS materialization cost) alongside the concept page's DDIA framing (purity requirement, fault tolerance via re-execution, surface compilation from SQL/Hive/Pig). Pregel's anti-pattern motivation noted. Confidence bumped medium → high. |
+
+### Mechanics
+
+- For each pair: rewrote every `[[<loser>]]` and `[[<loser>|<display>]]` occurrence to point at the survivor via `sed -i` across every `*.md` (except the loser file itself). Verified zero remaining citers of any loser slug before deleting.
+- Deleted 6 files: `concepts/backward-euler-method.md`, `concepts/forward-euler-method.md`, `concepts/topological-sorting.md`, `entities/raft.md`, `entities/paxos.md`, `entities/mapreduce.md`.
+- Reconciled `wiki/index.md`: removed 6 duplicate rows (3 concept-table duplicates produced by the sed pass, 3 entity-table rows whose targets no longer exist), updated tags + confidence on the 6 surviving rows.
+- Statistics updated: **Concepts 1152 → 1149, Entities 183 → 180**.
+
+### Verification
+
+- Inbound-link rewrite: 0 remaining citers of any of the 6 loser slugs anywhere in the wiki.
+- Dangling-link sweep: clean (the one regex hit, ``\[\[wiki/index.md\]\]`` in this log file's prior section, is a backtick-quoted code example, not a real link).
+- Orphan sweep: clean.
+- Required-section schema: every survivor still satisfies its page-type schema (`## Definition`, `## How It Works`, `## Key Parameters`, `## When To Use`, `## Risks & Pitfalls`, `## Related Concepts`, `## Sources`).

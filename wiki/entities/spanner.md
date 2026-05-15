@@ -29,8 +29,8 @@ Google Spanner is a globally distributed, relational, strongly consistent databa
 ## Related Entities
 
 - [[entities/postgresql]]
-- [[entities/paxos]]
-- [[entities/raft]]
+- [[concepts/paxos]]
+- [[concepts/raft]]
 - [[entities/martin-kleppmann]]
 
 ## Sources

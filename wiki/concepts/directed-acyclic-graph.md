@@ -34,7 +34,7 @@ DAGs are produced whenever a precedence or causal relationship exists without fe
 
 ## Related Concepts
 
-- [[concepts/topological-sorting]]
+- [[concepts/topological-sort]]
 - [[concepts/graph-theory]]
 - [[concepts/finite-state-machine]]
 - [[concepts/timing-graph]]

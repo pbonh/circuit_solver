@@ -30,7 +30,7 @@ NScale (Quamar, Deshpande, Lin, VLDB Journal 2016) is a neighborhood-centric lar
 
 - [[entities/arabesque]]
 - [[entities/g-thinker]]
-- [[entities/mapreduce]]
+- [[concepts/mapreduce]]
 
 ## Sources
 

@@ -38,7 +38,7 @@ A stack (or recursion) holds the current path. At each step, the algorithm advan
 ## Related Concepts
 
 - [[concepts/breadth-first-search]]
-- [[concepts/topological-sorting]]
+- [[concepts/topological-sort]]
 - [[concepts/graph-theory]]
 
 ## Sources

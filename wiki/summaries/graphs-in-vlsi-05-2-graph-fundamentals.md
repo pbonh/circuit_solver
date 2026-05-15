@@ -39,7 +39,7 @@ confidence: high
 - [[concepts/bellman-ford-algorithm]] — negative-weight shortest path and negative-cycle detection.
 - [[concepts/a-star-algorithm]] — heuristic-guided shortest path, used in VLSI grid routing.
 - [[concepts/graph-coloring]] — chromatic number, four color theorem.
-- [[concepts/topological-sorting]] — Kahn's and DFS algorithms for DAG ordering.
+- [[concepts/topological-sort]] — Kahn's and DFS algorithms for DAG ordering.
 - [[concepts/bipartite-graph]] — characterized by absence of odd cycles.
 - [[concepts/tree-graph]] — connected acyclic simple graph.
 

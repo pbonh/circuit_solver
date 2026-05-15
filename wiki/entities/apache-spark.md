@@ -27,7 +27,7 @@ Apache Spark (Zaharia et al., NSDI 2012) is a general-purpose distributed datafl
 
 ## Related Entities
 
-- [[entities/mapreduce]]
+- [[concepts/mapreduce]]
 - [[entities/hdfs]]
 - [[entities/graphx]]
 - [[entities/systemml]]

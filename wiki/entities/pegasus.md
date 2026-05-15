@@ -28,7 +28,7 @@ PEGASUS (Kang, Tsourakakis, Faloutsos, ICDM 2009; KAIS 2011) is a peta-scale gra
 
 ## Related Entities
 
-- [[entities/mapreduce]]
+- [[concepts/mapreduce]]
 - [[entities/gbase]]
 - [[entities/systemml]]
 

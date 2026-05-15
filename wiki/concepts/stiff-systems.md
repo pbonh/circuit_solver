@@ -38,7 +38,7 @@ A-stable or stiffly-stable implicit methods (backward Euler, trapezoidal, BDF/Ge
 ## Related Concepts
 
 - [[concepts/a-stability]]
-- [[concepts/backward-euler-method]]
+- [[concepts/backward-euler]]
 - [[concepts/linear-multistep-methods]]
 
 ## Sources

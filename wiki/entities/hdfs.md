@@ -30,7 +30,7 @@ HDFS is the distributed file system of the Apache Hadoop ecosystem. It abstracts
 
 - [[entities/biggraph-cuhk]]
 - [[entities/apache-giraph]]
-- [[entities/mapreduce]]
+- [[concepts/mapreduce]]
 
 ## Sources
 

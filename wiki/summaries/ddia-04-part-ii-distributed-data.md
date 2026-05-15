@@ -80,8 +80,8 @@ confidence: high
 - [[entities/mongodb]] — Already created; single-leader replication.
 - [[entities/apache-kafka]] — Already created; uses ZooKeeper for coordination.
 - [[entities/voltdb]] — In-memory serial-execution database.
-- [[entities/raft]] — Understandable consensus algorithm (Ongaro & Ousterhout).
-- [[entities/paxos]] — Lamport's classic consensus algorithm and family.
+- [[concepts/raft]] — Understandable consensus algorithm (Ongaro & Ousterhout).
+- [[concepts/paxos]] — Lamport's classic consensus algorithm and family.
 
 ## Source Metadata
 

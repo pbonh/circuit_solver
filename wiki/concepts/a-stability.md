@@ -35,7 +35,7 @@ A-stability is the strongest practical stability requirement. The Dahlquist barr
 
 ## Related Concepts
 
-- [[concepts/backward-euler-method]]
+- [[concepts/backward-euler]]
 - [[concepts/trapezoidal-rule]]
 - [[concepts/stiff-systems]]
 - [[concepts/linear-multistep-methods]]

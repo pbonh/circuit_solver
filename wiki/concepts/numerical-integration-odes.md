@@ -42,8 +42,8 @@ For stiff circuit simulation, implicit LMS methods (especially Gear/BDF) are uni
 ## Related Concepts
 
 - [[concepts/linear-multistep-methods]]
-- [[concepts/forward-euler-method]]
-- [[concepts/backward-euler-method]]
+- [[concepts/forward-euler]]
+- [[concepts/backward-euler]]
 - [[concepts/trapezoidal-rule]]
 - [[concepts/a-stability]]
 - [[concepts/stiff-systems]]

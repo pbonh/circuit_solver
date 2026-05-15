@@ -7,7 +7,7 @@ type: presentation
 tags: [presentation, meta]
 created: 2026-04-08
 updated: 2026-04-08
-sources: ["wiki/index.md"]
+sources: ["index.md"]
 confidence: high
 ---
 
@@ -43,4 +43,4 @@ A minimal [Marp](https://marp.app) deck demonstrating the format the Presentatio
 
 ## References
 
-- [[wiki/index.md]]
+- [[index]]

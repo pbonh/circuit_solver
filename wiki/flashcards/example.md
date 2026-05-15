@@ -4,7 +4,7 @@ type: flashcards
 tags: [flashcards, meta]
 created: 2026-04-08
 updated: 2026-04-08
-sources: ["wiki/index.md"]
+sources: ["index.md"]
 confidence: high
 ---
 
@@ -16,7 +16,7 @@ Each card is separated from the next by a blank line. The `?`/`??` lives on its 
 
 ## Source
 
-[[wiki/index.md]]
+[[index]]
 
 ## Cards
 

@@ -30,7 +30,7 @@ GBASE (Kang et al., SIGKDD 2011; VLDB Journal 2012) is a MapReduce-based big-gra
 
 - [[entities/pegasus]]
 - [[entities/systemml]]
-- [[entities/mapreduce]]
+- [[concepts/mapreduce]]
 
 ## Sources
 

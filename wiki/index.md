@@ -10,8 +10,8 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 
 ## Statistics
 
-- Concepts: 1152
-- Entities: 183
+- Concepts: 1149
+- Entities: 180
 - Summaries: 207
 - Syntheses: 0
 
@@ -83,8 +83,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/backward-and-forward-compatibility|Backward and Forward Compatibility]] | well-established, distributed-systems, encoding | high | 2026-05-15 |
 | [[concepts/backward-error-analysis-manifolds|Backward Error Analysis on Manifolds]] | ode, numerical-integration, foundational | low | 2026-05-15 |
 | [[concepts/backward-error-analysis|Backward Error Analysis]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/backward-euler-method|Backward Euler Method]] | transient, numerical-integration, foundational | high | 2026-05-15 |
-| [[concepts/backward-euler|Backward Euler]] | analog, transient, foundational | high | 2026-05-15 |
+| [[concepts/backward-euler|Backward Euler]] | analog, transient, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/bakers-method|Baker's Method]] | graph, algorithm, foundational | high | 2026-05-15 |
 | [[concepts/balanced-truncation|Balanced Truncation (TBR / PMTBR)]] | mor, interconnect, ac | medium | 2026-05-15 |
 | [[concepts/bandgap|Bandgap]] | semiconductor, device-physics, band-structure | high | 2026-05-15 |
@@ -411,8 +410,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/fn-traits|Fn Traits]] | rust, foundational, traits | high | 2026-05-15 |
 | [[concepts/forest|Forest]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/forward-back-substitution|Forward and Back Substitution]] | foundational, numerical, well-established | high | 2026-05-15 |
-| [[concepts/forward-euler-method|Forward Euler Method]] | transient, numerical-integration, foundational | high | 2026-05-15 |
-| [[concepts/forward-euler|Forward Euler]] | analog, transient, foundational | high | 2026-05-15 |
+| [[concepts/forward-euler|Forward Euler]] | analog, transient, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/fourier-analysis|Fourier Analysis]] | analog, transient, foundational | high | 2026-05-15 |
 | [[concepts/fowler-nordheim-tunneling|Fowler-Nordheim Tunneling]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
 | [[concepts/fractionated-satellite-systems|Fractionated Satellite Systems]] | simulation, modeling, applications | medium | 2026-05-15 |
@@ -603,7 +601,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/macros|Macros]] | rust, macros, advanced | high | 2026-05-15 |
 | [[concepts/maintainability|Maintainability]] | distributed-systems, foundational, well-established | high | 2026-05-15 |
 | [[concepts/manifold-differential-equation|Manifold Differential Equation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/mapreduce|MapReduce]] | batch, distributed-systems, well-established | medium | 2026-05-15 |
+| [[concepts/mapreduce|MapReduce]] | batch, distributed-systems, big-data, batch-processing, foundational | high | 2026-05-15 |
 | [[concepts/markov-matrix-model|Markov Matrix Model]] | simulation, modeling, markov | medium | 2026-05-15 |
 | [[concepts/masked-array|Masked Array (NumPy)]] | python, numpy, well-established | medium | 2026-05-15 |
 | [[concepts/master-ses|Master SES]] | simulation, modeling, ses | medium | 2026-05-15 |
@@ -761,7 +759,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/path|Path]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/pathological-element|Pathological Element]] | analog, foundational, behavioral | medium | 2026-05-15 |
 | [[concepts/pattern-matching|Pattern Matching]] | rust, foundational, well-established | high | 2026-05-15 |
-| [[concepts/paxos|Paxos]] | distributed-systems, consensus, advanced | medium | 2026-05-15 |
+| [[concepts/paxos|Paxos]] | distributed-systems, consensus, algorithm, advanced, foundational | high | 2026-05-15 |
 | [[concepts/peano-kernel|Peano Kernel]] | ode, numerical-integration, foundational | low | 2026-05-15 |
 | [[concepts/peer-message-exchange|Peer Message Exchange (DEVS)]] | simulation, modeling, devs | medium | 2026-05-15 |
 | [[concepts/pendulum-equation|Pendulum Equation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
@@ -835,7 +833,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/radau-ia-method|Radau IA Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
 | [[concepts/radau-iia-method|Radau IIA Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
 | [[concepts/radiative-recombination|Radiative Recombination]] | semiconductor, device-physics, photonic | medium | 2026-05-15 |
-| [[concepts/raft|Raft]] | distributed-systems, consensus, well-established | high | 2026-05-15 |
+| [[concepts/raft|Raft]] | distributed-systems, consensus, algorithm, well-established | high | 2026-05-15 |
 | [[concepts/raii|Raii]] | speculative, foundational | low | 2026-05-15 |
 | [[concepts/random-walk|Random Walk]] | algorithm, stochastic, graph | medium | 2026-05-15 |
 | [[concepts/rankwidth|Rankwidth]] | graph, foundational, well-established | high | 2026-05-15 |
@@ -1089,7 +1087,6 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/topological-minor|Topological Minor]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/topological-nodal-formulation|Topological Nodal Formulation]] | foundational, graph, analog | high | 2026-05-15 |
 | [[concepts/topological-sort|Topological Sort]] | graph, algorithm, foundational | high | 2026-05-15 |
-| [[concepts/topological-sorting|Topological Sorting]] | graph, algorithm, foundational | high | 2026-05-15 |
 | [[concepts/total-order-broadcast|Total Order Broadcast]] | distributed-systems, well-established, consensus | high | 2026-05-15 |
 | [[concepts/tournament|Tournament]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/trait-bounds|Trait Bounds]] | rust, foundational, generics | high | 2026-05-15 |
@@ -1266,7 +1263,6 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[entities/linda-petzold|Linda Petzold]] | ode, numerical-integration, foundational | 2026-05-15 |
 | [[entities/lsode|LSODE]] | ode, numerical-integration, foundational | 2026-05-15 |
 | [[entities/maiter|Maiter]] | graph, distributed-systems, big-data | 2026-05-15 |
-| [[entities/mapreduce|MapReduce]] | distributed-systems, big-data, batch-processing | 2026-05-15 |
 | [[entities/martin-kleppmann|Martin Kleppmann]] | well-established, biography, distributed-systems | 2026-05-15 |
 | [[entities/matplotlib|Matplotlib]] | python, visualization, foundational | 2026-05-15 |
 | [[entities/mongodb|MongoDB]] | well-established, nosql, document-database | 2026-05-15 |
@@ -1286,7 +1282,6 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[entities/opencl|Opencl]] | speculative | 2026-05-15 |
 | [[entities/oreilly-media|O'Reilly Media]] | publisher, technical-publishing | 2026-05-15 |
 | [[entities/pandas|Pandas]] | python, pandas, dataframe | 2026-05-15 |
-| [[entities/paxos|Paxos Consensus Algorithm]] | well-established, distributed-systems, consensus | 2026-05-15 |
 | [[entities/pegasus|PEGASUS]] | graph, big-data, sparse-matrix | 2026-05-15 |
 | [[entities/peter-deuflhard|Peter Deuflhard]] | ode, numerical-integration, foundational | 2026-05-15 |
 | [[entities/phem56|PHEM56]] | ode, numerical-integration, foundational | 2026-05-15 |
@@ -1306,7 +1301,6 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[entities/r-language|R Language]] | r, statistics, data-analysis | 2026-05-15 |
 | [[entities/rabbitmq|RabbitMQ]] | messaging, broker, open-source | 2026-05-15 |
 | [[entities/radau5|RADAU5]] | ode, numerical-integration, foundational | 2026-05-15 |
-| [[entities/raft|Raft Consensus Algorithm]] | well-established, distributed-systems, consensus | 2026-05-15 |
 | [[entities/redis|Redis]] | database, key-value, in-memory | 2026-05-15 |
 | [[entities/requests-library|Python `requests` Library]] | python, well-established | 2026-05-15 |
 | [[entities/rkc|RKC]] | ode, numerical-integration, foundational | 2026-05-15 |
@@ -1581,12 +1575,14 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 
 | Page | Source | Cards | Updated |
 |------|--------|-------|---------|
+| [[flashcards/example|Example Flashcards]] | [[index]] | 3 | 2026-04-08 |
 | <!-- entries added by /wiki-flashcards --> | | | |
 
 ## Presentations
 
 | Page | Topic | Pages Cited | Updated |
 |------|-------|-------------|---------|
+| [[presentations/example|Example Presentation]] | Marp deck format | 1 | 2026-04-08 |
 | <!-- entries added by /wiki-present --> | | | |
 
 ## Specs
