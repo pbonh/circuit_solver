@@ -5,12 +5,12 @@ tags: [superconductive, vlsi, interconnect, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-A passive transmission line (PTL) in RSFQ technology is a superconducting microstrip or stripline used to propagate single flux quantum (SFQ) pulses between circuit elements. PTLs require impedance-matched drivers and receivers at both ends.
+GraphsInVLSI Chapter 11: one of two RSFQ interconnect types — "a *passive transmission line* (PTL) requiring a driver, receiver, and impedance matching [589, 590]". Used to propagate single flux quantum (SFQ) pulses between RSFQ gates. The chapter contrasts PTL with the active [[concepts/josephson-transmission-line]] (JTL), which uses biased Josephson junctions instead of impedance-matched drivers/receivers.
 
 ## How It Works
 

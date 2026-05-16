@@ -5,12 +5,12 @@ tags: [statistics, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/PythonDataAnalystsToolkit/_txt/07-chapter-3-regular-expressions-and-math-with-python.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Set theory studies collections of distinct elements and operations on them — union, intersection, difference, and complement — typically visualized with Venn diagrams. The chapter uses SymPy's `FiniteSet` to compute set operations and basic probabilities.
+Chapter 3 of "Python Data Analyst's Toolkit" introduces set theory as a SymPy application area alongside "algebra, calculus, probability". The book's treatment uses SymPy's `FiniteSet` to compute set operations and basic probabilities. Set theory itself studies collections of distinct elements and operations on them — union, intersection, difference, and complement — typically visualized with Venn diagrams. The book scope is narrow; the content below extends to standard set-theory vocabulary.
 
 ## How It Works
 

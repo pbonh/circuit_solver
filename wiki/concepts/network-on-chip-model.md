@@ -5,12 +5,12 @@ tags: [simulation, modeling, network-on-chip, verification, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/ModelingAndSimulationOfSystems/_txt/20-16-model-development-and-execution-process-with-repositories-validation-and-verification.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-A Network-on-Chip (NoC) Model represents the communication fabric of a multi-processor system on chip as a set of processing nodes, links, and switches that route packets (flits) between them. In the SOC-DEVS verification context (Gholami and Sarjoughian 2017), NoC models exemplify how data exclusion can shrink the state space for model checking.
+Chapter 16 Sect. 16.5.3-16.5.5 uses the NoC as the canonical example of how data-exclusion shrinks the verification state space: "An example is Network-on-Chip (NoC) model (Gholami and Sarjoughian 2017). In this kind of system, data (called flits) is communicated among processing nodes, links, and switches, but not processed. This kind of data can be excluded which results in lowering the state space size which is a key factor for model verification. For NoC model verification, source and destination nodes (i.e., processing elements and switches) are used to define state space. Inclusion of data can result in unbounded state space (i.e., models can be validated, but verified if appropriately constrained)." Properties of interest include "total delay of flits or the distribution of flit traffic" verifiable via the DEVS-Suite simulator.
 
 ## How It Works
 

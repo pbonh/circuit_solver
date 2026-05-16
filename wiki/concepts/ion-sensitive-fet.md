@@ -5,12 +5,12 @@ tags: [semiconductor, device-physics, mosfet, sensor, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/19-chapter-14-sensors.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-An ion-sensitive field-effect transistor is a MOSFET in which the metal gate electrode is replaced by an electrolyte solution contacted by a reference electrode, with an ion-selective membrane (e.g., Si3N4, Ta2O5, glass, or polymer) on top of the gate insulator. Charge accumulation at the membrane-electrolyte interface shifts the threshold voltage, providing a continuous electrochemical-to-electrical transduction.
+Sze & Ng (Sect. 14.5.2): "The ion-sensitive field-effect transistor (ISFET) is one of the most common of the chemically sensitive field-effect transistors. The ISFET was proposed and demonstrated by Bergveld in 1970 [reference 11-12]. Since the inclusion of a reference electrode in contact with the electrolyte was reported in 1974, such an electrode has been considered to be an integral part of an ISFET." The electrolyte plus reference electrode "becomes the gate of a MOSFET (Fig. 23), replacing the conventional poly-Si gate." Reference electrode is typically Ag-AgCl. Examples of ion-selective dielectric layers listed in the book: Si₃N₄, Al₂O₃, TiO₂, Ta₂O₅. Typical channel dimensions: tens to hundreds of microns.
 
 ## How It Works
 

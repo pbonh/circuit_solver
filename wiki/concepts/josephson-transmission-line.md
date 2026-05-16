@@ -5,12 +5,12 @@ tags: [superconductive, vlsi, interconnect, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-A Josephson transmission line (JTL) is an active superconductive interconnect built from a chain of Josephson junctions, each biased with a DC current and connected by superconducting inductors. JTLs propagate SFQ pulses with controllable delay and amplification.
+GraphsInVLSI Chapter 11 distinguishes the JTL from the passive transmission line as the two RSFQ interconnect choices: "RSFQ interconnect is either a passive transmission line (PTL) requiring a driver, receiver, and impedance matching [589, 590], or an *active Josephson transmission line* (JTL) requiring bias current for each Josephson junction." Built from a chain of Josephson junctions each biased with a DC current and connected by superconducting inductors, a JTL regenerates an SFQ pulse at every stage.
 
 ## How It Works
 

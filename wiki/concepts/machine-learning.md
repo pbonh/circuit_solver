@@ -8,9 +8,11 @@ sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/01-about-the-author.txt"
 confidence: low
 ---
 
+> Cited source is a one-page author bio: "Recently, he received an interdisciplinary research grant of 199,000 to implement a machine learning system for mining students' knowledge and skills." No substantive treatment in the source. Content below is general knowledge.
+
 ## Definition
 
-Machine learning is the discipline of building computational systems that learn patterns from data to make predictions or decisions without explicit rules. It is mentioned as an area in which the author has received research funding for mining student knowledge.
+Machine learning is the discipline of building computational systems that learn patterns from data to make predictions or decisions without explicit rules.
 
 ## How It Works
 

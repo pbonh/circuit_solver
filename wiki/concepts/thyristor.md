@@ -4,17 +4,17 @@ type: concept
 tags: [semiconductor, device-physics, power-device, well-established]
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt"]
-confidence: low
+sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt", "raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/15-chapter-11-thyristors-and-power-devices.txt"]
+confidence: medium
 ---
 
 ## Definition
 
-A thyristor is a four-layer p-n-p-n semiconductor device that exhibits a bistable on/off characteristic. It can be triggered into a low-impedance conducting state by a brief gate current pulse and stays on until the main current drops below a holding value. Variants include the silicon-controlled rectifier (SCR), gate turn-off thyristor (GTO), MOS-controlled thyristor (MCT), and triac.
+Per Sze & Ng (Sect. 11.2): "The name *thyristor* applies to a general family of semiconductor devices that exhibit bistable characteristics and can be switched between a high-impedance, low-current off-state and a low-impedance, high-current on-state. Also, the operations of thyristors are intimately related to the bipolar-transistor action in which both electrons and holes interact with each other in the transport processes." The basic thyristor (Fig. 1a of the chapter) is a four-layer p-n-p-n device with three series p-n junctions J1, J2, J3; the n1-layer ("n-base") is much wider and lowest-doped to sustain high breakdown voltage. Anode contacts the outer p-layer; cathode the outer n-layer; the gate (also called the "base") is connected to the inner p-base. Without the gate the two-terminal device is the **Shockley diode**.
 
 ## How It Works
 
-The p-n-p-n structure is equivalent to two cross-coupled BJTs (pnp + npn). When the loop gain alpha_pnp + alpha_npn approaches 1, regenerative feedback latches the device on. Re-blocking requires the main current to fall below the holding current (for SCR) or active forced commutation (for GTO/MCT).
+The historical analysis (Moll et al. 1956; control terminal added 1958 by Mackintosh and Aldrich-Holonyak) uses the two-transistor analogue: the p-n-p-n stack is equivalent to a cross-coupled p-n-p plus n-p-n pair. When the loop gain `α_pnp + α_npn` approaches 1, regenerative feedback latches the device on (region 1→2 of Fig. 2 in Sze Sect. 11.2: forward breakover from off-state). Re-blocking requires the main current to fall below the holding current (SCR/Shockley diode) or active forced commutation / MOS turn-off (GTO/MCT).
 
 ## Key Parameters
 

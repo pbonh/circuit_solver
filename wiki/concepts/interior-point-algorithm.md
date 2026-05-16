@@ -5,8 +5,10 @@ tags: [algorithm, optimization, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt"]
-confidence: low
+confidence: medium
 ---
+
+> GraphsInVLSI Chapter 9 uses interior-point as the workhorse continuous optimizer: "The Interior Point Algorithm, part of MATLAB Optimization Toolbox [557] and HSPICE [540], is used in this case study. The optimization functions, circuit parameters, and external parameters are inputs to the optimization algorithm. The optimization procedure has been run on an Intel Core i7-6700 3.40 GHz 8-core computer using different initial conditions to avoid any local minima."
 
 ## Definition
 

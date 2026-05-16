@@ -5,8 +5,10 @@ tags: [vlsi, graph, digital, well-established, architecture]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/GraphsInVLSI/_txt/04-1-introduction.txt"]
-confidence: low
+confidence: medium
 ---
+
+> GraphsInVLSI Chapter 1 mentions networks-on-chip only as one of several graph-driven VLSI subdomains: "Applications of graph theory to the design of VLSI circuits and systems are the [topic of this book]" with applications including "three-dimensional integration [67], hardware security [68, 69], circuit analysis [70–72], and networks-on-chip (NoC) [73, 74]." The book is not a NoC reference; the content below summarizes the standard NoC engineering vocabulary consistent with the cited references.
 
 ## Definition
 

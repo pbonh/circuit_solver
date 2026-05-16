@@ -5,12 +5,12 @@ tags: [vlsi, routing, algorithm, novel, optimization]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Subgraph reheating is a simulated-annealing-inspired technique within SPROUT that temporarily expands the subgraph beyond its area constraint (dilation) and then prunes back (erosion) to escape local minima of the impedance-minimization landscape.
+Per GraphsInVLSI Sect. 10.1.6: "The graph-based power routing problem can be viewed as an optimization problem, `Minimize : R(n_s, n) s.t. : A(n) ≤ A_max` (Eq. 10.5) ... These algorithms are, therefore, a form of local optimization where the result is not guaranteed to be a global minimum. To mitigate this issue, the subgraph reheating technique is presented in this section, inspired by the simulated annealing algorithm [577] where the objective function can temporarily increase to explore the design space." The chapter introduces this as a SPROUT-specific escape from local minima of the impedance-minimization landscape.
 
 ## How It Works
 

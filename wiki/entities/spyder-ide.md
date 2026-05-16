@@ -5,12 +5,12 @@ tags: [python, ide, tool, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/03-introduction.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Overview
 
-Spyder is a scientific Python integrated development environment introduced in the book as an alternative editor to Jupyter Notebooks for data-science work. It bundles a code editor, console, debugger, and variable explorer aimed at numerical and data workflows.
+Per the introduction of "Data Analysis and Visualizations with Python": "the book then covers the Python environment and gets you acquainted with editors like Jupyter Notebooks and the Spyder IDE. After going through a primer on Python programming, you will grasp the fundamental Python programming techniques used in data science." Spyder is a scientific Python IDE bundling a code editor, IPython console, debugger, and variable explorer aimed at numerical and data workflows; it is presented in the book as a peer to Jupyter Notebooks.
 
 ## Characteristics
 

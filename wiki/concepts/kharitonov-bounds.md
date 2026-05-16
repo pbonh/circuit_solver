@@ -5,8 +5,10 @@ tags: [control-theory, robust, foundational, analog]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/16-11-performance-bound-analysis-of-analog-circuits-considering-process-variations.txt"]
-confidence: low
+confidence: medium
 ---
+
+> Advanced Symbolic Analysis for VLSI Systems Chapter 11 ("Performance Bound Analysis of Analog Circuits Considering Process Variations") cites Kharitonov in the context of worst-case frequency-domain analysis: "Recently, worst-case analysis of linearized analog circuits in frequency domain has been proposed [158], where Kharitonov's functions [93] were applied to obtain the performance bounds in frequency domain, but no systematic method was proposed to obtain variational transfer functions. This was later improved by [78], where symbolic analysis approach was applied to derive exact transfer functions and affine interval method was used to compute variational transfer functions. However, the affine interval method can lead to over-conservative results."
 
 ## Definition
 

@@ -8,9 +8,11 @@ sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/01-about-the-author.txt"
 confidence: low
 ---
 
+> The cited source is the one-page author bio of "Data Analysis and Visualizations with Python", listing "data mining" only as one of the author's research and editorial areas: "He is editor for journals in the fields of computer and information science including artificial intelligence, data mining, machine learning, mobile and web technologies. He supervised a large number of graduation projects, as well as he has published numerous papers about data mining, users online privacy, semantic web structure and knowledge discovery." No substantive treatment in the source — content below is general knowledge.
+
 ## Definition
 
-Data mining is the process of discovering patterns, anomalies, and relationships within large datasets using methods from statistics, machine learning, and database systems. It is one of the author's major research and publication areas.
+Data mining is the process of discovering patterns, anomalies, and relationships within large datasets using methods from statistics, machine learning, and database systems.
 
 ## How It Works
 

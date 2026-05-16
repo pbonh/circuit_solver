@@ -8,9 +8,11 @@ sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/02-about-the-technical-r
 confidence: low
 ---
 
+> Source is a one-page reviewer bio listing "data analytics, modeling, and simulation applied to semiconductor materials and devices" as the reviewer's research area. No substantive treatment of simulation appears in this source. The page below is general knowledge; for the deeper treatment in this knowledge base see [[concepts/devs-simulation-protocol]] and the Hairer-Wanner-derived [[entities/radau5]] etc.
+
 ## Definition
 
-Simulation is the use of mathematical models executed on a computer to imitate the behavior of a physical or abstract system over time. The technical reviewer's expertise spans simulation applied to semiconductor materials, devices, control systems, and image processing.
+Simulation is the use of mathematical models executed on a computer to imitate the behavior of a physical or abstract system over time.
 
 ## How It Works
 

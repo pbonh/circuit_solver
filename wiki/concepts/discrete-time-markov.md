@@ -5,16 +5,16 @@ tags: [simulation, modeling, markov, stochastic, devs, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/ModelingAndSimulationOfSystems/_txt/23-19-devs-support-for-markov-modeling-and-simulation.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-A Discrete-Time Markov (DTM) model is a discrete-time-step approximation of a Continuous Time Markov model in which events occur at fixed time intervals rather than at exponentially distributed times. It is implemented in MS4 Me via Finite Probability DEVS.
+Chapter 19 ("DEVS Support for Markov Modeling and Simulation"): three Markov classes — Continuous-Time Markov (CTM), Discrete-Time Markov (DTM), and Markov Matrix (MM) — "have been implemented in MS4 Me using the Finite Probability DEVS (FP-DEVS) capabilities". DTM is described directly: "the discrete-time version is parameterized by a time step (or cycle length in the common Markov terminology). As with the basic FP-DEVS convention presented in the MS4 Me Users Guide, transitions occur with a time advance equal to the time step and with specified probabilities, in this case, determined by the given rates and the time step."
 
 ## How It Works
 
-At each time step, the model samples its next state according to the transition probability vector for the current state. Compared to CTM, the DTM is less accurate (it discretizes time) but easier to reason about and to combine with deterministic discrete-time signal processing components.
+Per book: "For small enough time steps, the employed probabilities are given by the product of the corresponding CTM values and the time step. For larger time steps, a better approximation is given by employing probabilities equal to `1-exp(-h*p)` where h is the time step and p the corresponding CTM" rate. At each time step the model samples its next state according to that transition vector.
 
 ## Key Parameters
 

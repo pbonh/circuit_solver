@@ -5,12 +5,12 @@ tags: [statistics, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/PythonDataAnalystsToolkit/_txt/07-chapter-3-regular-expressions-and-math-with-python.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Calculus is the branch of mathematics concerned with continuous change, primarily through limits, derivatives, and integrals. The chapter introduces it as functions available via SymPy: `limit`, `diff`, and `integrate`.
+This page exists because Chapter 3 of "Python Data Analyst's Toolkit" introduces SymPy "for solving mathematical problems in algebra, calculus, probability, and set theory." The chapter's "Solving questions in calculus" subsection scopes the topic narrowly: "We will learn how to use SymPy to calculate the limiting value, derivate, and the definite and indefinite integral of a function." It links readers to https://docs.sympy.org/latest/tutorial/calculus.html for the broader Sympy treatment. The general calculus content below is consistent with that scope but is general-knowledge, not book material.
 
 ## How It Works
 

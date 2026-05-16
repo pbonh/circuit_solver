@@ -5,12 +5,12 @@ tags: [graph, graph-processing, single-machine, block-centric, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Overview
 
-GRACE (Xie et al., PVLDB 2013) is a single-machine in-memory block-centric graph processing system. Vertices are partitioned into blocks via METIS so that each block fits in the CPU last-level cache; all vertices in a block are processed together (often to convergence) before moving on to the next block, exploiting cache locality and limited memory bandwidth.
+Per Systems For Big Graph Analytics Chapter 5 (Part II / Think Like a Graph): "The block-centric model has also been applied in single-machine in-memory graph processing. For example, GRACE [4] partitions vertices into blocks by METIS, so that each block fits in the CPU cache. All vertices in a block are processed together (possibly until convergence) without cache miss, before processing another block. This block-centric solution improves cache locality and mitigates the problem of limited memory bandwidth. Unlike Giraph++ and Blogel, GRACE only requires a user to specify the vertex-centric computation logic, and the block-centric computation is treated as a proper scheduling of vertex-centric computation inside each block."
 
 ## Characteristics
 

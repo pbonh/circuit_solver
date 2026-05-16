@@ -1,5 +1,5 @@
 ---
-title: "Concept Name"
+title: "Concept Name (Template Placeholder)"
 type: concept
 tags: [speculative, foundational]
 created: 2026-05-15
@@ -8,30 +8,32 @@ sources: ["raw/_reconciled"]
 confidence: low
 ---
 
+> This page exists because the journal entry template ([[journal/template]]) contains a placeholder wiki-link `[[concepts/concept-name]]` to illustrate how journal entries should cite concept pages. It is not a real concept; do not link to it from real wiki content. The reconciliation pass created this stub so that the placeholder link in the template does not register as a dangling link in lint runs.
+
 ## Definition
 
-Stub page created during reconciliation because at least one wiki page links to `[[concepts/concept-name]]` but no concept page existed yet. Replace this section with a one-paragraph plain-English definition drawn from a citing source.
+Placeholder — not a real concept. The link `[[concepts/concept-name]]` in [[journal/template]] is illustrative only.
 
 ## How It Works
 
-To be expanded.
+n/a
 
 ## Key Parameters
 
-To be expanded.
+n/a
 
 ## When To Use
 
-To be expanded.
+n/a
 
 ## Risks & Pitfalls
 
-To be expanded.
+- Real journal entries should replace `[[concepts/concept-name]]` with a link to an actual concept page before being committed.
 
 ## Related Concepts
 
-(See citing pages for context.)
+- [[journal/template]] — the only page that legitimately references this stub.
 
 ## Sources
 
-- (cited only from non-summary pages — see citation list during reconciliation)
+- N/A (stub created during reconciliation to satisfy template wiki-link)

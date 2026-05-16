@@ -1,29 +1,34 @@
 ---
-title: "Opencl"
+title: "OpenCL"
 type: entity
-tags: [speculative]
+tags: [gpu, parallel, khronos, well-established]
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/_reconciled"]
-confidence: low
+sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt", "raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/bibliography.txt"]
+confidence: medium
 ---
 
 ## Overview
 
-Stub page created during reconciliation because at least one wiki page links to `[[entities/opencl]]` but no entity page existed yet. Replace this section with a brief overview.
+OpenCL ("Open Computing Language") is a Khronos Group open standard for parallel computing across heterogeneous platforms (CPUs, GPUs, FPGAs, DSPs). The "Advanced Symbolic Analysis for VLSI Systems" Chapter 12 lists OpenCL in its single-sentence enumeration of the major GPU programming environments: "[NVIDIA] Compute Unified Device Architecture (CUDA), Stream SDK, and OpenCL [7, 94, 143]". The book's bibliography entry 94: "Khronos Group, Open Computing Language (OpenCL), http://www.khronos.org/opencl."
 
 ## Characteristics
 
-To be expanded.
+- Khronos open standard (cross-vendor).
+- C-like kernel language compiled to device IR (SPIR-V in OpenCL 2.x and beyond).
+- Host-side API for context / queue / buffer / kernel management.
+- Targets CPUs, GPUs, FPGAs, and DSPs — wider hardware reach than CUDA.
 
 ## Common Strategies
 
-To be expanded.
+- Used when portability across GPU vendors and CPU fallback matters more than peak NVIDIA performance.
+- Counterpart to [[entities/nvidia-cuda]] for the symbolic-VLSI / Monte Carlo workloads of Sect. 12 of the cited book.
 
 ## Related Entities
 
-(See citing pages for context.)
+- [[entities/nvidia-cuda]] — NVIDIA-specific competitor.
+- Khronos Group — standards body.
 
 ## Sources
 
-- (cited only from non-summary pages — see citation list during reconciliation)
+- [[summaries/advanced-symbolic-analysis-for-vlsi-systems-17-12-statistical-parallel-monte-carlo-analysis-on-gpus]]

@@ -5,12 +5,12 @@ tags: [vlsi, digital, synchronization, well-established, architecture]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Globally Asynchronous, Locally Synchronous (GALS) is a clocking paradigm (introduced ca. 1984) in which an IC is partitioned into multiple synchronous islands, each driven by its own clock; communication between islands uses asynchronous handshaking protocols, avoiding the need for a single global clock.
+GraphsInVLSI Chapter 4 (Synchronization): "A less stringent, globally asynchronous, locally synchronous (GALS) clocking paradigm was introduced in 1984 [318]. By splitting an integrated circuit into separate clock regions, the delay from a clock source to each register is reduced, typically producing less clock skew. The transfer of data among the separate clock domains is established by an asynchronous communication protocol [319]." Later the chapter calls GALS "an effective method for controlling the size of a circuit ... By decomposing the circuits into separate clock domains, the permissible [clock-skew] range can be efficiently determined within each partition" [ref 339].
 
 ## How It Works
 

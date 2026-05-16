@@ -8,9 +8,11 @@ sources: ["raw/PythonDataAnalystsToolkit/_txt/02-about-the-technical-reviewer.tx
 confidence: low
 ---
 
+> The cited source is a one-page technical-reviewer bio listing predictive modeling only as one of his career activities: "He's had a career covering the life cycle of data ... data warehousing, Business Intelligence (BI), analytical tool development, ad hoc analysis, predictive modeling, data science product development...". No substantive treatment of predictive modeling appears in the source.
+
 ## Definition
 
-Predictive modeling is the use of statistical or machine learning models to forecast outcomes for new data based on patterns learned from historical data. It is listed as one of the technical reviewer's core activities.
+Predictive modeling is the use of statistical or machine learning models to forecast outcomes for new data based on patterns learned from historical data.
 
 ## How It Works
 

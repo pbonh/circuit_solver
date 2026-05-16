@@ -5,12 +5,12 @@ tags: [semiconductor, device-physics, materials, contact, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/07-chapter-3-metal-semiconductor-contacts.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Overview
 
-Silicides are intermetallic compounds of silicon with a metal (e.g., TiSi2, NiSi, CoSi2, PtSi, WSi2). They are formed by reaction between a deposited metal film and the underlying silicon during a thermal anneal. Silicides provide the low-resistance, thermally stable, and CMOS-compatible contacts used at MOSFET source, drain, and gate terminals and BJT emitter, base, and collector contacts.
+Silicides are intermetallic compounds of silicon with a metal (e.g., TiSi₂, NiSi, CoSi₂, PtSi, WSi₂). Per Sze & Ng (Sect. 3.2.3): "a technology for making controllable Schottky barrier contacts has been developed in which a chemical reaction between the metal and the underlying silicon is induced to form silicides. The formation of metal silicides by solid-solid metallurgical reaction provides more reliable and reproducible Schottky barriers, because the interface chemical reactions are well defined and can be maintained under good control." Sze's Fig. 9 shows the empirical correlation between barrier height on n-Si and silicide eutectic temperature. Table 4 lists `φ_Bn` for representative silicides on n-type Si — e.g., CoSi (0.68 V, cubic, forming temp 400°C, melting 1460°C); CoSi₂ (0.64 V, cubic, forming 450°C, melting 1326°C); CrSi₂ (0.57 V, hexagonal, forming 450°C, melting 1475°C); rare-earth disilicides (DySi₂ 0.37 V, ErSi₂ 0.39 V, GdSi₂ 0.37 V).
 
 ## Characteristics
 

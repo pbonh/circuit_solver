@@ -5,12 +5,12 @@ tags: [vlsi, routing, algorithm, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Multilayer routing synthesizes wire connections across multiple physical layers of an IC or PCB, exploiting via transitions to circumvent layer congestion. In SPROUT's context, when single-layer available space is disjoint, multilayer routing decomposes the problem into per-layer routing problems linked by vias.
+GraphsInVLSI Chapter 10 routes the power network across the board's metal layers and treats single-layer routing as a special case. From Sect. 10.1: "After [polygon] removal, the available space on each layer may become disjoint, leaving no valid path between terminals on the same layer ... In this case, routing is accomplished using multiple layers." A "modification of SPROUT to support multilayer routing is presented in the Appendix C" of the book.
 
 ## How It Works
 

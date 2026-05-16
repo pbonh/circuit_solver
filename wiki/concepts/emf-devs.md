@@ -5,12 +5,12 @@ tags: [simulation, modeling, devs, emf, eclipse, emerging]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/ModelingAndSimulationOfSystems/_txt/15-12-languages-for-constructing-devs-models.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-EMF-DEVS is a meta-level Parallel DEVS modeling environment built on the Eclipse Modeling Framework (EMF). It supports meta-level atomic and coupled DEVS model specifications and lets domain modelers add structural constraints on top of the predefined generic atomic and coupled meta-models.
+Per Chapter 12: "DEVS simulation model development can also be defined using meta-modeling. The Eclipse Modeling Framework (EMF) is a meta-level modeling environment (Steinberg et al. 2008). It is used to introduce EMF-DEVS approach (Sarjoughian and Markid 2012). EMF-DEVS modeling environment supports meta-level atomic and coupled DEVS model specifications defined in terms of the Parallel DEVS formalism. It can be used to develop domain-specific models. A key advantage of the EMF-DEVS is adding constraints for user-defined models atop pre-defined ones for the generic atomic and coupled EMF-DEVS models. These constraints can help automate validation of structural properties of atomic and coupled model before generation of concrete simulation models for a target tool such as the DEVS-Suite simulator."
 
 ## How It Works
 

@@ -5,12 +5,12 @@ tags: [semiconductor, device-physics, mosfet, process, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-A polysilicon (poly-Si) gate is a MOSFET gate electrode made of heavily doped polycrystalline silicon. Introduced in the 1970s, it replaced aluminum gates and enabled the self-aligned source/drain process that defined modern CMOS until metal-gate / high-k stacks displaced it at the 45/32 nm nodes.
+A polysilicon (poly-Si) gate is a MOSFET gate electrode made of polycrystalline silicon. Sze & Ng (Sect. 6.5.2 "Gate Stack") name the three properties that made it the workhorse gate material for decades: "compatibility with the silicon processing", the "ability to withstand high-temperature anneal that is required after self-aligned source/drain implantation", and the fact that "the work function can be varied by doping it into n-type and p-type. Such flexibility is crucial for a symmetric CMOS technology."
 
 ## How It Works
 
@@ -29,8 +29,9 @@ Polysilicon is deposited by LPCVD over the gate oxide and patterned by lithograp
 
 ## Risks & Pitfalls
 
-- Polysilicon-gate depletion adds ~3-5 A to effective oxide thickness.
-- Boron penetration through gate oxide for p+ poly in pMOS limits aggressive thinning of SiO2 without nitridation.
+- Two limitations enumerated by Sze (Sect. 6.5.2): (1) "relatively high resistance" — does not penalise DC characteristics because the gate terminates on the gate insulator, but the penalty "shows up in high-frequency parameters such as noise and f_max"; (2) "finite depletion width at the oxide interface ... reduces the effective gate capacitance and becomes more severe with thinner oxides".
+- To circumvent both, Sze names "silicides and metals" as obvious replacement gate materials, with "potential candidates ... TiN, TaN, W, Mo, and NiSi".
+- Boron penetration through gate oxide for p+ poly in pMOS limits aggressive thinning of SiO₂ without nitridation.
 
 ## Related Concepts
 

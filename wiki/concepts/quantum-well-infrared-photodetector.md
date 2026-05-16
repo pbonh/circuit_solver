@@ -5,16 +5,16 @@ tags: [semiconductor, device-physics, photonic, heterojunction, advanced, well-e
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/18-chapter-13-photodetectors-and-solar-cells.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-A QWIP is a semiconductor infrared photodetector based on intersubband absorption inside multiple quantum wells. Absorbed long-wave-infrared photons excite confined electrons from a bound subband to an extended or higher-bound state, from which they can be swept out by an applied bias as photocurrent.
+Per Sze & Ng (Sect. 13.8): the first functional QWIP "based on bound-to-bound intersubband transition in a GaAs/AlGaAs heterostructure, was realized by Levine et al. and Choi et al. in 1987. The same group also presented improved detector results on bound-to-continuum transition in 1988. Another type of transition, bound-to-miniband had been observed in 1991." Absorbed long-wave-infrared photons excite confined electrons from a bound subband to an extended or higher-bound state, from which they can be swept out by an applied bias as photocurrent.
 
 ## How It Works
 
-A periodic GaAs/AlGaAs (or InGaAs/InP) multiple-quantum-well stack is designed so that the subband spacing matches the desired wavelength (typically 8-12 um for thermal imaging). Selection rules forbid normal-incidence absorption; QWIP arrays use diffraction gratings or random scatterers on top to provide a vertical component of the optical electric field.
+A periodic GaAs/AlGaAs (or InGaAs/InP) multiple-quantum-well stack is designed so that the subband spacing matches the desired wavelength (typically 8-12 µm for thermal imaging). Per Sze Fig. 37 the GaAs quantum-well layers are "about 5 nm and are usually doped to n-type in the 10¹⁷ cm⁻³ range. The barrier layers are undoped and have a thickness in the range of 30-50 nm." Selection rules forbid normal-incidence absorption; Sze illustrates the two standard coupling solutions (Fig. 37a/b): "Light is incident normal to a polished facet making a 45° angle to the quantum well" or "A grating is used to refract light coming from the substrate."
 
 ## Key Parameters
 

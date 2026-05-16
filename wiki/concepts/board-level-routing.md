@@ -5,12 +5,12 @@ tags: [vlsi, power-integrity, routing, well-established, board]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Board-level routing synthesizes interconnections between components on a printed circuit board (PCB), including signal nets and power/ground nets. Multiple metal layers separated by dielectric layers are connected by vias; design rules govern wire widths, spacings, and via constraints.
+Per GraphsInVLSI Sect. 10.1: "A typical board-level layout consists of several metal layers, each separated by a dielectric layer. The connections between the layers are provided by vias. SPROUT uses layer information, design rules, and placement data to produce an initial layout. The objective of the algorithm is to generate a shape connecting the power management IC with the target ball grid array (BGA) balls and decoupling capacitors while complying with the design rules and minimizing the impedance."
 
 ## How It Works
 

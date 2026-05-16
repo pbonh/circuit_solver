@@ -4,25 +4,31 @@ type: entity
 tags: [ode, numerical-integration, foundational]
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: low
+sources: ["raw/solving_ordinary_differential_equations_ii/_txt/03-chapter-iv-stiff-problems-one-step-methods.txt"]
+confidence: medium
 ---
 
 ## Overview
 
-Hairer-Wanner extrapolation code based on linearly implicit Euler; adaptive order and step size; excellent for stringent-tolerance stiff and DAE problems.
+SEULEX is the Hairer-Wanner extrapolation code implementing the Stiff linearly implicit EULer EXtrapolation method (formula (9.32) of Sect. IV.9). It uses the step-number sequence {2, 3, 4, 5, 6, 7, ...} by default (other sequences selectable). The step-size and order selection mirror those of [[entities/sodex]]. The earlier code [[entities/eulsim]]/EULSIM (Deuflhard 1985) is the predecessor with the same numerical method but a different implementation.
 
 ## Characteristics
 
-- See the cited summary for the specific role this entity plays in the Hairer-Wanner volume.
+- Adaptive-order, adaptive-step [[concepts/extrapolation-method]] applied to the linearly implicit Euler method.
+- A(α)-stable (book Sect. IV.9 stability analysis).
+- Best one-step code for stringent tolerances on the standard stiff battery (Sect. IV.10 Fig. 10.8): superior to Rosenbrock codes at Tol ≤ 10⁻⁶ on VDPOL/ROBER/OREGO.
+- "SEULEX has problems with round-off errors at high precision" on the carbon-circuit problem (Sect. IV.10) — the linear-system formulation is round-off-sensitive.
 
 ## Common Strategies
 
-- See the cited summary for the methods, codes, or results associated with this entity.
+- Default high-accuracy stiff code in the Hairer-Wanner benchmark suite alongside [[entities/radau5]] (which dominates at slightly different workpoints).
+- Used together with [[entities/sodex]] (mid-point rule extrapolation) to show the linear-Euler vs. mid-point trade-off.
 
 ## Related Entities
 
-- See the citing summary for related authors, codes, and projects.
+- [[entities/sodex]] — linearly implicit mid-point rule extrapolation; same step-size logic.
+- EULSIM — predecessor implementation by Deuflhard.
+- [[entities/peter-deuflhard]] — originator of the extrapolation lineage.
 
 ## Sources
 

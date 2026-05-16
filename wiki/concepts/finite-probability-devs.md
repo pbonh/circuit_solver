@@ -5,8 +5,10 @@ tags: [simulation, modeling, devs, markov, stochastic, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/ModelingAndSimulationOfSystems/_txt/23-19-devs-support-for-markov-modeling-and-simulation.txt"]
-confidence: low
+confidence: medium
 ---
+
+> Chapter 19 attributes the FP-DEVS construct to the MS4 Me toolset and grounds the three Markov modeling classes (CTM, DTM, MM) on it: "Markov models, having both discrete and continuous time bases, have been implemented in MS4 Me using the Finite Probability DEVS (FP-DEVS) capabilities (described below)." The text refers to "the basic FP-DEVS convention presented in the MS4 Me Users Guide" — transitions occur with a time-advance and specified probabilities, parameters that are interpreted differently for CTM, DTM, and MM models.
 
 ## Definition
 

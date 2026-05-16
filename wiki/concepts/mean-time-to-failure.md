@@ -5,16 +5,24 @@ tags: [vlsi, reliability, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-Mean Time To Failure (MTTF) is the expected operating time of a device or component until its first failure. For VLSI interconnects, MTTF is commonly modeled using Black's equation MTTF = (K / J^n) · exp(E_a / kT), where J is current density, T is temperature, E_a is activation energy, and n ≈ 2 for many conductor materials.
+Per GraphsInVLSI Chapter 9: "if the mean time to failure (MTTF) is of concern, optimizing MTTF would place an upper limit on the current density and temperature, as shown in [538]". The book's Eq. 9.3 is Black's equation:
+
+> MTTF = (K / j^n) · exp(E_a / kT)
+
+"where K and n are material and process constants, Ea is the activation energy, k is the Boltzmann constant, T is the temperature, and j is the current density."
 
 ## How It Works
 
-In the power-delivery exploration framework, MTTF is rewritten in terms of interconnect width W, thickness H, and RMS current as MTTF = K_1 W^n H^n / I_rms^n · exp(K_2 W^2 H^2 / I_rms^2). This couples physical design variables (interconnect dimensions) to reliability objectives. Wider/thicker conductors increase MTTF but consume area.
+GraphsInVLSI Eq. 9.5 adapts Black's equation into a form parametrised by interconnect geometry (after ref. [539]):
+
+> MTTF = K_1 W^n H^n / I_rms^n · exp(K_2 W^2 H^2 / I_rms^2)
+
+This couples physical design variables (interconnect width W and thickness H) to the reliability objective directly through I_rms. Wider/thicker conductors increase MTTF but consume area, making MTTF a natural objective in the chapter's exploratory power-delivery optimization framework.
 
 ## Key Parameters
 

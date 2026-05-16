@@ -8,9 +8,11 @@ sources: ["raw/PythonDataAnalystsToolkit/_txt/01-about-the-author.txt"]
 confidence: low
 ---
 
+> The cited source (a one-page author bio in Python Data Analyst's Toolkit) lists "data analytics" only as one of the author's focus areas: "Some of her key focus areas include Python, data analytics, machine learning, statistics, and deep learning." No substantive definition appears in the source. This page provides general-knowledge content consistent with the framing.
+
 ## Definition
 
-Data analytics is the broad discipline of using computational techniques to examine datasets in order to extract patterns, insights, and inform decisions. It is listed as one of the author's primary focus areas.
+Data analytics is the broad discipline of using computational techniques to examine datasets in order to extract patterns, insights, and inform decisions.
 
 ## How It Works
 

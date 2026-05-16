@@ -5,12 +5,12 @@ tags: [semiconductor, device-physics, photonic, well-established]
 created: 2026-05-15
 updated: 2026-05-15
 sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/18-chapter-13-photodetectors-and-solar-cells.txt"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
 
-A photoconductor is a bulk semiconductor (or thin film) with two ohmic contacts whose resistance decreases when illuminated. Photogenerated carriers add to the equilibrium conductivity until they recombine after a lifetime tau. Photoconductive gain = tau / t_tr (carrier lifetime divided by transit time) can exceed unity, so photoconductors can deliver more electrons per absorbed photon than a junction device.
+Per Sze & Ng (Sect. 13.2): "A photoconductor consists simply of a slab of semiconductor, in bulk or thin-film form, with ohmic contacts affixed to the opposite ends (Fig. 2). When incident light falls on the surface of the photoconductor, carriers are generated either by band-to-band transitions (*intrinsic*) or by transitions involving forbidden-gap energy levels (*extrinsic*), resulting in an increase in conductivity." Conductivity `σ = q(μ_n n + μ_p p)`; under illumination the dominant contribution is the increase in carrier number. The wavelength cutoff is set by ΔE — the bandgap Eg for intrinsic photoconductors, an impurity-to-band energy for extrinsic. The book's Table 1 gives the gain range as 1-10⁶ and the response-time range as 10⁻⁸-10⁻³ s.
 
 ## How It Works
 

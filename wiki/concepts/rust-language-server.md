@@ -4,13 +4,13 @@ type: concept
 tags: [rust, tooling, foundational]
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/01-introduction.txt"]
-confidence: low
+sources: ["raw/rust_book/_txt/01-introduction.txt", "raw/rust_book/_txt/02-chapter-1-getting-started.txt"]
+confidence: medium
 ---
 
 ## Definition
 
-The Rust Language Server (RLS) — and its modern replacement `rust-analyzer` — provides IDE features for Rust: code completion, go-to-definition, inline diagnostics, and refactoring support. The book references RLS as the official IDE integration component.
+"The Rust Programming Language" introduction lists "The Rust Language Server" as one of the three first-party IDE tools, alongside Rustfmt and Cargo: "The Rust Language Server powers Integrated Development Environment (IDE) integration for code completion and inline error messages." Chapter 1 of the same book points readers to its modern replacement: "The Rust team has been focusing on enabling great IDE support via rust-analyzer. See Appendix D for more details." Together with its successor `rust-analyzer`, it provides IDE features for Rust — code completion, go-to-definition, inline diagnostics, and refactoring — over the Language Server Protocol (LSP).
 
 ## How It Works
 

@@ -8,9 +8,11 @@ sources: ["raw/PrototypingPythonDashboards/_txt/17-appendix-a-utilities-for-mana
 confidence: low
 ---
 
+> The source mentions cron only as an automation suggestion: "This data management scheme could be easily modified for greater efficiency and automated to run monthly using a Unix cron job if desired." (Appendix A of Prototyping Python Dashboards). The book does not teach cron syntax; the content below is general knowledge.
+
 ## Definition
 
-Cron is the Unix time-based job scheduler used to run commands or scripts at recurring intervals defined in a crontab file. The book suggests using cron to automate the monthly refresh of the ATADS data pipeline.
+Cron is the Unix time-based job scheduler used to run commands or scripts at recurring intervals defined in a crontab file.
 
 ## How It Works
 

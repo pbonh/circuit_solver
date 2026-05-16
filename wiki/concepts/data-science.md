@@ -4,13 +4,13 @@ type: concept
 tags: [data-analysis, foundational, well-established]
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/02-about-the-technical-reviewer.txt"]
-confidence: low
+sources: ["raw/PythonDataAnalystsToolkit/_txt/02-about-the-technical-reviewer.txt", "raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt"]
+confidence: medium
 ---
 
 ## Definition
 
-Data science is an interdisciplinary practice combining programming, statistics, and domain knowledge to extract knowledge and insights from data. The book characterizes a data science practitioner as proficient in programming, data preparation, visualization, and statistics.
+DataAnalysisAndVisualizationsPython Chapter 1: "Data science is the field that comprises everything related to cleaning, preparing, and analyzing unstructured, semistructured, and structured data. This field of science uses a combination of statistics, mathematics, programming, problem-solving, and data capture to extract insights and information from data." Per the same chapter's "Stages of Data Science" subsection (Fig. 1-1), data scientists "use programming tools such as Python, R, SAS, Java, Perl, and C/C++ to extract knowledge from prepared data. To extract this information, they employ various fit-to-purpose models based on machine leaning algorithms, statistics, and mathematical methods."
 
 ## How It Works
 
