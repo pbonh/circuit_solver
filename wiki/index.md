@@ -17,6 +17,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 - Vision: 1
 - Contexts: 5
 - Context Maps: 1
+- Grills: 1
 
 ## Concepts
 
@@ -1622,4 +1623,10 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | Title | Slug | Updated |
 |-------|------|---------|
 | <!-- entries added by /pdf-to-mdbook --> | | |
+
+## Grills
+
+| Topic | Status | Updated |
+|-------|--------|---------|
+| [[grills/circuit-solver|Circuit Solver]] | done | 2026-05-17 |
 

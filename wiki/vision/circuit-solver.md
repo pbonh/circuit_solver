@@ -49,3 +49,7 @@ This R&D effort delivers a unified analog, digital, and mixed-signal circuit sim
 ## Revisions
 
 - 2026-05-17 — Initial scope declaration for circuit-solver R&D effort.
+
+## Grill Notes
+
+- [[grills/circuit-solver]] — Open design questions being surfaced and resolved.

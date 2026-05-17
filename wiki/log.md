@@ -482,3 +482,26 @@ Ran Strategy workflow for topic `circuit-solver`. Read `wiki/index.md`, the synt
 - Convergence (analysis-level success vs. Newton-iteration tolerance)
 
 **Acceptance gate:** Scanned every `[[…]]` reference in new pages; created missing stubs; 0 dangling links. `wiki/index.md` statistics bumped: Concepts 1149 → 1152, Vision 0 → 1, Contexts 0 → 5, Context Maps 0 → 1.
+
+**2026-05-17 — /wiki-grill circuit-solver**
+
+Started grill on \`circuit-solver\`. Top-level decisions identified: 6 items (binding mechanism, sparse solver, graph assembly, mixed-signal coupling, NR convergence, model dispatch). Grilled Decision 1 (Rust-to-Python binding).
+- Q1→A1: PyO3 in-process
+- Q2→A2: Immutable \`Circuit\` graph + per-request mutable analysis state
+- Q3→A3: Builder API via PyO3 (Rust-backed incremental construction, \`.freeze()\` to immutable)
+- Decision recorded: PyO3 in-process extension, immutable graph via builder, per-request analysis options.
+- Status: in progress. Forward stubs created: \`[[architecture/circuit-solver]]\`, \`[[specs/circuit-solver]]\`.
+- Next: pick another top-level decision to continue grilling.
+
+**2026-05-17 — /wiki-grill circuit-solver (completed)**
+
+Grill for \`circuit-solver\` completed. All 6 top-level decisions resolved:
+1. Rust-to-Python binding: PyO3 in-process, immutable Circuit via builder API, per-request analysis state
+2. Sparse direct solver: russell (DC/Transient), faer (AC)
+3. Graph-to-matrix: flatten once, full matrix built, analysis extracts sub-view
+4. Mixed-signal coupling: optimistic sync, sparse checkpointing, shared scheduler
+5. NR convergence: ΔI/ΔV primary + KCL guard triggered on claimed convergence
+6. Device dispatch: closed enum for core models (diode, BJT, MOSFET)
+- Status updated to \`done\`. Grill file: \`wiki/grills/circuit-solver.md\`.
+- Forward stubs: \`wiki/architecture/circuit-solver.md\`, \`wiki/specs/circuit-solver.md\`
+- Next step: /wiki-architecture circuit-solver
