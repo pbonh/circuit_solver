@@ -458,3 +458,27 @@ Read `wiki/index.md` and 14 representative concept pages across analog, digital,
 **Recommendation:** Run `/wiki-strategy circuit-simulation` to formalize these clusters into explicit `wiki/contexts/` pages and a context map.
 
 **Acceptance gate:** Verified every `[[…]]` reference in the new synthesis page against the filesystem; 0 dangling links. `wiki/index.md` statistics bumped: Syntheses 0 → 1.
+
+## Strategy workflow for circuit-solver (2026-05-17)
+
+Ran Strategy workflow for topic `circuit-solver`. Read `wiki/index.md`, the synthesis `[[syntheses/bounded-contexts-in-circuit-simulation]]`, and 12 representative concept/entity pages (dc-analysis, ac-analysis, transient-analysis, modified-nodal-analysis, device-modeling, sparse-matrix, newton-raphson-method, spice, spectre, rust-language, python, integration-method).
+
+**Distillation pass:** Core (load-bearing) contexts: numeric-solver, analysis-orchestration. Supporting contexts: netlist-graph, device-modeling, application-frontend.
+
+**Pages created or updated:**
+- `[[vision/circuit-solver]]` — Value proposition, scope, differentiation for the R&D effort.
+- `[[contexts/netlist-graph]]` — Circuit structural representation; ubiquitous language around nodes, branches, elements.
+- `[[contexts/device-modeling]]` — Semiconductor equations and linearization; stamp contract with solver.
+- `[[contexts/numeric-solver]]` — MNA, sparse LU, Newton-Raphson, integration methods.
+- `[[contexts/analysis-orchestration]]` — DC/AC/transient/noise control loops and unified result structure.
+- `[[contexts/application-frontend]]` — Python API and CLI entry point.
+- `[[context-maps/circuit-solver]]` — Translations table, false-cognate inventory, integration-pattern assignments for all five contexts.
+- Stubs: `[[concepts/bounded-context]]`, `[[concepts/context-map]]`, `[[concepts/false-cognate]]` (DDD scaffolding needed by required sections).
+
+**False cognates flagged:**
+- Node (netlist-graph vertex vs. numeric-solver matrix variable)
+- Model (netlist-graph string key vs. device-modeling equation set)
+- Operating Point (global DC solution vs. per-device bias)
+- Convergence (analysis-level success vs. Newton-iteration tolerance)
+
+**Acceptance gate:** Scanned every `[[…]]` reference in new pages; created missing stubs; 0 dangling links. `wiki/index.md` statistics bumped: Concepts 1149 → 1152, Vision 0 → 1, Contexts 0 → 5, Context Maps 0 → 1.

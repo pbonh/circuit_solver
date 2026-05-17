@@ -1,7 +1,7 @@
 ---
 title: "Circuit Simulation Knowledge Base Index"
 type: index
-updated: 2026-05-15
+updated: 2026-05-17
 ---
 
 # Circuit Simulation Knowledge Base Index
@@ -10,10 +10,13 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 
 ## Statistics
 
-- Concepts: 1149
+- Concepts: 1152
 - Entities: 180
 - Summaries: 207
 - Syntheses: 1
+- Vision: 1
+- Contexts: 5
+- Context Maps: 1
 
 ## Concepts
 
@@ -1565,6 +1568,28 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[summaries/sze-physics-semiconductor-devices-19-chapter-14-sensors|Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 14: Sensors]] | `PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/19-chapter-14-sensors.txt` | semiconductor, device-physics, sensor, well-established | 2026-05-15 |
 | [[summaries/sze-physics-semiconductor-devices-20-appendix-a-list-of-symbols|Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Appendix A: List of Symbols]] | `PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/20-appendix-a-list-of-symbols.txt` | semiconductor, device-physics, reference, well-established | 2026-05-15 |
 | [[summaries/sze-physics-semiconductor-devices-21-appendix-e-properties-of-important-semiconductors|Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Appendix E (and G): Properties of Important Semiconductors]] | `PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/21-appendix-e-properties-of-important-semiconductors.txt` | semiconductor, device-physics, reference, well-established | 2026-05-15 |
+
+## Vision
+
+| Page | Topic | Updated |
+|------|-------|---------|
+| [[vision/circuit-solver|Circuit Solver]] | circuit-solver R&D effort | 2026-05-17 |
+
+## Contexts
+
+| Page | Role | Updated |
+|------|------|---------|
+| [[contexts/netlist-graph|Netlist Graph]] | Circuit structural representation | 2026-05-17 |
+| [[contexts/device-modeling|Device Modeling]] | Semiconductor device equations | 2026-05-17 |
+| [[contexts/numeric-solver|Numeric Solver]] | MNA, sparse LU, Newton-Raphson | 2026-05-17 |
+| [[contexts/analysis-orchestration|Analysis Orchestration]] | DC/AC/transient/noise control | 2026-05-17 |
+| [[contexts/application-frontend|Application Frontend]] | Python API and CLI | 2026-05-17 |
+
+## Context Maps
+
+| Page | Contexts | Updated |
+|------|----------|---------|
+| [[context-maps/circuit-solver|Circuit Solver Context Map]] | 5 | 2026-05-17 |
 
 ## Syntheses
 
