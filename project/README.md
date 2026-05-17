@@ -4,15 +4,7 @@ This directory holds the actual software being built. The `wiki/` tree
 documents *about* this project (vision, contexts, ADRs, specs, glossary);
 this tree *is* the project.
 
-<!--
-CUSTOMIZE via `/wiki-project-init`. Replace this block with a one-paragraph
-description of the implementation:
-  - language: <primary language(s)>
-  - build:    <build / package-manager command, e.g. `cargo build`>
-  - test:     <single command `/wiki-lint` and Hermes workers use to verify, e.g. `cargo test`>
-  - entry:    <path or command to start the program>
-Remove this HTML comment when done.
--->
+This project is implemented in Rust and Python. Build with `cargo build`, verify with `cargo test`, and run the entry point via `python -m circuit_solver`.
 
 ## Conventions
 

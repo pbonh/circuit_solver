@@ -407,3 +407,37 @@ Confidence bumped from `low` to `medium` (concepts whose treatment is grounded i
 ### Statistics impact
 
 No new pages created; only the 126 existing stubs were rewritten in place. `wiki/index.md` rows pointing at these concepts continue to resolve. No new orphans.
+
+## project-init: scaffolded project/ and kanban/ (2026-05-17)
+
+Ran `/wiki-project-init`. Filled the customization marker in `project/README.md` (language = rust, python; build = `cargo build`; test = `cargo test`; entry = `python -m circuit_solver`). Updated `AGENTS.md` `## Implementation Workspace` coherently. Appended Python ignores (`*.egg-info/`, `.pytest_cache/`, `.mypy_cache/`, `.ruff_cache/`) to `project/.gitignore`. `kanban/` was already fully scaffolded; `kanban/board.yaml` left untouched (still carries its `<!--` marker for `/wiki-kanban-board`).
+
+- `project/README.md` marker check: `grep -c '<!--'` = 0 ✓
+- `AGENTS.md` marker check: `grep -c '<!--'` = 0 ✓
+- `kanban/` subtree check: 6 expected files present ✓
+- `kanban/board.yaml` untouched: `grep -c '<!--'` = 1 (still has marker) ✓
+
+Next step: `/wiki-kanban-board <slug>` to bind a Hermes board and flip the `board_bound` artifact green.
+
+## Query synthesis: bounded contexts in circuit simulation (2026-05-17)
+
+Ran Query workflow against the question: *what bounded contexts seem to exist in this domain?*
+Read `wiki/index.md` and 14 representative concept pages across analog, digital, mixed-signal, symbolic, physical-design, and DEVS clusters.
+
+**Synthesis created:** `[[syntheses/bounded-contexts-in-circuit-simulation]]`
+
+**Implied bounded contexts identified (8):**
+1. Netlist & Graph Representation
+2. Device Modeling & Compact Models
+3. Analog Numerical Solver Engine
+4. Digital Logic & Verification
+5. Mixed-Signal Integration
+6. Symbolic Analysis & Model Order Reduction
+7. VLSI Physical Design & EDA
+8. Discrete-Event Simulation Framework
+
+**Key insight:** The wiki has 1,149 concepts but zero explicit context/context-map pages. The concept graph reveals a shared kernel around `[[concepts/modified-nodal-analysis]]` / `[[concepts/branch-stamping]]`, a customer–supplier edge from Device Modeling to Analog Solver, and an anticorruption-layer role for Mixed-Signal Integration. False cognates already present in the corpus: "node", "model", "simulation", "conservative", "branch".
+
+**Recommendation:** Run `/wiki-strategy circuit-simulation` to formalize these clusters into explicit `wiki/contexts/` pages and a context map.
+
+**Acceptance gate:** Verified every `[[…]]` reference in the new synthesis page against the filesystem; 0 dangling links. `wiki/index.md` statistics bumped: Syntheses 0 → 1.

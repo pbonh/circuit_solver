@@ -13,7 +13,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 - Concepts: 1149
 - Entities: 180
 - Summaries: 207
-- Syntheses: 0
+- Syntheses: 1
 
 ## Concepts
 
@@ -1570,6 +1570,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 
 | Page | Pages Compared | Created |
 |------|----------------|---------|
+| [[syntheses/bounded-contexts-in-circuit-simulation|Bounded Contexts in Circuit Simulation]] | 47 concept pages | 2026-05-17 |
 
 ## Flashcards
 

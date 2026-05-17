@@ -245,9 +245,9 @@ See `docs/rd-pipeline/pipeline-manifest.md` in the `pi-llm-wiki` source for the 
 
 ## Implementation Workspace
 
-The implementation of this project lives in `project/` (sibling of `wiki/`). Every changed-file path written by `/wiki-kanban-ingest` into a spec's `## Implementation Evidence` section must resolve under that directory. `/wiki-lint` enforces this.
+The implementation of this project lives in `project/` (sibling of `wiki/`). It is implemented in Rust and Python: build with `cargo build`, verify with `cargo test`, and run the entry point via `python -m circuit_solver`. Every changed-file path written by `/wiki-kanban-ingest` into a spec's `## Implementation Evidence` section must resolve under that directory. `/wiki-lint` enforces this.
 
-`/wiki-project-init` scaffolds the directory and walks the customization marker below; the manifest artifact `project_init` flips green once the marker is filled in.
+`/wiki-project-init` scaffolds the directory and walks the customization marker; the manifest artifact `project_init` flips green once the marker is filled in.
 
 
 

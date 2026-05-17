@@ -6,6 +6,10 @@
 __pycache__/
 *.pyc
 .venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
 # Hermes worktrees should never be created here — they go in
 # ../kanban/.worktrees/ — but guard against accidents.
