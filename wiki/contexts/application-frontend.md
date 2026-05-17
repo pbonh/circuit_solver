@@ -43,3 +43,7 @@ Key invariants: CLI arguments map to valid analysis requests. Python API calls a
 ## Relationships
 
 - [[context-maps/circuit-solver]]
+
+## Architecture
+
+- [[architecture/circuit-solver]] — C4 diagrams showing the application-frontend context as the PyO3-based entry point and result presenter.

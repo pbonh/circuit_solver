@@ -48,3 +48,7 @@ Key invariants: Every model name referenced by an element in the netlist-graph r
 ## Relationships
 
 - [[context-maps/circuit-solver]]
+
+## Architecture
+
+- [[architecture/circuit-solver]] — C4 diagrams showing the device-modeling context as the stamp supplier to the numeric-solver container.

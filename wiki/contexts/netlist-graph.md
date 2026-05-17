@@ -47,3 +47,7 @@ Key invariants: The graph is connected (after ground reference). Every element t
 ## Relationships
 
 - [[context-maps/circuit-solver]]
+
+## Architecture
+
+- [[architecture/circuit-solver]] — C4 diagrams showing how the netlist-graph context participates in the end-to-end parsing, flattening, stamping, and solving pipeline.

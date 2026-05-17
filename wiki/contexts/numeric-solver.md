@@ -55,3 +55,7 @@ Key invariants: The MNA matrix is structurally nonsingular (after ground suppres
 ## Relationships
 
 - [[context-maps/circuit-solver]]
+
+## Architecture
+
+- [[architecture/circuit-solver]] — C4 diagrams showing the numeric-solver context as the MNA assembly and sparse-LU engine.

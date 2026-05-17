@@ -505,3 +505,32 @@ Grill for \`circuit-solver\` completed. All 6 top-level decisions resolved:
 - Status updated to \`done\`. Grill file: \`wiki/grills/circuit-solver.md\`.
 - Forward stubs: \`wiki/architecture/circuit-solver.md\`, \`wiki/specs/circuit-solver.md\`
 - Next step: /wiki-architecture circuit-solver
+
+## 2026-05-17 — /wiki-architecture circuit-solver
+
+Ran Architecture workflow for `circuit-solver`.
+
+**Purpose:** *How does a SPICE netlist get parsed, flattened, stamped, and solved end-to-end, particularly in mixed-signal simulation environments?*
+
+**C4 levels drawn:** Context + Container (default).
+
+**Containers identified:**
+1. Python Frontend (Python, PyO3)
+2. Netlist Graph Builder (Rust)
+3. Device Model Engine (Rust)
+4. Numeric Solver Engine (Rust, russell, faer)
+5. Analysis Orchestrator (Rust)
+6. Mixed-Signal Scheduler (Rust)
+
+**Decisions surfaced (5):**
+1. PyO3 In-Process Binding with Immutable Circuit Graph
+2. Hybrid Sparse Direct Solver Backend (russell + faer)
+3. Two-Pass Graph Flattening with Per-Analysis Sub-Views
+4. Optimistic Mixed-Signal Synchronization via Shared Scheduler
+5. Closed Enum Device Model Dispatch
+
+**Cross-link updates:** Added `## Architecture` sections to all 5 context pages (`netlist-graph`, `device-modeling`, `numeric-solver`, `analysis-orchestration`, `application-frontend`).
+
+**Acceptance gate:** Zero dangling links — all 9 `[[…]]` references on `architecture/circuit-solver.md` resolve to existing files.
+
+**Next step:** `/wiki-adr <decision title>` for each surfaced decision.

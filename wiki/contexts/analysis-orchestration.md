@@ -54,3 +54,7 @@ Key invariants: AC and noise analyses require a converged DC operating point. Tr
 ## Relationships
 
 - [[context-maps/circuit-solver]]
+
+## Architecture
+
+- [[architecture/circuit-solver]] — C4 diagrams showing the analysis-orchestration context driving the control loops and interacting with the mixed-signal scheduler.

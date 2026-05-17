@@ -18,6 +18,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 - Contexts: 5
 - Context Maps: 1
 - Grills: 1
+- Architecture: 1
 
 ## Concepts
 
@@ -1629,4 +1630,10 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | Topic | Status | Updated |
 |-------|--------|---------|
 | [[grills/circuit-solver|Circuit Solver]] | done | 2026-05-17 |
+
+## Architecture
+
+| Topic | Purpose | Updated |
+|-------|---------|---------|
+| [[architecture/circuit-solver|Circuit Solver]] | How does a SPICE netlist get parsed, flattened, stamped, and solved end-to-end, particularly in mixed-signal simulation environments? | 2026-05-17 |
 
