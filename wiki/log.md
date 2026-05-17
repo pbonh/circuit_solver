@@ -1,7 +1,7 @@
 ---
 title: "Circuit Simulation Knowledge Base Log"
 type: log
-updated: 2026-05-15
+updated: 2026-05-17
 ---
 
 # Activity Log
@@ -418,6 +418,23 @@ Ran `/wiki-project-init`. Filled the customization marker in `project/README.md`
 - `kanban/board.yaml` untouched: `grep -c '<!--'` = 1 (still has marker) ✓
 
 Next step: `/wiki-kanban-board <slug>` to bind a Hermes board and flip the `board_bound` artifact green.
+
+## kanban-board: bound circuit-solver (2026-05-17)
+
+Bound Hermes Kanban board `circuit-solver` to this wiki.
+
+- **Board slug:** `circuit-solver` (created via `hermes kanban boards create`)
+- **Workspace default:** `dir:./project`
+- **Profiles:** `orchestrator` → `default`, `worker` → `default`, `reviewer` → `default`
+- **Skill verification:** `default` has `kanban-orchestrator` and `kanban-worker` enabled
+- **Smoke test:** `hermes kanban --board circuit-solver list` exits 0
+- **Acceptance gates:**
+  - `grep -c '<!--' kanban/board.yaml` → 0 ✓
+  - `yq eval '.board' kanban/board.yaml` → `circuit-solver` ✓
+  - `profiles.orchestrator/worker/reviewer` all non-empty ✓
+  - `AGENTS.md` `## Kanban Board` section contains no `<!--` marker ✓
+
+Manifest artifact `board_bound` is now satisfied; `kanban_emit` and `kanban_ingest` are ungated.
 
 ## Query synthesis: bounded contexts in circuit simulation (2026-05-17)
 

@@ -253,9 +253,13 @@ The implementation of this project lives in `project/` (sibling of `wiki/`). It 
 
 ## Kanban Board
 
-This wiki is bound to a Hermes Kanban board via `kanban/board.yaml`. Tasks are emitted by `/wiki-kanban-emit` and round-tripped by `/wiki-kanban-ingest`; both pass `--board <slug>` from `board.yaml` and resolve assignees via its `profiles:` section. See `kanban/README.md` for the file layout.
+This wiki is bound to the Hermes Kanban board **`circuit-solver`** via `kanban/board.yaml`. Tasks are emitted by `/wiki-kanban-emit` and round-tripped by `/wiki-kanban-ingest`; both pass `--board circuit-solver` and resolve assignees via its `profiles:` section.
 
-`/wiki-kanban-board <slug>` binds the board and writes the YAML; the manifest artifact `board_bound` requires `project_init` and gates `kanban_emit` and `kanban_ingest`.
+- **Slug:** `circuit-solver`
+- **Workspace default:** `dir:./project`
+- **Profiles:** `orchestrator` → `default`, `worker` → `default`, `reviewer` → `default`
+
+The manifest artifact `board_bound` requires `project_init` and gates `kanban_emit` and `kanban_ingest`.
 
 
 
