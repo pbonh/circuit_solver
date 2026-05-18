@@ -53,3 +53,8 @@ This R&D effort delivers a unified analog, digital, and mixed-signal circuit sim
 ## Grill Notes
 
 - [[grills/circuit-solver]] — Open design questions being surfaced and resolved.
+
+## Related Decisions
+
+- [[decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler|ADR-0004]] — Mixed-signal co-simulation hooks (optimistic synchronization via shared scheduler) fall within the in-scope items declared above.
+- [[decisions/0005-closed-enum-device-model-dispatch|ADR-0005]] — Core semiconductor device model dispatch via closed enum (diode, BJT, MOSFET Level-1 through BSIM4-level) falls within the in-scope items declared above.

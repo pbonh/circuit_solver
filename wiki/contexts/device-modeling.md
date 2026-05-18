@@ -49,6 +49,10 @@ Key invariants: Every model name referenced by an element in the netlist-graph r
 
 - [[context-maps/circuit-solver]]
 
+## Related Decisions
+
+- [[decisions/0005-closed-enum-device-model-dispatch|ADR-0005]] — Commits the device-modeling context to closed-enum dispatch for core semiconductor models, eliminating runtime extensibility in favor of zero-cost static dispatch.
+
 ## Architecture
 
 - [[architecture/circuit-solver]] — C4 diagrams showing the device-modeling context as the stamp supplier to the numeric-solver container.

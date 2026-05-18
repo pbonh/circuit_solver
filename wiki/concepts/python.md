@@ -42,6 +42,10 @@ Python provides syntax for variables, functions, conditional statements, data ty
 - [[entities/pandas]]
 - [[entities/jupyter-notebook]]
 
+## Related Decisions
+
+- [[decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph]] — Establishes PyO3 as the binding mechanism for exposing the Rust circuit-solver core to Python.
+
 ## Sources
 
 - [[summaries/data-analysis-visualizations-python-01-about-the-author]]

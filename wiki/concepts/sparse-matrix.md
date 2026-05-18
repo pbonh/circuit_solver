@@ -42,6 +42,10 @@ Sparse matrices arise naturally in VLSI circuit analysis because each node typic
 - [[concepts/preconditioning]]
 - [[concepts/domain-decomposition]]
 
+## Related Decisions
+
+- [[decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer|ADR-0002]] — Chooses pure-Rust `russell` and `faer` backends over FFI-based sparse solvers.
+
 ## Sources
 
 - [[summaries/graphs-in-vlsi-08-5-circuit-analysis]]

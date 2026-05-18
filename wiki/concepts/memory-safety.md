@@ -44,6 +44,11 @@ Rust achieves memory safety through ownership, borrowing, and lifetimes enforced
 - [[concepts/rust-language]]
 - [[concepts/fearless-concurrency]]
 
+## Related Decisions
+
+- [[decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph]] — Chooses PyO3 in-process binding to preserve Rust memory-safety guarantees at the Python boundary.
+- [[decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer|ADR-0002]] — Preserves memory safety in the numeric solver by eliminating FFI to C/C++ sparse direct solver libraries.
+
 ## Sources
 
 - [[summaries/rust-book-00-foreword]]

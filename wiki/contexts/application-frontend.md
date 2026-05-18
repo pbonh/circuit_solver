@@ -47,3 +47,7 @@ Key invariants: CLI arguments map to valid analysis requests. Python API calls a
 ## Architecture
 
 - [[architecture/circuit-solver]] — C4 diagrams showing the application-frontend context as the PyO3-based entry point and result presenter.
+
+## Related Decisions
+
+- [[decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph]] — Governs the PyO3 binding mechanism and immutable graph ownership model for the Python API.

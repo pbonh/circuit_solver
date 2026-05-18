@@ -52,6 +52,10 @@ In sparse form, operation counts and storage grow approximately linearly with n 
 - [[concepts/sparse-matrix-methods]]
 - [[concepts/pivoting]]
 
+## Related Decisions
+
+- [[decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer|ADR-0002]] — Selects `russell` for real LU and `faer` for complex LU in the circuit solver.
+
 ## Sources
 
 - [[summaries/computer-methods-circuit-analysis-design-05-chapter-2-network-equations-and-their-solution]]

@@ -176,6 +176,11 @@ A3: 3
 - [[wiki/architecture/circuit-solver]]
 - [[wiki/specs/circuit-solver]]
 
+## Related Decisions
+
+- [[decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler|ADR-0004]] — Formal ADR capturing the optimistic mixed-signal synchronization commitment surfaced in the grill under decision-tree item 4.
+- [[decisions/0005-closed-enum-device-model-dispatch|ADR-0005]] — Formal ADR capturing the closed-enum device model dispatch commitment surfaced in the grill under decision-tree item 6.
+
 ## Status
 
 done

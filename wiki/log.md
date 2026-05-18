@@ -534,3 +534,23 @@ Ran Architecture workflow for `circuit-solver`.
 **Acceptance gate:** Zero dangling links — all 9 `[[…]]` references on `architecture/circuit-solver.md` resolve to existing files.
 
 **Next step:** `/wiki-adr <decision title>` for each surfaced decision.
+
+---
+
+2026-05-17 — ADR-0001 opened: "PyO3 In-Process Binding with Immutable Circuit Graph". Status: proposed. ASR: "The simulator must expose an ergonomic, zero-copy Python API for interactive circuit construction and analysis while preserving Rust's ownership and memory-safety guarantees." Cross-linked: architecture/circuit-solver (surfaced bullet updated → ADR-0001), contexts/application-frontend, concepts/ownership, concepts/memory-safety, concepts/python, concepts/ffi. Stubs created: concepts/architecturally-significant-requirement, concepts/architectural-decision-record, concepts/system-architecture, concepts/quality-attributes. Index.md updated (Decisions table + Concepts count 1152→1156). Zero dangling links verified.
+
+---
+
+2026-05-17 — ADR-0002 opened: "Hybrid Sparse Direct Solver Backend (russell + faer)". Status: proposed. ASR: "The numeric solver must perform sparse direct LU factorization for all in-scope analysis types without crossing an FFI boundary to C/C++ legacy libraries, because memory safety is a core differentiator, and the analysis portfolio inherently requires both real-valued (DC/transient) and complex-valued (AC) solves." Cross-linked: architecture/circuit-solver (surfaced bullet updated → ADR-0002), contexts/numeric-solver, concepts/sparse-matrix, concepts/lu-decomposition, concepts/ffi, concepts/memory-safety. Index.md updated (Decisions table). Zero dangling links verified.
+
+---
+
+2026-05-17 — ADR-0003 opened: "Two-Pass Graph Flattening with Per-Analysis Sub-Views". Status: proposed. ASR: "The numeric solver must handle ground-reference and constraint-mask differences between operating-point and small-signal analyses without re-flattening the netlist graph." Cross-linked: architecture/circuit-solver (surfaced bullet updated → ADR-0003), contexts/netlist-graph, contexts/numeric-solver, contexts/analysis-orchestration, concepts/architecturally-significant-requirement. Index.md updated (Decisions count 1→3, Decisions table). Zero dangling links verified.
+
+---
+
+2026-05-17 — ADR-0004 opened: "Optimistic Mixed-Signal Synchronization via Shared Scheduler". Status: proposed. ASR: "The simulator must support mixed-signal co-simulation between the continuous-time analog solver and an external event-driven digital simulator, using optimistic time advancement with efficient rollback on digital mispredictions, while keeping the analog analysis-orchestration and digital kernel contexts decoupled (neither queries the other directly)." Cross-linked: architecture/circuit-solver (surfaced bullet updated → ADR-0004), contexts/analysis-orchestration, grills/circuit-solver, vision/circuit-solver, concepts/mixed-level-simulation. Index.md updated (Decisions count 3→4, Decisions table). Zero dangling links verified.
+
+---
+
+2026-05-17 — ADR-0005 opened: "Closed Enum Device Model Dispatch". Status: proposed. ASR: "Newton-Raphson stamp evaluation must run in a tight loop with zero-cost dispatch and cache-friendly data layouts." Cross-linked: architecture/circuit-solver (surfaced bullet updated → ADR-0005), contexts/device-modeling, contexts/numeric-solver, grills/circuit-solver, vision/circuit-solver, concepts/zero-cost-abstractions, concepts/static-dispatch, concepts/dynamic-dispatch, concepts/trait-objects, concepts/memory-safety. Index.md updated (Decisions count 4→5, Decisions table). Zero dangling links verified.

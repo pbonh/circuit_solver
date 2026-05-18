@@ -89,15 +89,15 @@ C4Container
 
 ## Decisions Surfaced
 
-**PyO3 In-Process Binding with Immutable Circuit Graph** — The Python Frontend container is a PyO3 extension module that constructs an immutable `CircuitGraph` via the Netlist Graph Builder's builder API; per-request mutable analysis state flows to the Analysis Orchestrator, preserving Rust ownership discipline while giving Python ergonomic incremental construction.
+**PyO3 In-Process Binding with Immutable Circuit Graph** — The Python Frontend container is a PyO3 extension module that constructs an immutable `CircuitGraph` via the Netlist Graph Builder's builder API; per-request mutable analysis state flows to the Analysis Orchestrator, preserving Rust ownership discipline while giving Python ergonomic incremental construction. → ADR-0001
 
-**Hybrid Sparse Direct Solver Backend (russell + faer)** — The Numeric Solver Engine container carries two backend technologies: `russell` for real-valued DC and transient sparse LU, and `faer` for complex-valued AC small-signal LU. This split avoids FFI while matching each analysis type to the appropriate pure-Rust solver.
+**Hybrid Sparse Direct Solver Backend (russell + faer)** — The Numeric Solver Engine container carries two backend technologies: `russell` for real-valued DC and transient sparse LU, and `faer` for complex-valued AC small-signal LU. This split avoids FFI while matching each analysis type to the appropriate pure-Rust solver. → ADR-0002
 
-**Two-Pass Graph Flattening with Per-Analysis Sub-Views** — The Numeric Solver Engine reads the graph structure once from the Netlist Graph Builder; the full matrix (including ground) is built during flattening, and the Analysis Orchestrator extracts the relevant sub-view or applies constraint masks at solve time, avoiding rebuilds when analysis needs differ.
+**Two-Pass Graph Flattening with Per-Analysis Sub-Views** — The Numeric Solver Engine reads the graph structure once from the Netlist Graph Builder; the full matrix (including ground) is built during flattening, and the Analysis Orchestrator extracts the relevant sub-view or applies constraint masks at solve time, avoiding rebuilds when analysis needs differ. → ADR-0003
 
-**Optimistic Mixed-Signal Synchronization via Shared Scheduler** — The Mixed-Signal Scheduler container mediates all time-sync and rollback traffic between the Analysis Orchestrator and the external Digital Event Simulator. Neither kernel queries the other directly; the scheduler owns both and issues "run-until" commands, keeping the context boundary clean.
+**Optimistic Mixed-Signal Synchronization via Shared Scheduler** — The Mixed-Signal Scheduler container mediates all time-sync and rollback traffic between the Analysis Orchestrator and the external Digital Event Simulator. Neither kernel queries the other directly; the scheduler owns both and issues "run-until" commands, keeping the context boundary clean. → ADR-0004
 
-**Closed Enum Device Model Dispatch** — The Device Model Engine container uses a closed enum (`enum DeviceModel { Diode(...), BJT(...), MOSFET(...), ... }`) for zero-cost dispatch of core semiconductor models. The vision bounds device scope to diode, BJT, and MOSFET Level-1 through BSIM4-level; no runtime extensibility requirement is stated.
+**Closed Enum Device Model Dispatch** — The Device Model Engine container uses a closed enum (`enum DeviceModel { Diode(...), BJT(...), MOSFET(...), ... }`) for zero-cost dispatch of core semiconductor models. The vision bounds device scope to diode, BJT, and MOSFET Level-1 through BSIM4-level; no runtime extensibility requirement is stated. → ADR-0005
 
 ## Cross-Links
 

@@ -51,6 +51,11 @@ The compiler emits the standard C calling convention for `extern "C"`. Other ABI
 - [[concepts/raw-pointers]]
 - [[concepts/rust-language]]
 
+## Related Decisions
+
+- [[decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph]] — Uses PyO3 (a higher-level FFI framework) instead of raw C FFI for the Rust-to-Python binding.
+- [[decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer|ADR-0002]] — Avoids FFI entirely for the sparse direct solver stack by choosing pure-Rust `russell` and `faer`.
+
 ## Sources
 
 - [[summaries/rust-book-20-chapter-19-advanced-features]]

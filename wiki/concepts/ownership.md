@@ -52,6 +52,10 @@ Assignment of non-`Copy` types moves the value; the source binding becomes inval
 - [[concepts/move-semantics]]
 - [[concepts/drop-trait]]
 
+## Related Decisions
+
+- [[decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph]] — Relies on Rust ownership to enforce immutable graph semantics across the PyO3 boundary.
+
 ## Sources
 
 - [[summaries/rust-book-01-introduction]]

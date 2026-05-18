@@ -10,7 +10,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 
 ## Statistics
 
-- Concepts: 1152
+- Concepts: 1156
 - Entities: 180
 - Summaries: 207
 - Syntheses: 1
@@ -19,6 +19,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 - Context Maps: 1
 - Grills: 1
 - Architecture: 1
+- Decisions: 5
 
 ## Concepts
 
@@ -62,6 +63,8 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/ao-stability|Ao-Stability]] | ode, numerical-integration, foundational | low | 2026-05-15 |
 | [[concepts/api-gateway|API Gateway]] | microservices, networking, well-established | high | 2026-05-15 |
 | [[concepts/arc-type|Arc Type]] | rust, concurrency, smart-pointers | high | 2026-05-15 |
+| [[concepts/architectural-decision-record|Architectural Decision Record]] | architecture, documentation, well-established | high | 2026-05-17 |
+| [[concepts/architecturally-significant-requirement|Architecturally Significant Requirement]] | requirements, architecture, foundational | high | 2026-05-17 |
 | [[concepts/array-reshaping|Array Reshaping]] | python, numpy, foundational | high | 2026-05-15 |
 | [[concepts/array-slicing|Array Slicing]] | python, numpy, foundational | high | 2026-05-15 |
 | [[concepts/assertions|Assertions (Rust)]] | rust, foundational, testing | high | 2026-05-15 |
@@ -824,6 +827,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/python-modules|Python Modules]] | python, foundational, well-established | high | 2026-05-15 |
 | [[concepts/python|Python]] | python, foundational, well-established | high | 2026-05-15 |
 | [[concepts/q-omega-sensitivity|Q and omega_0 Sensitivity]] | sensitivity, analog, ac | high | 2026-05-15 |
+| [[concepts/quality-attributes|Quality Attributes]] | architecture, requirements, foundational | high | 2026-05-17 |
 | [[concepts/quality-of-service|Quality of Service (QoS)]] | simulation, modeling, soa | medium | 2026-05-15 |
 | [[concepts/quantum-cascade-laser|Quantum-Cascade Laser]] | semiconductor, device-physics, photonic | low | 2026-05-15 |
 | [[concepts/quantum-mechanical-tunneling|Quantum-Mechanical Tunneling]] | semiconductor, device-physics, transport | medium | 2026-05-15 |
@@ -1050,6 +1054,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/symbolic-stamp|Symbolic Stamp]] | hierarchical, symbolic, analog | medium | 2026-05-15 |
 | [[concepts/symplectic-integrator|Symplectic Integrator]] | ode, numerical-integration, foundational | low | 2026-05-15 |
 | [[concepts/symplectic-method|Symplectic Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/system-architecture|System Architecture]] | architecture, foundational | high | 2026-05-17 |
 | [[concepts/system-entity-structure|System Entity Structure (SES)]] | simulation, modeling, ontology | high | 2026-05-15 |
 | [[concepts/system-of-record|System of Record]] | foundational, well-established, distributed-systems | high | 2026-05-15 |
 | [[concepts/systemd-service|Systemd Service]] | unix, deployment, systemd | high | 2026-05-15 |
@@ -1636,4 +1641,14 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | Topic | Purpose | Updated |
 |-------|---------|---------|
 | [[architecture/circuit-solver|Circuit Solver]] | How does a SPICE netlist get parsed, flattened, stamped, and solved end-to-end, particularly in mixed-signal simulation environments? | 2026-05-17 |
+
+## Decisions
+
+| ADR | Title | Status | Updated |
+|-----|-------|--------|---------|
+| [[decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph|0001]] | PyO3 In-Process Binding with Immutable Circuit Graph | proposed | 2026-05-17 |
+| [[decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer|0002]] | Hybrid Sparse Direct Solver Backend (russell + faer) | proposed | 2026-05-17 |
+| [[decisions/0003-two-pass-graph-flattening-with-per-analysis-sub-views|0003]] | Two-Pass Graph Flattening with Per-Analysis Sub-Views | proposed | 2026-05-17 |
+| [[decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler|0004]] | Optimistic Mixed-Signal Synchronization via Shared Scheduler | proposed | 2026-05-17 |
+| [[decisions/0005-closed-enum-device-model-dispatch|0005]] | Closed Enum Device Model Dispatch | proposed | 2026-05-17 |
 

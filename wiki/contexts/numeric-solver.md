@@ -59,3 +59,8 @@ Key invariants: The MNA matrix is structurally nonsingular (after ground suppres
 ## Architecture
 
 - [[architecture/circuit-solver]] — C4 diagrams showing the numeric-solver context as the MNA assembly and sparse-LU engine.
+
+## Related Decisions
+
+- [[decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer|ADR-0002]] — Commits the numeric-solver context to a hybrid `russell` + `faer` pure-Rust sparse direct solver backend.
+- [[decisions/0005-closed-enum-device-model-dispatch|ADR-0005]] — Commits the device-modeling context to closed-enum dispatch; the numeric-solver context consumes the resulting `LinearizedModel` stamps via `match` on the enum in Newton-Raphson loops.

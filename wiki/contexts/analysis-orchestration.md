@@ -58,3 +58,7 @@ Key invariants: AC and noise analyses require a converged DC operating point. Tr
 ## Architecture
 
 - [[architecture/circuit-solver]] — C4 diagrams showing the analysis-orchestration context driving the control loops and interacting with the mixed-signal scheduler.
+
+## Related Decisions
+
+- [[decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler|ADR-0004]] — Optimistic mixed-signal synchronization via shared scheduler; the analysis-orchestration context receives "run-until" and "rollback" commands from the Mixed-Signal Scheduler.
