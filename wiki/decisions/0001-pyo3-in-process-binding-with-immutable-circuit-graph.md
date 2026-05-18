@@ -3,7 +3,7 @@ title: "PyO3 In-Process Binding with Immutable Circuit Graph"
 type: decision
 tags: [decision, circuit-solver, pyo3, rust, python, binding, memory-safety]
 created: 2026-05-17
-updated: 2026-05-17
+updated: 2026-05-18
 sources:
   - "architecture/circuit-solver"
   - "grills/circuit-solver"
@@ -16,7 +16,7 @@ confidence: high
 
 ## Status
 
-proposed
+accepted
 
 ## Context
 

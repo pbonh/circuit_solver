@@ -3,7 +3,7 @@ title: "Optimistic Mixed-Signal Synchronization via Shared Scheduler"
 type: decision
 tags: [decision, circuit-solver, mixed-signal, synchronization, optimistic, scheduler, rollback, checkpoint]
 created: 2026-05-17
-updated: 2026-05-17
+updated: 2026-05-18
 sources:
   - "architecture/circuit-solver"
   - "grills/circuit-solver"
@@ -17,7 +17,7 @@ confidence: high
 
 ## Status
 
-proposed
+accepted
 
 ## Context
 

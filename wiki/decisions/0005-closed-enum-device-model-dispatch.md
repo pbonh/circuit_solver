@@ -3,7 +3,7 @@ title: "Closed Enum Device Model Dispatch"
 type: decision
 tags: [decision, circuit-solver, device-model, dispatch, performance, rust, zero-cost-abstractions]
 created: 2026-05-17
-updated: 2026-05-17
+updated: 2026-05-18
 sources:
   - "architecture/circuit-solver"
   - "grills/circuit-solver"
@@ -22,7 +22,7 @@ confidence: high
 
 ## Status
 
-proposed
+accepted
 
 ## Context
 

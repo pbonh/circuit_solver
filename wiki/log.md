@@ -1,7 +1,7 @@
 ---
 title: "Circuit Simulation Knowledge Base Log"
 type: log
-updated: 2026-05-17
+updated: 2026-05-18
 ---
 
 # Activity Log
@@ -554,3 +554,11 @@ Ran Architecture workflow for `circuit-solver`.
 ---
 
 2026-05-17 — ADR-0005 opened: "Closed Enum Device Model Dispatch". Status: proposed. ASR: "Newton-Raphson stamp evaluation must run in a tight loop with zero-cost dispatch and cache-friendly data layouts." Cross-linked: architecture/circuit-solver (surfaced bullet updated → ADR-0005), contexts/device-modeling, contexts/numeric-solver, grills/circuit-solver, vision/circuit-solver, concepts/zero-cost-abstractions, concepts/static-dispatch, concepts/dynamic-dispatch, concepts/trait-objects, concepts/memory-safety. Index.md updated (Decisions count 4→5, Decisions table). Zero dangling links verified.
+
+---
+
+2026-05-18 — Spec emitted: `wiki/specs/circuit-solver.md` (slug: `circuit-solver`). Goal: v1 binary acceptance criteria for the unified analog / digital / mixed-signal simulator, validated against [[entities/ngspice]] (analog golden reference) and [[entities/icarus-verilog]] (digital golden reference) on the [[entities/sky130-pdk]] and [[entities/asap7-pdk]]. Stories: 5 (analog conformance, digital event-trace equivalence, three mixed-signal cosim circuits, Newton-Raphson convergence guard, PyO3 frontend contract). Scenarios: 13 fenced ` ```gherkin ` blocks including one `Scenario Outline` (six cells/testbenches across both PDKs). User-confirmed scope envelopes: lenient functional-correctness (5 % / 0.5 dB / 100 µV / 2 dB); ASAP7 restricted to gate-level digital per [[decisions/0005-closed-enum-device-model-dispatch|ADR-0005]] (BSIM-CMG analog deferred); event-trace equivalence (not byte-level VCD) as the digital metric; mixed-signal corpus = digital-driven analog load, comparator + DFF, level shifter. ADR citations in frontmatter: 0001–0005 (all currently `proposed` — recorded as a soft-gate decision-to-proceed under the spec's `## Sources` section). Stubs created (`confidence: low`): concepts/golden-reference, concepts/value-change-dump, concepts/event-trace-equivalence, concepts/global-interpreter-lock, entities/icarus-verilog, entities/sky130-pdk, entities/asap7-pdk, entities/pyo3, entities/russell, entities/faer. Index.md updated (Concepts 1156→1160, Entities 180→186, Specs row added with count 1, header `updated` field bumped to 2026-05-18). Zero dangling links verified.
+
+---
+
+2026-05-18 — ADRs 0001–0005 promoted from `proposed` to `accepted`. Files updated: `wiki/decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph.md`, `wiki/decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer.md`, `wiki/decisions/0003-two-pass-graph-flattening-with-per-analysis-sub-views.md`, `wiki/decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler.md`, `wiki/decisions/0005-closed-enum-device-model-dispatch.md` — `## Status` flipped to `accepted` and frontmatter `updated` bumped to 2026-05-18 in each. ADR bodies were left untouched, preserving write-once discipline ([[concepts/architectural-decision-record]]). Downstream impact: the Spec workflow's soft-gate on `wiki/specs/circuit-solver.md` is now satisfied; `/wiki-kanban-emit` can dispatch the spec under the P2 pipeline pattern. Index.md `## Decisions` table refreshed (all five rows now show `accepted | 2026-05-18`). Spec's `## Sources` ADR-status footnotes updated to reflect acceptance.

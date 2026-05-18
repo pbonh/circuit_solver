@@ -3,7 +3,7 @@ title: "Two-Pass Graph Flattening with Per-Analysis Sub-Views"
 type: decision
 tags: [decision, circuit-solver, netlist, graph, flattening, mna, sparse-matrix, analysis]
 created: 2026-05-17
-updated: 2026-05-17
+updated: 2026-05-18
 sources:
   - "architecture/circuit-solver"
   - "grills/circuit-solver"
@@ -18,7 +18,7 @@ confidence: high
 
 ## Status
 
-proposed
+accepted
 
 ## Context
 

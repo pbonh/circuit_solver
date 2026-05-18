@@ -1,7 +1,7 @@
 ---
 title: "Circuit Simulation Knowledge Base Index"
 type: index
-updated: 2026-05-17
+updated: 2026-05-18
 ---
 
 # Circuit Simulation Knowledge Base Index
@@ -10,8 +10,8 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 
 ## Statistics
 
-- Concepts: 1156
-- Entities: 180
+- Concepts: 1160
+- Entities: 186
 - Summaries: 207
 - Syntheses: 1
 - Vision: 1
@@ -20,6 +20,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 - Grills: 1
 - Architecture: 1
 - Decisions: 5
+- Specs: 1
 
 ## Concepts
 
@@ -379,6 +380,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/event-log|Event Log]] | distributed-systems, streaming, well-established | high | 2026-05-15 |
 | [[concepts/event-scheduling-simulation|Event-Scheduling Simulation]] | simulation, modeling, discrete-event | medium | 2026-05-15 |
 | [[concepts/event-sourcing|Event Sourcing]] | well-established, distributed-systems, derived-data | high | 2026-05-15 |
+| [[concepts/event-trace-equivalence|Event-Trace Equivalence]] | digital, verification, foundational | low | 2026-05-18 |
 | [[concepts/eventual-consistency|Eventual Consistency]] | distributed-systems, consistency, foundational | high | 2026-05-15 |
 | [[concepts/exactly-once-processing|Exactly-Once Processing]] | messaging, fault-tolerance, advanced | medium | 2026-05-15 |
 | [[concepts/exactly-once-semantics|Exactly-Once Semantics]] | streaming, distributed-systems, well-established | high | 2026-05-15 |
@@ -438,7 +440,9 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/generalized-matrix-vector-multiplication|Generalized Matrix-Vector Multiplication]] | graph, sparse-matrix, big-data | high | 2026-05-15 |
 | [[concepts/generics|Generics]] | rust, foundational, generics | high | 2026-05-15 |
 | [[concepts/ggl-formulation|GGL Formulation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/global-interpreter-lock|Global Interpreter Lock (GIL)]] | python, concurrency, foundational, well-established | low | 2026-05-18 |
 | [[concepts/gmin-stepping|Gmin Stepping]] | analog, dc, well-established | high | 2026-05-15 |
+| [[concepts/golden-reference|Golden Reference]] | verification, testing, foundational | low | 2026-05-18 |
 | [[concepts/gpu-parallel-monte-carlo|GPU-Parallel Monte Carlo]] | monte-carlo, gpu, parallel | medium | 2026-05-15 |
 | [[concepts/gradient|Gradient]] | optimization, foundational, well-established | high | 2026-05-15 |
 | [[concepts/graph-algebra|Graph Algebra]] | graph, foundational, well-established | medium | 2026-05-15 |
@@ -1134,6 +1138,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/unsafe-rust|Unsafe Rust]] | rust, advanced, well-established | high | 2026-05-15 |
 | [[concepts/use-declarations|Use Declarations]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/v-and-v-tools|V&V Tools (Verification and Validation)]] | simulation, modeling, verification | medium | 2026-05-15 |
+| [[concepts/value-change-dump|Value Change Dump (VCD)]] | digital, verification, foundational, well-established | low | 2026-05-18 |
 | [[concepts/van-der-pol-equation|Van der Pol Equation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
 | [[concepts/varactor-diode|Varactor Diode]] | semiconductor, device-physics, p-n-junction | medium | 2026-05-15 |
 | [[concepts/variable-ordering|Variable Ordering (BDD)]] | bdd, foundational, np-complete | high | 2026-05-15 |
@@ -1195,6 +1200,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[entities/apache-storm|Apache Storm]] | streaming, open-source | 2026-05-15 |
 | [[entities/apache-thrift|Apache Thrift]] | well-established, encoding, schema-evolution | 2026-05-15 |
 | [[entities/arabesque|Arabesque]] | graph, distributed-systems, graph-mining | 2026-05-15 |
+| [[entities/asap7-pdk|ASAP7 PDK]] | pdk, predictive, open-source, asap7, finfet, digital | 2026-05-18 |
 | [[entities/atads-dataset|ATADS Dataset]] | aviation, dataset, time-series | 2026-05-15 |
 | [[entities/avopsinsight|AVOPSinsight]] | web, dashboard, aviation | 2026-05-15 |
 | [[entities/aws-lambda|AWS Lambda]] | cloud, serverless, faas | 2026-05-15 |
@@ -1230,6 +1236,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[entities/ernst-hairer|Ernst Hairer]] | ode, numerical-integration, foundational | 2026-05-15 |
 | [[entities/esteban-tlelo-cuautle|Esteban Tlelo-Cuautle]] | person, author, researcher | 2026-05-15 |
 | [[entities/etcd|etcd]] | well-established, distributed-systems, consensus | 2026-05-15 |
+| [[entities/faer|faer]] | rust, sparse-matrix, lu-decomposition, complex-arithmetic, numeric-solver | 2026-05-18 |
 | [[entities/fail2ban|Fail2ban]] | unix, security, intrusion-prevention | 2026-05-15 |
 | [[entities/ferris|Ferris]] | rust, mascot | 2026-05-15 |
 | [[entities/flask|Flask]] | python, web, wsgi | 2026-05-15 |
@@ -1256,6 +1263,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[entities/heinz-otto-kreiss|Heinz-Otto Kreiss]] | ode, numerical-integration, foundational | 2026-05-15 |
 | [[entities/hspice|HSPICE]] | tool, analog, simulator | 2026-05-15 |
 | [[entities/ian-gorton|Ian Gorton]] | author, academic, distributed-systems | 2026-05-15 |
+| [[entities/icarus-verilog|Icarus Verilog]] | digital, simulator, verilog, open-source | 2026-05-18 |
 | [[entities/indium-phosphide|Indium Phosphide (InP)]] | semiconductor, material, iii-v | 2026-05-15 |
 | [[entities/inra|INRA (French National Institute for Agricultural Research)]] | simulation, agriculture, institute | 2026-05-15 |
 | [[entities/isaac|ISAAC]] | tool, symbolic, analog | 2026-05-15 |
@@ -1303,6 +1311,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[entities/pregel|Pregel]] | graph, distributed-systems, big-data | 2026-05-15 |
 | [[entities/prometheus|Prometheus]] | observability, monitoring, open-source | 2026-05-15 |
 | [[entities/protocol-buffers|Protocol Buffers]] | well-established, encoding, schema-evolution | 2026-05-15 |
+| [[entities/pyo3|PyO3]] | rust, python, binding, ffi, well-established | 2026-05-18 |
 | [[entities/python-csv-module|Python `csv` Module]] | python, foundational, well-established | 2026-05-15 |
 | [[entities/python-datetime-module|Python `datetime` Module]] | python, foundational, well-established | 2026-05-15 |
 | [[entities/python-re-module|Python `re` Module]] | python, foundational, well-established | 2026-05-15 |
@@ -1318,6 +1327,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[entities/rodas|RODAS]] | ode, numerical-integration, foundational | 2026-05-15 |
 | [[entities/rodas5|RODAS5]] | ode, numerical-integration, foundational | 2026-05-15 |
 | [[entities/ros4|ROS4]] | ode, numerical-integration, foundational | 2026-05-15 |
+| [[entities/russell|Russell]] | rust, sparse-matrix, lu-decomposition, numeric-solver, well-established | 2026-05-18 |
 | [[entities/rust-project|Rust Project]] | rust, organization, foundational | 2026-05-15 |
 | [[entities/samza|Apache Samza]] | well-established, distributed-systems, streaming | 2026-05-15 |
 | [[entities/scad3|SCAD3]] | tool, symbolic, analog | 2026-05-15 |
@@ -1332,6 +1342,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[entities/silicide|Silicide]] | semiconductor, device-physics, materials | 2026-05-15 |
 | [[entities/silicon-dioxide|Silicon Dioxide (SiO2)]] | semiconductor, device-physics, materials | 2026-05-15 |
 | [[entities/silicon|Silicon (Si)]] | semiconductor, material, foundational | 2026-05-15 |
+| [[entities/sky130-pdk|Sky130 PDK]] | pdk, foundry, open-source, sky130, analog, digital | 2026-05-18 |
 | [[entities/sodex|SODEX]] | ode, numerical-integration, foundational | 2026-05-15 |
 | [[entities/spanner|Google Spanner]] | well-established, distributed-systems, relational | 2026-05-15 |
 | [[entities/spectre|Spectre]] | analog, mixed-signal, well-established | 2026-05-15 |
@@ -1622,7 +1633,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 
 | Page | Goal | Scenarios | Created |
 |------|------|-----------|---------|
-| <!-- entries added by /wiki-spec --> | | | |
+| [[specs/circuit-solver|Circuit Solver]] | v1 binary acceptance criteria vs ngspice (analog) and Icarus Verilog (digital) on Sky130 / ASAP7 | 13 | 2026-05-17 |
 
 ## Books
 
@@ -1646,9 +1657,9 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 
 | ADR | Title | Status | Updated |
 |-----|-------|--------|---------|
-| [[decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph|0001]] | PyO3 In-Process Binding with Immutable Circuit Graph | proposed | 2026-05-17 |
-| [[decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer|0002]] | Hybrid Sparse Direct Solver Backend (russell + faer) | proposed | 2026-05-17 |
-| [[decisions/0003-two-pass-graph-flattening-with-per-analysis-sub-views|0003]] | Two-Pass Graph Flattening with Per-Analysis Sub-Views | proposed | 2026-05-17 |
-| [[decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler|0004]] | Optimistic Mixed-Signal Synchronization via Shared Scheduler | proposed | 2026-05-17 |
-| [[decisions/0005-closed-enum-device-model-dispatch|0005]] | Closed Enum Device Model Dispatch | proposed | 2026-05-17 |
+| [[decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph|0001]] | PyO3 In-Process Binding with Immutable Circuit Graph | accepted | 2026-05-18 |
+| [[decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer|0002]] | Hybrid Sparse Direct Solver Backend (russell + faer) | accepted | 2026-05-18 |
+| [[decisions/0003-two-pass-graph-flattening-with-per-analysis-sub-views|0003]] | Two-Pass Graph Flattening with Per-Analysis Sub-Views | accepted | 2026-05-18 |
+| [[decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler|0004]] | Optimistic Mixed-Signal Synchronization via Shared Scheduler | accepted | 2026-05-18 |
+| [[decisions/0005-closed-enum-device-model-dispatch|0005]] | Closed Enum Device Model Dispatch | accepted | 2026-05-18 |
 

@@ -3,7 +3,7 @@ title: "Hybrid Sparse Direct Solver Backend (russell + faer)"
 type: decision
 tags: [decision, circuit-solver, sparse-matrix, lu-decomposition, russell, faer, rust, memory-safety, numeric-solver]
 created: 2026-05-17
-updated: 2026-05-17
+updated: 2026-05-18
 sources:
   - "architecture/circuit-solver"
   - "contexts/numeric-solver"
@@ -16,7 +16,7 @@ confidence: high
 
 ## Status
 
-proposed
+accepted
 
 ## Context
 
