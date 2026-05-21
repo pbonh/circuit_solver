@@ -17,3 +17,6 @@ Events include: `bootstrap-complete`, `manifest-bound`, `proposal-drafted`,
 <!-- entries appended by scientia skills -->
 - 2026-05-21T20:28:53Z — scientia-wiki-init — bootstrap-complete — bundle 0.1.0
 - 2026-05-21T20:30:01Z — scientia-wiki-lint — completed — — critical=0 warning=11 suggestion=1355
+- 2026-05-21T20:33:55Z — orchestrator — state-detected — — wiki_present=true lint=clean tenants=0 hermes=true
+- 2026-05-21T20:35:06Z — scientia-wiki-grill — grill-complete — default/circuit-solver — 4 stubs promoted, 0 open questions, wiki ready for bind
+- 2026-05-21T20:36:15Z — scientia-wiki-bind — manifest-bound — circuit-solver/2026-05-21-v1-spec — wiki_snapshot=a6ced3d
