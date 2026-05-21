@@ -165,3 +165,4 @@ The following design decisions will be captured as ADRs by `scientia-intent-adr`
 - **Zero-order hold default at analog-digital boundary** with linear interpolation opt-in. Proposed ADR slug: `0007-zero-order-hold-analog-digital-boundary`.
 - **Per-node max(relative, absolute) tolerance envelope** for golden-reference conformance. Proposed ADR slug: `0008-per-node-max-relative-absolute-tolerance-envelope`.
 - **Topology checker in netlist-graph Pass 1** that flags floating nodes and disconnected subgraphs before solve. Proposed ADR slug: `0009-topology-checker-floating-node-detection`.
+- **Unstable public Rust API surface for v1** — v1.0.0 signals feature completeness, not semver-frozen API stability. Proposed ADR slug: `0010-unstable-public-rust-api-surface-for-v1`.

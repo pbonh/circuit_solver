@@ -92,7 +92,7 @@ And the CircuitGraph remains unchanged
 Given CircuitDesigner creates a CircuitBuilder and adds a resistor "R1"
 And CircuitDesigner calls builder.build() producing graph_a
 And CircuitDesigner adds another resistor "R2" to the same builder
-And CircuitDesigner calls builder.build() producing graph_b
+When CircuitDesigner calls builder.build() a second time producing graph_b
 Then graph_a contains one element
 And graph_b contains two elements
 And graph_a is not affected by the addition of "R2"

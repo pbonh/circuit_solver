@@ -42,3 +42,11 @@ Events include: `bootstrap-complete`, `manifest-bound`, `proposal-drafted`,
 - 2026-05-21T23:00:23Z — orchestrator — adr-accepted — circuit-solver/2026-05-21-v1-spec — ADR-0007 accepted
 - 2026-05-21T23:00:23Z — orchestrator — adr-accepted — circuit-solver/2026-05-21-v1-spec — ADR-0008 accepted
 - 2026-05-21T23:00:23Z — orchestrator — adr-accepted — circuit-solver/2026-05-21-v1-spec — ADR-0009 accepted
+- 2026-05-21T23:01:39Z — orchestrator — enter-phase — circuit-solver/2026-05-21-v1-spec — delegating to scientia-intent-tasks
+- 2026-05-21T23:02:50Z — scientia-intent-tasks — tasks-listed — circuit-solver/2026-05-21-v1-spec — task_count=72
+- 2026-05-21T23:02:50Z — orchestrator — exit-phase — circuit-solver/2026-05-21-v1-spec — scientia-intent-tasks complete; stage now tasks
+- 2026-05-21T23:03:15Z — orchestrator — enter-phase — circuit-solver/2026-05-21-v1-spec — delegating to scientia-intent-verify
+- 2026-05-21T23:05:57Z — scientia-intent-verify — verified — circuit-solver/2026-05-21-v1-spec — critical=0 warning=5 suggestion=3
+- 2026-05-21T23:05:57Z — orchestrator — exit-phase — circuit-solver/2026-05-21-v1-spec — scientia-intent-verify complete; worst_severity=warning; passes gate (block_on=critical)
+- 2026-05-21T23:10:17Z — orchestrator — warnings-fixed — circuit-solver/2026-05-21-v1-spec — all 5 verify WARNING findings resolved
+- 2026-05-21T23:10:17Z — scientia-intent-adr — adr-drafted — circuit-solver/2026-05-21-v1-spec — adr=ADR-0010 status=accepted

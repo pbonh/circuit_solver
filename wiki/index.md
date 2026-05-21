@@ -19,7 +19,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 - Context Maps: 1
 - Grills: 1
 - Architecture: 1
-- Decisions: 9
+- Decisions: 10
 - Specs: 7
 
 ## Concepts
@@ -1672,4 +1672,5 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[decisions/0007-zero-order-hold-analog-digital-boundary|0007]] | Zero-Order Hold Default at Analog-Digital Boundary | accepted | 2025-07-18 |
 | [[decisions/0008-per-node-max-relative-absolute-tolerance-envelope|0008]] | Per-Node max(Relative, Absolute) Tolerance Envelope | accepted | 2025-07-18 |
 | [[decisions/0009-topology-checker-floating-node-detection|0009]] | Topology Checker for Floating-Node Detection in Pass 1 | accepted | 2025-07-18 |
+| [[decisions/0010-unstable-public-rust-api-surface-for-v1|0010]] | Unstable Public Rust API Surface for v1 | accepted | 2025-07-18 |
 
