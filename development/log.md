@@ -21,3 +21,11 @@ Events include: `bootstrap-complete`, `manifest-bound`, `proposal-drafted`,
 - 2026-05-21T20:35:06Z — scientia-wiki-grill — grill-complete — default/circuit-solver — 4 stubs promoted, 0 open questions, wiki ready for bind
 - 2026-05-21T20:36:15Z — scientia-wiki-bind — manifest-bound — circuit-solver/2026-05-21-v1-spec — wiki_snapshot=a6ced3d
 - 2026-05-21T20:41:46Z — scientia-intent-proposal — proposal-drafted — circuit-solver/2026-05-21-v1-spec — capabilities=6 breaking=2
+- 2026-05-21T22:42:07Z — orchestrator — delegating — circuit-solver/2026-05-21-v1-spec — to scientia-intent-spec
+- 2026-05-21T22:45:39Z — scientia-intent-spec — spec-authored — circuit-solver/2026-05-21-v1-spec — capability=dc-operating-point scenarios=6
+- 2026-05-21T22:45:39Z — scientia-intent-spec — spec-authored — circuit-solver/2026-05-21-v1-spec — capability=ac-small-signal scenarios=6
+- 2026-05-21T22:45:39Z — scientia-intent-spec — spec-authored — circuit-solver/2026-05-21-v1-spec — capability=transient-time-domain scenarios=6
+- 2026-05-21T22:45:39Z — scientia-intent-spec — spec-authored — circuit-solver/2026-05-21-v1-spec — capability=noise-spectral-density scenarios=6
+- 2026-05-21T22:45:39Z — scientia-intent-spec — spec-authored — circuit-solver/2026-05-21-v1-spec — capability=mixed-signal-cosim scenarios=6
+- 2026-05-21T22:45:39Z — scientia-intent-spec — spec-authored — circuit-solver/2026-05-21-v1-spec — capability=python-frontend scenarios=8
+- 2026-05-21T22:45:45Z — scientia-intent-spec — stage-complete — circuit-solver/2026-05-21-v1-spec — all 6 specs authored (38 scenarios total); stage transitioned to specs; next: scientia-intent-design

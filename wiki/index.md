@@ -20,7 +20,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 - Grills: 1
 - Architecture: 1
 - Decisions: 5
-- Specs: 1
+- Specs: 7
 
 ## Concepts
 
@@ -1634,6 +1634,12 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | Page | Goal | Scenarios | Created |
 |------|------|-----------|---------|
 | [[specs/circuit-solver|Circuit Solver]] | v1 binary acceptance criteria vs ngspice (analog) and Icarus Verilog (digital) on Sky130 / ASAP7 | 13 | 2026-05-17 |
+| [[specs/dc-operating-point|DC Operating Point]] | Steady-state equilibrium via Newton-Raphson with homotopy; node voltages and branch currents | 6 | 2026-05-21 |
+| [[specs/ac-small-signal|AC Small Signal]] | Frequency-domain linearized analysis; magnitude/phase TransferFunctions via complex sparse LU | 6 | 2026-05-21 |
+| [[specs/transient-time-domain|Transient Time Domain]] | Nonlinear time-domain simulation with adaptive timestepping and implicit integration | 6 | 2026-05-21 |
+| [[specs/noise-spectral-density|Noise Spectral Density]] | Output-referred noise from intrinsic device sources; spectral density vs. frequency | 6 | 2026-05-21 |
+| [[specs/mixed-signal-cosim|Mixed-Signal Co-Simulation]] | Optimistic analog/digital synchronization with rollback on misprediction | 6 | 2026-05-21 |
+| [[specs/python-frontend|Python Frontend]] | PyO3 builder API, immutable CircuitGraph, zero-copy NumPy results, GIL release | 8 | 2026-05-21 |
 
 ## Books
 
