@@ -288,3 +288,57 @@ Feature: Long solves do not block the Python interpreter
 - [[concepts/golden-reference]], [[concepts/event-trace-equivalence]], [[concepts/value-change-dump]], [[concepts/global-interpreter-lock]] — Created as `confidence: low` stubs alongside this spec.
 - [[entities/ngspice]], [[entities/icarus-verilog]], [[entities/sky130-pdk]], [[entities/asap7-pdk]], [[entities/pyo3]], [[entities/russell]], [[entities/faer]] — The entities named in scenarios; the four not previously in the wiki are created as `confidence: low` stubs alongside this spec.
 - **ADR-status note:** All five governing ADRs were promoted from `proposed` to `accepted` on 2026-05-18, satisfying the Spec workflow's lint rule (`Every spec's frontmatter.adr_ids entry must resolve to an existing ADR file with ## Status: accepted`). This spec is now eligible for `/wiki-kanban-emit` under the P2 pipeline pattern.
+
+## Kanban Tasks
+
+**Board:** `circuit-solver`
+
+**Idempotency Keys:**
+- Parent: `circuit-solver:0001+0002+0003+0004+0005:8f2bb9a98937aad9e3df672478aabd493d18d4cbdf8ef6ef3206726dfafb96b3`
+- Scenario — Pria validates an NMOS biased in saturation: `circuit-solver:0001+0002+0003+0004+0005:pria-validates-an-nmos-biased-in-saturation:ccf842c441bb15d3069fd0de5e689a54c42f5cf1494359333c4ef2559434ba6f`
+- Scenario — Pria sweeps a common-source amplifier from 1 Hz to 1 GHz: `circuit-solver:0001+0002+0003+0004+0005:pria-sweeps-a-common-source-amplifier-from-1-hz-to-1-ghz:afe49fc0b2764cae43f536263b747e3b1f702c70116da53c11b322f0c3637830`
+- Scenario — Pria simulates a five-stage ring oscillator: `circuit-solver:0001+0002+0003+0004+0005:pria-simulates-a-five-stage-ring-oscillator:73e4918084abe2b5b824a46a096f334f03221d09d79896b6743cbb25f08ea8e6`
+- Scenario — Pria measures input-referred noise of the common-source amplifier: `circuit-solver:0001+0002+0003+0004+0005:pria-measures-input-referred-noise-of-the-common-source-amplifier:92c0dfb7576369ec1edf057ca777ffc62c85f8b513de68bfbc80d639b2da463f`
+- Scenario — Devesh validates a digital cell or testbench against iverilog: `circuit-solver:0001+0002+0003+0004+0005:devesh-validates-a-digital-cell-or-testbench-against-iverilog:946772d4c59ce350d530a486ca965392050e05925f68f8b94f618dde987ac0b0`
+- Scenario — Mira drives a Sky130 inverter chain into an RC load: `circuit-solver:0001+0002+0003+0004+0005:mira-drives-a-sky130-inverter-chain-into-an-rc-load:3ebfaf2bec1dbedfbc8e3066cd60d33047353f0cf9cbb63004f4a2afaaf2df43`
+- Scenario — Mira feeds a comparator output into a Verilog D flip-flop: `circuit-solver:0001+0002+0003+0004+0005:mira-feeds-a-comparator-output-into-a-verilog-d-flip-flop:730cf569cabffb91a4fcdaa24391330094d000fc5074d80082c8d36fecce86f0`
+- Scenario — Mira drives a Sky130 1.8V-to-3.3V level shifter: `circuit-solver:0001+0002+0003+0004+0005:mira-drives-a-sky130-18v-to-33v-level-shifter:394f11c795fcaaf77436064b100f4b5a5082f079e3cfc2dc1b0b9e554b98f0ca`
+- Scenario — Roya verifies a near-discontinuity bias point: `circuit-solver:0001+0002+0003+0004+0005:roya-verifies-a-near-discontinuity-bias-point:242778f20d9e6da12e6aeee55295b993d4643ba3b72e6093faac266f29768e14`
+- Scenario — Roya runs a CMOS inverter at its metastable point: `circuit-solver:0001+0002+0003+0004+0005:roya-runs-a-cmos-inverter-at-its-metastable-point:42b3c745570b96c869bea6ecaf63cfe9c4335e295db8b3d51e8fdc45f56cf2b3`
+- Scenario — Pria attempts to mutate a built circuit and reads a result array: `circuit-solver:0001+0002+0003+0004+0005:pria-attempts-to-mutate-a-built-circuit-and-reads-a-result-array:f7a895621c1317053115fb1252f9f429d120c49d2f1fe6dd9d6f2e1196735430`
+- Scenario — Pria runs a 100k-timestep transient while a Python thread spins: `circuit-solver:0001+0002+0003+0004+0005:pria-runs-a-100k-timestep-transient-while-a-python-thread-spins:9099a5754ed68c1647a3c0edb159aa3e7f86a635a64970da35fd998dc7d2c991`
+- Aggregator: `circuit-solver:0001+0002+0003+0004+0005:aggregator:8e0549487ea897c877fe5ae528812b963f1857313c5815babb587a2787d73abc`
+
+**ADR IDs:** `0001`, `0002`, `0003`, `0004`, `0005`
+
+**Collaboration Pattern:** P2 pipeline (`worker` → `reviewer`)
+
+**Profile Mapping:**
+- orchestrator → `default`
+- worker → `default`
+- reviewer → `default`
+
+**Tenant:** `default`
+
+**Workspace:** `dir:/home/phillip/Boxes/Homes/RustDev/Code/github.com/pbonh/circuit_solver/project`
+
+**Skills:** `wiki-maintainer`, `kanban-worker`
+
+**Task List:**
+
+| ID | Role | Assignee | Scenario / Description |
+|---|---|---|---|
+| `t_e3d1ebe9` | orchestrator | default | Parent (spec orchestration) |
+| `t_8ca9027e` | worker | default | Scenario: Pria validates an NMOS biased in saturation |
+| `t_0dac134b` | worker | default | Scenario: Pria sweeps a common-source amplifier from 1 Hz to 1 GHz |
+| `t_2c3eb911` | worker | default | Scenario: Pria simulates a five-stage ring oscillator |
+| `t_7c3875fb` | worker | default | Scenario: Pria measures input-referred noise of the common-source amplifier |
+| `t_6ec40808` | worker | default | Scenario: Devesh validates a digital cell or testbench against iverilog |
+| `t_99a70ad2` | worker | default | Scenario: Mira drives a Sky130 inverter chain into an RC load |
+| `t_69000f20` | worker | default | Scenario: Mira feeds a comparator output into a Verilog D flip-flop |
+| `t_79ecbefd` | worker | default | Scenario: Mira drives a Sky130 1.8V-to-3.3V level shifter |
+| `t_af0770ea` | worker | default | Scenario: Roya verifies a near-discontinuity bias point |
+| `t_8e71a163` | worker | default | Scenario: Roya runs a CMOS inverter at its metastable point |
+| `t_5931e2d9` | worker | default | Scenario: Pria attempts to mutate a built circuit and reads a result array |
+| `t_a073ec79` | worker | default | Scenario: Pria runs a 100k-timestep transient while a Python thread spins |
+| `t_10406b92` | reviewer | default | Aggregator (Implementation Evidence) |
