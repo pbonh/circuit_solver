@@ -29,3 +29,6 @@ Events include: `bootstrap-complete`, `manifest-bound`, `proposal-drafted`,
 - 2026-05-21T22:45:39Z — scientia-intent-spec — spec-authored — circuit-solver/2026-05-21-v1-spec — capability=mixed-signal-cosim scenarios=6
 - 2026-05-21T22:45:39Z — scientia-intent-spec — spec-authored — circuit-solver/2026-05-21-v1-spec — capability=python-frontend scenarios=8
 - 2026-05-21T22:45:45Z — scientia-intent-spec — stage-complete — circuit-solver/2026-05-21-v1-spec — all 6 specs authored (38 scenarios total); stage transitioned to specs; next: scientia-intent-design
+- 2026-05-21T22:51:54Z — orchestrator — enter-phase — circuit-solver/2026-05-21-v1-spec — delegating to scientia-intent-design
+- 2026-05-21T22:53:35Z — scientia-intent-design — design-drafted — circuit-solver/2026-05-21-v1-spec — adrs_in_force=5 open_questions=5
+- 2026-05-21T22:53:37Z — orchestrator — exit-phase — circuit-solver/2026-05-21-v1-spec — scientia-intent-design complete; stage now design
