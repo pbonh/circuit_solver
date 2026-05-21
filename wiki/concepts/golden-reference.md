@@ -43,4 +43,4 @@ For analog circuit simulation, the golden reference is typically an established 
 
 ## Sources
 
-- [[wiki/specs/circuit-solver]] — Defines the v1 acceptance envelope and corpus.
+- [[specs/circuit-solver]] — Defines the v1 acceptance envelope and corpus.

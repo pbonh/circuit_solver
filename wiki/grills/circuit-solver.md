@@ -6,7 +6,7 @@ sources:
   - "wiki/vision/circuit-solver"
   - "contexts/application-frontend"
   - "contexts/analysis-orchestration"
-last_updated: 2026-05-17
+updated: 2026-05-17
 ---
 
 ## Decision Tree
@@ -170,11 +170,11 @@ A3: 3
 
 ## Cross-Links
 
-- [[wiki/vision/circuit-solver]]
+- [[vision/circuit-solver]]
 - [[contexts/application-frontend]]
 - [[contexts/analysis-orchestration]]
-- [[wiki/architecture/circuit-solver]]
-- [[wiki/specs/circuit-solver]]
+- [[architecture/circuit-solver]]
+- [[specs/circuit-solver]]
 
 ## Related Decisions
 

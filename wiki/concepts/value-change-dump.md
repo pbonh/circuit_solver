@@ -42,4 +42,4 @@ The simulation kernel writes a header section declaring the simulation timescale
 
 ## Sources
 
-- [[wiki/specs/circuit-solver]] — Uses VCD as the exchange format between [[entities/icarus-verilog]] and the circuit-solver digital kernel.
+- [[specs/circuit-solver]] — Uses VCD as the exchange format between [[entities/icarus-verilog]] and the circuit-solver digital kernel.

@@ -43,4 +43,4 @@ Both simulators run the same Verilog source against the same testbench and emit 
 
 ## Sources
 
-- [[wiki/specs/circuit-solver]] — Uses event-trace equivalence as the digital-kernel acceptance criterion against [[entities/icarus-verilog]].
+- [[specs/circuit-solver]] — Uses event-trace equivalence as the digital-kernel acceptance criterion against [[entities/icarus-verilog]].

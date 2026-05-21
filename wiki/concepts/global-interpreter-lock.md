@@ -39,4 +39,4 @@ Every Python thread must hold the GIL to run bytecode. The interpreter periodica
 
 ## Sources
 
-- [[wiki/specs/circuit-solver]] — Story 5 requires the solver to release the GIL during long-running analyses so that a concurrent Python thread observes ≥ 80 % CPU utilisation.
+- [[specs/circuit-solver]] — Story 5 requires the solver to release the GIL during long-running analyses so that a concurrent Python thread observes ≥ 80 % CPU utilisation.

@@ -3,6 +3,7 @@ title: "Journal Entry — YYYY-MM-DD"
 type: journal
 tags: [journal]
 date: YYYY-MM-DD
+updated: YYYY-MM-DD
 concepts_used: []
 result: ""
 ---
