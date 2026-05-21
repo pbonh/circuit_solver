@@ -5,7 +5,7 @@ tags: [verification, testing, foundational]
 created: 2026-05-18
 updated: 2026-05-18
 sources: ["wiki/specs/circuit-solver"]
-confidence: low
+confidence: medium
 ---
 
 ## Definition
