@@ -32,3 +32,13 @@ Events include: `bootstrap-complete`, `manifest-bound`, `proposal-drafted`,
 - 2026-05-21T22:51:54Z — orchestrator — enter-phase — circuit-solver/2026-05-21-v1-spec — delegating to scientia-intent-design
 - 2026-05-21T22:53:35Z — scientia-intent-design — design-drafted — circuit-solver/2026-05-21-v1-spec — adrs_in_force=5 open_questions=5
 - 2026-05-21T22:53:37Z — orchestrator — exit-phase — circuit-solver/2026-05-21-v1-spec — scientia-intent-design complete; stage now design
+- 2026-05-21T22:56:53Z — orchestrator — enter-phase — circuit-solver/2026-05-21-v1-spec — delegating to scientia-intent-adr
+- 2026-05-21T22:59:18Z — scientia-intent-adr — adr-drafted — circuit-solver/2026-05-21-v1-spec — adr=ADR-0006 status=proposed
+- 2026-05-21T22:59:18Z — scientia-intent-adr — adr-drafted — circuit-solver/2026-05-21-v1-spec — adr=ADR-0007 status=proposed
+- 2026-05-21T22:59:18Z — scientia-intent-adr — adr-drafted — circuit-solver/2026-05-21-v1-spec — adr=ADR-0008 status=proposed
+- 2026-05-21T22:59:18Z — scientia-intent-adr — adr-drafted — circuit-solver/2026-05-21-v1-spec — adr=ADR-0009 status=proposed
+- 2026-05-21T22:59:20Z — orchestrator — exit-phase — circuit-solver/2026-05-21-v1-spec — scientia-intent-adr complete; stage now adr; 4 ADRs drafted (0006–0009), all proposed
+- 2026-05-21T23:00:23Z — orchestrator — adr-accepted — circuit-solver/2026-05-21-v1-spec — ADR-0006 accepted
+- 2026-05-21T23:00:23Z — orchestrator — adr-accepted — circuit-solver/2026-05-21-v1-spec — ADR-0007 accepted
+- 2026-05-21T23:00:23Z — orchestrator — adr-accepted — circuit-solver/2026-05-21-v1-spec — ADR-0008 accepted
+- 2026-05-21T23:00:23Z — orchestrator — adr-accepted — circuit-solver/2026-05-21-v1-spec — ADR-0009 accepted
