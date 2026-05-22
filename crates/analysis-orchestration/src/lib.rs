@@ -15,13 +15,16 @@
 //!   results. Covers scenarios
 //!   `ac-small-signal#ac-analysis-with-pre-computed-operating-point`
 //!   and `ac-small-signal#ac-analysis-on-purely-linear-circuit`.
-//! - [`noise`] — Noise spectral-density control loop (tasks.md #37).
+//! - [`noise`] — Noise spectral-density control loop (tasks.md #37)
+//!   plus the integrated-noise-over-bandwidth summary metric
+//!   (tasks.md #39, [`integrated_noise`]).
 //!   Linearizes at the DC operating point, builds noise transfer
 //!   matrices at each frequency via the AC sub-view extractor, and
 //!   computes the output-referred PSD by summing squared-magnitude
 //!   transfer-function contributions weighted by per-source PSDs.
 //!   Covers scenarios
-//!   `noise-spectral-density#noise-analysis-on-a-resistive-circuit`
+//!   `noise-spectral-density#noise-analysis-on-a-resistive-circuit`,
+//!   `noise-spectral-density#integrated-noise-over-bandwidth`,
 //!   and
 //!   `noise-spectral-density#noise-analysis-on-circuit-with-failed-operating-point`.
 //! - [`sweep`] — Logarithmic frequency [`Sweep`][crate::LogSweep]
@@ -55,7 +58,8 @@ pub use mixed_signal::{
     DigitalStepReport, MixedSignalScheduler, NextEventReport, SchedulerError, SchedulerOutcome,
 };
 pub use noise::{
-    collect_noise_sources, noise_analysis, NoiseAnalysisData, NoiseAnalysisError,
+    collect_noise_sources, integrated_noise, noise_analysis, IntegratedNoise, IntegratedNoiseError,
+    IntegratedNoiseRequest, IntegrationBand, NoiseAnalysisData, NoiseAnalysisError,
     NoiseAnalysisRequest, NoiseAnalysisResult, NoiseInjection,
 };
 pub use sweep::{LogSweep, LogSweepError};
