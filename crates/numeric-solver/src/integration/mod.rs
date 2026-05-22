@@ -76,6 +76,7 @@
 pub mod adaptive;
 pub mod backward_euler;
 pub mod companion;
+pub mod trapezoidal;
 
 pub use adaptive::{
     next_step_size, step_decision, AdaptiveError, LteEstimator, LteToleranceEnvelope,
@@ -86,3 +87,4 @@ pub use backward_euler::{
     CompanionInputError,
 };
 pub use companion::{CapacitorHistory, CompanionStamp, InductorHistory};
+pub use trapezoidal::{CapacitorTrapHistory, InductorTrapHistory};
