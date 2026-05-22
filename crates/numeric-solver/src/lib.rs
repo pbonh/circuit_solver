@@ -66,6 +66,7 @@ pub mod assemble;
 pub mod flatten;
 pub mod integration;
 pub mod linear_solver;
+pub mod newton_raphson;
 pub mod sub_view;
 
 pub use ac_sub_view::{AcSubView, AcSubViewBuilder, AcSubViewError};
@@ -83,5 +84,9 @@ pub use integration::{
 pub use linear_solver::{
     FaerComplexSolver, LinearSolver, LinearSolverError, RussellRealSolver, SolutionVector,
     SparseLinearSystem, SparseTriplet, C64,
+};
+pub use newton_raphson::{
+    NewtonRaphsonConfig, NewtonRaphsonDriver, NewtonRaphsonError, NewtonRaphsonOutcome,
+    NonlinearSystem, SystemError,
 };
 pub use sub_view::{source_rhs_from, SubView, SubViewBuilder, SubViewError};
