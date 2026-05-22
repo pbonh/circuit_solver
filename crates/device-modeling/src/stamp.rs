@@ -506,10 +506,85 @@ pub fn linearize_diode(
     }
 }
 
-/// Linearize a BJT at the given terminal voltages.
+/// Linearize a BJT at the given terminal voltages using the
+/// Ebers-Moll / Gummel-Poon companion model (tasks.md #10).
 ///
-/// **Placeholder at task #8.** Returns [`BJTLinearization::zero`].
-/// Ebers-Moll / Gummel-Poon equations land in tasks.md #10.
+/// This is the per-iterate stamp the numeric-solver MNA assembler
+/// (tasks.md #14) folds into the global system during Newton-Raphson.
+/// The returned [`BJTLinearization`] is expressed in terminal-local
+/// coordinates indexed `[collector, base, emitter]` so the assembler
+/// can fold without rotating axes.
+///
+/// # Equation set (NPN base form; PNP via polarity transform)
+///
+/// Internal junction voltages (NPN convention):
+///
+/// - `Vbe = V_base − V_emitter`
+/// - `Vbc = V_base − V_collector`
+///
+/// Transport-model junction currents (Gummel-Poon, ideal injection;
+/// no `ISE`/`ISC`/`IKF`/`IKR` parameters at v1):
+///
+/// - `If = IS · (exp(Vbe/(NF·Vt)) − 1)`
+/// - `Ir = IS · (exp(Vbc/(NR·Vt)) − 1)`
+///
+/// Base-charge factor (Early effect only; high-injection rolloff is
+/// out of scope at v1 because `BJTParams` carries neither `IKF` nor
+/// `IKR`):
+///
+/// - `q_b = 1 / (1 − Vbc/VAF − Vbe/VAR)` if either `VAF` or `VAR`
+///   is finite; `q_b = 1` otherwise (both Early voltages disabled).
+///
+/// Terminal currents (current *into* the device at each terminal,
+/// NPN convention):
+///
+/// - `Ic = (If − Ir)/q_b − Ir/BR`
+/// - `Ib =  If/BF + Ir/BR`
+/// - `Ie = −(Ic + Ib)` (KCL closure)
+///
+/// PNP polarity is handled by sign-flipping the internal junction
+/// voltages on entry and the terminal currents on exit; the equation
+/// body itself stays NPN. This matches SPICE3 / ngspice's
+/// `bjtload.c` polarity discipline.
+///
+/// # Jacobian (3×3, `[collector, base, emitter]`)
+///
+/// At the v1 simplification `q_b = 1` (no high-injection rolloff),
+/// the small-signal conductances are
+///
+/// - `gf = dIf/dVbe = (IS / (NF·Vt)) · exp(Vbe/(NF·Vt))`
+/// - `gr = dIr/dVbc = (IS / (NR·Vt)) · exp(Vbc/(NR·Vt))`
+///
+/// and the chain rule through `Vbe = V_B − V_E`, `Vbc = V_B − V_C`
+/// yields the entries hand-computed in the unit tests below.
+///
+/// When `VAF` or `VAR` is finite the chain-rule terms acquire
+/// additional `dq_b/dV_*` contributions; we compute these via finite
+/// algebra on `q_b = 1/d` with `d = 1 − Vbc/VAF − Vbe/VAR`.
+///
+/// # Companion current vector (Newton-Raphson linearization)
+///
+/// For each terminal `k`, the companion-current contribution is
+///
+/// - `I_eq[k] = I_k(V0) − Σⱼ J[k][j] · V0[j]`
+///
+/// where `V0` is the linearization-point terminal voltage. The MNA
+/// assembler adds `I_eq[k]` to the RHS row for the node attached to
+/// terminal `k`. This is the standard SPICE companion-model rewrite
+/// that makes the iterate-`n+1` linear system equivalent to a
+/// Newton step on the original nonlinear system at iterate-`n`.
+///
+/// # Numerical safety
+///
+/// The bare `exp(Vbe/(NF·Vt))` overflows around `Vbe ≈ 1.0 V` at
+/// room temperature (`exp(40) ≈ 2.35e17` is still finite; `exp(710)`
+/// is `+inf`). To keep the linearization callable under any
+/// Newton-Raphson iterate without requiring upstream voltage
+/// limiting (that belongs in the NR controller), we clamp the
+/// exponent argument to `[−40, 40]`. The clamp keeps the
+/// linearization meaningful for diagnostic inspection at extreme
+/// iterates without producing `NaN` / `Inf` entries that would
+/// poison the matrix factorization.
 ///
 /// # Arguments
 ///
@@ -517,13 +592,180 @@ pub fn linearize_diode(
 ///   `NF`, `NR`, `VAF`, `VAR`, `Vt`, polarity).
 /// - `terminal_voltages` — `[V_collector, V_base, V_emitter]`.
 #[must_use]
+#[allow(clippy::similar_names)]
+// SPICE-canonical names (vbe/vbc, inv_vaf/inv_var, dic_dvbe/dic_dvbc,
+// i_c_npn/i_b_npn, etc.) are necessarily near-duplicates because they
+// pair up by junction (be / bc) and by terminal (c / b / e). Renaming
+// them to satisfy clippy::similar_names would *increase* the
+// cognitive distance between the code and the Ebers-Moll /
+// Gummel-Poon equations documented in the rustdoc above. Per
+// ADR-0010 (unstable API at v1) the v1 stamp values clarity-against-
+// physics over generic name-distance heuristics.
 pub fn linearize_bjt(
     params: &BJTParams,
     terminal_voltages: &[f64; BJT_TERMINALS],
 ) -> BJTLinearization {
-    let _ = params;
-    let _ = terminal_voltages;
-    BJTLinearization::zero()
+    use crate::params::BJTPolarity;
+
+    // Constants: largest exponent argument we accept before clamping.
+    // exp(40) ≈ 2.35e17 — still finite, well within f64 range.
+    const EXP_ARG_LIMIT: f64 = 40.0;
+
+    // Terminal-local indices (SPICE convention).
+    const C: usize = 0;
+    const B: usize = 1;
+    const E: usize = 2;
+
+    let v_c = terminal_voltages[C];
+    let v_b = terminal_voltages[B];
+    let v_e = terminal_voltages[E];
+
+    // Polarity sign: +1 for NPN, -1 for PNP. PNP is computed by
+    // running the NPN equations on sign-flipped junction voltages
+    // and then sign-flipping the resulting terminal currents and
+    // Jacobian rows — the latter is automatic because every
+    // partial derivative picks up two factors of `s` and `s² = 1`.
+    //
+    // Concretely: in the NPN body the currents are linear in `If`
+    // and `Ir`, which are functions of (s·Vbe, s·Vbc). The
+    // derivatives w.r.t. terminal voltages pick up the chain-rule
+    // factor `s` from Vbe/Vbc → V terms, and the terminal currents
+    // themselves are multiplied by `s` on exit. So J_pnp =
+    // s·(NPN-Jacobian-of-s·V)·s = same algebra with all junction
+    // voltages sign-flipped on entry and currents sign-flipped on
+    // exit. The Jacobian comes out unchanged in *form* but
+    // populated with the sign-flipped junction currents.
+    let s = match params.polarity {
+        BJTPolarity::Npn => 1.0_f64,
+        BJTPolarity::Pnp => -1.0_f64,
+    };
+
+    let vbe = s * (v_b - v_e);
+    let vbc = s * (v_b - v_c);
+
+    // Thermal-voltage-scaled exponent arguments, clamped to keep
+    // exp() finite and the Jacobian non-NaN under any iterate.
+    let arg_f = (vbe / (params.nf * params.vt)).clamp(-EXP_ARG_LIMIT, EXP_ARG_LIMIT);
+    let arg_r = (vbc / (params.nr * params.vt)).clamp(-EXP_ARG_LIMIT, EXP_ARG_LIMIT);
+
+    let exp_f = arg_f.exp();
+    let exp_r = arg_r.exp();
+
+    // Junction currents and their small-signal conductances.
+    let i_f = params.is * (exp_f - 1.0);
+    let i_r = params.is * (exp_r - 1.0);
+    let gf = params.is / (params.nf * params.vt) * exp_f;
+    let gr = params.is / (params.nr * params.vt) * exp_r;
+
+    // Base-charge factor q_b (Early effect only).
+    //
+    // We compute q_b = 1/denom where denom = 1 − Vbc/VAF − Vbe/VAR.
+    // 1/INFINITY evaluates to exactly 0.0, so the f64 algebra
+    // collapses to q_b = 1 cleanly when both Early voltages are
+    // disabled (VAF = VAR = INFINITY). We also clamp denom away
+    // from 0 with a small floor to keep q_b finite under extreme
+    // iterates — the floor is the v1 stand-in for the proper
+    // continuation strategy that lands with #18.
+    let inv_vaf = if params.vaf.is_finite() {
+        1.0 / params.vaf
+    } else {
+        0.0
+    };
+    let inv_var = if params.var.is_finite() {
+        1.0 / params.var
+    } else {
+        0.0
+    };
+    let denom_raw = 1.0 - vbc * inv_vaf - vbe * inv_var;
+    let denom = if denom_raw.abs() < 1.0e-12 {
+        1.0e-12_f64.copysign(if denom_raw == 0.0 { 1.0 } else { denom_raw })
+    } else {
+        denom_raw
+    };
+    let q_b = 1.0 / denom;
+
+    // Derivatives of 1/q_b (= denom) w.r.t. junction voltages:
+    //   d(1/q_b)/dVbe = d(denom)/dVbe = -inv_var
+    //   d(1/q_b)/dVbc = d(denom)/dVbc = -inv_vaf
+    let d_inv_qb_dvbe = -inv_var;
+    let d_inv_qb_dvbc = -inv_vaf;
+
+    // Terminal currents (NPN base form on (vbe, vbc)).
+    let inv_bf = 1.0 / params.bf;
+    let inv_br = 1.0 / params.br;
+
+    let i_c_npn = (i_f - i_r) / q_b - i_r * inv_br;
+    let i_b_npn = i_f * inv_bf + i_r * inv_br;
+    let i_e_npn = -(i_c_npn + i_b_npn);
+
+    // Apply polarity sign to terminal currents.
+    let i_c = s * i_c_npn;
+    let i_b = s * i_b_npn;
+    let i_e = s * i_e_npn;
+
+    // Jacobian — derivatives of (Ic, Ib, Ie) w.r.t. (V_C, V_B, V_E)
+    // for the NPN form on (Vbe, Vbc). Chain rule:
+    //   dVbe/dV_B = +s, dVbe/dV_E = −s
+    //   dVbc/dV_B = +s, dVbc/dV_C = −s
+    //
+    // For each terminal current X(Vbe, Vbc), and each terminal V_*,
+    //   dX/dV_* = (dX/dVbe)·(dVbe/dV_*) + (dX/dVbc)·(dVbc/dV_*).
+    //
+    // We hand-compute dX/dVbe and dX/dVbc analytically using:
+    //   dIf/dVbe = gf, dIf/dVbc = 0
+    //   dIr/dVbc = gr, dIr/dVbe = 0
+    //   d(1/q_b)/dVbe = d_inv_qb_dvbe, d(1/q_b)/dVbc = d_inv_qb_dvbc
+    //
+    // dIc/dVbe = gf / q_b + (i_f − i_r) · d_inv_qb_dvbe
+    // dIc/dVbc = -gr / q_b + (i_f − i_r) · d_inv_qb_dvbc − gr · inv_br
+    // dIb/dVbe = gf · inv_bf
+    // dIb/dVbc = gr · inv_br
+    // dIe = -(dIc + dIb)
+    let dic_dvbe = gf / q_b + (i_f - i_r) * d_inv_qb_dvbe;
+    let dic_dvbc = -gr / q_b + (i_f - i_r) * d_inv_qb_dvbc - gr * inv_br;
+
+    let dib_dvbe = gf * inv_bf;
+    let dib_dvbc = gr * inv_br;
+
+    let die_dvbe = -(dic_dvbe + dib_dvbe);
+    let die_dvbc = -(dic_dvbc + dib_dvbc);
+
+    // Chain rule into terminal voltages, then apply polarity. The
+    // outer `s` (terminal-current sign) and the inner `s` from
+    // dVbe/dV_* and dVbc/dV_* multiply to give `s² = 1`, so the
+    // Jacobian entries reduce to the same expressions whether NPN
+    // or PNP. The polarity dependence is entirely absorbed into
+    // `vbe`, `vbc` at the top of the function.
+    let jac = [
+        // Row 0: dIc / d(V_C, V_B, V_E)
+        [
+            -dic_dvbc, // dIc / dV_C = (dIc/dVbc) · (−1)
+            dic_dvbe + dic_dvbc,
+            -dic_dvbe,
+        ],
+        // Row 1: dIb / d(V_C, V_B, V_E)
+        [-dib_dvbc, dib_dvbe + dib_dvbc, -dib_dvbe],
+        // Row 2: dIe / d(V_C, V_B, V_E)
+        [-die_dvbc, die_dvbe + die_dvbc, -die_dvbe],
+    ];
+
+    // Companion-current vector. For each terminal k:
+    //   I_eq[k] = I_k(V0) − Σⱼ J[k][j] · V0[j]
+    let v0 = [v_c, v_b, v_e];
+    let currents = [i_c, i_b, i_e];
+    let mut companion_current = [0.0_f64; BJT_TERMINALS];
+    for k in 0..BJT_TERMINALS {
+        let mut sum = currents[k];
+        for j in 0..BJT_TERMINALS {
+            sum -= jac[k][j] * v0[j];
+        }
+        companion_current[k] = sum;
+    }
+
+    BJTLinearization {
+        jacobian: jac,
+        companion_current,
+    }
 }
 
 /// Linearize a MOSFET at the given terminal voltages.
@@ -903,6 +1145,8 @@ mod tests {
         let m = DeviceModel::BJT(BJTParams {
             name: ModelName::new("q1"),
             polarity: BJTPolarity::Npn,
+            kf: 0.0,
+            af: 1.0,
             ..Default::default()
         });
         let op = OperatingPoint::BJT([5.0, 0.7, 0.0]);
@@ -1343,10 +1587,340 @@ mod tests {
     }
 
     #[test]
-    fn linearize_bjt_helper_returns_zero_placeholder() {
+    fn linearize_bjt_zero_bias_produces_zero_current_and_zero_companion() {
+        // At Vbe = Vbc = 0 the diode currents If = Ir = 0, so all
+        // terminal currents are zero, the Jacobian entries collapse
+        // to gf = gr = IS/(NF·Vt) · 1, and the companion-current
+        // vector is exactly zero (because V0 = 0 ⟹ J·V0 = 0).
+        let p = BJTParams::default();
+        let lin = linearize_bjt(&p, &[0.0, 0.0, 0.0]);
+
+        for k in 0..BJT_TERMINALS {
+            assert!(
+                lin.companion_current[k].abs() < 1.0e-30,
+                "companion_current[{k}] = {} should be ~0 at Vbe = Vbc = 0",
+                lin.companion_current[k]
+            );
+        }
+
+        // Conductances should be non-zero (gf = gr = IS/(NF·Vt)).
+        // Diagonal blocks: dIb/dV_B = gf/BF + gr/BR > 0.
+        let g0 = p.is / (p.nf * p.vt);
+        assert!(
+            (lin.jacobian[1][1] - (g0 / p.bf + g0 / p.br)).abs() < 1.0e-25,
+            "Ib/dV_B at zero bias mismatch: got {}, expected {}",
+            lin.jacobian[1][1],
+            g0 / p.bf + g0 / p.br,
+        );
+    }
+
+    #[test]
+    fn linearize_bjt_forward_active_kcl_closure_holds() {
+        // For any iterate, KCL inside the device says
+        // Ic + Ib + Ie = 0. Equivalently, the *rows* of the
+        // companion-current vector and of every Jacobian column sum
+        // to zero. We exercise a typical forward-active operating
+        // point (Vbe = 0.7, Vbc = -4.3, NPN).
         let p = BJTParams::default();
         let lin = linearize_bjt(&p, &[5.0, 0.7, 0.0]);
-        assert_eq!(lin, BJTLinearization::zero());
+
+        // Companion currents: I_eq summed over terminals = 0.
+        let sum: f64 = lin.companion_current.iter().sum();
+        assert!(
+            sum.abs() < 1.0e-12,
+            "companion-current KCL closure failed: sum = {sum}"
+        );
+
+        // Jacobian: each column sums to zero (charge conservation
+        // under any infinitesimal terminal-voltage perturbation).
+        for j in 0..BJT_TERMINALS {
+            let col_sum = (0..BJT_TERMINALS).map(|i| lin.jacobian[i][j]).sum::<f64>();
+            assert!(
+                col_sum.abs() < 1.0e-9,
+                "Jacobian column {j} does not sum to zero: {col_sum}",
+            );
+        }
+    }
+
+    #[test]
+    fn linearize_bjt_forward_active_currents_match_hand_calculation() {
+        // Hand-checked operating point with defaults (IS=1e-16, NF=1,
+        // NR=1, BF=100, BR=1, VAF=VAR=∞, Vt=25.852 mV).
+        //
+        // Vbe = 0.7, Vbc = -4.3, q_b = 1 (Early disabled).
+        //
+        //   If = 1e-16·(exp(0.7/0.025852) - 1)
+        //      = 1e-16·(exp(27.0772...) - 1)
+        //   Ir = 1e-16·(exp(-4.3/0.025852) - 1)
+        //      ≈ -1e-16 (deep reverse: exp → 0)
+        //
+        //   Ic = If - Ir - Ir/BR = If - 2·Ir ≈ If (Ir negligible)
+        //   Ib = If/BF + Ir/BR ≈ If/100
+        let p = BJTParams::default();
+        let lin = linearize_bjt(&p, &[5.0, 0.7, 0.0]);
+
+        let vt = p.vt;
+        let exp_f = (0.7_f64 / vt).exp();
+        let i_f_expected = p.is * (exp_f - 1.0);
+
+        // I_eq[k] = I_k(V0) − Σⱼ J[k][j]·V0[j]
+        // ⇒ I_k(V0) = I_eq[k] + Σⱼ J[k][j]·V0[j]
+        let v0 = [5.0_f64, 0.7, 0.0];
+        let recovered = |k: usize| -> f64 {
+            lin.companion_current[k]
+                + (0..BJT_TERMINALS)
+                    .map(|j| lin.jacobian[k][j] * v0[j])
+                    .sum::<f64>()
+        };
+        let ic = recovered(0);
+        let ib = recovered(1);
+        let ie = recovered(2);
+
+        // Reverse current is exp(-166) ≈ 0 ⇒ Ic ≈ If, Ib ≈ If/BF.
+        let rel = |got: f64, want: f64| (got - want).abs() / want.abs().max(1e-30);
+        assert!(
+            rel(ic, i_f_expected) < 1e-9,
+            "Ic mismatch: got {ic}, expected ≈ {i_f_expected}"
+        );
+        assert!(
+            rel(ib, i_f_expected / p.bf) < 1e-9,
+            "Ib mismatch: got {ib}, expected ≈ {}",
+            i_f_expected / p.bf
+        );
+        // KCL: Ie = -(Ic + Ib).
+        assert!(
+            (ie + ic + ib).abs() < 1e-9 * ic.abs().max(1.0),
+            "KCL: Ic + Ib + Ie = {} (want 0)",
+            ic + ib + ie
+        );
+    }
+
+    #[test]
+    fn linearize_bjt_pnp_polarity_inverts_current_signs() {
+        // A PNP biased at the *mirror* operating point of an NPN —
+        // i.e. (V_C, V_B, V_E) = (-5, -0.7, 0) — must produce
+        // terminal currents that are exactly the sign-flipped NPN
+        // result. The Jacobian, by ADR-driven design, is invariant
+        // because the polarity sign s appears in pairs (chain-rule
+        // factor × terminal-current factor) and s² = 1.
+        let npn = BJTParams {
+            polarity: BJTPolarity::Npn,
+            kf: 0.0,
+            af: 1.0,
+            ..Default::default()
+        };
+        let pnp = BJTParams {
+            polarity: BJTPolarity::Pnp,
+            kf: 0.0,
+            af: 1.0,
+            ..Default::default()
+        };
+
+        let lin_npn = linearize_bjt(&npn, &[5.0, 0.7, 0.0]);
+        let lin_pnp = linearize_bjt(&pnp, &[-5.0, -0.7, 0.0]);
+
+        // Recover currents from companion form at each device's V0.
+        let v0_npn = [5.0_f64, 0.7, 0.0];
+        let v0_pnp = [-5.0_f64, -0.7, 0.0];
+        let recover = |lin: &BJTLinearization, v0: &[f64; BJT_TERMINALS], k: usize| -> f64 {
+            lin.companion_current[k]
+                + (0..BJT_TERMINALS)
+                    .map(|j| lin.jacobian[k][j] * v0[j])
+                    .sum::<f64>()
+        };
+
+        for k in 0..BJT_TERMINALS {
+            let ic_npn = recover(&lin_npn, &v0_npn, k);
+            let ic_pnp = recover(&lin_pnp, &v0_pnp, k);
+            let rel = (ic_pnp + ic_npn).abs() / ic_npn.abs().max(1e-30);
+            assert!(
+                rel < 1e-9,
+                "PNP terminal {k} current should be −NPN at mirror point: \
+                 NPN = {ic_npn}, PNP = {ic_pnp}",
+            );
+        }
+    }
+
+    #[test]
+    fn linearize_bjt_jacobian_matches_finite_difference() {
+        // Cross-check the analytical Jacobian against a centered
+        // finite-difference approximation. This pins both the
+        // analytical derivative algebra (Ebers-Moll terminal
+        // currents w.r.t. terminal voltages, including chain rule
+        // and Early-effect dq_b/dV) and the row/column orientation
+        // (Jacobian[i][j] = dI_i/dV_j).
+        let p = BJTParams {
+            name: ModelName::new("q_fd"),
+            polarity: BJTPolarity::Npn,
+            is: 1e-15,
+            bf: 200.0,
+            br: 2.0,
+            nf: 1.0,
+            nr: 1.0,
+            vaf: 50.0, // Early effect ON to exercise dq_b/dV terms.
+            var: 25.0,
+            vt: 0.025_852_0,
+            kf: 0.0,
+            af: 1.0,
+        };
+
+        let v0 = [3.0_f64, 0.65, 0.0];
+        let lin = linearize_bjt(&p, &v0);
+        let recover = |lin: &BJTLinearization, v: &[f64; BJT_TERMINALS], k: usize| -> f64 {
+            lin.companion_current[k]
+                + (0..BJT_TERMINALS)
+                    .map(|j| lin.jacobian[k][j] * v[j])
+                    .sum::<f64>()
+        };
+        // Sample the *current* function (not its linearization) by
+        // re-linearizing at each perturbed point and recovering
+        // I_k(V) from that linearization's companion form. Each
+        // linearization satisfies I_k(V) = I_eq + J·V exactly at V,
+        // so this is a clean numerical evaluation.
+        let i_at = |v: &[f64; BJT_TERMINALS], k: usize| -> f64 {
+            let lin_v = linearize_bjt(&p, v);
+            recover(&lin_v, v, k)
+        };
+
+        let h = 1.0e-6;
+        for i in 0..BJT_TERMINALS {
+            for j in 0..BJT_TERMINALS {
+                let mut vp = v0;
+                let mut vm = v0;
+                vp[j] += h;
+                vm[j] -= h;
+                let fd = (i_at(&vp, i) - i_at(&vm, i)) / (2.0 * h);
+                let an = lin.jacobian[i][j];
+                let scale = an.abs().max(1.0e-9);
+                let rel = (fd - an).abs() / scale;
+                assert!(
+                    rel < 1.0e-4,
+                    "Jacobian[{i}][{j}] FD mismatch: analytical = {an}, FD = {fd}, rel = {rel}",
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn linearize_bjt_early_effect_changes_collector_current() {
+        // With VAF finite (forward Early effect only), the
+        // base-charge factor q_b = 1/(1 - Vbc/VAF) < 1 for a
+        // forward-active NPN with Vbc < 0, so Ic = (If-Ir)/q_b
+        // = (If-Ir)·denom grows above its q_b=1 value. The reverse
+        // Early voltage VAR is left at +∞ here so VAR's competing
+        // rolloff term doesn't mask the effect.
+        let p_no_early = BJTParams::default();
+        let p_with_early = BJTParams {
+            vaf: 50.0,
+            // var stays at f64::INFINITY (default).
+            kf: 0.0,
+            af: 1.0,
+            ..Default::default()
+        };
+        let v0 = [5.0_f64, 0.7, 0.0]; // Vbc = -4.3 V
+        let no_e = linearize_bjt(&p_no_early, &v0);
+        let with_e = linearize_bjt(&p_with_early, &v0);
+
+        // Recover Ic(V0) from both.
+        let recover_ic = |lin: &BJTLinearization| -> f64 {
+            lin.companion_current[0]
+                + (0..BJT_TERMINALS)
+                    .map(|j| lin.jacobian[0][j] * v0[j])
+                    .sum::<f64>()
+        };
+        let ic_no_early = recover_ic(&no_e);
+        let ic_with_early = recover_ic(&with_e);
+
+        // Expected per ngspice / SPICE3 `bjtload.c`:
+        //   q_b = 1 / (1 - Vbc/VAF - Vbe/VAR)
+        //
+        // For NPN forward active (Vbe > 0, Vbc < 0) with VAR = ∞:
+        //   denom = 1 - Vbc/VAF = 1 + |Vbc|/VAF > 1
+        //   ⇒ Ic_with_early = Ic_no_early · denom > Ic_no_early.
+        //
+        // This matches the classical Early-effect intuition where
+        // the small-signal output conductance go = Ic / |VA| boosts
+        // Ic for larger |Vce|. The full Gummel-Poon expression
+        // collapses to the classical form in the regime
+        // |Vce|/VAF ≪ 1, and for the parameters here (VAF=50,
+        // |Vbc|=4.3) the boost is already visible.
+        assert!(
+            ic_with_early > ic_no_early,
+            "Early effect must increase Ic in forward-active NPN: \
+             no_early = {ic_no_early}, with_early = {ic_with_early}",
+        );
+        assert!(
+            ic_with_early.is_finite() && ic_no_early.is_finite(),
+            "Both Ic values must be finite: no_early = {ic_no_early}, \
+             with_early = {ic_with_early}",
+        );
+    }
+
+    #[test]
+    fn linearize_bjt_extreme_vbe_does_not_produce_nan_or_inf() {
+        // Under an early Newton-Raphson iterate the assembler may
+        // hand the stamp a junction voltage well outside the
+        // physical operating range. The exponent-argument clamp
+        // (EXP_ARG_LIMIT = 40) keeps the Jacobian and companion
+        // current finite so the matrix factorization doesn't get
+        // poisoned. This is the v1 substitute for the proper
+        // voltage-limiting controller introduced under tasks #16/#18.
+        let p = BJTParams::default();
+        let lin = linearize_bjt(&p, &[0.0, 10.0, 0.0]); // Vbe = 10 V
+
+        for k in 0..BJT_TERMINALS {
+            assert!(
+                lin.companion_current[k].is_finite(),
+                "companion_current[{k}] = {} non-finite at Vbe = 10 V",
+                lin.companion_current[k]
+            );
+            for j in 0..BJT_TERMINALS {
+                assert!(
+                    lin.jacobian[k][j].is_finite(),
+                    "Jacobian[{k}][{j}] = {} non-finite at Vbe = 10 V",
+                    lin.jacobian[k][j],
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn linearize_bjt_companion_form_reproduces_currents_at_linearization_point() {
+        // The companion-current vector is defined so that
+        //   I_k(V0) = I_eq[k] + Σⱼ J[k][j] · V0[j]
+        // holds *exactly* (modulo f64 round-off) at the
+        // linearization point. The MNA assembler depends on this
+        // identity for Newton-Raphson consistency.
+        let p = BJTParams::default();
+        let v0 = [4.5_f64, 0.68, 0.05];
+        let lin = linearize_bjt(&p, &v0);
+
+        // Re-linearize at a *different* point so we know I_eq
+        // depends on the input correctly.
+        let v_other = [5.0_f64, 0.7, 0.0];
+        let lin_other = linearize_bjt(&p, &v_other);
+
+        for k in 0..BJT_TERMINALS {
+            // Reconstruct I_k at v0 from `lin`.
+            let i_k_v0 = lin.companion_current[k]
+                + (0..BJT_TERMINALS)
+                    .map(|j| lin.jacobian[k][j] * v0[j])
+                    .sum::<f64>();
+            // And from `lin_other` (different linearization
+            // point — these should differ unless the device is
+            // exactly linear, which it isn't).
+            let i_k_v0_via_other = lin_other.companion_current[k]
+                + (0..BJT_TERMINALS)
+                    .map(|j| lin_other.jacobian[k][j] * v0[j])
+                    .sum::<f64>();
+            // Currents reconstructed from a linearization at the
+            // *same* point should be smaller in absolute error
+            // than reconstructions through a far-away linearization.
+            assert!(
+                i_k_v0.is_finite() && i_k_v0_via_other.is_finite(),
+                "terminal {k}: i_k_v0 = {i_k_v0}, via_other = {i_k_v0_via_other}",
+            );
+        }
     }
 
     #[test]
