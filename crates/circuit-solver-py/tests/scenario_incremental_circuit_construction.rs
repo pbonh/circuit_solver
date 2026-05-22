@@ -61,10 +61,12 @@
 //!   `crate::graph::PyCircuitGraph` (no `&mut self` `#[pymethods]`
 //!   compile against a `frozen` class). This test reads the Python
 //!   type name back through `get_type().name()` to confirm the class
-//!   identity, and additionally asserts that *no `add_*` method is
-//!   present on the returned graph* — the strongest behavioural check
-//!   we can run at the scenario layer without owning task #54's
-//!   dedicated `ImmutableHandleError` surface.
+//!   identity, and additionally asserts that *invoking each `add_*`
+//!   trap method* on the returned graph raises
+//!   `ImmutableHandleError` with a message that names the attempted
+//!   method and cites the immutability invariant — the direct
+//!   behavioural realisation of task #54's contract (merged in
+//!   `ebf976c`) at the scenario layer.
 //! - **ADR-0010** (Unstable Public Rust API Surface for v1). This
 //!   witness uses only the names re-exported from
 //!   `crate::{PyCircuitBuilder, PyCircuitGraph, CircuitBuilderError}`,
@@ -94,7 +96,7 @@
 
 #![cfg(not(feature = "extension-module"))]
 
-use circuit_solver::PyCircuitBuilder;
+use circuit_solver::{ImmutableHandleError, PyCircuitBuilder};
 use pyo3::prelude::*;
 use pyo3::types::{IntoPyDict, PyList};
 
@@ -193,13 +195,17 @@ fn scenario_incremental_circuit_construction_via_builder_api() {
         //   2. The class is `#[pyclass(frozen)]` (verified
         //      structurally; the `Bound<PyAny>` we hold cannot
         //      acquire a `&mut self` borrow at the PyO3 layer).
-        //   3. As a defence-in-depth behavioural check, *no* `add_*`
-        //      method is callable on the returned graph — `getattr`
-        //      on each of `add_element`, `add_wire`, `add_model`, and
-        //      `add_subcircuit` must fail with `AttributeError`. This
-        //      is the strongest observable signal that the graph
-        //      surface is read-only without yet owning task #54's
-        //      dedicated `ImmutableHandleError`.
+        //   3. As a direct behavioural check, *invoking* each `add_*`
+        //      trap method (`add_element`, `add_wire`, `add_model`,
+        //      `add_subcircuit`) on the returned graph must raise
+        //      `ImmutableHandleError`, and the error message must
+        //      name the attempted method and cite the immutability
+        //      invariant (the string `"immutable"` or the governing
+        //      ADR id `"ADR-0001"`). Task #54 (merged in `ebf976c`)
+        //      added these trap methods specifically to make this
+        //      scenario assertion possible; before #54 the scenario
+        //      had to settle for `getattr`-absence as a defence-in-
+        //      depth proxy.
         let type_name: String = graph
             .get_type()
             .name()
@@ -212,11 +218,32 @@ fn scenario_incremental_circuit_construction_via_builder_api() {
         );
 
         for forbidden in ["add_element", "add_wire", "add_model", "add_subcircuit"] {
-            let lookup = graph.getattr(forbidden);
+            // Call the trap method with no positional or keyword
+            // arguments; #54 made the four `add_*` methods on
+            // `CircuitGraph` `#[pyo3(signature = (*_args, **_kwargs))]`
+            // unconditional raisers, so the empty-arg call is
+            // sufficient to exercise the trap. We do *not* care
+            // whether real-shaped arguments would also raise; the
+            // contract is "any call raises", and the simplest call
+            // we can construct is the empty one.
+            let err = graph
+                .call_method0(forbidden)
+                .expect_err("immutable CircuitGraph trap method must raise on call, not return Ok");
             assert!(
-                lookup.is_err(),
-                "immutable CircuitGraph must not expose mutator '{forbidden}'; \
-                 getattr returned {lookup:?}"
+                err.is_instance_of::<ImmutableHandleError>(py),
+                "immutable CircuitGraph mutator '{forbidden}' must raise \
+                 ImmutableHandleError; got: {err}"
+            );
+            let msg = err.to_string();
+            assert!(
+                msg.contains(forbidden),
+                "ImmutableHandleError raised by '{forbidden}' must name the \
+                 attempted method in its message; got: {msg}"
+            );
+            assert!(
+                msg.contains("immutable") || msg.contains("ADR-0001"),
+                "ImmutableHandleError raised by '{forbidden}' must explain why \
+                 mutation is rejected (mention 'immutable' or 'ADR-0001'); got: {msg}"
             );
         }
 
@@ -332,10 +359,11 @@ fn scenario_is_deterministic_across_repeated_runs() {
 
 /// Defence-in-depth: explicitly verify the immutable-handle property
 /// at the Python boundary by attempting (and failing) a `setattr` on
-/// the returned `CircuitGraph`. Together with the `add_*` getattr
-/// checks in the main scenario, this gives us the strongest
-/// behavioural signal that the graph is read-only without yet relying
-/// on task #54's dedicated `ImmutableHandleError`.
+/// the returned `CircuitGraph`. The main scenario test already
+/// asserts the canonical `ImmutableHandleError` raised by the `add_*`
+/// trap methods (#54 contract); this `setattr` check covers the
+/// orthogonal attribute-assignment axis of immutability, which is
+/// owned by `#[pyclass(frozen)]` rather than by the trap methods.
 ///
 /// Note: `#[pyclass(frozen)]` causes `setattr` to fail with
 /// `AttributeError: attribute '<x>' of 'CircuitGraph' objects is not
