@@ -36,6 +36,13 @@
 //!   `AnalogTrace`, `DigitalEventTrace`, `MixedSignalResult`, and the
 //!   scheduler-attached metadata used by the
 //!   `optimistic-advance-with-correct-prediction` scenario).
+//! - [`transient`] — transient-analysis Result envelope
+//!   (`TransientResult`) and the adaptive-timestepping audit trail
+//!   (`TimestepHistoryMetadata`, `TimestepHistoryEntry`,
+//!   `StepOutcome`) that realizes the
+//!   `adaptive-timestepping-rejects-and-re-solves` scenario's
+//!   terminal "timestep history is available in the Result
+//!   metadata" Then.
 //!
 //! # Scope of this crate
 //!
@@ -61,6 +68,7 @@ pub mod ids;
 pub mod model;
 pub mod result;
 pub mod time;
+pub mod transient;
 
 pub use analysis::AnalysisType;
 pub use branch::BranchId;
@@ -74,3 +82,7 @@ pub use result::{
     AnalogTrace, DigitalEventTrace, MixedSignalResult, RollbackEvent, SchedulerMetadata, Waveform,
 };
 pub use time::SimulationTime;
+pub use transient::{
+    StepOutcome as TransientStepOutcome, TimestepHistoryEntry, TimestepHistoryMetadata,
+    TransientResult,
+};

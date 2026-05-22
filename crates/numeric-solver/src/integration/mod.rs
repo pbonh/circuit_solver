@@ -63,6 +63,9 @@
 //! - tasks.md **#31** — `gear2_bdf::{capacitor_companion, inductor_companion}`,
 //! - tasks.md **#32** — adaptive LTE estimator that depends on the
 //!   per-method companion outputs.
+//! - tasks.md **#35** — Result-side timestep-history metadata
+//!   lifted into [`circuit_solver_types::TransientResult`] via the
+//!   `From<&TimestepHistory>` impl in [`adaptive`].
 //!
 //! # Stability
 //!

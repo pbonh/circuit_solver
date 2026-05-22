@@ -13,7 +13,7 @@
 //! incidence structure); `netlist-graph` owns *construction* of the
 //! immutable graph, this crate owns *consumption* of it.
 //!
-//! As of `tasks.md` item #29 the public surface is:
+//! As of `tasks.md` item #35 the public surface is:
 //!
 //! - [`FlattenedStructure`] — the canonical hand-off type between the
 //!   netlist crate and the assembler (item #3). Defined in
@@ -33,7 +33,13 @@
 //!   reactive elements. [`integration::backward_euler`] lands in
 //!   tasks.md #29 (capacitor + inductor); sibling modules for
 //!   Trapezoidal (#30) and Gear-2 BDF (#31) attach under the same
-//!   shape.
+//!   shape; [`integration::adaptive`] (tasks.md #32) provides the
+//!   LTE controller; the `From<&TimestepHistory>` impl in
+//!   `integration::adaptive` (tasks.md **#35**) lifts the
+//!   controller's audit trail into
+//!   [`circuit_solver_types::TimestepHistoryMetadata`] for the
+//!   user-facing
+//!   [`circuit_solver_types::TransientResult`].
 //!
 //! # Stability
 //!

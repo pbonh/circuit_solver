@@ -474,6 +474,18 @@ pub struct StepDecision {
     /// value `> 1.0` produces `Reject`; `<= 1.0` produces `Accept`.
     /// Surfaced for the timestep history metadata (tasks.md #35).
     pub worst_ratio: f64,
+    /// Index into the `samples` slice passed to [`step_decision`]
+    /// identifying the node that produced `worst_ratio`. `None`
+    /// when the samples slice was empty (which the controller
+    /// rejects upstream, so consumers typically see `Some(_)`).
+    ///
+    /// Plumbed through here for the timestep-history metadata
+    /// (tasks.md #35) per the reviewer's downstream note on
+    /// tasks.md #32: the LTE estimator already computes the worst
+    /// node identity, and surfacing it lets users plot
+    /// "which node is driving step rejection?" without recomputing
+    /// the LTE.
+    pub worst_index: Option<usize>,
 }
 
 /// Whether the controller accepts or rejects the tentative step.
@@ -686,7 +698,7 @@ pub fn step_decision(
     if !current_h.is_finite() || current_h <= 0.0 {
         return Err(AdaptiveError::NonPositiveStep { h: current_h });
     }
-    let (worst_ratio, _worst_index) = estimator.worst_ratio(samples, envelope)?;
+    let (worst_ratio, worst_index) = estimator.worst_ratio(samples, envelope)?;
     let outcome = if worst_ratio <= 1.0 {
         StepOutcome::Accept
     } else {
@@ -697,6 +709,7 @@ pub fn step_decision(
         outcome,
         next_h,
         worst_ratio,
+        worst_index: Some(worst_index),
     })
 }
 
@@ -729,6 +742,13 @@ pub fn step_decision(
 /// - `outcome` — whether the attempt was accepted or rejected.
 /// - `worst_ratio` — the worst-case LTE/threshold ratio across all
 ///   nodes from this attempt, for diagnostic plotting.
+/// - `worst_index` — the index into the per-step `samples` slice
+///   identifying which node produced `worst_ratio`. `None` when the
+///   outer loop did not capture the index (e.g. for end-of-run
+///   manually-built records in tests). Plumbed in tasks.md #35 per
+///   the tasks.md #32 reviewer's note that this identity is
+///   already available from [`LteEstimator::worst_ratio`] and is
+///   load-bearing for "which node is driving rejection?" telemetry.
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct TimestepRecord {
     /// Attempted time `t_n + h` (seconds).
@@ -741,6 +761,32 @@ pub struct TimestepRecord {
     /// Worst-case LTE/threshold ratio across all nodes from this
     /// attempt.
     pub worst_ratio: f64,
+    /// Index of the node that produced `worst_ratio`, if known.
+    /// `None` allowed for callers that have not threaded the index
+    /// through (legacy / test code).
+    pub worst_index: Option<usize>,
+}
+
+impl TimestepRecord {
+    /// Build a record from a per-step decision plus the time/h that
+    /// were attempted.
+    ///
+    /// This is the canonical adapter for the outer control loop
+    /// (tasks.md #33): after each [`step_decision`] call it folds
+    /// the decision into a record and appends to the history. The
+    /// adapter exists so the `worst_index` and `worst_ratio` plumbing
+    /// from [`StepDecision`] is single-sourced rather than re-built
+    /// at every call site.
+    #[must_use]
+    pub fn from_decision(t_attempt: f64, h_attempt: f64, decision: &StepDecision) -> Self {
+        Self {
+            t_attempt,
+            h_attempt,
+            outcome: decision.outcome,
+            worst_ratio: decision.worst_ratio,
+            worst_index: decision.worst_index,
+        }
+    }
 }
 
 /// Append-only log of every tentative timestep attempt during a
@@ -814,6 +860,74 @@ impl TimestepHistory {
             .count();
         let rejected = self.records.len() - accepted;
         (accepted, rejected)
+    }
+}
+
+// -----------------------------------------------------------------------
+// Conversion into the Result-side metadata payload (tasks.md #35)
+// -----------------------------------------------------------------------
+//
+// `numeric-solver` produces `TimestepHistory`/`TimestepRecord` as
+// pure-compute byproducts of the LTE controller. The
+// transient-analysis-frontend boundary, however, must not pull the
+// numeric solver into its types layer — downstream crates depend
+// only on `circuit-solver-types`. So the Result-side metadata lives
+// in `circuit_solver_types::transient`, and this conversion lifts a
+// run's accumulated history into that stable shape.
+//
+// The conversion is intentionally a field-by-field map; the two
+// types are structurally similar so there is no transformation,
+// just a re-export of the controller's verdict in a Result-bound
+// vocabulary.
+
+impl From<StepOutcome> for circuit_solver_types::TransientStepOutcome {
+    fn from(outcome: StepOutcome) -> Self {
+        match outcome {
+            StepOutcome::Accept => circuit_solver_types::TransientStepOutcome::Accept,
+            StepOutcome::Reject => circuit_solver_types::TransientStepOutcome::Reject,
+        }
+    }
+}
+
+impl From<&TimestepRecord> for circuit_solver_types::TimestepHistoryEntry {
+    fn from(record: &TimestepRecord) -> Self {
+        circuit_solver_types::TimestepHistoryEntry {
+            t_attempt: record.t_attempt,
+            h_attempt: record.h_attempt,
+            outcome: record.outcome.into(),
+            worst_ratio: record.worst_ratio,
+            worst_node: record.worst_index,
+        }
+    }
+}
+
+impl From<TimestepRecord> for circuit_solver_types::TimestepHistoryEntry {
+    fn from(record: TimestepRecord) -> Self {
+        (&record).into()
+    }
+}
+
+impl From<&TimestepHistory> for circuit_solver_types::TimestepHistoryMetadata {
+    /// Lift a numeric-solver-internal [`TimestepHistory`] into the
+    /// stable Result-side
+    /// [`circuit_solver_types::TimestepHistoryMetadata`] handed to
+    /// users on the [`circuit_solver_types::TransientResult`].
+    ///
+    /// Realizes the Gherkin scenario
+    /// `transient-time-domain#adaptive-timestepping-rejects-and-re-solves`
+    /// terminal "And the timestep history is available in the Result
+    /// metadata" by being the *one* conversion the orchestration
+    /// layer calls at end-of-run to populate the Result.
+    fn from(history: &TimestepHistory) -> Self {
+        circuit_solver_types::TimestepHistoryMetadata::from_entries(
+            history.records().iter().map(Into::into).collect(),
+        )
+    }
+}
+
+impl From<TimestepHistory> for circuit_solver_types::TimestepHistoryMetadata {
+    fn from(history: TimestepHistory) -> Self {
+        (&history).into()
     }
 }
 
@@ -1548,18 +1662,21 @@ mod tests {
             h_attempt: 1.0e-9,
             outcome: StepOutcome::Reject,
             worst_ratio: 5.0,
+            worst_index: Some(0),
         });
         history.record(TimestepRecord {
             t_attempt: 0.5e-9,
             h_attempt: 0.5e-9,
             outcome: StepOutcome::Accept,
             worst_ratio: 0.2,
+            worst_index: Some(0),
         });
         history.record(TimestepRecord {
             t_attempt: 1.5e-9,
             h_attempt: 1.0e-9,
             outcome: StepOutcome::Accept,
             worst_ratio: 0.5,
+            worst_index: Some(0),
         });
         let accepted = history.accepted_points();
         // Gherkin: "the final Result contains only accepted time
@@ -1675,12 +1792,7 @@ mod tests {
         assert_eq!(first.outcome, StepOutcome::Reject);
         // Gherkin: re-solves at a smaller timestep.
         assert!(first.next_h < h0);
-        history.record(TimestepRecord {
-            t_attempt: h0,
-            h_attempt: h0,
-            outcome: first.outcome,
-            worst_ratio: first.worst_ratio,
-        });
+        history.record(TimestepRecord::from_decision(h0, h0, &first));
 
         // Second attempt at the shrunk step, with a smaller
         // second difference (the outer loop's NR re-solve at the
@@ -1695,12 +1807,7 @@ mod tests {
         let second = step_decision(estimator, &good_samples, env, h1, bounds)
             .expect("valid inputs must succeed");
         assert_eq!(second.outcome, StepOutcome::Accept);
-        history.record(TimestepRecord {
-            t_attempt: h1,
-            h_attempt: h1,
-            outcome: second.outcome,
-            worst_ratio: second.worst_ratio,
-        });
+        history.record(TimestepRecord::from_decision(h1, h1, &second));
 
         // Gherkin: the final Result contains only accepted time
         // points.
@@ -1714,5 +1821,215 @@ mod tests {
         assert_eq!(history.counts(), (1, 1));
         assert_eq!(history.records()[0].outcome, StepOutcome::Reject);
         assert_eq!(history.records()[1].outcome, StepOutcome::Accept);
+    }
+
+    // -----------------------------------------------------------------
+    // tasks.md #35: Result-side metadata + conversion tests
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn step_decision_now_reports_worst_index() {
+        // Two-node sample: node 1 has the larger LTE; controller
+        // must surface that index.
+        let estimator = LteEstimator::backward_euler();
+        let env = LteToleranceEnvelope::transient_default();
+        let bounds = StepSizeBounds::transient_default();
+        let samples = vec![
+            NodeHistorySample {
+                v_prev_prev: 0.0,
+                v_prev: 0.0,
+                v_curr: 1.0e-6, // small curvature
+            },
+            NodeHistorySample {
+                v_prev_prev: 0.0,
+                v_prev: 0.0,
+                v_curr: 1.0, // large curvature → big LTE
+            },
+        ];
+        let decision = step_decision(estimator, &samples, env, 1.0e-9, bounds)
+            .expect("valid inputs must succeed");
+        // The downstream reviewer's tasks.md #32 note #2 was
+        // "step_decision discards worst_index". This test pins
+        // the fix.
+        assert_eq!(decision.worst_index, Some(1));
+    }
+
+    #[test]
+    fn timestep_record_from_decision_propagates_worst_index() {
+        let estimator = LteEstimator::backward_euler();
+        let env = LteToleranceEnvelope::transient_default();
+        let bounds = StepSizeBounds::transient_default();
+        let samples = vec![
+            NodeHistorySample {
+                v_prev_prev: 0.0,
+                v_prev: 0.0,
+                v_curr: 1.0e-6,
+            },
+            NodeHistorySample {
+                v_prev_prev: 0.0,
+                v_prev: 0.0,
+                v_curr: 1.0,
+            },
+        ];
+        let decision = step_decision(estimator, &samples, env, 1.0e-9, bounds)
+            .expect("valid inputs must succeed");
+        let record = TimestepRecord::from_decision(1.0e-9, 1.0e-9, &decision);
+        assert_eq!(record.outcome, decision.outcome);
+        assert!((record.worst_ratio - decision.worst_ratio).abs() < 1.0e-30);
+        assert_eq!(record.worst_index, decision.worst_index);
+        assert!((record.t_attempt - 1.0e-9).abs() < 1.0e-30);
+        assert!((record.h_attempt - 1.0e-9).abs() < 1.0e-30);
+    }
+
+    #[test]
+    fn step_outcome_converts_to_result_side_outcome() {
+        use circuit_solver_types::TransientStepOutcome;
+        let accept: TransientStepOutcome = StepOutcome::Accept.into();
+        let reject: TransientStepOutcome = StepOutcome::Reject.into();
+        assert_eq!(accept, TransientStepOutcome::Accept);
+        assert_eq!(reject, TransientStepOutcome::Reject);
+    }
+
+    #[test]
+    fn timestep_record_converts_to_result_side_entry() {
+        use circuit_solver_types::{TimestepHistoryEntry, TransientStepOutcome};
+        let record = TimestepRecord {
+            t_attempt: 1.0e-9,
+            h_attempt: 1.0e-9,
+            outcome: StepOutcome::Reject,
+            worst_ratio: 5.0,
+            worst_index: Some(2),
+        };
+        let entry: TimestepHistoryEntry = (&record).into();
+        assert!((entry.t_attempt - record.t_attempt).abs() < 1.0e-30);
+        assert!((entry.h_attempt - record.h_attempt).abs() < 1.0e-30);
+        assert_eq!(entry.outcome, TransientStepOutcome::Reject);
+        assert!((entry.worst_ratio - record.worst_ratio).abs() < 1.0e-30);
+        assert_eq!(entry.worst_node, Some(2));
+
+        // By-value also works (just delegates).
+        let entry_owned: TimestepHistoryEntry = record.into();
+        assert_eq!(entry_owned.worst_node, Some(2));
+    }
+
+    #[test]
+    fn timestep_history_lifts_into_result_metadata() {
+        // The Gherkin scenario hand-built end-to-end.
+        // Attempt 1: t=1ns, h=1ns → reject (worst_ratio 5.0).
+        // Attempt 2: t=0.5ns, h=0.5ns → accept.
+        // Attempt 3: t=1.5ns, h=1ns → accept.
+        let mut history = TimestepHistory::new();
+        history.record(TimestepRecord {
+            t_attempt: 1.0e-9,
+            h_attempt: 1.0e-9,
+            outcome: StepOutcome::Reject,
+            worst_ratio: 5.0,
+            worst_index: Some(0),
+        });
+        history.record(TimestepRecord {
+            t_attempt: 0.5e-9,
+            h_attempt: 0.5e-9,
+            outcome: StepOutcome::Accept,
+            worst_ratio: 0.2,
+            worst_index: Some(0),
+        });
+        history.record(TimestepRecord {
+            t_attempt: 1.5e-9,
+            h_attempt: 1.0e-9,
+            outcome: StepOutcome::Accept,
+            worst_ratio: 0.5,
+            worst_index: Some(0),
+        });
+
+        // The Result-side metadata is what the user reads.
+        let meta: circuit_solver_types::TimestepHistoryMetadata = (&history).into();
+        assert_eq!(meta.len(), 3);
+        assert_eq!(meta.counts(), (2, 1));
+        // Gherkin: "the final Result contains only accepted time
+        // points" — accepted_times excludes the 1ns rejected attempt.
+        assert_eq!(meta.accepted_times(), vec![0.5e-9, 1.5e-9]);
+        // Gherkin: "the timestep history is available in the
+        // Result metadata" — the rejected attempt is preserved
+        // in the entry log for diagnostics.
+        assert!(meta.had_rejection());
+        assert_eq!(
+            meta.entries()[0].outcome,
+            circuit_solver_types::TransientStepOutcome::Reject
+        );
+        // By-value also works.
+        let meta_owned: circuit_solver_types::TimestepHistoryMetadata = history.into();
+        assert_eq!(meta_owned.len(), 3);
+    }
+
+    #[test]
+    fn lifting_an_empty_history_yields_an_empty_metadata() {
+        let history = TimestepHistory::new();
+        let meta: circuit_solver_types::TimestepHistoryMetadata = (&history).into();
+        assert!(meta.is_empty());
+        assert_eq!(meta.counts(), (0, 0));
+        assert!(meta.accepted_times().is_empty());
+        assert!(!meta.had_rejection());
+    }
+
+    #[test]
+    fn gherkin_scenario_end_to_end_through_result_metadata() {
+        // This is the full Gherkin scenario through *both* the
+        // controller and the conversion: drive the controller with
+        // a fast switch sample (rejected), then a slow re-solve
+        // sample (accepted), record each into the history, lift
+        // into Result metadata, and assert the scenario's
+        // terminal Then about accepted time points and metadata
+        // availability.
+        let estimator = LteEstimator::backward_euler();
+        let env = LteToleranceEnvelope::transient_default();
+        let bounds = StepSizeBounds::transient_default();
+        let mut history = TimestepHistory::new();
+
+        // Attempt 1: tentative step at t=1ns, h=1ns, with a
+        // rapidly switching sample. Expect Reject.
+        let h0 = 1.0e-9;
+        let bad_samples = vec![NodeHistorySample {
+            v_prev_prev: 0.0,
+            v_prev: 0.0,
+            v_curr: 1.0,
+        }];
+        let d1 = step_decision(estimator, &bad_samples, env, h0, bounds)
+            .expect("valid inputs must succeed");
+        assert_eq!(d1.outcome, StepOutcome::Reject);
+        // Per the controller's contract: reject ⇒ next_h is the
+        // shrunken re-solve step (smaller than h0).
+        assert!(d1.next_h < h0);
+        history.record(TimestepRecord::from_decision(h0, h0, &d1));
+
+        // Attempt 2: at the controller-suggested smaller step,
+        // with a less-curvy sample (the post-shrink NR re-solve).
+        // Expect Accept.
+        let h1 = d1.next_h;
+        let good_samples = vec![NodeHistorySample {
+            v_prev_prev: 0.0,
+            v_prev: 1.0e-4,
+            v_curr: 3.0e-4,
+        }];
+        let d2 = step_decision(estimator, &good_samples, env, h1, bounds)
+            .expect("valid inputs must succeed");
+        assert_eq!(d2.outcome, StepOutcome::Accept);
+        history.record(TimestepRecord::from_decision(h1, h1, &d2));
+
+        // Lift to Result-side metadata.
+        let meta: circuit_solver_types::TimestepHistoryMetadata = (&history).into();
+        // Gherkin terminal Then #1: only accepted time points.
+        assert_eq!(meta.accepted_times().len(), 1);
+        // Gherkin terminal Then #2: timestep history is available
+        // in the metadata — both attempts visible.
+        assert_eq!(meta.entries().len(), 2);
+        assert_eq!(meta.counts(), (1, 1));
+        assert!(meta.had_rejection());
+        // The worst_node identity from the controller round-trips
+        // through into the metadata.
+        assert_eq!(
+            meta.entries()[0].worst_node,
+            Some(0),
+            "worst_node must survive the conversion (tasks.md #32 reviewer note #2)"
+        );
     }
 }

@@ -53,7 +53,7 @@ created: 2025-07-18
 - [ ] **32.** Implement adaptive timestepping with LTE estimator: compute local truncation error, reject step if above tolerance, reduce h and re-solve — @spec: transient-time-domain#adaptive-timestepping-rejects-and-re-solves (depends on #29)
 - [ ] **33.** Implement transient analysis control loop: compute initial DC operating point (or accept UIC), step through time interval with selected integration method, return Waveforms — @spec: transient-time-domain#transient-analysis-with-default-integration-method (depends on #32, #20)
 - [ ] **34.** Implement UIC (Use Initial Conditions) mode: skip DC operating point, start from user-supplied node voltages — @spec: transient-time-domain#transient-analysis-with-uic-initial-conditions (depends on #33)
-- [ ] **35.** Implement timestep history metadata in Result — @spec: transient-time-domain#adaptive-timestepping-rejects-and-re-solves (depends on #32)
+- [x] **35.** Implement timestep history metadata in Result — @spec: transient-time-domain#adaptive-timestepping-rejects-and-re-solves (depends on #32)
 
 ## Capability: noise-spectral-density
 
