@@ -12,10 +12,13 @@
 //! `tasks.md`, item #53 owns the `build()` method and the immutable
 //! `CircuitGraph` `PyO3` handle. Until #53 lands, this class is only
 //! useful for accumulating declarations and for unit-testing the
-//! delegation paths; a private inspection helper
-//! [`PyCircuitBuilder::element_decl_count`] exposes the post-expansion
-//! element count so the test suite can verify the delegation
-//! side-effects without depending on #53's `build()`.
+//! delegation paths; two private inspection helpers —
+//! [`PyCircuitBuilder::element_decl_count`] and
+//! [`PyCircuitBuilder::build_snapshot_element_count`] — expose the
+//! post-add and post-build element counts respectively so the test
+//! suite can verify the delegation side-effects (#52) and the
+//! builder-isolation invariant (#55) without depending on #53's
+//! `build()` returning a full `CircuitGraph` handle.
 //!
 //! # Surface decisions (recorded for ADR-0010 callers)
 //!
@@ -200,6 +203,55 @@ impl PyCircuitBuilder {
     #[must_use]
     pub fn element_decl_count(&self) -> usize {
         self.inner.element_decl_count()
+    }
+
+    /// Build a `CircuitGraph` snapshot and return its post-expansion
+    /// element count as an inspection helper.
+    ///
+    /// This method exists to verify the
+    /// `python-frontend#builder-isolation-across-multiple-builds`
+    /// Gherkin scenario at the Python-frontend layer **without**
+    /// committing the full `CircuitGraph` `PyO3` handle, which is owned
+    /// by tasks.md item #53. It drives
+    /// [`netlist_graph::CircuitBuilder::build`] and returns
+    /// `netlist_graph::CircuitGraph::element_count` for the resulting
+    /// snapshot.
+    ///
+    /// The isolation invariant the spec scenario asserts is:
+    ///
+    /// > After `graph_a = builder.build()` and a subsequent
+    /// > `add_element("R2", …)`, calling `builder.build()` again
+    /// > produces a `graph_b` that contains `R2`, while `graph_a`
+    /// > remains a frozen snapshot of the state at *its* `build()`
+    /// > call site.
+    ///
+    /// The Rust core proves this invariant in
+    /// `netlist_graph::builder::tests::builder_isolation_across_multiple_builds`;
+    /// this Python-frontend helper lifts the invariant across the
+    /// `PyO3` boundary by returning *owned* `usize` snapshots — every
+    /// returned value is an independent Python int, captured from a
+    /// distinct call to the underlying Rust builder. The Python-level
+    /// regression test then verifies that the first snapshot's count
+    /// does not move when later builds happen.
+    ///
+    /// # Stability
+    ///
+    /// Per [ADR-0010] the Rust API surface is unstable at v1.0.0; this
+    /// helper is explicitly marked for replacement by #53's full
+    /// `build() -> PyCircuitGraph` once that lands. The Python contract
+    /// the Gherkin scenarios exercise will then move to
+    /// `len(graph_a.elements())` (or equivalent), not this helper.
+    ///
+    /// # Errors
+    ///
+    /// Raises `CircuitBuilderError` if the underlying Rust builder's
+    /// subcircuit expansion fails (unknown subcircuit reference,
+    /// expansion cycle).
+    ///
+    /// [ADR-0010]: ../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0010-unstable-public-rust-api-surface-for-v1.md
+    pub fn build_snapshot_element_count(&mut self) -> PyResult<usize> {
+        let graph = self.inner.build().map_err(|e| to_py_err(&e))?;
+        Ok(graph.element_count())
     }
 }
 

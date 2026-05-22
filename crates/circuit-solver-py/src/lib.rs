@@ -4,12 +4,16 @@
 //! module name registered with `CPython` is `circuit_solver` (PEP 8
 //! lowercase, distinct from the Rust crate name `circuit-solver-py`).
 //!
-//! ## Surface as of `tasks.md` item #52
+//! ## Surface as of `tasks.md` item #55
 //!
 //! - [`CircuitBuilder`](builder::PyCircuitBuilder) — the incremental
 //!   construction entry point. Methods: `add_element`, `add_wire`,
 //!   `add_model`, `add_subcircuit`. Delegates to
-//!   [`netlist_graph::CircuitBuilder`].
+//!   [`netlist_graph::CircuitBuilder`]. Item #55 adds the
+//!   `build_snapshot_element_count` inspection helper that lifts the
+//!   `python-frontend#builder-isolation-across-multiple-builds` Gherkin
+//!   scenario across the `PyO3` boundary without prematurely exposing
+//!   the full `CircuitGraph` handle (that handle is item #53's scope).
 //! - [`CircuitBuilderError`] — single Python exception class covering
 //!   every error variant of `netlist_graph::NetlistGraphError`.
 //!
