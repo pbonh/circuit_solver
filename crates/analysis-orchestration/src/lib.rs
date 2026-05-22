@@ -15,6 +15,10 @@
 //!   results. Covers scenarios
 //!   `ac-small-signal#ac-analysis-with-pre-computed-operating-point`
 //!   and `ac-small-signal#ac-analysis-on-purely-linear-circuit`.
+//! - [`sweep`] — Logarithmic frequency [`Sweep`][crate::LogSweep]
+//!   generator (tasks.md #28). Produces the frequency vector used by
+//!   [`ac_analysis`] for multi-decade Bode-style analyses. Covers
+//!   scenario `ac-small-signal#ac-frequency-sweep-over-multiple-decades`.
 //! - [`mixed_signal`] — Mixed-Signal Scheduler skeleton with the
 //!   `optimistic-advance-with-correct-prediction` happy path. Sibling
 //!   implementer tasks fill in mis-prediction rollback, boundary
@@ -28,9 +32,11 @@
 
 pub mod ac;
 pub mod mixed_signal;
+pub mod sweep;
 
 pub use ac::{ac_analysis, AcAnalysisError, AcAnalysisRequest, AcAnalysisResult, TransferFunction};
 pub use mixed_signal::{
     AnalogSolver, AnalogStepReport, BoundarySignals, DigitalAdapterKind, DigitalSimulator,
     DigitalStepReport, MixedSignalScheduler, NextEventReport, SchedulerError, SchedulerOutcome,
 };
+pub use sweep::{LogSweep, LogSweepError};
