@@ -2,15 +2,23 @@
 //! integration methods.
 //!
 //! This crate hosts the numeric core of the solver: it consumes the
-//! flattened netlist topology produced by `netlist-graph`'s Pass-1
-//! pass and progressively builds the Pass-2 MNA matrix, runs the
-//! Newton-Raphson outer loop, and dispatches to sparse-LU backends
-//! per ADR-0002. Most of the implementation lands incrementally as
-//! `tasks.md` items #14–#35.
+//! flattened netlist topology produced by Pass 1 (this crate, item #6)
+//! over a `CircuitGraph` from `netlist-graph`, and progressively builds
+//! the Pass-2 MNA matrix, runs the Newton-Raphson outer loop, and
+//! dispatches to sparse-LU backends per ADR-0002. Most of the
+//! implementation lands incrementally as `tasks.md` items #14–#35.
 //!
-//! As of `tasks.md` item #3 the only public surface is
-//! [`flattened::FlattenedStructure`] — the canonical hand-off type
-//! between the netlist crate and the assembler.
+//! Per ADR-0003 the flattener lives inside this crate (the Numeric
+//! Solver Engine "reads the `CircuitGraph` once" and produces the full
+//! incidence structure); `netlist-graph` owns *construction* of the
+//! immutable graph, this crate owns *consumption* of it.
+//!
+//! As of `tasks.md` item #6 the public surface is:
+//!
+//! - [`flattened::FlattenedStructure`] — the canonical hand-off type
+//!   between the netlist crate and the assembler (item #3).
+//! - [`flatten::flatten`] — Pass 1 itself: read a `CircuitGraph` and
+//!   return a `FlattenedStructure` (item #6, this task).
 //!
 //! # Stability
 //!
@@ -18,8 +26,10 @@
 
 #![deny(missing_docs)]
 
+pub mod flatten;
 pub mod flattened;
 
+pub use flatten::{flatten, FlattenError};
 pub use flattened::{
     ElementIncidence, FlattenedStructure, FlattenedStructureError, TopologyReport,
 };

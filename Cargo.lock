@@ -58,6 +58,7 @@ name = "numeric-solver"
 version = "0.0.1"
 dependencies = [
  "circuit-solver-types",
+ "netlist-graph",
 ]
 
 [[package]]
