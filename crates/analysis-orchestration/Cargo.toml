@@ -1,0 +1,18 @@
+[package]
+name = "analysis-orchestration"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+description = "Analysis control loops and the Mixed-Signal Scheduler (tasks.md items #20–#22, #25–#28, #33–#35, #37–#41, #42–#51)."
+
+[lints]
+workspace = true
+
+[dependencies]
+circuit-solver-types = { path = "../circuit-solver-types" }
+
+[dev-dependencies]
+circuit-solver-types = { path = "../circuit-solver-types" }

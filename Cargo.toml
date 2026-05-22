@@ -1,0 +1,32 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/circuit-solver-types",
+    "crates/netlist-graph",
+    "crates/device-modeling",
+    "crates/numeric-solver",
+    "crates/analysis-orchestration",
+    "crates/application-frontend",
+]
+# `circuit-solver-py` (PyO3 extension, item #1) is not yet a member; it will be
+# added once the Python frontend tasks (#52–#61) materialize. ADR-0010 makes
+# all v1 Rust API unstable, so the workspace shape itself remains revisable.
+
+[workspace.package]
+version = "0.0.1"
+edition = "2021"
+rust-version = "1.75"
+license = "MIT"
+repository = "https://github.com/pbonh/circuit_solver"
+publish = false  # ADR-0010: API surface is unstable; not for crates.io until stabilized.
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
