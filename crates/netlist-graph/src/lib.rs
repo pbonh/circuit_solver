@@ -21,10 +21,26 @@
 //! returning an immutable `CircuitGraph`. The headline scenario it
 //! enables is `python-frontend#incremental-circuit-construction-via-builder-api`.
 //!
-//! The remaining netlist-graph responsibilities — Pass 1 structure
-//! flattening (item #6), the topology checker (item #4 / ADR-0009),
-//! and SPICE deck parsing (items #15, #52..#55) — land in subsequent
-//! tasks.
+//! # tasks.md item #4
+//!
+//! The [`topology`] module delivers item #4 of
+//! `circuit-solver/2026-05-21-v1-spec`: Pass-1 floating-node
+//! detection per [ADR-0009]. It consumes a
+//! [`FlattenedStructure`](circuit_solver_types::flattened::FlattenedStructure)
+//! (`circuit-solver-types`) and a parallel conductivity-class slice,
+//! and emits a [`TopologyReport`](circuit_solver_types::flattened::TopologyReport)
+//! (`circuit-solver-types`) that the analysis orchestrator uses to
+//! decide whether to enable Gmin-stepping pre-solve.
+//!
+//! # Cross-crate dependency note
+//!
+//! The data types the topology checker reads (`FlattenedStructure`,
+//! `ElementIncidence`) and writes (`TopologyReport`) were promoted to
+//! `circuit-solver-types` to break the netlist-graph ↔ numeric-solver
+//! dependency cycle that would arise if `netlist-graph` imported them
+//! from `numeric-solver` while `numeric-solver`'s flattener imported
+//! `CircuitGraph` from `netlist-graph`. This keeps the dataflow
+//! strictly unidirectional per design.md.
 //!
 //! # Public surface
 //!
@@ -35,6 +51,8 @@
 //! - [`SubcircuitDefinition`], [`SubcircuitName`] — reusable circuit
 //!   modules and their port interfaces.
 //! - [`NetlistGraphError`] — the closed enumeration of builder errors.
+//! - [`topology::check_topology`], [`topology::ConductivityClass`] —
+//!   Pass-1 floating-node detection (ADR-0009).
 //!
 //! # Stability
 //!
@@ -43,6 +61,7 @@
 //! ADR.
 //!
 //! [ctx]: ../../../../wiki/contexts/netlist-graph.md
+//! [ADR-0009]: ../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0009-topology-checker-floating-node-detection.md
 
 #![deny(missing_docs)]
 
@@ -51,6 +70,7 @@ pub mod element;
 pub mod error;
 pub mod graph;
 pub mod subcircuit;
+pub mod topology;
 
 pub use builder::{CircuitBuilder, ElementDecl, NetName, GROUND_NET};
 pub use element::{Element, ElementKind, ElementName, SubcircuitName};

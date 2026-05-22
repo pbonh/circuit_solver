@@ -15,8 +15,10 @@
 //!
 //! As of `tasks.md` item #6 the public surface is:
 //!
-//! - [`flattened::FlattenedStructure`] — the canonical hand-off type
-//!   between the netlist crate and the assembler (item #3).
+//! - [`FlattenedStructure`] — the canonical hand-off type between the
+//!   netlist crate and the assembler (item #3). Defined in
+//!   `circuit-solver-types` to avoid a netlist-graph ↔ numeric-solver
+//!   dependency cycle; re-exported here for convenience.
 //! - [`flatten::flatten`] — Pass 1 itself: read a `CircuitGraph` and
 //!   return a `FlattenedStructure` (item #6, this task).
 //!
@@ -27,9 +29,8 @@
 #![deny(missing_docs)]
 
 pub mod flatten;
-pub mod flattened;
 
-pub use flatten::{flatten, FlattenError};
-pub use flattened::{
+pub use circuit_solver_types::flattened::{
     ElementIncidence, FlattenedStructure, FlattenedStructureError, TopologyReport,
 };
+pub use flatten::{flatten, FlattenError};

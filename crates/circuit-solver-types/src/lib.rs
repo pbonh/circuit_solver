@@ -24,6 +24,14 @@
 //!   update/residue criterion encoded here.
 //! - [`analysis`] — the closed `AnalysisType` enum the analysis
 //!   orchestrator dispatches on.
+//! - [`flattened`] — Pass-1 flattened incidence structure
+//!   (`FlattenedStructure`, `ElementIncidence`, `TopologyReport`) and
+//!   its constructor errors. Originally placed in `numeric-solver`, these
+//!   types were promoted here because `netlist-graph` (topology checker,
+//!   tasks.md item #4) and `numeric-solver` (flattener, tasks.md item #6)
+//!   both need them; keeping them in `circuit-solver-types` breaks what
+//!   would otherwise be a netlist-graph ↔ numeric-solver dependency
+//!   cycle.
 //! - [`result`] — mixed-signal Result envelopes (`Waveform`,
 //!   `AnalogTrace`, `DigitalEventTrace`, `MixedSignalResult`, and the
 //!   scheduler-attached metadata used by the
@@ -31,19 +39,24 @@
 //!
 //! # Scope of this crate
 //!
-//! `circuit-solver-types` carries only the types that cross multiple
-//! workspace crates. Richer per-context data — `CircuitGraph`,
-//! `FlattenedStructure`, `DeviceModel`, `AnalysisRequest` envelopes,
-//! `OperatingPoint`, `TransferFunction`, `TopologyReport` — lives in
-//! the bounded-context crate that owns it. This keeps `types` a thin,
-//! dependency-free leaf so every other crate can depend on it without
-//! pulling in solver internals.
+//! `circuit-solver-types` carries the types that cross multiple
+//! workspace crates. `FlattenedStructure`, `ElementIncidence`, and
+//! `TopologyReport` were promoted here specifically to break the
+//! netlist-graph ↔ numeric-solver dependency cycle that would arise
+//! if the topology checker (in `netlist-graph`, tasks.md item #4)
+//! imported them from `numeric-solver` while the flattener (in
+//! `numeric-solver`, tasks.md item #6) imported `CircuitGraph` from
+//! `netlist-graph`. Other richer per-context data — `CircuitGraph`,
+//! `DeviceModel`, `AnalysisRequest` envelopes, `OperatingPoint`,
+//! `TransferFunction` — still lives in the bounded-context crate that
+//! owns it.
 
 #![deny(missing_docs)]
 
 pub mod analysis;
 pub mod branch;
 pub mod convergence;
+pub mod flattened;
 pub mod ids;
 pub mod model;
 pub mod result;
@@ -52,6 +65,9 @@ pub mod time;
 pub use analysis::AnalysisType;
 pub use branch::BranchId;
 pub use convergence::{ConvergenceDiagnostic, ConvergenceStatus, ConvergenceTolerances};
+pub use flattened::{
+    ElementIncidence, FlattenedStructure, FlattenedStructureError, TopologyReport,
+};
 pub use ids::{ElementId, NodeId, SignalName};
 pub use model::ModelName;
 pub use result::{
