@@ -15,6 +15,15 @@
 //!   results. Covers scenarios
 //!   `ac-small-signal#ac-analysis-with-pre-computed-operating-point`
 //!   and `ac-small-signal#ac-analysis-on-purely-linear-circuit`.
+//! - [`noise`] — Noise spectral-density control loop (tasks.md #37).
+//!   Linearizes at the DC operating point, builds noise transfer
+//!   matrices at each frequency via the AC sub-view extractor, and
+//!   computes the output-referred PSD by summing squared-magnitude
+//!   transfer-function contributions weighted by per-source PSDs.
+//!   Covers scenarios
+//!   `noise-spectral-density#noise-analysis-on-a-resistive-circuit`
+//!   and
+//!   `noise-spectral-density#noise-analysis-on-circuit-with-failed-operating-point`.
 //! - [`sweep`] — Logarithmic frequency [`Sweep`][crate::LogSweep]
 //!   generator (tasks.md #28). Produces the frequency vector used by
 //!   [`ac_analysis`] for multi-decade Bode-style analyses. Covers
@@ -32,11 +41,16 @@
 
 pub mod ac;
 pub mod mixed_signal;
+pub mod noise;
 pub mod sweep;
 
 pub use ac::{ac_analysis, AcAnalysisError, AcAnalysisRequest, AcAnalysisResult, TransferFunction};
 pub use mixed_signal::{
     AnalogSolver, AnalogStepReport, BoundarySignals, DigitalAdapterKind, DigitalSimulator,
     DigitalStepReport, MixedSignalScheduler, NextEventReport, SchedulerError, SchedulerOutcome,
+};
+pub use noise::{
+    collect_noise_sources, noise_analysis, NoiseAnalysisData, NoiseAnalysisError,
+    NoiseAnalysisRequest, NoiseAnalysisResult, NoiseInjection,
 };
 pub use sweep::{LogSweep, LogSweepError};

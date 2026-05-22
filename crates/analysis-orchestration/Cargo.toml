@@ -16,12 +16,20 @@ circuit-solver-types = { path = "../circuit-solver-types" }
 # AC analysis control loop (tasks.md #25) drives the AC sub-view
 # extractor and the complex-valued sparse-LU dispatch from the
 # numeric-solver crate. The control loop owns no MNA assembly logic
-# of its own; it composes existing numeric-solver pieces.
+# of its own; it composes existing numeric-solver pieces. The noise
+# control loop (tasks.md #37) shares this composition pattern.
 numeric-solver = { path = "../numeric-solver" }
 netlist-graph = { path = "../netlist-graph" }
+# Noise analysis (tasks.md #37) consumes the intrinsic-noise stamp
+# contract from device-modeling (tasks.md #36): the per-resistor
+# `4kT/R` Johnson-Nyquist source is built via `resistor_thermal_noise`,
+# and physical constants (`BOLTZMANN_J_PER_K`, `ROOM_TEMPERATURE_K`)
+# are re-used to keep the thermal-noise formula in one canonical site.
+device-modeling = { path = "../device-modeling" }
 num-complex = { version = "0.4", default-features = false }
 
 [dev-dependencies]
 circuit-solver-types = { path = "../circuit-solver-types" }
 numeric-solver = { path = "../numeric-solver" }
 netlist-graph = { path = "../netlist-graph" }
+device-modeling = { path = "../device-modeling" }
