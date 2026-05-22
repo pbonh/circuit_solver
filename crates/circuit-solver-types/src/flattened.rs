@@ -48,7 +48,7 @@
 //!   the **full** matrix per ADR-0003; sub-view extraction (tasks.md
 //!   item #15) is where ground suppression happens.
 
-use circuit_solver_types::{BranchId, ElementId, NodeId};
+use crate::{BranchId, ElementId, NodeId};
 
 /// Incidence stamp for a single circuit element after Pass 1
 /// flattening.

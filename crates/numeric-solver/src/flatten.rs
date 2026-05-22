@@ -72,7 +72,9 @@
 //! the builder, which makes downstream conformance comparison against
 //! ngspice's matrix layout reproducible.
 
-use crate::flattened::{ElementIncidence, FlattenedStructure, FlattenedStructureError};
+use circuit_solver_types::flattened::{
+    ElementIncidence, FlattenedStructure, FlattenedStructureError,
+};
 use circuit_solver_types::{BranchId, ElementId, NodeId};
 use netlist_graph::{CircuitGraph, ElementKind};
 
