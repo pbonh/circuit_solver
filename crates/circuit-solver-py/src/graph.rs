@@ -16,13 +16,20 @@
 //! so adding `#[pymethods]` that mutate is structurally impossible —
 //! `&mut self` receivers would fail to compile. This is the strongest
 //! enforcement of ADR-0001's immutable-handle requirement available
-//! at the binding boundary. The companion scenario
+//! at the binding boundary.
+//!
+//! To satisfy the companion scenario
 //! `python-frontend#immutable-circuit-graph-prevents-post-build-mutation`
-//! (tasks.md item #54) will add a dedicated `ImmutableHandleError`
-//! Python exception class for the "attempted mutation" path; for now
-//! such attempts surface as the standard `AttributeError` Python
-//! raises when a class lacks the requested method, which is itself a
-//! valid "mutation rejected" signal.
+//! (tasks.md item #54), each builder-mutation method name —
+//! `add_element`, `add_wire`, `add_model`, `add_subcircuit` — is
+//! present on `PyCircuitGraph` as a **trap method**: it exists so
+//! Python attribute lookup succeeds, but its body unconditionally
+//! raises the dedicated [`ImmutableHandleError`](crate::errors::ImmutableHandleError)
+//! Python exception. The signature is `*args, **kwargs` so any call
+//! shape resolves to the trap before argument-type checking can
+//! produce a `TypeError`, which would obscure the real diagnostic.
+//! The `frozen` pyclass attribute is the structural belt; the trap
+//! methods are the diagnostic suspenders.
 //!
 //! # Surface decisions (recorded for ADR-0010 callers)
 //!
@@ -41,8 +48,10 @@
 //! - **`__repr__` for diagnostics.** A short `__repr__` is provided so
 //!   `print(graph)` from a Python REPL produces something useful.
 
+use crate::errors::immutable_handle_err;
 use netlist_graph::CircuitGraph;
 use pyo3::prelude::*;
+use pyo3::types::{PyDict, PyTuple};
 
 /// Python class: `circuit_solver.CircuitGraph`.
 ///
@@ -153,5 +162,92 @@ impl PyCircuitGraph {
             self.inner.node_count(),
             self.inner.model_count(),
         )
+    }
+
+    // -----------------------------------------------------------------
+    // Immutable-handle trap methods (tasks.md item #54; scenario
+    // `python-frontend#immutable-circuit-graph-prevents-post-build-mutation`).
+    // -----------------------------------------------------------------
+    //
+    // Each builder-mutation method name from `PyCircuitBuilder` is
+    // mirrored here as a no-op that raises
+    // [`ImmutableHandleError`](crate::errors::ImmutableHandleError).
+    // The `(*args, **kwargs)` signature is deliberate: it consumes any
+    // call shape Python may construct (positional or keyword), so the
+    // typed `ImmutableHandleError` always wins over `TypeError` (wrong
+    // number of arguments) or other incidental Python diagnostics. The
+    // body never inspects the arguments — the only contract is "this
+    // method is not callable on an immutable handle". The
+    // `_args` / `_kwargs` parameter names communicate that intent to
+    // both `clippy` (no unused-name warning) and to the reader.
+
+    /// Trap method: raises [`ImmutableHandleError`](crate::errors::ImmutableHandleError) — see the
+    /// `python-frontend#immutable-circuit-graph-prevents-post-build-mutation`
+    /// Gherkin scenario. Mirrors the signature shape of
+    /// `CircuitBuilder.add_element` so Python attribute lookup
+    /// succeeds and the call reaches the typed-error path.
+    ///
+    /// # Errors
+    ///
+    /// Always raises `ImmutableHandleError`.
+    #[pyo3(signature = (*_args, **_kwargs))]
+    #[allow(clippy::needless_pass_by_value)] // PyO3 forwards owned Bound values for *args/**kwargs.
+    pub fn add_element(
+        &self,
+        _args: Bound<'_, PyTuple>,
+        _kwargs: Option<Bound<'_, PyDict>>,
+    ) -> PyResult<()> {
+        Err(immutable_handle_err("add_element"))
+    }
+
+    /// Trap method: raises [`ImmutableHandleError`](crate::errors::ImmutableHandleError) — see the
+    /// `python-frontend#immutable-circuit-graph-prevents-post-build-mutation`
+    /// Gherkin scenario. Mirrors `CircuitBuilder.add_wire`.
+    ///
+    /// # Errors
+    ///
+    /// Always raises `ImmutableHandleError`.
+    #[pyo3(signature = (*_args, **_kwargs))]
+    #[allow(clippy::needless_pass_by_value)]
+    pub fn add_wire(
+        &self,
+        _args: Bound<'_, PyTuple>,
+        _kwargs: Option<Bound<'_, PyDict>>,
+    ) -> PyResult<()> {
+        Err(immutable_handle_err("add_wire"))
+    }
+
+    /// Trap method: raises [`ImmutableHandleError`](crate::errors::ImmutableHandleError) — see the
+    /// `python-frontend#immutable-circuit-graph-prevents-post-build-mutation`
+    /// Gherkin scenario. Mirrors `CircuitBuilder.add_model`.
+    ///
+    /// # Errors
+    ///
+    /// Always raises `ImmutableHandleError`.
+    #[pyo3(signature = (*_args, **_kwargs))]
+    #[allow(clippy::needless_pass_by_value)]
+    pub fn add_model(
+        &self,
+        _args: Bound<'_, PyTuple>,
+        _kwargs: Option<Bound<'_, PyDict>>,
+    ) -> PyResult<()> {
+        Err(immutable_handle_err("add_model"))
+    }
+
+    /// Trap method: raises [`ImmutableHandleError`](crate::errors::ImmutableHandleError) — see the
+    /// `python-frontend#immutable-circuit-graph-prevents-post-build-mutation`
+    /// Gherkin scenario. Mirrors `CircuitBuilder.add_subcircuit`.
+    ///
+    /// # Errors
+    ///
+    /// Always raises `ImmutableHandleError`.
+    #[pyo3(signature = (*_args, **_kwargs))]
+    #[allow(clippy::needless_pass_by_value)]
+    pub fn add_subcircuit(
+        &self,
+        _args: Bound<'_, PyTuple>,
+        _kwargs: Option<Bound<'_, PyDict>>,
+    ) -> PyResult<()> {
+        Err(immutable_handle_err("add_subcircuit"))
     }
 }
