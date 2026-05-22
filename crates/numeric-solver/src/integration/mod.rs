@@ -60,7 +60,7 @@
 //! under the *same* module shape:
 //!
 //! - tasks.md **#30** — `trapezoidal::{capacitor_companion, inductor_companion}`,
-//! - tasks.md **#31** — `gear2_bdf::{capacitor_companion, inductor_companion}`,
+//! - tasks.md **#31** — `gear2::{capacitor_companion, inductor_companion}` (BDF-2),
 //! - tasks.md **#32** — adaptive LTE estimator that depends on the
 //!   per-method companion outputs.
 //! - tasks.md **#35** — Result-side timestep-history metadata
@@ -76,6 +76,7 @@
 pub mod adaptive;
 pub mod backward_euler;
 pub mod companion;
+pub mod gear2;
 pub mod trapezoidal;
 
 pub use adaptive::{
@@ -87,4 +88,5 @@ pub use backward_euler::{
     CompanionInputError,
 };
 pub use companion::{CapacitorHistory, CompanionStamp, InductorHistory};
+pub use gear2::{CapacitorGear2History, InductorGear2History};
 pub use trapezoidal::{CapacitorTrapHistory, InductorTrapHistory};
