@@ -49,8 +49,11 @@
 //! - [`linear_solver`] — sparse-direct LU dispatch (ADR-0002).
 //!   [`linear_solver::FaerComplexSolver`] implements
 //!   [`linear_solver::LinearSolver`] for `Complex<f64>` matrices and
-//!   is the AC / noise small-signal backend (tasks.md #23). The
-//!   real-valued (`russell`) implementation lands in tasks.md #16.
+//!   is the AC / noise small-signal backend (tasks.md #23).
+//!   [`linear_solver::RussellRealSolver`] is the real-valued
+//!   (`f64`) sibling backed by `russell_sparse` / `SuiteSparse`
+//!   UMFPACK; it drives DC operating-point and transient timestep
+//!   solves (tasks.md #16).
 //!
 //! # Stability
 //!
@@ -78,7 +81,7 @@ pub use integration::{
     StepDecision, StepOutcome, StepSizeBounds, TimestepHistory, TimestepRecord,
 };
 pub use linear_solver::{
-    FaerComplexSolver, LinearSolver, LinearSolverError, SolutionVector, SparseLinearSystem,
-    SparseTriplet, C64,
+    FaerComplexSolver, LinearSolver, LinearSolverError, RussellRealSolver, SolutionVector,
+    SparseLinearSystem, SparseTriplet, C64,
 };
 pub use sub_view::{source_rhs_from, SubView, SubViewBuilder, SubViewError};
