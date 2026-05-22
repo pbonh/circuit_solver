@@ -41,6 +41,12 @@
 //!   user-facing
 //!   [`circuit_solver_types::TransientResult`].
 //!
+//! - [`linear_solver`] — sparse-direct LU dispatch (ADR-0002).
+//!   [`linear_solver::FaerComplexSolver`] implements
+//!   [`linear_solver::LinearSolver`] for `Complex<f64>` matrices and
+//!   is the AC / noise small-signal backend (tasks.md #23). The
+//!   real-valued (`russell`) implementation lands in tasks.md #16.
+//!
 //! # Stability
 //!
 //! Per ADR-0010 the public API surface is unstable at v1.0.0.
@@ -50,6 +56,7 @@
 pub mod assemble;
 pub mod flatten;
 pub mod integration;
+pub mod linear_solver;
 pub mod sub_view;
 
 pub use assemble::{assemble, MnaAssemblyError, MnaSystem};
@@ -62,5 +69,9 @@ pub use integration::{
     next_step_size, step_decision, AdaptiveError, CapacitorHistory, CompanionInputError,
     CompanionStamp, InductorHistory, LteEstimator, LteToleranceEnvelope, NodeHistorySample,
     StepDecision, StepOutcome, StepSizeBounds, TimestepHistory, TimestepRecord,
+};
+pub use linear_solver::{
+    FaerComplexSolver, LinearSolver, LinearSolverError, SolutionVector, SparseLinearSystem,
+    SparseTriplet, C64,
 };
 pub use sub_view::{source_rhs_from, SubView, SubViewBuilder, SubViewError};

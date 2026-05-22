@@ -15,3 +15,19 @@ workspace = true
 circuit-solver-types = { path = "../circuit-solver-types" }
 netlist-graph = { path = "../netlist-graph" }
 device-modeling = { path = "../device-modeling" }
+
+# Sparse direct solvers per ADR-0002.
+# - `faer` backs the complex-valued LU dispatch used by AC and Noise
+#   analyses (tasks.md #23). The `default-features = false` opt-out
+#   drops the optional NumPy interop, RNG, and serde features so the
+#   solver pulls in only `std + linalg + sparse-linalg + rayon`
+#   parallelism, all of which it actually uses.
+# - `num-complex` provides the `Complex<f64>` element type that the
+#   trait surface exposes to callers; `faer` re-exports its own
+#   `c64` (which is layout- and ABI-compatible with
+#   `num_complex::Complex<f64>`) and we convert at the boundary.
+# - `russell_sparse` is intentionally not added here yet; tasks.md
+#   #16 (real-valued dispatch) lands the russell backend behind the
+#   same `LinearSolver` trait under a generic scalar parameter.
+faer = { version = "0.19.4", default-features = false, features = ["std", "rayon"] }
+num-complex = { version = "0.4", default-features = false }
