@@ -45,6 +45,7 @@
 
 pub mod companion;
 pub mod model;
+pub mod noise;
 pub mod params;
 pub mod stamp;
 
@@ -53,6 +54,12 @@ pub use companion::{
     ReactiveState, REACTIVE_TERMINALS,
 };
 pub use model::{DeviceFamily, DeviceModel};
+pub use noise::{
+    noise_stamp_bjt, noise_stamp_diode, noise_stamp_mosfet, resistor_thermal_noise, BJTNoiseStamp,
+    BJTOperatingState, DeviceNoiseStamp, DeviceOperatingState, DiodeNoiseStamp,
+    DiodeOperatingState, MosfetNoiseStamp, MosfetOperatingState, NoiseMechanism, NoiseSource,
+    BOLTZMANN_J_PER_K, ELEMENTARY_CHARGE_C, ROOM_TEMPERATURE_K,
+};
 pub use params::{
     BJTParams, BJTPolarity, DiodeParams, MOSFETParams, MosBSIM3v3Params, MosBSIM4Params,
     MosLevel1Params, MosPolarity,

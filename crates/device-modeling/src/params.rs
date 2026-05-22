@@ -68,11 +68,24 @@ pub struct DiodeParams {
     /// (`Vt = k·T/q`), in volts. Pre-computed at parameter-extraction
     /// time so the stamp loop does not re-derive it per iterate.
     pub vt: f64,
+
+    /// Flicker noise coefficient `KF`, dimensionless. Used by
+    /// [`crate::noise`] (tasks.md #36) as part of the
+    /// `KF·I^AF / f` 1/f noise model. `KF = 0` disables flicker
+    /// noise (the SPICE default).
+    pub kf: f64,
+
+    /// Flicker noise current exponent `AF`, dimensionless. SPICE
+    /// default is `AF = 1` (linear in current); some PDKs use values
+    /// in `0.5..=2.0`. Together with [`Self::kf`] this drives the
+    /// flicker term `KF · I_D^AF / f` in [`crate::noise`].
+    pub af: f64,
 }
 
 impl Default for DiodeParams {
     /// SPICE-canonical defaults: `IS = 1e-14 A`, `N = 1`, `RS = 0 Ω`,
-    /// `Vt = 25.85 mV` (room temperature `T = 300.15 K`).
+    /// `Vt = 25.85 mV` (room temperature `T = 300.15 K`),
+    /// `KF = 0` (flicker disabled), `AF = 1`.
     fn default() -> Self {
         Self {
             name: ModelName::new(""),
@@ -80,6 +93,8 @@ impl Default for DiodeParams {
             n: 1.0,
             rs: 0.0,
             vt: 0.025_852_0,
+            kf: 0.0,
+            af: 1.0,
         }
     }
 }
@@ -134,12 +149,22 @@ pub struct BJTParams {
 
     /// Thermal voltage `Vt = k·T/q`, in volts.
     pub vt: f64,
+
+    /// Flicker noise coefficient `KF`, dimensionless. `KF = 0`
+    /// disables flicker noise (the SPICE default). See
+    /// [`crate::noise`] for the BJT 1/f noise model.
+    pub kf: f64,
+
+    /// Flicker noise current exponent `AF`, dimensionless. SPICE
+    /// default is `AF = 1`.
+    pub af: f64,
 }
 
 impl Default for BJTParams {
     /// SPICE-canonical NPN defaults: `IS = 1e-16 A`, `BF = 100`,
     /// `BR = 1`, `NF = NR = 1`, Early effect disabled
-    /// (`VAF = VAR = f64::INFINITY`), `Vt = 25.85 mV`.
+    /// (`VAF = VAR = f64::INFINITY`), `Vt = 25.85 mV`,
+    /// `KF = 0` (flicker disabled), `AF = 1`.
     fn default() -> Self {
         Self {
             name: ModelName::new(""),
@@ -152,6 +177,8 @@ impl Default for BJTParams {
             vaf: f64::INFINITY,
             var: f64::INFINITY,
             vt: 0.025_852_0,
+            kf: 0.0,
+            af: 1.0,
         }
     }
 }
@@ -233,12 +260,20 @@ pub struct MosLevel1Params {
     pub gamma: f64,
     /// Surface potential `PHI`, in volts.
     pub phi: f64,
+    /// Flicker noise coefficient `KF`, dimensionless. `KF = 0`
+    /// disables flicker noise (the SPICE default). See
+    /// [`crate::noise`] for the Level-1 MOSFET 1/f noise model.
+    pub kf: f64,
+    /// Flicker noise current exponent `AF`, dimensionless. SPICE
+    /// default is `AF = 1`.
+    pub af: f64,
 }
 
 impl Default for MosLevel1Params {
     /// SPICE-canonical Level-1 defaults: `VTO = 0 V`, `KP = 2e-5
     /// A/V²`, `LAMBDA = 0 /V` (no CLM), `GAMMA = 0 √V` (no body
-    /// effect), `PHI = 0.6 V`, NMOS polarity.
+    /// effect), `PHI = 0.6 V`, `KF = 0` (flicker disabled), `AF = 1`,
+    /// NMOS polarity.
     fn default() -> Self {
         Self {
             name: ModelName::new(""),
@@ -248,6 +283,8 @@ impl Default for MosLevel1Params {
             lambda: 0.0,
             gamma: 0.0,
             phi: 0.6,
+            kf: 0.0,
+            af: 1.0,
         }
     }
 }
@@ -319,6 +356,8 @@ mod tests {
         assert_eq!(p.n.to_bits(), 1.0_f64.to_bits());
         assert_eq!(p.rs.to_bits(), 0.0_f64.to_bits());
         assert_eq!(p.vt.to_bits(), 0.025_852_0_f64.to_bits());
+        assert_eq!(p.kf.to_bits(), 0.0_f64.to_bits());
+        assert_eq!(p.af.to_bits(), 1.0_f64.to_bits());
         assert!(p.name.is_empty());
     }
 
@@ -333,6 +372,8 @@ mod tests {
         assert_eq!(p.nr.to_bits(), 1.0_f64.to_bits());
         assert!(p.vaf.is_infinite());
         assert!(p.var.is_infinite());
+        assert_eq!(p.kf.to_bits(), 0.0_f64.to_bits());
+        assert_eq!(p.af.to_bits(), 1.0_f64.to_bits());
     }
 
     #[test]
@@ -344,6 +385,8 @@ mod tests {
         assert_eq!(p.lambda.to_bits(), 0.0_f64.to_bits());
         assert_eq!(p.gamma.to_bits(), 0.0_f64.to_bits());
         assert_eq!(p.phi.to_bits(), 0.6_f64.to_bits());
+        assert_eq!(p.kf.to_bits(), 0.0_f64.to_bits());
+        assert_eq!(p.af.to_bits(), 1.0_f64.to_bits());
     }
 
     #[test]
