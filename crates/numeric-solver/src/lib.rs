@@ -64,6 +64,7 @@
 pub mod ac_sub_view;
 pub mod assemble;
 pub mod flatten;
+pub mod gmin_stepping;
 pub mod integration;
 pub mod linear_solver;
 pub mod newton_raphson;
@@ -76,6 +77,10 @@ pub use circuit_solver_types::flattened::{
     ElementIncidence, FlattenedStructure, FlattenedStructureError, TopologyReport,
 };
 pub use flatten::{flatten, FlattenError};
+pub use gmin_stepping::{
+    GminAugmentedSystem, GminSchedule, GminScheduleError, GminSteppingConfig, GminSteppingDriver,
+    GminSteppingError, GminSteppingOutcome, HomotopyStatus,
+};
 pub use integration::{
     advance_capacitor_history, advance_inductor_history, capacitor_companion, inductor_companion,
     next_step_size, step_decision, AdaptiveError, CapacitorHistory, CompanionInputError,
