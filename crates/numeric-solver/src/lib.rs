@@ -48,5 +48,7 @@ pub use circuit_solver_types::flattened::{
 pub use flatten::{flatten, FlattenError};
 pub use integration::{
     advance_capacitor_history, advance_inductor_history, capacitor_companion, inductor_companion,
-    CapacitorHistory, CompanionInputError, CompanionStamp, InductorHistory,
+    next_step_size, step_decision, AdaptiveError, CapacitorHistory, CompanionInputError,
+    CompanionStamp, InductorHistory, LteEstimator, LteToleranceEnvelope, NodeHistorySample,
+    StepDecision, StepOutcome, StepSizeBounds, TimestepHistory, TimestepRecord,
 };

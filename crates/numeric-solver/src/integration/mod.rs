@@ -70,9 +70,14 @@
 //! the public API surface is **unstable** at v1.0.0. Consumers must
 //! pin to exact versions until a future stabilization ADR.
 
+pub mod adaptive;
 pub mod backward_euler;
 pub mod companion;
 
+pub use adaptive::{
+    next_step_size, step_decision, AdaptiveError, LteEstimator, LteToleranceEnvelope,
+    NodeHistorySample, StepDecision, StepOutcome, StepSizeBounds, TimestepHistory, TimestepRecord,
+};
 pub use backward_euler::{
     advance_capacitor_history, advance_inductor_history, capacitor_companion, inductor_companion,
     CompanionInputError,
