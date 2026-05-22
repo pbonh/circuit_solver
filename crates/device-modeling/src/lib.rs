@@ -28,9 +28,12 @@
 //!   per the design slice at `openspec/changes/circuit-solver-2026-05-21-v1-spec/design.md`.
 //! - [`model`] — the top-level [`DeviceModel`] enum, its family
 //!   discriminator [`DeviceFamily`], and convenience accessors.
-//! - [`stamp`] — placeholder for the `LinearizedModel` stamp surface
-//!   introduced in tasks.md #8. This crate stub provides only the
-//!   trait skeleton at item #7.
+//! - [`stamp`] — the `LinearizedModel` stamp + Jacobian surface
+//!   introduced in tasks.md #8. Defines the [`stamp::LinearizedModel`]
+//!   response type, the [`stamp::OperatingPoint`] request type, and
+//!   the [`DeviceModel::linearize`](crate::DeviceModel) dispatch entry
+//!   point. Per-family equation bodies land in tasks.md #9
+//!   (Diode), #10 (BJT), and #11–#13 (MOSFET levels).
 //!
 //! # Stability
 //!
@@ -48,4 +51,9 @@ pub use model::{DeviceFamily, DeviceModel};
 pub use params::{
     BJTParams, BJTPolarity, DiodeParams, MOSFETParams, MosBSIM3v3Params, MosBSIM4Params,
     MosLevel1Params, MosPolarity,
+};
+pub use stamp::{
+    linearize_bjt, linearize_diode, linearize_mosfet, BJTLinearization, DiodeLinearization,
+    LinearizedModel, MOSFETLinearization, OperatingPoint, OperatingPointFamilyMismatch,
+    BJT_TERMINALS, DIODE_TERMINALS, MOSFET_TERMINALS,
 };
