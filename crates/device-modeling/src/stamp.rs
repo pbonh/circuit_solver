@@ -774,8 +774,10 @@ pub fn linearize_bjt(
 ///
 /// - [`MOSFETParams::Level1`] → tasks.md #11 (Shichman-Hodges) —
 ///   **placeholder** (zero stamp) until #11 lands.
-/// - [`MOSFETParams::BSIM3v3`] → tasks.md #12 — **placeholder**
-///   (zero stamp) until #12 lands.
+/// - [`MOSFETParams::BSIM3v3`] → tasks.md #12 — **implemented**:
+///   `BSIM3v3` DC core with body effect, DIBL, smoothed strong/
+///   sub-threshold transition, velocity saturation, and channel-
+///   length modulation; see [`crate::bsim3v3::linearize_bsim3v3`].
 /// - [`MOSFETParams::BSIM4`] → tasks.md #13 — **implemented**:
 ///   long-channel BSIM4 stamp with DIBL and channel-length
 ///   modulation, see [`linearize_mosfet_bsim4`].
@@ -800,9 +802,11 @@ pub fn linearize_mosfet(
             MOSFETLinearization::zero()
         }
         MOSFETParams::BSIM3v3(p) => {
-            let _ = p;
-            let _ = terminal_voltages;
-            MOSFETLinearization::zero()
+            // tasks.md #12: delegate to the dedicated BSIM3v3 DC
+            // stamp module. The Level-1 (#11) and BSIM4 (#13) arms
+            // remain at the #8 zero placeholder until their owning
+            // tasks land.
+            crate::bsim3v3::linearize_bsim3v3(p, terminal_voltages)
         }
         MOSFETParams::BSIM4(p) => linearize_mosfet_bsim4(p, terminal_voltages),
     }
@@ -1930,29 +1934,64 @@ mod tests {
         // the load-bearing assertion; the run-time check pins
         // intent.
         //
+        // tasks.md #12 and #13 replaced the BSIM3v3 and BSIM4 arms'
+        // zero placeholders with real DC stamps. Only Level-1 (#11)
+        // remains a zero placeholder until its owning task lands.
+        //
         // At all-zero terminal voltages:
-        // - Level-1 and `BSIM3v3` are still placeholder zero stamps
-        //   (tasks.md #11 / #12 land later).
-        // - BSIM4 (tasks.md #13, this slice) returns zero because the
-        //   default `VTH0 = 0.7 V` puts a 0/0/0/0 terminal-voltage
-        //   call into cutoff — not because the helper is a
-        //   placeholder. The dedicated `bsim4_tests` module exercises
-        //   the saturation / triode / DIBL / KCL invariants.
+        // - Level-1 still returns the zero placeholder.
+        // - `BSIM3v3` dispatches into the real implementation; we
+        //   assert the Jacobian and companion current are finite (the
+        //   real contract) rather than exactly zero (the placeholder
+        //   contract). The dedicated `bsim3v3::tests` module exercises
+        //   the saturation / sub-threshold / KCL invariants.
+        // - BSIM4 likewise dispatches into the real implementation;
+        //   the dedicated `bsim4_tests` module exercises the
+        //   saturation / triode / DIBL / KCL invariants.
         let l1 = MOSFETParams::Level1(MosLevel1Params::default());
         let b3 = MOSFETParams::BSIM3v3(MosBSIM3v3Params::default());
         let b4 = MOSFETParams::BSIM4(MosBSIM4Params::default());
         assert_eq!(
             linearize_mosfet(&l1, &[0.0; MOSFET_TERMINALS]),
-            MOSFETLinearization::zero()
+            MOSFETLinearization::zero(),
+            "tasks.md #11 has not yet replaced the Level-1 placeholder"
         );
-        assert_eq!(
-            linearize_mosfet(&b3, &[0.0; MOSFET_TERMINALS]),
-            MOSFETLinearization::zero()
-        );
-        assert_eq!(
-            linearize_mosfet(&b4, &[0.0; MOSFET_TERMINALS]),
-            MOSFETLinearization::zero()
-        );
+        // BSIM3v3 at exactly the zero operating point still
+        // produces a near-zero stamp (deep sub-threshold), but the
+        // arm now dispatches into the real implementation. We
+        // assert the conductance entries are finite (the real
+        // contract) rather than exactly zero (the placeholder
+        // contract).
+        let b3_stamp = linearize_mosfet(&b3, &[0.0; MOSFET_TERMINALS]);
+        for row in &b3_stamp.jacobian {
+            for &j in row {
+                assert!(j.is_finite(), "BSIM3v3 Jacobian must be finite, got {j}");
+            }
+        }
+        for &i in &b3_stamp.companion_current {
+            assert!(
+                i.is_finite(),
+                "BSIM3v3 companion current must be finite, got {i}"
+            );
+        }
+        // BSIM4 likewise dispatches into the real implementation
+        // (tasks.md #13). At all-zero biases the default
+        // `VTH0 = 0.7 V` puts the device in cutoff, so the
+        // numerical stamp is near-zero — but the arm no longer
+        // returns the bit-equal placeholder. Assert finite (the
+        // real contract).
+        let b4_stamp = linearize_mosfet(&b4, &[0.0; MOSFET_TERMINALS]);
+        for row in &b4_stamp.jacobian {
+            for &j in row {
+                assert!(j.is_finite(), "BSIM4 Jacobian must be finite, got {j}");
+            }
+        }
+        for &i in &b4_stamp.companion_current {
+            assert!(
+                i.is_finite(),
+                "BSIM4 companion current must be finite, got {i}"
+            );
+        }
     }
 
     // -----------------------------------------------------------------

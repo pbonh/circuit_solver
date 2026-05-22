@@ -33,11 +33,12 @@
 //!   response type, the [`stamp::OperatingPoint`] request type, and
 //!   the [`DeviceModel::linearize`](crate::DeviceModel) dispatch entry
 //!   point. Per-family equation bodies land in tasks.md #9
-//!   (Diode), #10 (BJT), #11–#13 (MOSFET levels). As of tasks.md #13
-//!   the MOSFET BSIM4 arm is implemented
-//!   ([`stamp::linearize_mosfet_bsim4`]); the Diode, BJT, Level-1,
-//!   and `BSIM3v3` arms are still zero placeholders awaiting their
-//!   respective tasks.
+//!   (Diode), #10 (BJT), #11–#13 (MOSFET levels). As of tasks.md #12
+//!   and #13 the MOSFET `BSIM3v3` arm
+//!   ([`bsim3v3::linearize_bsim3v3`]) and BSIM4 arm
+//!   ([`stamp::linearize_mosfet_bsim4`]) are implemented; the Diode,
+//!   BJT, and Level-1 arms are still zero placeholders awaiting
+//!   their respective tasks.
 //!
 //! # Stability
 //!
@@ -47,12 +48,14 @@
 
 #![deny(missing_docs)]
 
+pub mod bsim3v3;
 pub mod companion;
 pub mod model;
 pub mod noise;
 pub mod params;
 pub mod stamp;
 
+pub use bsim3v3::linearize_bsim3v3;
 pub use companion::{
     CapacitorCompanion, CompanionConstructionError, InductorCompanion, ReactiveCompanion,
     ReactiveState, REACTIVE_TERMINALS,
