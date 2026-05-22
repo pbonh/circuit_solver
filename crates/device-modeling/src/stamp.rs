@@ -684,18 +684,17 @@ pub fn linearize_bjt(
     };
     let q_b = 1.0 / denom;
 
-    // Derivatives of q_b w.r.t. junction voltages:
-    //   d q_b / d Vbe = q_b² · inv_var
-    //   d q_b / d Vbc = q_b² · inv_vaf
-    let q_b_sq = q_b * q_b;
-    let dqb_dvbe = q_b_sq * inv_var;
-    let dqb_dvbc = q_b_sq * inv_vaf;
+    // Derivatives of 1/q_b (= denom) w.r.t. junction voltages:
+    //   d(1/q_b)/dVbe = d(denom)/dVbe = -inv_var
+    //   d(1/q_b)/dVbc = d(denom)/dVbc = -inv_vaf
+    let d_inv_qb_dvbe = -inv_var;
+    let d_inv_qb_dvbc = -inv_vaf;
 
     // Terminal currents (NPN base form on (vbe, vbc)).
     let inv_bf = 1.0 / params.bf;
     let inv_br = 1.0 / params.br;
 
-    let i_c_npn = (i_f - i_r) * q_b - i_r * inv_br;
+    let i_c_npn = (i_f - i_r) / q_b - i_r * inv_br;
     let i_b_npn = i_f * inv_bf + i_r * inv_br;
     let i_e_npn = -(i_c_npn + i_b_npn);
 
@@ -715,15 +714,15 @@ pub fn linearize_bjt(
     // We hand-compute dX/dVbe and dX/dVbc analytically using:
     //   dIf/dVbe = gf, dIf/dVbc = 0
     //   dIr/dVbc = gr, dIr/dVbe = 0
-    //   dq_b/dVbe = dqb_dvbe, dq_b/dVbc = dqb_dvbc
+    //   d(1/q_b)/dVbe = d_inv_qb_dvbe, d(1/q_b)/dVbc = d_inv_qb_dvbc
     //
-    // dIc/dVbe = gf · q_b + (i_f − i_r) · dqb_dvbe
-    // dIc/dVbc = -gr · q_b + (i_f − i_r) · dqb_dvbc − gr · inv_br
+    // dIc/dVbe = gf / q_b + (i_f − i_r) · d_inv_qb_dvbe
+    // dIc/dVbc = -gr / q_b + (i_f − i_r) · d_inv_qb_dvbc − gr · inv_br
     // dIb/dVbe = gf · inv_bf
     // dIb/dVbc = gr · inv_br
     // dIe = -(dIc + dIb)
-    let dic_dvbe = gf * q_b + (i_f - i_r) * dqb_dvbe;
-    let dic_dvbc = -gr * q_b + (i_f - i_r) * dqb_dvbc - gr * inv_br;
+    let dic_dvbe = gf / q_b + (i_f - i_r) * d_inv_qb_dvbe;
+    let dic_dvbc = -gr / q_b + (i_f - i_r) * d_inv_qb_dvbc - gr * inv_br;
 
     let dib_dvbe = gf * inv_bf;
     let dib_dvbc = gr * inv_br;
@@ -1797,11 +1796,11 @@ mod tests {
     #[test]
     fn linearize_bjt_early_effect_changes_collector_current() {
         // With VAF finite (forward Early effect only), the
-        // base-charge factor q_b = 1/(1 - Vbc/VAF) > 1 for a
-        // forward-active NPN with Vbc < 0, so Ic = (If-Ir)·q_b
-        // grows above its q_b=1 value. The reverse Early voltage
-        // VAR is left at +∞ here so VAR's competing rolloff term
-        // doesn't mask the effect.
+        // base-charge factor q_b = 1/(1 - Vbc/VAF) < 1 for a
+        // forward-active NPN with Vbc < 0, so Ic = (If-Ir)/q_b
+        // = (If-Ir)·denom grows above its q_b=1 value. The reverse
+        // Early voltage VAR is left at +∞ here so VAR's competing
+        // rolloff term doesn't mask the effect.
         let p_no_early = BJTParams::default();
         let p_with_early = BJTParams {
             vaf: 50.0,
@@ -1826,31 +1825,19 @@ mod tests {
         //   q_b = 1 / (1 - Vbc/VAF - Vbe/VAR)
         //
         // For NPN forward active (Vbe > 0, Vbc < 0) with VAR = ∞:
-        //   denom = 1 - Vbc/VAF = 1 + |Vbc|/VAF > 1, so q_b < 1
-        //   ⇒ Ic_with_early = Ic_no_early · q_b < Ic_no_early.
+        //   denom = 1 - Vbc/VAF = 1 + |Vbc|/VAF > 1
+        //   ⇒ Ic_with_early = Ic_no_early · denom > Ic_no_early.
         //
-        // This matches the SPICE3 algebraic convention but runs
-        // *against* the classical Early-effect intuition where the
-        // small-signal output conductance go = Ic / |VA| boosts Ic
-        // for larger |Vce|. The classical form `Ic ∝ (1 + Vce/VA)`
-        // is a small-signal approximation of the Gummel-Poon q_b
-        // factor expanded around the operating point; the full
-        // Gummel-Poon expression collapses to it in the regime
-        // |Vce|/VAF ≪ 1, but for the parameters here (VAF=50,
-        // |Vbc|=4.3) the linear-expansion approximation does not
-        // apply and the bare q_b reduction dominates.
-        //
-        // What's load-bearing for the v1 stamp is that turning on
-        // the Early voltages produces a *different* (and finite)
-        // Ic than the q_b=1 case, so the dq_b/dV chain-rule terms
-        // are populated and the small-signal output conductance
-        // contribution lands on the Jacobian. The precise
-        // direction of Ic change is verified against the
-        // golden reference under tasks.md #20 (conformance).
-        assert_ne!(
-            ic_with_early.to_bits(),
-            ic_no_early.to_bits(),
-            "Early effect must change Ic: both = {ic_no_early}",
+        // This matches the classical Early-effect intuition where
+        // the small-signal output conductance go = Ic / |VA| boosts
+        // Ic for larger |Vce|. The full Gummel-Poon expression
+        // collapses to the classical form in the regime
+        // |Vce|/VAF ≪ 1, and for the parameters here (VAF=50,
+        // |Vbc|=4.3) the boost is already visible.
+        assert!(
+            ic_with_early > ic_no_early,
+            "Early effect must increase Ic in forward-active NPN: \
+             no_early = {ic_no_early}, with_early = {ic_with_early}",
         );
         assert!(
             ic_with_early.is_finite() && ic_no_early.is_finite(),
