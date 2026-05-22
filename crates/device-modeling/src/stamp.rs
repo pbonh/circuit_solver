@@ -1145,6 +1145,8 @@ mod tests {
         let m = DeviceModel::BJT(BJTParams {
             name: ModelName::new("q1"),
             polarity: BJTPolarity::Npn,
+            kf: 0.0,
+            af: 1.0,
             ..Default::default()
         });
         let op = OperatingPoint::BJT([5.0, 0.7, 0.0]);
@@ -1703,10 +1705,14 @@ mod tests {
         // factor × terminal-current factor) and s² = 1.
         let npn = BJTParams {
             polarity: BJTPolarity::Npn,
+            kf: 0.0,
+            af: 1.0,
             ..Default::default()
         };
         let pnp = BJTParams {
             polarity: BJTPolarity::Pnp,
+            kf: 0.0,
+            af: 1.0,
             ..Default::default()
         };
 
@@ -1754,6 +1760,8 @@ mod tests {
             vaf: 50.0, // Early effect ON to exercise dq_b/dV terms.
             var: 25.0,
             vt: 0.025_852_0,
+            kf: 0.0,
+            af: 1.0,
         };
 
         let v0 = [3.0_f64, 0.65, 0.0];
@@ -1805,6 +1813,8 @@ mod tests {
         let p_with_early = BJTParams {
             vaf: 50.0,
             // var stays at f64::INFINITY (default).
+            kf: 0.0,
+            af: 1.0,
             ..Default::default()
         };
         let v0 = [5.0_f64, 0.7, 0.0]; // Vbc = -4.3 V
