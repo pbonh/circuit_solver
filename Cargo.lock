@@ -20,7 +20,10 @@ dependencies = [
 name = "circuit-solver-py"
 version = "0.0.1"
 dependencies = [
+ "circuit-solver-types",
+ "netlist-graph",
  "pyo3",
+ "pyo3-build-config",
 ]
 
 [[package]]
