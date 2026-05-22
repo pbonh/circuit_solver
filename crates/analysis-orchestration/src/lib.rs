@@ -15,6 +15,11 @@
 //!   results. Covers scenarios
 //!   `ac-small-signal#ac-analysis-with-pre-computed-operating-point`
 //!   and `ac-small-signal#ac-analysis-on-purely-linear-circuit`.
+//! - [`auto_dc_ac`] — Auto-DC AC composition (tasks.md #26). When no
+//!   prior [`OperatingPoint`] is cached, runs [`dc_analysis`] first and
+//!   then [`ac_analysis`] at the converged operating point, returning
+//!   both halves in a single bundled result. Covers scenario
+//!   `ac-small-signal#ac-analysis-without-prior-operating-point`.
 //! - [`noise`] — Noise spectral-density control loop (tasks.md #37)
 //!   plus the integrated-noise-over-bandwidth summary metric
 //!   (tasks.md #39, [`integrated_noise`]).
@@ -43,12 +48,16 @@
 #![deny(missing_docs)]
 
 pub mod ac;
+pub mod auto_dc_ac;
 pub mod dc;
 pub mod mixed_signal;
 pub mod noise;
 pub mod sweep;
 
 pub use ac::{ac_analysis, AcAnalysisError, AcAnalysisRequest, AcAnalysisResult, TransferFunction};
+pub use auto_dc_ac::{
+    ac_analysis_with_auto_dc, AcWithAutoDcError, AcWithAutoDcRequest, AcWithAutoDcResult,
+};
 pub use dc::{
     dc_analysis, BranchCurrentSample, DcAnalysisError, DcAnalysisRequest, DcAnalysisResult,
     OperatingPoint,
