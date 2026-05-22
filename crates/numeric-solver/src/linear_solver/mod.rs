@@ -77,9 +77,11 @@
 #![allow(clippy::module_name_repetitions)]
 
 mod faer_complex;
+mod russell_real;
 mod system;
 
 pub use faer_complex::FaerComplexSolver;
+pub use russell_real::RussellRealSolver;
 pub use system::{LinearSolverError, SolutionVector, SparseLinearSystem, SparseTriplet};
 
 use num_complex::Complex;

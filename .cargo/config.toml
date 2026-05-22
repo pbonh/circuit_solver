@@ -1,0 +1,64 @@
+# Workspace-level cargo configuration.
+#
+# Configures search paths so `russell_sparse` (the real-valued
+# sparse-direct LU backend selected by ADR-0002) can locate SuiteSparse
+# headers and shared libraries regardless of whether the host installed
+# SuiteSparse via the system package manager (Debian / Fedora / RHEL),
+# Homebrew on macOS, or Homebrew on Linux (linuxbrew).
+#
+# Why this is needed:
+#
+# `russell_sparse@1.15` unconditionally compiles a small C glue layer
+# (`c_code/interface_{klu,umfpack,...}.c`) that `#include`s
+# `<klu.h>` and `<umfpack.h>`. Its build script (`build.rs`) only
+# probes the OS package-manager locations (`/usr/include/suitesparse`,
+# `/usr/lib`, `/usr/lib/x86_64-linux-gnu`, `/opt/homebrew/...`). On
+# linuxbrew hosts SuiteSparse lives under
+# `/home/linuxbrew/.linuxbrew/{include,lib}`, which `russell_sparse`'s
+# own probe misses; we add it here via `CPATH` / `LIBRARY_PATH`, which
+# the `cc` crate (used by russell_sparse's build script) respects.
+#
+# The `[build].rustflags` block adds the same lib directories at link
+# time AND installs `RUNPATH` entries so test binaries and the final
+# Python extension can locate `libumfpack.so` / `libklu.so` at runtime
+# without requiring callers to pre-set `LD_LIBRARY_PATH`.
+#
+# Nonexistent directories in `CPATH` / `LIBRARY_PATH` / `-Wl,-rpath`
+# are silently ignored by `cc(1)` / `ld(1)`, so this config is safe to
+# commit even on hosts that only have one of the four install layouts
+# present.
+#
+# Hosts that already have `/usr/include/suitesparse` populated (Debian,
+# Fedora 40+ via `dnf install suitesparse-devel`, RHEL via
+# `suitesparse-devel` from EPEL) do not need any of these paths to be
+# populated; russell_sparse's own probe will pick those up.
+
+[env]
+# Header search path for the `cc` crate's compile step. cc reads CPATH
+# as a colon-separated list of include directories.
+CPATH = "/home/linuxbrew/.linuxbrew/include/suitesparse:/home/linuxbrew/.linuxbrew/include:/opt/homebrew/include/suitesparse:/opt/homebrew/include:/usr/local/include/suitesparse:/usr/local/include:/usr/include/suitesparse"
+
+# Library search path for the `cc` crate's link step plus the standard
+# loader. LIBRARY_PATH is consulted at link time by both `cc` and the
+# system linker.
+LIBRARY_PATH = "/home/linuxbrew/.linuxbrew/lib:/opt/homebrew/lib:/usr/local/lib:/usr/lib/x86_64-linux-gnu:/usr/lib64:/usr/lib"
+
+[build]
+# Add the same paths to rustc's link search list, and install RUNPATH
+# entries so binaries resolve `libumfpack.so` / `libklu.so` at run time
+# without an external `LD_LIBRARY_PATH`. Linkers ignore RUNPATH entries
+# that don't exist on a given host, so this list is safe across the
+# four common SuiteSparse install layouts (linuxbrew, macOS brew,
+# `/usr/local`, system).
+rustflags = [
+    "-L", "/home/linuxbrew/.linuxbrew/lib",
+    "-L", "/opt/homebrew/lib",
+    "-L", "/usr/local/lib",
+    "-L", "/usr/lib/x86_64-linux-gnu",
+    "-L", "/usr/lib64",
+    "-L", "/usr/lib",
+    "-C", "link-arg=-Wl,-rpath,/home/linuxbrew/.linuxbrew/lib",
+    "-C", "link-arg=-Wl,-rpath,/opt/homebrew/lib",
+    "-C", "link-arg=-Wl,-rpath,/usr/local/lib",
+    "-C", "link-arg=-Wl,-rpath,/usr/lib/x86_64-linux-gnu",
+]
