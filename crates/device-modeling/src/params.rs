@@ -320,25 +320,126 @@ impl Default for MosBSIM3v3Params {
 
 /// MOSFET BSIM4 parameters (tasks.md #13 stamp).
 ///
-/// Same shape rationale as [`MosBSIM3v3Params`]: a sparse raw map
-/// for now, concrete fields landing with the #13 stamp.
+/// # Scope at task #13
+///
+/// Industry BSIM4 v4.8 carries ~200 named parameters and dozens of
+/// regime-specific equations (short-channel correction, DIBL, velocity
+/// saturation, channel-length modulation, mobility degradation, bulk
+/// charge, body-bias dependence, gate tunneling, …). Implementing the
+/// full equation set is a multi-week numerical kernel that does not
+/// fit in a single tasks.md item.
+///
+/// What this task ships is the **canonical-parameter subset** that
+/// the long-channel-with-DIBL BSIM4 stamp at
+/// [`crate::stamp::linearize_mosfet_bsim4`] reads. These are the
+/// minimum fields needed to produce a non-zero, Newton-Raphson-convergent
+/// linearization that exercises the same dispatch / Jacobian / companion
+/// machinery a future full BSIM4 will plug into.
+///
+/// The remaining ~190 parameters live in [`Self::raw`] as a forward-
+/// compatibility hatch: callers can stage extra parameter values now,
+/// and a later task that extends the stamp can promote any of them
+/// to typed fields without breaking [`Self::raw`]-only callers.
+///
+/// # Parameter names
+///
+/// Typed-field names follow the SPICE BSIM4 .MODEL card lowercased
+/// (BSIM4 parameter names are case-insensitive on the card).
 #[derive(Debug, Clone, PartialEq)]
 pub struct MosBSIM4Params {
     /// Model identifier.
     pub name: ModelName,
     /// Channel polarity.
     pub polarity: MosPolarity,
-    /// Sparse parameter map (BSIM4 has ~200 named parameters).
+
+    /// Zero-bias threshold voltage `VTH0`, in volts. Stored as a
+    /// magnitude — the stamp folds in `polarity` to recover the
+    /// signed PMOS threshold at evaluation time. SPICE default
+    /// for NMOS is +0.7 V.
+    pub vth0: f64,
+
+    /// Low-field channel-carrier mobility `U0`, in m²/V·s.
+    /// SPICE BSIM4 default for NMOS is 0.067 m²/V·s.
+    pub u0: f64,
+
+    /// Gate-oxide thickness `TOXE`, in metres. SPICE BSIM4 default
+    /// is 3 nm. Used together with [`Self::epsox`] to derive the
+    /// gate-oxide capacitance per unit area `Cox = εox / TOXE`.
+    pub toxe: f64,
+
+    /// Gate-oxide permittivity `EPSOX`, in F/m. SPICE BSIM4 default
+    /// is `3.9 · ε₀ ≈ 3.453e-11 F/m` (silicon dioxide).
+    pub epsox: f64,
+
+    /// DIBL coefficient `ETA0`, dimensionless. Multiplies `Vds` in
+    /// the threshold-shift expression to model drain-induced barrier
+    /// lowering: `Vth_eff = Vth0 - ETA0·Vds`. SPICE BSIM4 default
+    /// is 0.08.
+    pub eta0: f64,
+
+    /// Channel-length modulation coefficient `PCLM`, in 1/V.
+    /// The stamp uses it as a Level-1-equivalent `LAMBDA`: drain
+    /// current in saturation scales by `(1 + PCLM·Vds_eff)`.
+    /// SPICE BSIM4 default is 1.3 (dimensionless); we treat it as
+    /// the per-volt CLM coefficient at this scope.
+    pub pclm: f64,
+
+    /// Drawn channel width `W`, in metres. SPICE BSIM4 default is
+    /// 5 µm. Together with [`Self::l`] forms the W/L geometric ratio
+    /// the stamp multiplies into the transconductance.
+    pub w: f64,
+
+    /// Drawn channel length `L`, in metres. SPICE BSIM4 default is
+    /// 5 µm.
+    pub l: f64,
+
+    /// Sparse parameter map for forward compatibility with full
+    /// BSIM4 (`SubsurfaceSV`, `RDSW`, `NFACTOR`, `XJ`, …). Reading
+    /// these is not part of the task #13 stamp; the map is preserved
+    /// so future stamp extensions can adopt them without breaking
+    /// callers that already populate them.
     pub raw: std::collections::BTreeMap<String, f64>,
 }
 
 impl Default for MosBSIM4Params {
+    /// SPICE-canonical BSIM4 defaults that produce a working long-
+    /// channel NMOS with a +0.7 V threshold, 0.067 m²/V·s mobility,
+    /// 3 nm gate oxide, 0.08 DIBL coefficient, 1.3/V CLM, and a
+    /// 5 µm × 5 µm geometry — i.e. a representative SPICE textbook
+    /// device that exercises every regime branch.
     fn default() -> Self {
         Self {
             name: ModelName::new(""),
             polarity: MosPolarity::Nmos,
+            vth0: 0.7,
+            u0: 0.067,
+            toxe: 3.0e-9,
+            // 3.9 · ε₀ = 3.9 · 8.854_187_8128e-12 ≈ 3.453e-11 F/m
+            epsox: 3.453e-11,
+            eta0: 0.08,
+            pclm: 1.3,
+            w: 5.0e-6,
+            l: 5.0e-6,
             raw: std::collections::BTreeMap::new(),
         }
+    }
+}
+
+impl MosBSIM4Params {
+    /// Gate-oxide capacitance per unit area `Cox = εox / TOXE`,
+    /// in F/m². Convenience accessor used by the BSIM4 stamp.
+    #[must_use]
+    pub fn cox(&self) -> f64 {
+        self.epsox / self.toxe
+    }
+
+    /// Transconductance parameter `KP = U0 · Cox · (W / L)`, in A/V².
+    /// This is the BSIM4-flavored analogue of the Level-1 `KP`,
+    /// computed from the underlying physical parameters rather than
+    /// fitted directly.
+    #[must_use]
+    pub fn kp(&self) -> f64 {
+        self.u0 * self.cox() * (self.w / self.l)
     }
 }
 
