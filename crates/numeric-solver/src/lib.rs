@@ -29,6 +29,11 @@
 //!   suppression, Gmin-stepping, and source-stepping masks to the
 //!   full MNA matrix from item #14, producing the [`sub_view::SubView`]
 //!   the linear solver consumes (item #15).
+//! - [`ac_sub_view`] — AC-analysis sub-view extraction: augment the
+//!   operating-point MNA matrix with `jωC` capacitor and `jωL`
+//!   inductor stamps at a single angular frequency, apply ground
+//!   suppression, and lower to the complex [`linear_solver::SparseLinearSystem`]
+//!   the [`linear_solver::FaerComplexSolver`] consumes (item #24).
 //! - [`integration`] — implicit-integration companion models for
 //!   reactive elements. [`integration::backward_euler`] lands in
 //!   tasks.md #29 (capacitor + inductor); sibling modules for
@@ -53,12 +58,14 @@
 
 #![deny(missing_docs)]
 
+pub mod ac_sub_view;
 pub mod assemble;
 pub mod flatten;
 pub mod integration;
 pub mod linear_solver;
 pub mod sub_view;
 
+pub use ac_sub_view::{AcSubView, AcSubViewBuilder, AcSubViewError};
 pub use assemble::{assemble, MnaAssemblyError, MnaSystem};
 pub use circuit_solver_types::flattened::{
     ElementIncidence, FlattenedStructure, FlattenedStructureError, TopologyReport,
