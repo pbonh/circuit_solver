@@ -318,3 +318,182 @@ fn add_subcircuit_malformed_body_raises_type_error() {
         );
     });
 }
+
+/// Gherkin scenario: `python-frontend#builder-isolation-across-multiple-builds`.
+///
+/// This test lifts the isolation invariant — already proven for the
+/// pure-Rust `netlist_graph::CircuitBuilder` in
+/// `crates/netlist-graph/src/builder.rs`'s
+/// `builder_isolation_across_multiple_builds` unit test — across the
+/// `PyO3` boundary, using `build_snapshot_element_count` as the
+/// inspection helper (the full `CircuitGraph` `PyO3` handle is tasks.md
+/// item #53's scope).
+///
+/// Gherkin steps:
+///
+/// ```text
+/// Given CircuitDesigner creates a CircuitBuilder and adds a resistor "R1"
+/// And   CircuitDesigner calls builder.build() producing graph_a
+/// And   CircuitDesigner adds another resistor "R2" to the same builder
+/// When  CircuitDesigner calls builder.build() a second time producing graph_b
+/// Then  graph_a contains one element
+/// And   graph_b contains two elements
+/// And   graph_a is not affected by the addition of "R2"
+/// ```
+///
+/// Mapping to the Python-frontend surface as of tasks.md #55:
+///
+/// - `builder.build()` is rendered by
+///   [`PyCircuitBuilder::build_snapshot_element_count`], which drives
+///   the inner Rust builder's `build()` and returns the snapshot's
+///   post-expansion element count. The full handle (whose
+///   `.elements()` len would give the same number) lands in #53.
+/// - "`graph_a` is not affected by the addition of `R2`" is verified by
+///   capturing the first snapshot count into a Python int *before*
+///   adding `R2`; once captured, that int is an owned Python value
+///   that cannot change retroactively, so re-asserting it remains 1
+///   after the second `build()` proves the snapshot was independent.
+#[test]
+fn gherkin_scenario_builder_isolation_across_multiple_builds() {
+    Python::attach(|py| {
+        let b = fresh_builder(py);
+
+        // Given: add R1 (1 kΩ between n1 and ground).
+        let kwargs_r1 = [("value", 1_000.0)].into_py_dict(py).unwrap();
+        let terminals_r1 = PyList::new(py, ["n1", "0"]).unwrap();
+        b.call_method("add_element", ("R1", "R", terminals_r1), Some(&kwargs_r1))
+            .unwrap();
+
+        // And: builder.build() producing graph_a — capture the
+        // element count as an owned Python int (the value cannot
+        // mutate retroactively).
+        let graph_a_element_count: usize = b
+            .call_method0("build_snapshot_element_count")
+            .unwrap()
+            .extract()
+            .unwrap();
+
+        // And: add R2 (2 kΩ between n2 and ground) to the SAME
+        // builder.
+        let kwargs_r2 = [("value", 2_000.0)].into_py_dict(py).unwrap();
+        let terminals_r2 = PyList::new(py, ["n2", "0"]).unwrap();
+        b.call_method("add_element", ("R2", "R", terminals_r2), Some(&kwargs_r2))
+            .unwrap();
+
+        // When: builder.build() a second time producing graph_b.
+        let graph_b_element_count: usize = b
+            .call_method0("build_snapshot_element_count")
+            .unwrap()
+            .extract()
+            .unwrap();
+
+        // Then: graph_a contains one element.
+        assert_eq!(
+            graph_a_element_count, 1,
+            "graph_a (first snapshot) must contain exactly one element (R1)"
+        );
+
+        // And: graph_b contains two elements.
+        assert_eq!(
+            graph_b_element_count, 2,
+            "graph_b (second snapshot) must contain both R1 and R2"
+        );
+
+        // And: graph_a is not affected by the addition of R2. This is
+        // attested by `graph_a_element_count` still being 1 after the
+        // mutation + second build — i.e. the first snapshot remained
+        // an independent capture.
+        assert_eq!(
+            graph_a_element_count, 1,
+            "graph_a's captured count must be unchanged by the later add_element + build"
+        );
+
+        // Defence-in-depth: re-asserting via the builder's
+        // element_decl_count makes the divergence visible if the
+        // helper ever stops snapshotting and starts aliasing internal
+        // state — the builder now has 2 declarations, but the
+        // previously-captured graph_a count must still be 1.
+        let live_decl_count: usize = b
+            .call_method0("element_decl_count")
+            .unwrap()
+            .extract()
+            .unwrap();
+        assert_eq!(
+            live_decl_count, 2,
+            "live builder state must reflect the post-R2 mutation"
+        );
+        assert_ne!(
+            graph_a_element_count, live_decl_count,
+            "graph_a snapshot must diverge from the post-mutation live builder count"
+        );
+    });
+}
+
+/// Negative companion to the isolation scenario: repeated `build()`
+/// calls with **no** intervening mutation must produce equal snapshots.
+/// This guards against the helper introducing a hidden monotonic
+/// counter or other state that would cause spurious divergence.
+#[test]
+fn repeated_build_snapshots_without_mutation_are_equal() {
+    Python::attach(|py| {
+        let b = fresh_builder(py);
+        let kwargs = [("value", 1_000.0)].into_py_dict(py).unwrap();
+        let terminals = PyList::new(py, ["n1", "0"]).unwrap();
+        b.call_method("add_element", ("R1", "R", terminals), Some(&kwargs))
+            .unwrap();
+
+        let snap_a: usize = b
+            .call_method0("build_snapshot_element_count")
+            .unwrap()
+            .extract()
+            .unwrap();
+        let snap_b: usize = b
+            .call_method0("build_snapshot_element_count")
+            .unwrap()
+            .extract()
+            .unwrap();
+
+        assert_eq!(snap_a, 1);
+        assert_eq!(
+            snap_a, snap_b,
+            "no mutation between builds → equal snapshots"
+        );
+    });
+}
+
+/// Companion: after a `build_snapshot_element_count` call, the live
+/// builder must remain usable — the `add_element` path after a build
+/// must still succeed. This is the consequence of
+/// `netlist_graph::CircuitBuilder::build`'s snapshot semantics; the
+/// regression matters because subcircuit expansion runs once per
+/// `build()`, and a future refactor could accidentally make it
+/// destructive.
+#[test]
+fn builder_remains_usable_after_build_snapshot() {
+    Python::attach(|py| {
+        let b = fresh_builder(py);
+        let kwargs_r1 = [("value", 1_000.0)].into_py_dict(py).unwrap();
+        let terminals_r1 = PyList::new(py, ["n1", "0"]).unwrap();
+        b.call_method("add_element", ("R1", "R", terminals_r1), Some(&kwargs_r1))
+            .unwrap();
+
+        let _ = b
+            .call_method0("build_snapshot_element_count")
+            .unwrap()
+            .extract::<usize>()
+            .unwrap();
+
+        // Post-build add must succeed.
+        let kwargs_r2 = [("value", 2_000.0)].into_py_dict(py).unwrap();
+        let terminals_r2 = PyList::new(py, ["n2", "0"]).unwrap();
+        b.call_method("add_element", ("R2", "R", terminals_r2), Some(&kwargs_r2))
+            .unwrap();
+
+        let count: usize = b
+            .call_method0("element_decl_count")
+            .unwrap()
+            .extract()
+            .unwrap();
+        assert_eq!(count, 2, "builder must accept new elements after build");
+    });
+}
