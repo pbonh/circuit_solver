@@ -21,6 +21,10 @@
 //!   dependency cycle; re-exported here for convenience.
 //! - [`flatten::flatten`] — Pass 1 itself: read a `CircuitGraph` and
 //!   return a `FlattenedStructure` (item #6).
+//! - [`assemble::assemble`] — Pass 2: stamp the flattened incidence
+//!   (and any linearized device contributions) into the full MNA
+//!   matrix, producing an [`assemble::MnaSystem`] with ground row and
+//!   column intact (item #14).
 //! - [`integration`] — implicit-integration companion models for
 //!   reactive elements. [`integration::backward_euler`] lands in
 //!   tasks.md #29 (capacitor + inductor); sibling modules for
@@ -33,9 +37,11 @@
 
 #![deny(missing_docs)]
 
+pub mod assemble;
 pub mod flatten;
 pub mod integration;
 
+pub use assemble::{assemble, MnaAssemblyError, MnaSystem};
 pub use circuit_solver_types::flattened::{
     ElementIncidence, FlattenedStructure, FlattenedStructureError, TopologyReport,
 };

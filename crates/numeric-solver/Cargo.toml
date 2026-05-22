@@ -14,3 +14,4 @@ workspace = true
 [dependencies]
 circuit-solver-types = { path = "../circuit-solver-types" }
 netlist-graph = { path = "../netlist-graph" }
+device-modeling = { path = "../device-modeling" }
