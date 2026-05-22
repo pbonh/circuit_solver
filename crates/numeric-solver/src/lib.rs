@@ -67,6 +67,7 @@ pub mod flatten;
 pub mod integration;
 pub mod linear_solver;
 pub mod newton_raphson;
+pub mod source_stepping;
 pub mod sub_view;
 
 pub use ac_sub_view::{AcSubView, AcSubViewBuilder, AcSubViewError};
@@ -88,5 +89,9 @@ pub use linear_solver::{
 pub use newton_raphson::{
     NewtonRaphsonConfig, NewtonRaphsonDriver, NewtonRaphsonError, NewtonRaphsonOutcome,
     NonlinearSystem, SystemError,
+};
+pub use source_stepping::{
+    SourceSteppableSystem, SourceSteppingConfig, SourceSteppingDriver, SourceSteppingError,
+    SourceSteppingOutcome,
 };
 pub use sub_view::{source_rhs_from, SubView, SubViewBuilder, SubViewError};
