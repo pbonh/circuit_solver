@@ -40,11 +40,16 @@
 #![deny(missing_docs)]
 
 pub mod ac;
+pub mod dc;
 pub mod mixed_signal;
 pub mod noise;
 pub mod sweep;
 
 pub use ac::{ac_analysis, AcAnalysisError, AcAnalysisRequest, AcAnalysisResult, TransferFunction};
+pub use dc::{
+    dc_analysis, BranchCurrentSample, DcAnalysisError, DcAnalysisRequest, DcAnalysisResult,
+    OperatingPoint,
+};
 pub use mixed_signal::{
     AnalogSolver, AnalogStepReport, BoundarySignals, DigitalAdapterKind, DigitalSimulator,
     DigitalStepReport, MixedSignalScheduler, NextEventReport, SchedulerError, SchedulerOutcome,
