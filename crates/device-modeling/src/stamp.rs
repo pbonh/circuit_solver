@@ -68,6 +68,10 @@
 use crate::model::DeviceModel;
 use crate::params::{BJTParams, DiodeParams, MOSFETParams, MosBSIM4Params, MosPolarity};
 
+pub mod mosfet_level1;
+
+pub use mosfet_level1::linearize_mosfet_level1;
+
 // ---------------------------------------------------------------------
 // Terminal counts
 // ---------------------------------------------------------------------
@@ -770,17 +774,18 @@ pub fn linearize_bjt(
 
 /// Linearize a MOSFET at the given terminal voltages.
 ///
-/// Dispatches over the [`MOSFETParams`] level enum:
+/// **Per-level dispatch.** The `match` on [`MOSFETParams`] selects
+/// the level-specific stamp:
 ///
-/// - [`MOSFETParams::Level1`] → tasks.md #11 (Shichman-Hodges) —
-///   **placeholder** (zero stamp) until #11 lands.
-/// - [`MOSFETParams::BSIM3v3`] → tasks.md #12 — **implemented**:
-///   `BSIM3v3` DC core with body effect, DIBL, smoothed strong/
-///   sub-threshold transition, velocity saturation, and channel-
-///   length modulation; see [`crate::bsim3v3::linearize_bsim3v3`].
-/// - [`MOSFETParams::BSIM4`] → tasks.md #13 — **implemented**:
-///   long-channel BSIM4 stamp with DIBL and channel-length
-///   modulation, see [`linearize_mosfet_bsim4`].
+/// - [`MOSFETParams::Level1`] → Shichman-Hodges square law via
+///   [`linearize_mosfet_level1`] (tasks.md #11).
+/// - [`MOSFETParams::BSIM3v3`] → `BSIM3v3` DC core with body
+///   effect, DIBL, smoothed strong/sub-threshold transition,
+///   velocity saturation, and channel-length modulation; see
+///   [`crate::bsim3v3::linearize_bsim3v3`] (tasks.md #12).
+/// - [`MOSFETParams::BSIM4`] → long-channel BSIM4 stamp with DIBL
+///   and channel-length modulation, see [`linearize_mosfet_bsim4`]
+///   (tasks.md #13).
 ///
 /// The match is exhaustive (ADR-0005): adding a new MOS level to
 /// [`MOSFETParams`] breaks this site, which is the intended
@@ -796,11 +801,7 @@ pub fn linearize_mosfet(
     terminal_voltages: &[f64; MOSFET_TERMINALS],
 ) -> MOSFETLinearization {
     match params {
-        MOSFETParams::Level1(p) => {
-            let _ = p;
-            let _ = terminal_voltages;
-            MOSFETLinearization::zero()
-        }
+        MOSFETParams::Level1(p) => linearize_mosfet_level1(p, terminal_voltages),
         MOSFETParams::BSIM3v3(p) => {
             // tasks.md #12: delegate to the dedicated BSIM3v3 DC
             // stamp module. The Level-1 (#11) and BSIM4 (#13) arms
@@ -1161,6 +1162,12 @@ mod tests {
 
     #[test]
     fn linearize_mosfet_level1_dispatches_through_match() {
+        // The `MosLevel1Params::default()` has VTO=0, KP=2e-5,
+        // LAMBDA=0, GAMMA=0, PHI=0.6, polarity=Nmos. With the test
+        // bias V_gs=1.8 (V_g=1.8, V_s=0) and V_th=0 we are in
+        // saturation; the Level-1 stamp now returns a *non-zero*
+        // linearization (tasks.md #11). The shape contract (4-terminal
+        // MOSFET variant) is still what dispatches.
         let m = DeviceModel::MOSFET(MOSFETParams::Level1(MosLevel1Params {
             name: ModelName::new("nmos1"),
             polarity: MosPolarity::Nmos,
@@ -1168,7 +1175,19 @@ mod tests {
         }));
         let op = OperatingPoint::MOSFET([3.3, 1.8, 0.0, 0.0]);
         let lin = m.linearize(&op).expect("matched family must succeed");
-        assert!(matches!(lin, LinearizedModel::MOSFET(_)));
+        match lin {
+            LinearizedModel::MOSFET(stamp) => {
+                // Saturation: gm = KP · V_ov = 2e-5 · 1.8.
+                let expected_gm = 2.0e-5 * 1.8;
+                let got_gm = stamp.jacobian[0][1]; // J[D][G] = gm
+                let diff = (got_gm - expected_gm).abs();
+                assert!(
+                    diff < 1.0e-12,
+                    "expected gm ≈ {expected_gm}, got {got_gm} (diff {diff})",
+                );
+            }
+            other => panic!("expected MOSFET linearization, got {other:?}"),
+        }
         assert_eq!(lin.terminal_count(), MOSFET_TERMINALS);
     }
 
@@ -1928,34 +1947,49 @@ mod tests {
     }
 
     #[test]
-    fn linearize_mosfet_helper_dispatches_each_level() {
-        // Each MOS level dispatches independently — covered by the
-        // inner `match` on MOSFETParams. The compile-time check is
-        // the load-bearing assertion; the run-time check pins
-        // intent.
+    fn linearize_mosfet_helper_dispatches_each_level_with_level1_nonzero_in_saturation() {
+        // All three MOS arms are now real implementations (Level-1
+        // tasks.md #11, BSIM3v3 tasks.md #12, BSIM4 tasks.md #13).
+        // The compile-time exhaustiveness check on the inner `match`
+        // is the load-bearing assertion; the run-time checks here
+        // pin intent:
         //
-        // tasks.md #12 and #13 replaced the BSIM3v3 and BSIM4 arms'
-        // zero placeholders with real DC stamps. Only Level-1 (#11)
-        // remains a zero placeholder until its owning task lands.
-        //
-        // At all-zero terminal voltages:
-        // - Level-1 still returns the zero placeholder.
-        // - `BSIM3v3` dispatches into the real implementation; we
-        //   assert the Jacobian and companion current are finite (the
-        //   real contract) rather than exactly zero (the placeholder
-        //   contract). The dedicated `bsim3v3::tests` module exercises
-        //   the saturation / sub-threshold / KCL invariants.
-        // - BSIM4 likewise dispatches into the real implementation;
-        //   the dedicated `bsim4_tests` module exercises the
-        //   saturation / triode / DIBL / KCL invariants.
+        // - Level-1 at all-zero bias → exactly zero stamp (cutoff,
+        //   real Shichman-Hodges).
+        // - Level-1 at saturation bias `[3.3, 1.8, 0.0, 0.0]` →
+        //   non-zero stamp (real Shichman-Hodges).
+        // - BSIM3v3 dispatches into the real implementation; we
+        //   assert the Jacobian and companion current are finite
+        //   (the real contract) rather than exactly zero (the
+        //   placeholder contract). The dedicated `bsim3v3::tests`
+        //   module exercises the saturation / sub-threshold / KCL
+        //   invariants.
+        // - BSIM4 dispatches into the real implementation; at the
+        //   saturation bias `[3.3, 1.8, 0.0, 0.0]` the default
+        //   `VTH0 = 0.7 V` puts it in saturation and the stamp is
+        //   non-zero. The dedicated `bsim4_tests` module exercises
+        //   the saturation / triode / DIBL / KCL invariants.
         let l1 = MOSFETParams::Level1(MosLevel1Params::default());
+        let lin_cutoff = linearize_mosfet(&l1, &[0.0; MOSFET_TERMINALS]);
+        assert_eq!(lin_cutoff, MOSFETLinearization::zero());
+
+        // Saturation: bias the same default NMOS at V_gs = 1.8, V_ds =
+        // 3.3; the linearization must be non-zero (real Level-1 stamp).
+        let lin_sat = linearize_mosfet(&l1, &[3.3, 1.8, 0.0, 0.0]);
+        assert_ne!(lin_sat, MOSFETLinearization::zero());
+
+        // BSIM3v3 and BSIM4 are also real implementations now.
         let b3 = MOSFETParams::BSIM3v3(MosBSIM3v3Params::default());
         let b4 = MOSFETParams::BSIM4(MosBSIM4Params::default());
-        assert_eq!(
-            linearize_mosfet(&l1, &[0.0; MOSFET_TERMINALS]),
+
+        // BSIM4 at saturation bias must be non-zero (default
+        // `VTH0 = 0.7 V` puts the device in saturation, real arm).
+        assert_ne!(
+            linearize_mosfet(&b4, &[3.3, 1.8, 0.0, 0.0]),
             MOSFETLinearization::zero(),
-            "tasks.md #11 has not yet replaced the Level-1 placeholder"
+            "BSIM4 is implemented (tasks.md #13); saturation bias must produce a non-zero stamp"
         );
+
         // BSIM3v3 at exactly the zero operating point still
         // produces a near-zero stamp (deep sub-threshold), but the
         // arm now dispatches into the real implementation. We
