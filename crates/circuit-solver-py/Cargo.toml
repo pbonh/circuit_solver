@@ -1,0 +1,41 @@
+[package]
+name = "circuit-solver-py"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false  # ADR-0010: PyO3 extension is unstable and distributed via maturin, not crates.io.
+description = "PyO3 extension module hosting the Python frontend (tasks.md items #52–#61). Non-behavioral stub at this revision."
+
+# A PyO3 extension module is a `cdylib` so the resulting shared object can be
+# imported by CPython at runtime. The `rlib` artifact is retained so the crate
+# can also participate in workspace `cargo test` and downstream Rust unit-test
+# harnesses without re-linking. Both artifacts are required by the PyO3
+# recommended layout (see <https://pyo3.rs/v0.28/building-and-distribution>).
+[lib]
+name = "circuit_solver"  # `import circuit_solver` from Python (PEP 8 module name).
+crate-type = ["cdylib", "rlib"]
+
+[lints.rust]
+# Relax `unsafe_code` from the workspace-wide `forbid` to `deny`. PyO3's
+# `#[pymodule]` / `#[pyclass]` macros expand to `unsafe` blocks (FFI to
+# CPython); `forbid` would reject them outright. `deny` still requires
+# every `unsafe { ... }` block in *our own* code to be explicitly
+# justified. We re-declare the rest of the workspace lints explicitly
+# here because Cargo does not support per-lint overrides when also
+# inheriting via `[lints] workspace = true`.
+
+unsafe_code = "deny"
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+
+[dependencies]
+# `extension-module` tells the linker not to require the Python ABI at link
+# time; the symbols are resolved by the host interpreter at import time.
+# `abi3-py39` builds a stable-ABI wheel compatible with CPython >= 3.9, which
+# satisfies the v1 proposal's "maturin develop / maturin build --release"
+# distribution intent (design.md §"PyO3 distribution packaging").
+pyo3 = { version = "0.28", features = ["extension-module", "abi3-py39"] }

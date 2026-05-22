@@ -7,10 +7,12 @@ members = [
     "crates/numeric-solver",
     "crates/analysis-orchestration",
     "crates/application-frontend",
+    "crates/circuit-solver-py",
 ]
-# `circuit-solver-py` (PyO3 extension, item #1) is not yet a member; it will be
-# added once the Python frontend tasks (#52–#61) materialize. ADR-0010 makes
-# all v1 Rust API unstable, so the workspace shape itself remains revisable.
+# `circuit-solver-py` hosts the PyO3 extension module (`import circuit_solver`).
+# It is a workspace member as of tasks.md item #1, but its public API surface
+# (CircuitBuilder, CircuitGraph, AnalysisRequest, NumPy result arrays) is
+# filled in by tasks #52–#61. ADR-0010 keeps all v1 Rust API unstable.
 
 [workspace.package]
 version = "0.0.1"
