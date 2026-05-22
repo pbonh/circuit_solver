@@ -339,7 +339,7 @@ pub fn linearize_bsim3v3(
     //   both Ids and the bias under differentiation flip sign.
     let ids = sign * ids;
 
-    assemble_companion(ids, gm, gds, gmbs, vgs, vds, vbs, sign)
+    assemble_companion(ids, gm, gds, gmbs, sign * vgs, sign * vds, sign * vbs, sign)
 }
 
 // ---------------------------------------------------------------------
@@ -772,6 +772,44 @@ mod tests {
         assert!(
             ids_reconstructed < 0.0,
             "PMOS Vsg=3 Vsd=1 should source positive current at source (negative drain current), got {ids_reconstructed}"
+        );
+    }
+
+    // -----------------------------------------------------------------
+    // PMOS affine-model self-consistency: the companion-current +
+    // Jacobian·V reconstruction must agree to O(h²) curvature when
+    // evaluated from two different linearization points.
+    // -----------------------------------------------------------------
+    #[test]
+    fn pmos_companion_is_affine_self_consistent() {
+        let p = pmos_default();
+        let v0 = [2.0_f64, 0.0, 3.0, 3.0]; // Vsg=3, Vsd=1
+        let h = 1.0e-5;
+
+        // Perturb one terminal (drain) by ±h and re-linearize.
+        let lin0 = linearize_bsim3v3(&p, &v0);
+        let v1 = [v0[0] + h, v0[1], v0[2], v0[3]];
+        let lin1 = linearize_bsim3v3(&p, &v1);
+
+        // Reconstruct I_drain at v1 using lin0 extrapolated one step.
+        let reconstruct = |lin: &MOSFETLinearization, v: &[f64; 4]| -> f64 {
+            lin.companion_current[0]
+                + (0..MOSFET_TERMINALS)
+                    .map(|j| lin.jacobian[0][j] * v[j])
+                    .sum::<f64>()
+        };
+
+        let from_lin0 = reconstruct(&lin0, &v1);
+        let from_lin1 = reconstruct(&lin1, &v1);
+
+        // Both should equal the true device current at v1; their
+        // disagreement is O(h²) from curvature (≈ 1e-10 at h=1e-5).
+        let diff = (from_lin0 - from_lin1).abs();
+        assert!(
+            diff < 1.0e-9,
+            "PMOS affine self-consistency diff = {diff} at Vsg=3 Vsd=1 (h={h}); \
+             expected < 1e-9 (O(h²) curvature). Buggy normalized-bias path \
+             produces O(gm·h) ≈ 1e-8 instead.",
         );
     }
 
