@@ -48,9 +48,17 @@
 //!   the witness scenario tight. The architecture leaves a single
 //!   extension point ([`collect_noise_sources`]) where the future
 //!   device walk lands.
-//! - Integrated noise over bandwidth (tasks.md #39).
 //! - Auto-DC (tasks.md #40 — `noise-analysis-without-prior-operating-point`).
 //! - ngspice conformance test (tasks.md #66).
+//!
+//! # Additional scope — tasks.md #39
+//!
+//! This module also hosts [`integrated_noise`], the
+//! trapezoidal-integration-over-bandwidth summary metric
+//! (tasks.md #39). It consumes a [`NoiseAnalysisData`] result and
+//! returns the RMS noise voltage over a caller-specified frequency
+//! band. Witnesses scenario
+//! `noise-spectral-density#integrated-noise-over-bandwidth`.
 //!
 //! # Mathematical model
 //!
@@ -708,6 +716,407 @@ pub fn noise_analysis(
 }
 
 // ---------------------------------------------------------------------
+// Integrated noise over a bandwidth
+// ---------------------------------------------------------------------
+
+/// Caller-supplied frequency band for [`integrated_noise`].
+///
+/// Both bounds are in Hz. Invariants enforced by [`integrated_noise`]:
+///
+/// - both bounds are finite and strictly positive,
+/// - `lo_hz < hi_hz` (a band of zero width has no integral),
+/// - the band must overlap the underlying sweep — `hi_hz >= freqs[0]`
+///   and `lo_hz <= freqs[last]`. A band that lies entirely outside
+///   the sweep is rejected rather than silently producing a zero
+///   integral.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct IntegrationBand {
+    /// Lower bound of the integration band (Hz).
+    pub lo_hz: f64,
+    /// Upper bound of the integration band (Hz).
+    pub hi_hz: f64,
+}
+
+/// Input bundle for [`integrated_noise`].
+///
+/// Borrows the spectral-density curve produced by [`noise_analysis`]
+/// for the lifetime of the call.
+#[derive(Debug, Clone, Copy)]
+pub struct IntegratedNoiseRequest<'a> {
+    /// The spectral-density curve to integrate. Must carry at least
+    /// two samples and a strictly increasing, finite, strictly
+    /// positive frequency axis.
+    pub data: &'a NoiseAnalysisData,
+    /// The band over which to integrate. See [`IntegrationBand`].
+    pub band: IntegrationBand,
+}
+
+/// Output of [`integrated_noise`].
+///
+/// Both quantities are derived from the same trapezoidal integral; we
+/// surface both because callers (e.g. the Python `Result` shim,
+/// tasks.md item #58) typically want the RMS voltage but assertion
+/// suites want the V² area directly.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct IntegratedNoise {
+    /// The integral of the PSD over the requested band, in V². The
+    /// integrand is V²/Hz and the integration variable is Hz, so the
+    /// product is V². This is the *variance* of the band-limited
+    /// noise voltage and is always non-negative.
+    pub integrated_psd_v2: f64,
+    /// The RMS noise voltage over the requested band, in V.
+    /// `sqrt(integrated_psd_v2)`. Always non-negative.
+    pub rms_voltage_v: f64,
+    /// The band the integration actually covered, *clipped* to the
+    /// underlying sweep's range. If the caller's band extends past
+    /// either end of the sweep, the effective lower / upper bound is
+    /// `max(lo_hz, freqs[0])` / `min(hi_hz, freqs[last])`. Echoed
+    /// here so callers can detect clipping by comparing to the
+    /// `IntegrationBand` they submitted.
+    pub effective_band_hz: (f64, f64),
+}
+
+/// Errors raised by [`integrated_noise`].
+///
+/// Mirrors the pre-flight discipline of [`NoiseAnalysisError`]: every
+/// invariant is named, every numerical surface carries the offending
+/// value, and the bandwidth-overlap check is the only path-aware
+/// failure mode.
+#[derive(Debug, Clone, PartialEq)]
+pub enum IntegratedNoiseError {
+    /// The supplied [`NoiseAnalysisData`] had fewer than two samples;
+    /// trapezoidal integration requires at least one interval.
+    InsufficientSamples {
+        /// The actual sample count.
+        len: usize,
+    },
+    /// The two parallel vectors in [`NoiseAnalysisData`] disagreed in
+    /// length; the only way to construct this shape post-
+    /// [`noise_analysis`] is to hand-build it, but the defensive
+    /// check costs nothing.
+    LengthMismatch {
+        /// Length of `frequencies_hz`.
+        frequencies_len: usize,
+        /// Length of `spectral_density_v2_per_hz`.
+        psd_len: usize,
+    },
+    /// A frequency sample was non-finite or non-positive. The
+    /// upstream [`noise_analysis`] guarantees finite, strictly
+    /// positive frequencies; this is defense-in-depth for hand-built
+    /// payloads.
+    NonPositiveFrequency {
+        /// Index in `data.frequencies_hz`.
+        index: usize,
+        /// The offending value (Hz).
+        frequency_hz: f64,
+    },
+    /// A PSD sample was non-finite or negative. Likewise defensive.
+    NonPhysicalPsd {
+        /// Index in `data.spectral_density_v2_per_hz`.
+        index: usize,
+        /// The offending value (V²/Hz).
+        psd_v2_per_hz: f64,
+    },
+    /// The frequency axis was not strictly increasing at the named
+    /// index. Trapezoidal integration assumes monotone abscissae;
+    /// the upstream sweep generator produces them in order.
+    NonMonotonicFrequencies {
+        /// Index of the violating pair: `frequencies_hz[index - 1] >= frequencies_hz[index]`.
+        index: usize,
+        /// The earlier sample.
+        prev_hz: f64,
+        /// The later sample.
+        curr_hz: f64,
+    },
+    /// One of the band bounds was non-finite or non-positive.
+    NonPositiveBandBound {
+        /// The offending value (Hz). The caller can disambiguate
+        /// `lo` vs `hi` by comparing against their submitted band.
+        bound_hz: f64,
+    },
+    /// `band.lo_hz >= band.hi_hz`; the integration region is empty
+    /// or reversed.
+    EmptyOrReversedBand {
+        /// The submitted lower bound (Hz).
+        lo_hz: f64,
+        /// The submitted upper bound (Hz).
+        hi_hz: f64,
+    },
+    /// The submitted band did not overlap the sweep: either
+    /// `band.hi_hz < frequencies_hz[0]` or
+    /// `band.lo_hz > frequencies_hz[last]`. We surface this as an
+    /// error rather than returning zero so a typo in `lo`/`hi` does
+    /// not silently produce "no noise".
+    BandOutOfSweep {
+        /// The submitted lower bound (Hz).
+        lo_hz: f64,
+        /// The submitted upper bound (Hz).
+        hi_hz: f64,
+        /// The sweep's lower bound (Hz).
+        sweep_lo_hz: f64,
+        /// The sweep's upper bound (Hz).
+        sweep_hi_hz: f64,
+    },
+}
+
+impl core::fmt::Display for IntegratedNoiseError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::InsufficientSamples { len } => write!(
+                f,
+                "integrated-noise: spectral-density curve has {len} sample(s); need at least 2 for trapezoidal integration"
+            ),
+            Self::LengthMismatch {
+                frequencies_len,
+                psd_len,
+            } => write!(
+                f,
+                "integrated-noise: spectral-density payload has frequencies_len={frequencies_len} but psd_len={psd_len}"
+            ),
+            Self::NonPositiveFrequency { index, frequency_hz } => write!(
+                f,
+                "integrated-noise: frequencies_hz[{index}] = {frequency_hz} is non-positive or non-finite"
+            ),
+            Self::NonPhysicalPsd { index, psd_v2_per_hz } => write!(
+                f,
+                "integrated-noise: spectral_density_v2_per_hz[{index}] = {psd_v2_per_hz} is negative or non-finite"
+            ),
+            Self::NonMonotonicFrequencies {
+                index,
+                prev_hz,
+                curr_hz,
+            } => write!(
+                f,
+                "integrated-noise: frequency axis not strictly increasing at index {index}: prev={prev_hz} Hz, curr={curr_hz} Hz"
+            ),
+            Self::NonPositiveBandBound { bound_hz } => write!(
+                f,
+                "integrated-noise: band bound {bound_hz} Hz is non-positive or non-finite"
+            ),
+            Self::EmptyOrReversedBand { lo_hz, hi_hz } => write!(
+                f,
+                "integrated-noise: band [{lo_hz}, {hi_hz}] Hz is empty or reversed (need lo < hi)"
+            ),
+            Self::BandOutOfSweep {
+                lo_hz,
+                hi_hz,
+                sweep_lo_hz,
+                sweep_hi_hz,
+            } => write!(
+                f,
+                "integrated-noise: band [{lo_hz}, {hi_hz}] Hz lies outside sweep [{sweep_lo_hz}, {sweep_hi_hz}] Hz"
+            ),
+        }
+    }
+}
+
+impl std::error::Error for IntegratedNoiseError {}
+
+/// Integrate the output-referred noise spectral density over a
+/// caller-specified bandwidth and return the RMS noise voltage.
+///
+/// # Algorithm
+///
+/// Given the PSD samples `S(f_i)` (V²/Hz) at frequency points
+/// `f_i` (Hz) — typically the output of [`noise_analysis`] — and a
+/// band `[f_lo, f_hi]`, the band-limited noise *variance* is
+///
+/// ```text
+/// V² = ∫_{f_lo}^{f_hi}  S(f)  df          [V²]
+/// ```
+///
+/// and the band-limited *RMS* voltage is `√V²`. We approximate the
+/// integral by the **trapezoidal rule** applied to the sample axis,
+/// with **linear interpolation** of `S(f)` at the band edges when
+/// `f_lo` / `f_hi` fall between sample points. Concretely, for each
+/// adjacent pair `(f_i, f_{i+1})` we compute the intersection of
+/// `[f_i, f_{i+1}]` with `[f_lo, f_hi]` (call it `[a, b]`) and add
+///
+/// ```text
+/// 0.5 · (b - a) · ( S_interp(a) + S_interp(b) )
+/// ```
+///
+/// where `S_interp(f) = S(f_i) + (f - f_i)/(f_{i+1} - f_i) · (S(f_{i+1}) - S(f_i))`.
+///
+/// When the band coincides with sample points (`f_lo = f_a`,
+/// `f_hi = f_b` for some `a < b`), this reduces to the textbook
+/// trapezoidal rule over indices `[a, b]`.
+///
+/// # Band clipping
+///
+/// If `[f_lo, f_hi]` extends past the sweep's range on either side,
+/// we clip silently to the sweep's range — we do *not* extrapolate
+/// the PSD. The returned [`IntegratedNoise::effective_band_hz`] echoes
+/// the clipped range so the caller can detect this case. A band that
+/// lies *entirely* outside the sweep is rejected as
+/// [`IntegratedNoiseError::BandOutOfSweep`].
+///
+/// # Why trapezoidal
+///
+/// The spec scenario states *"trapezoidal integration of spectral
+/// density over user-specified band, return RMS noise voltage"*
+/// (tasks.md #39). Trapezoidal is the canonical SPICE-family choice
+/// for integrating noise PSDs because the sweep is typically
+/// logarithmically spaced and the PSD curve is smooth on each
+/// decade; higher-order rules (Simpson) require an even number of
+/// intervals and aliases the band edges. Future work can add a
+/// `MIDPOINT` / `SIMPSON` variant; tasks.md #39 anchors trapezoidal
+/// as the required v1 path.
+///
+/// # Errors
+///
+/// See [`IntegratedNoiseError`] for the complete list. Pre-flight
+/// validation order: payload-length sanity, monotonicity / physical
+/// sample values, band-bound finiteness, band non-empty, band
+/// overlap with sweep.
+///
+/// # Output invariants
+///
+/// - `integrated_psd_v2 >= 0.0` (sum of non-negative trapezoids over
+///   a non-empty band of non-negative PSDs).
+/// - `rms_voltage_v >= 0.0` (the principal square root).
+/// - `effective_band_hz.0 >= submitted_lo_hz` and
+///   `effective_band_hz.1 <= submitted_hi_hz` (clipping only narrows).
+///
+/// # Panics
+///
+/// Does not panic in release. Debug assertions guard the
+/// non-negativity invariants on the way out.
+pub fn integrated_noise(
+    req: IntegratedNoiseRequest<'_>,
+) -> Result<IntegratedNoise, IntegratedNoiseError> {
+    let freqs = &req.data.frequencies_hz;
+    let psds = &req.data.spectral_density_v2_per_hz;
+
+    // --- Payload sanity ----------------------------------------------------
+    if freqs.len() != psds.len() {
+        return Err(IntegratedNoiseError::LengthMismatch {
+            frequencies_len: freqs.len(),
+            psd_len: psds.len(),
+        });
+    }
+    if freqs.len() < 2 {
+        return Err(IntegratedNoiseError::InsufficientSamples { len: freqs.len() });
+    }
+
+    // --- Per-sample physical sanity ----------------------------------------
+    for (i, &f) in freqs.iter().enumerate() {
+        if !f.is_finite() || f <= 0.0 {
+            return Err(IntegratedNoiseError::NonPositiveFrequency {
+                index: i,
+                frequency_hz: f,
+            });
+        }
+    }
+    for (i, &s) in psds.iter().enumerate() {
+        if !s.is_finite() || s < 0.0 {
+            return Err(IntegratedNoiseError::NonPhysicalPsd {
+                index: i,
+                psd_v2_per_hz: s,
+            });
+        }
+    }
+    for i in 1..freqs.len() {
+        // The non-finite / non-positive frequency check above
+        // guarantees both sides are finite, so `>=` is well-defined
+        // here. (Clippy flags `!(a < b)` as awkward on PartialOrd.)
+        if freqs[i - 1] >= freqs[i] {
+            return Err(IntegratedNoiseError::NonMonotonicFrequencies {
+                index: i,
+                prev_hz: freqs[i - 1],
+                curr_hz: freqs[i],
+            });
+        }
+    }
+
+    // --- Band sanity -------------------------------------------------------
+    let lo = req.band.lo_hz;
+    let hi = req.band.hi_hz;
+    if !lo.is_finite() || lo <= 0.0 {
+        return Err(IntegratedNoiseError::NonPositiveBandBound { bound_hz: lo });
+    }
+    if !hi.is_finite() || hi <= 0.0 {
+        return Err(IntegratedNoiseError::NonPositiveBandBound { bound_hz: hi });
+    }
+    // Band-bound finiteness was checked above, so `>=` is
+    // well-defined here. (Clippy flags `!(lo < hi)` on PartialOrd.)
+    if lo >= hi {
+        return Err(IntegratedNoiseError::EmptyOrReversedBand {
+            lo_hz: lo,
+            hi_hz: hi,
+        });
+    }
+
+    let sweep_lo = freqs[0];
+    let sweep_hi = freqs[freqs.len() - 1];
+    if hi < sweep_lo || lo > sweep_hi {
+        return Err(IntegratedNoiseError::BandOutOfSweep {
+            lo_hz: lo,
+            hi_hz: hi,
+            sweep_lo_hz: sweep_lo,
+            sweep_hi_hz: sweep_hi,
+        });
+    }
+
+    // Clip the band silently to the sweep's range. The
+    // intersection-of-intervals loop below would do this for us
+    // implicitly, but echoing the effective range to the caller is
+    // valuable diagnostic information.
+    let eff_lo = lo.max(sweep_lo);
+    let eff_hi = hi.min(sweep_hi);
+    // EmptyOrReversedBand + the BandOutOfSweep check guarantee
+    // eff_lo < eff_hi here (the band overlaps and is non-empty).
+    debug_assert!(eff_lo < eff_hi);
+
+    // --- Trapezoidal accumulation ------------------------------------------
+    // For each sample interval `[f_i, f_{i+1}]` compute its
+    // intersection with `[eff_lo, eff_hi]` and accumulate a
+    // (linearly-interpolated) trapezoid on that sub-interval.
+    let mut integral = 0.0_f64;
+    for i in 0..(freqs.len() - 1) {
+        let f_a = freqs[i];
+        let f_b = freqs[i + 1];
+        // Early-out: this interval lies wholly below the band.
+        if f_b <= eff_lo {
+            continue;
+        }
+        // Early-out: this interval lies wholly above the band; the
+        // remaining intervals are also above (monotonicity).
+        if f_a >= eff_hi {
+            break;
+        }
+        let s_a = psds[i];
+        let s_b = psds[i + 1];
+        // The intersection of `[f_a, f_b]` with `[eff_lo, eff_hi]`.
+        let a = f_a.max(eff_lo);
+        let b = f_b.min(eff_hi);
+        // Linear interpolation of the PSD at `a` and `b`.
+        let denom = f_b - f_a;
+        // Monotonicity check above guarantees denom > 0.
+        let s_at_a = s_a + (a - f_a) / denom * (s_b - s_a);
+        let s_at_b = s_a + (b - f_a) / denom * (s_b - s_a);
+        // Linear-interpolation defense-in-depth: even with a
+        // monotone non-negative PSD curve and `a, b` inside
+        // `[f_a, f_b]`, floating-point can produce a tiny negative
+        // interpolant. Clamp to zero; the integral stays valid.
+        let s_at_a = s_at_a.max(0.0);
+        let s_at_b = s_at_b.max(0.0);
+        integral += 0.5 * (b - a) * (s_at_a + s_at_b);
+    }
+
+    debug_assert!(integral >= 0.0);
+    debug_assert!(integral.is_finite());
+    let rms = integral.sqrt();
+    debug_assert!(rms >= 0.0);
+
+    Ok(IntegratedNoise {
+        integrated_psd_v2: integral,
+        rms_voltage_v: rms,
+        effective_band_hz: (eff_lo, eff_hi),
+    })
+}
+
+// ---------------------------------------------------------------------
 // Helpers used internally and by tests
 // ---------------------------------------------------------------------
 
@@ -1254,5 +1663,499 @@ mod tests {
         };
         assert!(failed.is_failed() && !failed.is_ok());
         assert!(failed.data().is_none());
+    }
+
+    // ---------- integrated_noise: pre-flight rejection ------------------
+
+    fn flat_psd(n: usize, s0: f64) -> NoiseAnalysisData {
+        // Linearly-spaced frequencies 1, 2, ..., n Hz; constant PSD.
+        // `n` is a small test count (≤100); the cast is safe.
+        NoiseAnalysisData {
+            #[allow(clippy::cast_precision_loss)]
+            frequencies_hz: (1..=n).map(|i| i as f64).collect(),
+            spectral_density_v2_per_hz: vec![s0; n],
+        }
+    }
+
+    #[test]
+    fn integrated_noise_rejects_insufficient_samples() {
+        let data = NoiseAnalysisData {
+            frequencies_hz: vec![1.0],
+            spectral_density_v2_per_hz: vec![1.0e-18],
+        };
+        let req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 1.0,
+                hi_hz: 10.0,
+            },
+        };
+        assert!(matches!(
+            integrated_noise(req).unwrap_err(),
+            IntegratedNoiseError::InsufficientSamples { len: 1 }
+        ));
+    }
+
+    #[test]
+    fn integrated_noise_rejects_length_mismatch() {
+        let data = NoiseAnalysisData {
+            frequencies_hz: vec![1.0, 2.0, 3.0],
+            spectral_density_v2_per_hz: vec![1.0, 2.0],
+        };
+        let req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 1.0,
+                hi_hz: 3.0,
+            },
+        };
+        assert!(matches!(
+            integrated_noise(req).unwrap_err(),
+            IntegratedNoiseError::LengthMismatch {
+                frequencies_len: 3,
+                psd_len: 2,
+            }
+        ));
+    }
+
+    #[test]
+    fn integrated_noise_rejects_non_finite_frequency_in_payload() {
+        let data = NoiseAnalysisData {
+            frequencies_hz: vec![1.0, f64::NAN, 3.0],
+            spectral_density_v2_per_hz: vec![1.0e-18, 1.0e-18, 1.0e-18],
+        };
+        let req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 1.0,
+                hi_hz: 3.0,
+            },
+        };
+        assert!(matches!(
+            integrated_noise(req).unwrap_err(),
+            IntegratedNoiseError::NonPositiveFrequency { index: 1, .. }
+        ));
+    }
+
+    #[test]
+    fn integrated_noise_rejects_negative_psd() {
+        let data = NoiseAnalysisData {
+            frequencies_hz: vec![1.0, 2.0, 3.0],
+            spectral_density_v2_per_hz: vec![1.0e-18, -1.0e-19, 1.0e-18],
+        };
+        let req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 1.0,
+                hi_hz: 3.0,
+            },
+        };
+        assert!(matches!(
+            integrated_noise(req).unwrap_err(),
+            IntegratedNoiseError::NonPhysicalPsd { index: 1, .. }
+        ));
+    }
+
+    #[test]
+    fn integrated_noise_rejects_non_monotonic_frequencies() {
+        let data = NoiseAnalysisData {
+            frequencies_hz: vec![1.0, 2.0, 2.0, 3.0],
+            spectral_density_v2_per_hz: vec![1.0e-18; 4],
+        };
+        let req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 1.0,
+                hi_hz: 3.0,
+            },
+        };
+        match integrated_noise(req).unwrap_err() {
+            IntegratedNoiseError::NonMonotonicFrequencies {
+                index,
+                prev_hz,
+                curr_hz,
+            } => {
+                assert_eq!(index, 2);
+                assert_eq!(prev_hz.to_bits(), 2.0_f64.to_bits());
+                assert_eq!(curr_hz.to_bits(), 2.0_f64.to_bits());
+            }
+            other => panic!("expected NonMonotonicFrequencies, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn integrated_noise_rejects_non_positive_band_bound() {
+        let data = flat_psd(5, 1.0e-18);
+        let req_lo_zero = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 0.0,
+                hi_hz: 3.0,
+            },
+        };
+        assert!(matches!(
+            integrated_noise(req_lo_zero).unwrap_err(),
+            IntegratedNoiseError::NonPositiveBandBound { .. }
+        ));
+        let req_hi_nan = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 1.0,
+                hi_hz: f64::NAN,
+            },
+        };
+        assert!(matches!(
+            integrated_noise(req_hi_nan).unwrap_err(),
+            IntegratedNoiseError::NonPositiveBandBound { .. }
+        ));
+    }
+
+    #[test]
+    fn integrated_noise_rejects_empty_or_reversed_band() {
+        let data = flat_psd(5, 1.0e-18);
+        let req_equal = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 2.0,
+                hi_hz: 2.0,
+            },
+        };
+        assert!(matches!(
+            integrated_noise(req_equal).unwrap_err(),
+            IntegratedNoiseError::EmptyOrReversedBand { .. }
+        ));
+        let req_reversed = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 4.0,
+                hi_hz: 2.0,
+            },
+        };
+        assert!(matches!(
+            integrated_noise(req_reversed).unwrap_err(),
+            IntegratedNoiseError::EmptyOrReversedBand { .. }
+        ));
+    }
+
+    #[test]
+    fn integrated_noise_rejects_band_out_of_sweep() {
+        // Sweep is 1..=5 Hz from `flat_psd(5, ...)`.
+        let data = flat_psd(5, 1.0e-18);
+        // Band entirely below the sweep.
+        let req_below = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 1.0e-3,
+                hi_hz: 0.5,
+            },
+        };
+        assert!(matches!(
+            integrated_noise(req_below).unwrap_err(),
+            IntegratedNoiseError::BandOutOfSweep { .. }
+        ));
+        // Band entirely above the sweep.
+        let req_above = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 6.0,
+                hi_hz: 7.0,
+            },
+        };
+        assert!(matches!(
+            integrated_noise(req_above).unwrap_err(),
+            IntegratedNoiseError::BandOutOfSweep { .. }
+        ));
+    }
+
+    // ---------- integrated_noise: white-noise analytic ------------------
+
+    #[test]
+    fn integrated_noise_white_band_matches_analytic() {
+        // Flat PSD S0 over [1, 10] Hz integrated over [2, 8] Hz
+        // → variance = S0 · (8 - 2) = 6·S0; RMS = sqrt(6·S0).
+        let s0 = 4.0e-18; // a representative resistor PSD
+        let data = NoiseAnalysisData {
+            frequencies_hz: (1..=10).map(f64::from).collect(),
+            spectral_density_v2_per_hz: vec![s0; 10],
+        };
+        let req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 2.0,
+                hi_hz: 8.0,
+            },
+        };
+        let out = integrated_noise(req).expect("integration succeeds");
+        let expected = s0 * 6.0;
+        assert!(
+            approx(out.integrated_psd_v2, expected, 1.0e-12),
+            "white-band variance: expected {expected:.6e}, got {:.6e}",
+            out.integrated_psd_v2
+        );
+        assert!(approx(out.rms_voltage_v, expected.sqrt(), 1.0e-12));
+        assert_eq!(out.effective_band_hz, (2.0, 8.0));
+    }
+
+    #[test]
+    fn integrated_noise_white_full_sweep_matches_analytic() {
+        // Band coincides with the sweep endpoints — pure trapezoidal
+        // sum, no edge interpolation. Variance = S0 · (f_last - f_first).
+        let s0 = 1.0e-17;
+        let data = NoiseAnalysisData {
+            frequencies_hz: vec![1.0, 100.0, 1000.0, 10_000.0],
+            spectral_density_v2_per_hz: vec![s0; 4],
+        };
+        let req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 1.0,
+                hi_hz: 10_000.0,
+            },
+        };
+        let out = integrated_noise(req).expect("integration succeeds");
+        let expected = s0 * (10_000.0 - 1.0);
+        assert!(
+            approx(out.integrated_psd_v2, expected, 1.0e-12),
+            "white full-sweep: expected {expected:.6e}, got {:.6e}",
+            out.integrated_psd_v2
+        );
+    }
+
+    #[test]
+    fn integrated_noise_white_band_edges_between_samples() {
+        // Sweep at integer Hz 1..=10, integrate [2.5, 8.5].
+        // For a constant S(f) the linear interpolant equals S0 so
+        // the integral is exact: variance = S0 · (8.5 - 2.5) = 6·S0.
+        let s0 = 2.5e-18;
+        let data = flat_psd(10, s0);
+        let req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 2.5,
+                hi_hz: 8.5,
+            },
+        };
+        let out = integrated_noise(req).expect("integration succeeds");
+        let expected = s0 * 6.0;
+        assert!(
+            approx(out.integrated_psd_v2, expected, 1.0e-12),
+            "white inter-sample band: expected {expected:.6e}, got {:.6e}",
+            out.integrated_psd_v2
+        );
+        assert_eq!(out.effective_band_hz, (2.5, 8.5));
+    }
+
+    // ---------- integrated_noise: non-flat PSD analytic -----------------
+
+    #[test]
+    fn integrated_noise_linear_psd_matches_analytic() {
+        // PSD samples model an exactly-linear S(f) = m·f + c so that
+        // trapezoidal rule is exact: integral of (m·f + c) from a to b
+        // is m·(b² - a²)/2 + c·(b - a).
+        let m = 2.0e-21;
+        let c = 1.0e-18;
+        let freqs: Vec<f64> = (1..=11).map(f64::from).collect();
+        let psds: Vec<f64> = freqs.iter().map(|&f| m * f + c).collect();
+        let data = NoiseAnalysisData {
+            frequencies_hz: freqs,
+            spectral_density_v2_per_hz: psds,
+        };
+        let req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 3.0,
+                hi_hz: 9.0,
+            },
+        };
+        let out = integrated_noise(req).expect("integration succeeds");
+        let expected = m * (9.0_f64.powi(2) - 3.0_f64.powi(2)) / 2.0 + c * (9.0 - 3.0);
+        assert!(
+            approx(out.integrated_psd_v2, expected, 1.0e-10),
+            "linear PSD: expected {expected:.6e}, got {:.6e}",
+            out.integrated_psd_v2
+        );
+        assert!(approx(out.rms_voltage_v, expected.sqrt(), 1.0e-10));
+    }
+
+    #[test]
+    fn integrated_noise_clips_silently_outside_sweep() {
+        // Sweep 1..=5 Hz with flat S0; band [0.5, 10.0] should clip
+        // to [1, 5] and produce variance S0 · 4.
+        let s0 = 7.0e-18;
+        let data = flat_psd(5, s0);
+        let req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 0.5,
+                hi_hz: 10.0,
+            },
+        };
+        let out = integrated_noise(req).expect("integration succeeds");
+        let expected = s0 * 4.0;
+        assert!(approx(out.integrated_psd_v2, expected, 1.0e-12));
+        assert_eq!(out.effective_band_hz, (1.0, 5.0));
+    }
+
+    #[test]
+    fn integrated_noise_zero_psd_returns_zero_rms() {
+        // All-zero PSD — a circuit with no thermal sources — must
+        // return exactly 0 V RMS (no noise, no spurious epsilon).
+        let data = flat_psd(5, 0.0);
+        let req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 2.0,
+                hi_hz: 4.0,
+            },
+        };
+        let out = integrated_noise(req).expect("integration succeeds");
+        assert_eq!(out.integrated_psd_v2.to_bits(), 0.0_f64.to_bits());
+        assert_eq!(out.rms_voltage_v.to_bits(), 0.0_f64.to_bits());
+    }
+
+    #[test]
+    fn integrated_noise_band_inside_one_sample_interval() {
+        // Sweep at 1, 10 Hz with S(1)=S0, S(10)=S0 (flat). Band
+        // [3, 7] lies entirely within the single sample interval.
+        // For a flat PSD the integral is S0 · (7 - 3) = 4·S0.
+        let s0 = 1.0e-18;
+        let data = NoiseAnalysisData {
+            frequencies_hz: vec![1.0, 10.0],
+            spectral_density_v2_per_hz: vec![s0, s0],
+        };
+        let req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: 3.0,
+                hi_hz: 7.0,
+            },
+        };
+        let out = integrated_noise(req).expect("integration succeeds");
+        let expected = s0 * 4.0;
+        assert!(approx(out.integrated_psd_v2, expected, 1.0e-12));
+        assert_eq!(out.effective_band_hz, (3.0, 7.0));
+    }
+
+    // ---------- integrated_noise: composes with noise_analysis ----------
+
+    #[test]
+    fn integrated_noise_composes_with_resistive_noise_analysis() {
+        // End-to-end: run noise_analysis on the single-resistor
+        // witness fixture, then integrate over a sub-band. For a
+        // resistive circuit the PSD is *flat* in f (every |H_j| is
+        // frequency-independent), so the trapezoidal integral equals
+        // S0 · (f_hi - f_lo) and the RMS is sqrt(S0·BW).
+        //
+        // We use R1=2 kΩ so the resistor sets the dominant noise.
+        // The analytic PSD at n_out is ≈ 4kT·R1 (since R2=1 PΩ
+        // contribution is ~12 orders of magnitude smaller). We
+        // compute it from the witness rather than hardcoding so the
+        // test is robust to internal scaling tweaks.
+        let r1_ohms = 2.0e3;
+        let (fs, g, sys, out_id) = single_resistor_to_ground(r1_ohms);
+        let f_axis: Vec<f64> = (0..50).map(|i| 1.0 + f64::from(i) * 200.0).collect();
+        let req = NoiseAnalysisRequest {
+            dc_status: converged_status(),
+            system: &sys,
+            structure: &fs,
+            graph: &g,
+            frequencies_hz: &f_axis,
+            output: out_id,
+            temperature_k: ROOM_TEMPERATURE_K,
+            ground: None,
+        };
+        let data = noise_analysis(req)
+            .expect("noise analysis succeeds")
+            .data()
+            .cloned()
+            .expect("Ok variant");
+
+        // Integrate over [100, 1000] Hz.
+        let lo = 100.0;
+        let hi = 1000.0;
+        let int_req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: lo,
+                hi_hz: hi,
+            },
+        };
+        let out = integrated_noise(int_req).expect("integration succeeds");
+        // PSD is flat — take the first sample as S0.
+        let s0 = data.spectral_density_v2_per_hz[0];
+        let expected_var = s0 * (hi - lo);
+        assert!(
+            approx(out.integrated_psd_v2, expected_var, 1.0e-6),
+            "resistive band variance: expected {expected_var:.6e}, got {:.6e}",
+            out.integrated_psd_v2
+        );
+        assert!(approx(out.rms_voltage_v, expected_var.sqrt(), 1.0e-6));
+
+        // Cross-check against the analytic Johnson-Nyquist value:
+        // S_V = 4·k·T·R1.
+        let analytic_s0 = 4.0 * BOLTZMANN_J_PER_K * ROOM_TEMPERATURE_K * r1_ohms;
+        assert!(
+            approx(s0, analytic_s0, 1.0e-6),
+            "S0 matches 4kTR: expected {analytic_s0:.6e}, got {s0:.6e}"
+        );
+    }
+
+    #[test]
+    fn integrated_noise_witness_kilohz_to_megahertz_subband() {
+        // Direct spec witness: sweep spans 1 Hz to 10 MHz, integrate
+        // 1 kHz to 1 MHz. Resistive circuit → flat PSD → analytic
+        // RMS = sqrt(4kTR · (1e6 - 1e3)).
+        let r1_ohms = 1.0e3;
+        let (fs, g, sys, out_id) = single_resistor_to_ground(r1_ohms);
+        // 40 log-spaced points across 7 decades.
+        let f_axis: Vec<f64> = (0..40)
+            .map(|i| 10.0_f64.powf(f64::from(i) * 7.0 / 39.0))
+            .collect();
+        let req = NoiseAnalysisRequest {
+            dc_status: converged_status(),
+            system: &sys,
+            structure: &fs,
+            graph: &g,
+            frequencies_hz: &f_axis,
+            output: out_id,
+            temperature_k: ROOM_TEMPERATURE_K,
+            ground: None,
+        };
+        let data = noise_analysis(req)
+            .expect("noise analysis succeeds")
+            .data()
+            .cloned()
+            .expect("Ok variant");
+
+        let lo = 1.0e3;
+        let hi = 1.0e6;
+        let int_req = IntegratedNoiseRequest {
+            data: &data,
+            band: IntegrationBand {
+                lo_hz: lo,
+                hi_hz: hi,
+            },
+        };
+        let out = integrated_noise(int_req).expect("integration succeeds");
+        let analytic_s0 = 4.0 * BOLTZMANN_J_PER_K * ROOM_TEMPERATURE_K * r1_ohms;
+        let expected_var = analytic_s0 * (hi - lo);
+        // Resistive ⇒ flat ⇒ trapezoidal is exact up to the float
+        // round-off accumulated across 40 intervals plus the two
+        // edge sub-intervals. 1e-4 rel tolerance is generous and
+        // well below the 2 % spec tolerance envelope.
+        assert!(
+            approx(out.integrated_psd_v2, expected_var, 1.0e-4),
+            "1kHz–1MHz on R={r1_ohms} Ω: expected {expected_var:.6e}, got {:.6e}",
+            out.integrated_psd_v2
+        );
+        let expected_rms = expected_var.sqrt();
+        assert!(approx(out.rms_voltage_v, expected_rms, 1.0e-4));
+        // Sanity: 1 kΩ at room temperature over ~1 MHz gives
+        // ~4 µV RMS — assert the order of magnitude.
+        assert!(
+            (1.0e-6..1.0e-5).contains(&out.rms_voltage_v),
+            "1 kΩ / 1 MHz BW RMS should be ~µV: got {} V",
+            out.rms_voltage_v
+        );
     }
 }
