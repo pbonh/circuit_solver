@@ -66,7 +66,7 @@
 //! response is the [`LinearizedModel`].
 
 use crate::model::DeviceModel;
-use crate::params::{BJTParams, DiodeParams, MOSFETParams};
+use crate::params::{BJTParams, DiodeParams, MOSFETParams, MosBSIM4Params, MosPolarity};
 
 // ---------------------------------------------------------------------
 // Terminal counts
@@ -528,13 +528,15 @@ pub fn linearize_bjt(
 
 /// Linearize a MOSFET at the given terminal voltages.
 ///
-/// **Placeholder at task #8.** The level-discriminating `match` on
-/// [`MOSFETParams`] is in place (each level's arm currently returns
-/// the zero linearization). tasks.md #11–#13 fill each arm in:
+/// Dispatches over the [`MOSFETParams`] level enum:
 ///
-/// - [`MOSFETParams::Level1`] → tasks.md #11 (Shichman-Hodges),
-/// - [`MOSFETParams::BSIM3v3`] → tasks.md #12,
-/// - [`MOSFETParams::BSIM4`] → tasks.md #13.
+/// - [`MOSFETParams::Level1`] → tasks.md #11 (Shichman-Hodges) —
+///   **placeholder** (zero stamp) until #11 lands.
+/// - [`MOSFETParams::BSIM3v3`] → tasks.md #12 — **placeholder**
+///   (zero stamp) until #12 lands.
+/// - [`MOSFETParams::BSIM4`] → tasks.md #13 — **implemented**:
+///   long-channel BSIM4 stamp with DIBL and channel-length
+///   modulation, see [`linearize_mosfet_bsim4`].
 ///
 /// The match is exhaustive (ADR-0005): adding a new MOS level to
 /// [`MOSFETParams`] breaks this site, which is the intended
@@ -560,11 +562,280 @@ pub fn linearize_mosfet(
             let _ = terminal_voltages;
             MOSFETLinearization::zero()
         }
-        MOSFETParams::BSIM4(p) => {
-            let _ = p;
-            let _ = terminal_voltages;
-            MOSFETLinearization::zero()
+        MOSFETParams::BSIM4(p) => linearize_mosfet_bsim4(p, terminal_voltages),
+    }
+}
+
+// ---------------------------------------------------------------------
+// MOSFET BSIM4 stamp (tasks.md #13)
+// ---------------------------------------------------------------------
+
+/// Smooth-limiting cap on terminal voltage deltas evaluated inside
+/// the BSIM4 stamp.
+///
+/// The stamp's saturation curve is polynomial in `Vds_eff` and
+/// `Vgs - Vth`, so it cannot diverge to infinity the way the
+/// Diode's `exp(V/Vt)` can. The cap exists to keep Newton-Raphson
+/// excursions far from the converged operating point from producing
+/// astronomical intermediate currents that would shadow legitimate
+/// device currents in the iterate's residue norm. The cap value
+/// (40 V) is two decades above any realistic supply rail.
+const BSIM4_VOLTAGE_CAP: f64 = 40.0;
+
+/// Polarity-fold a terminal-voltage triple into NMOS-equivalent
+/// `(Vgs, Vds, Vbs)`.
+///
+/// SPICE convention: for a PMOS device, the stamp internally negates
+/// all three differential voltages so the same physics-side equation
+/// (written for NMOS strong inversion) computes the magnitude of the
+/// PMOS source-to-drain current, and the *sign* of `Id` is flipped
+/// back on the way out. This keeps the regime-detection branches
+/// (`Vgs <= Vth`, `Vds < Vgs - Vth`, …) polarity-symmetric.
+#[inline]
+fn bsim4_fold_polarity(
+    polarity: MosPolarity,
+    vd: f64,
+    vg: f64,
+    vs: f64,
+    vb: f64,
+) -> (f64, f64, f64, f64) {
+    // (Vgs, Vds, Vbs, sign) — sign multiplies the drain-source current
+    // on the way out so PMOS sources current rather than sinking it.
+    let (vgs, vds, vbs) = (vg - vs, vd - vs, vb - vs);
+    match polarity {
+        MosPolarity::Nmos => (vgs, vds, vbs, 1.0),
+        MosPolarity::Pmos => (-vgs, -vds, -vbs, -1.0),
+    }
+}
+
+/// Clamp a voltage component to `±BSIM4_VOLTAGE_CAP`.
+///
+/// This is a hard clamp rather than a smooth limiter because the
+/// BSIM4 stamp is polynomial in `Vds` and `Vgs - Vth`; the clamp's
+/// only job is to stop NR excursions from producing values that
+/// overwhelm the residue norm. The clamp is symmetric so derivatives
+/// remain correct inside the active band.
+#[inline]
+fn bsim4_clamp(v: f64) -> f64 {
+    v.clamp(-BSIM4_VOLTAGE_CAP, BSIM4_VOLTAGE_CAP)
+}
+
+/// Linearize a MOSFET BSIM4 device at the given terminal voltages.
+///
+/// # Numerical scope (tasks.md #13)
+///
+/// This is a **long-channel BSIM4 stamp with DIBL and channel-length
+/// modulation**. It uses the canonical-parameter subset documented
+/// on [`MosBSIM4Params`] (`VTH0`, `U0`, `TOXE`, `EPSOX`, `ETA0`,
+/// `PCLM`, `W`, `L`) and the regime-aware strong-inversion drain-
+/// current equation:
+///
+/// - **Cutoff** (`Vgs_ov ≤ 0`): `Id = 0`, all derivatives are zero.
+/// - **Linear / triode** (`0 < Vds < Vgs_ov`):
+///   `Id = KP · (Vgs_ov · Vds − Vds² / 2) · (1 + PCLM·Vds)`
+/// - **Saturation** (`Vds ≥ Vgs_ov ≥ 0`):
+///   `Id = (KP / 2) · Vgs_ov² · (1 + PCLM·Vds)`
+///
+/// with `Vgs_ov = Vgs − Vth_eff` and `Vth_eff = VTH0 − ETA0·Vds`
+/// (the DIBL term — drain-induced barrier lowering). For PMOS the
+/// internal evaluation is mirrored via a polarity-fold that negates
+/// all three differential voltages, evaluates the NMOS equation, and
+/// negates the resulting drain current on the way out.
+///
+/// The Jacobian is the analytic 4×4 partial-derivative matrix
+/// `∂I_t / ∂V_u` in terminal-local coordinates `[D, G, S, B]`:
+///
+/// - `gm = ∂Id/∂Vgs` — transconductance (rows D / G, anti-rows on S),
+/// - `gds = ∂Id/∂Vds` — output conductance plus DIBL-induced
+///   `∂Vth_eff/∂Vds` term,
+/// - `gmbs = ∂Id/∂Vbs` — body transconductance (zero in this scope —
+///   bulk-bias dependence of `VTH0` is not modeled at task #13;
+///   the row/column for the bulk terminal is wired through as zero so
+///   the 4×4 shape is preserved for the MNA assembler and for the
+///   future task that adds bulk effects).
+///
+/// The companion-current vector follows the standard Newton-Raphson
+/// companion-model form `i_eq = I(V_op) − J · V_op` so the MNA
+/// right-hand side carries `I(V_op)` exactly at the iterate. The
+/// drain and source companion entries are anti-equal (KCL at the
+/// device); gate and bulk are zero (the BSIM4 long-channel model has
+/// no DC gate or bulk current).
+///
+/// # Why this scope
+///
+/// Full industry BSIM4 v4.8 (~200 parameters, regime-switching with
+/// smooth interpolation between subthreshold / strong-inversion /
+/// velocity-saturation regimes, gate tunneling, bulk-charge,
+/// substrate-current) is a multi-week numerical kernel. The Gherkin
+/// scenario this task enables (`dc-operating-point#nonlinear-dc-
+/// operating-point-with-direct-convergence`) requires a *non-zero,
+/// convergent* MOSFET linearization — not full PDK-conformance
+/// (which lands at task #63 against Sky130 ngspice golden). The
+/// long-channel-with-DIBL stamp delivers the former at sibling-task
+/// parity with #11 (Level-1) and #12 (`BSIM3v3`), and gives the MNA
+/// assembler (tasks.md #14) something real to test stamp folding
+/// against.
+///
+/// # Arguments
+///
+/// - `params` — BSIM4 model parameters (see [`MosBSIM4Params`]).
+/// - `terminal_voltages` — `[V_drain, V_gate, V_source, V_bulk]`.
+//
+// Allow `clippy::similar_names` on the function: Vds / Vgs / Vbs and
+// Vd / Vg / Vs / Vb are the standard SPICE terminal-voltage names.
+// Renaming them would diverge from every BSIM4 / SPICE reference and
+// obscure the physics.
+#[must_use]
+#[allow(clippy::similar_names)]
+pub fn linearize_mosfet_bsim4(
+    params: &MosBSIM4Params,
+    terminal_voltages: &[f64; MOSFET_TERMINALS],
+) -> MOSFETLinearization {
+    // -----------------------------------------------------------------
+    // 1. Polarity-fold to NMOS-equivalent, clamp for NR robustness.
+    // -----------------------------------------------------------------
+    let [vd_raw, vg_raw, vs_raw, vb_raw] = *terminal_voltages;
+    let (vgs_p, vds_p, vbs_p, sign) =
+        bsim4_fold_polarity(params.polarity, vd_raw, vg_raw, vs_raw, vb_raw);
+    let _ = vbs_p; // task #13 does not model bulk-bias dependence; see docstring.
+    let vgs = bsim4_clamp(vgs_p);
+    let vds = bsim4_clamp(vds_p);
+
+    // -----------------------------------------------------------------
+    // 2. Effective threshold with DIBL: Vth_eff = VTH0 - ETA0 · Vds.
+    //    Overdrive Vgs_ov = Vgs - Vth_eff.
+    //    d(Vth_eff)/d(Vds) = -ETA0.
+    //    d(Vgs_ov)/d(Vgs) = 1.
+    //    d(Vgs_ov)/d(Vds) = +ETA0  (because Vth_eff decreases with Vds).
+    // -----------------------------------------------------------------
+    let vth_eff = params.vth0 - params.eta0 * vds;
+    let vgs_ov = vgs - vth_eff;
+
+    // -----------------------------------------------------------------
+    // 3. Regime branch + drain-current value and its partials.
+    //    All quantities are NMOS-equivalent here; polarity is folded
+    //    back via `sign` at the end.
+    //
+    //    Variables tracked:
+    //      id            — drain current (NMOS-equivalent, A)
+    //      d_id_d_vgs    — ∂Id/∂Vgs at this regime
+    //      d_id_d_vds    — ∂Id/∂Vds at this regime
+    // -----------------------------------------------------------------
+    let kp = params.kp();
+    let (id, d_id_d_vgs, d_id_d_vds) = if vgs_ov <= 0.0 {
+        // Cutoff — sub-threshold leakage not modeled at this scope.
+        (0.0, 0.0, 0.0)
+    } else if vds < vgs_ov {
+        // Linear / triode region.
+        //
+        // Id = KP · (Vgs_ov · Vds − Vds²/2) · (1 + PCLM·Vds)
+        //
+        // Let q = Vgs_ov · Vds − Vds²/2  (positive in triode),
+        //     m = 1 + PCLM · Vds.
+        // Then Id = KP · q · m.
+        //
+        // Partial w.r.t. Vgs_ov: ∂q/∂Vgs_ov = Vds  ⇒  via Vgs_ov,
+        //   ∂Id/∂Vgs = KP · Vds · m.
+        // Partial w.r.t. Vds (direct, holding Vgs_ov fixed):
+        //   ∂q/∂Vds = Vgs_ov − Vds,
+        //   ∂m/∂Vds = PCLM,
+        //   so direct = KP · ((Vgs_ov − Vds) · m + q · PCLM).
+        // Add the DIBL coupling: ∂Vgs_ov/∂Vds = +ETA0, contributing
+        //   KP · ETA0 · Vds · m  (the same form as the Vgs_ov route).
+        let q = vgs_ov * vds - 0.5 * vds * vds;
+        let m = 1.0 + params.pclm * vds;
+        let id = kp * q * m;
+        let d_vgs = kp * vds * m;
+        let d_vds_direct = kp * ((vgs_ov - vds) * m + q * params.pclm);
+        let d_vds_dibl = kp * params.eta0 * vds * m;
+        (id, d_vgs, d_vds_direct + d_vds_dibl)
+    } else {
+        // Saturation region.
+        //
+        // Id = (KP / 2) · Vgs_ov² · (1 + PCLM·Vds)
+        //
+        // Let s = Vgs_ov², m = 1 + PCLM · Vds.
+        // ∂s/∂Vgs_ov = 2·Vgs_ov.
+        //
+        // ∂Id/∂Vgs = (KP/2) · 2·Vgs_ov · m = KP · Vgs_ov · m.
+        // ∂Id/∂Vds direct (s held fixed) = (KP/2) · s · PCLM.
+        // ∂Id/∂Vds via DIBL: ∂Vgs_ov/∂Vds = +ETA0 ⇒
+        //   contribution KP · Vgs_ov · m · ETA0.
+        let m = 1.0 + params.pclm * vds;
+        let id = 0.5 * kp * vgs_ov * vgs_ov * m;
+        let d_vgs = kp * vgs_ov * m;
+        let d_vds_direct = 0.5 * kp * vgs_ov * vgs_ov * params.pclm;
+        let d_vds_dibl = kp * vgs_ov * m * params.eta0;
+        (id, d_vgs, d_vds_direct + d_vds_dibl)
+    };
+
+    // -----------------------------------------------------------------
+    // 4. Fold polarity back. `sign · id` is the device's drain
+    //    terminal current using the SPICE "current into drain" sign
+    //    convention. The partials are sign · ∂Id/∂(V_NMOS_eq), and
+    //    each NMOS-equivalent voltage equals `sign · (V_SPICE)`
+    //    (because we negated all three earlier). The two `sign`
+    //    factors cancel for the partials, so the partials are
+    //    polarity-symmetric. Only the current itself carries the
+    //    sign back out.
+    // -----------------------------------------------------------------
+    let id_spice = sign * id;
+    let gm = d_id_d_vgs; // ∂Id/∂Vgs in SPICE coordinates (sign² = 1).
+    let gds = d_id_d_vds; // same, ∂Id/∂Vds.
+    let gmbs = 0.0; // bulk-bias dependence not modeled at task #13.
+
+    // -----------------------------------------------------------------
+    // 5. Build the 4×4 Jacobian in terminal-local coordinates
+    //    [D, G, S, B]. Sign conventions:
+    //
+    //      I_D = +Id, I_S = -Id, I_G = I_B = 0   (KCL at device)
+    //      Vgs = Vg − Vs, Vds = Vd − Vs, Vbs = Vb − Vs
+    //
+    //    Apply the chain rule and KCL row-sum identity. For drain
+    //    row:
+    //      ∂I_D/∂V_D = +gds
+    //      ∂I_D/∂V_G = +gm
+    //      ∂I_D/∂V_S = -(gm + gds + gmbs)
+    //      ∂I_D/∂V_B = +gmbs
+    //
+    //    Source row is the negative of drain row (since I_S = -I_D
+    //    at the device, and the partials follow). Gate and bulk
+    //    rows are zero (no DC current).
+    // -----------------------------------------------------------------
+    let mut jacobian = [[0.0_f64; MOSFET_TERMINALS]; MOSFET_TERMINALS];
+    // Drain row: ∂I_D/∂V_*.
+    jacobian[0][0] = gds; // V_D
+    jacobian[0][1] = gm; // V_G
+    jacobian[0][2] = -(gm + gds + gmbs); // V_S
+    jacobian[0][3] = gmbs; // V_B
+                           // Source row: I_S = -I_D ⇒ negate every column.
+    jacobian[2][0] = -gds;
+    jacobian[2][1] = -gm;
+    jacobian[2][2] = gm + gds + gmbs;
+    jacobian[2][3] = -gmbs;
+    // Gate / bulk rows are zero (no DC gate or bulk current at this
+    // scope), kept explicit for clarity.
+    // jacobian[1][..] already zero; jacobian[3][..] already zero.
+
+    // -----------------------------------------------------------------
+    // 6. Companion current: i_eq = I(V_op) − J · V_op so the MNA
+    //    right-hand side recovers `I(V_op)` exactly at the iterate.
+    //    Compute J · V_op once and subtract.
+    // -----------------------------------------------------------------
+    let v_op = [vd_raw, vg_raw, vs_raw, vb_raw];
+    let i_total = [id_spice, 0.0, -id_spice, 0.0];
+    let mut companion_current = [0.0_f64; MOSFET_TERMINALS];
+    for (t, slot) in companion_current.iter_mut().enumerate() {
+        let mut jv = 0.0_f64;
+        for (u, &v_u) in v_op.iter().enumerate() {
+            jv += jacobian[t][u] * v_u;
         }
+        *slot = i_total[t] - jv;
+    }
+
+    MOSFETLinearization {
+        jacobian,
+        companion_current,
     }
 }
 
@@ -1079,11 +1350,20 @@ mod tests {
     }
 
     #[test]
-    fn linearize_mosfet_helper_dispatches_each_level_to_zero_placeholder() {
+    fn linearize_mosfet_helper_dispatches_each_level() {
         // Each MOS level dispatches independently — covered by the
         // inner `match` on MOSFETParams. The compile-time check is
         // the load-bearing assertion; the run-time check pins
         // intent.
+        //
+        // At all-zero terminal voltages:
+        // - Level-1 and `BSIM3v3` are still placeholder zero stamps
+        //   (tasks.md #11 / #12 land later).
+        // - BSIM4 (tasks.md #13, this slice) returns zero because the
+        //   default `VTH0 = 0.7 V` puts a 0/0/0/0 terminal-voltage
+        //   call into cutoff — not because the helper is a
+        //   placeholder. The dedicated `bsim4_tests` module exercises
+        //   the saturation / triode / DIBL / KCL invariants.
         let l1 = MOSFETParams::Level1(MosLevel1Params::default());
         let b3 = MOSFETParams::BSIM3v3(MosBSIM3v3Params::default());
         let b4 = MOSFETParams::BSIM4(MosBSIM4Params::default());
@@ -1161,6 +1441,356 @@ mod tests {
                 MosLevel1Params::default()
             ))),
             "MOSFET"
+        );
+    }
+}
+
+// =====================================================================
+// MOSFET BSIM4 stamp tests (tasks.md #13)
+// =====================================================================
+
+#[cfg(test)]
+mod bsim4_tests {
+    use super::*;
+    use crate::params::{MosBSIM4Params, MosPolarity};
+    use circuit_solver_types::ModelName;
+
+    /// A representative NMOS BSIM4 device — the SPICE defaults
+    /// produce a textbook long-channel NMOS that hits every regime
+    /// for `Vds` and `Vgs` in `[0, 5] V`.
+    fn nmos_default() -> MosBSIM4Params {
+        MosBSIM4Params {
+            name: ModelName::new("nmos_bsim4"),
+            polarity: MosPolarity::Nmos,
+            ..Default::default()
+        }
+    }
+
+    /// PMOS analogue of [`nmos_default`] — same |VTH0|, mobility, etc.,
+    /// but `polarity = Pmos`. PMOS conducts when `Vgs < -Vth0` and
+    /// `Vds < 0`.
+    fn pmos_default() -> MosBSIM4Params {
+        MosBSIM4Params {
+            name: ModelName::new("pmos_bsim4"),
+            polarity: MosPolarity::Pmos,
+            ..Default::default()
+        }
+    }
+
+    /// Reconstruct the terminal current at iterate `v` from a stamp's
+    /// `t`-th row using the companion-model identity
+    /// `I_t = ∑_u J[t][u] · v[u] + i_eq[t]`. Centralizes the loop the
+    /// MNA assembler will eventually call so each test does not
+    /// re-implement it.
+    fn reconstruct_current(
+        lin: &MOSFETLinearization,
+        t: usize,
+        v: &[f64; MOSFET_TERMINALS],
+    ) -> f64 {
+        lin.companion_current[t]
+            + lin.jacobian[t]
+                .iter()
+                .zip(v.iter())
+                .map(|(j, vu)| j * vu)
+                .sum::<f64>()
+    }
+
+    /// `assert_eq!`-friendly approximate equality for `f64`.
+    /// Picks the looser of relative and absolute tolerance per ADR-0008.
+    fn approx_eq(a: f64, b: f64, rel: f64, abs: f64) -> bool {
+        let tol = rel.mul_add(b.abs().max(a.abs()), abs);
+        (a - b).abs() <= tol
+    }
+
+    // -----------------------------------------------------------------
+    // Cutoff regime — id = 0, all derivatives zero, companion zero.
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn bsim4_nmos_cutoff_returns_zero_linearization() {
+        let p = nmos_default();
+        // Vgs = 0.5 < Vth0 = 0.7  ⇒  cutoff.
+        let lin = linearize_mosfet_bsim4(&p, &[0.0, 0.5, 0.0, 0.0]);
+        assert_eq!(
+            lin,
+            MOSFETLinearization::zero(),
+            "cutoff must produce a zero linearization"
+        );
+    }
+
+    #[test]
+    fn bsim4_pmos_cutoff_returns_zero_linearization() {
+        let p = pmos_default();
+        // For PMOS with VDD=3.3 V on source/bulk, gate at 3.0 V keeps
+        // |Vgs| = 0.3 V < Vth0 = 0.7 V — cutoff.
+        let lin = linearize_mosfet_bsim4(&p, &[0.0, 3.0, 3.3, 3.3]);
+        assert_eq!(lin, MOSFETLinearization::zero());
+    }
+
+    // -----------------------------------------------------------------
+    // Saturation regime — current flows, gm > 0, gds > 0 (due to PCLM
+    // and DIBL), KCL row sums vanish.
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn bsim4_nmos_saturation_has_positive_id_and_gm() {
+        let p = nmos_default();
+        // Vgs_ov = 1.8 - 0.7 = 1.1 V; Vds = 3.0 V > Vgs_ov ⇒ saturation.
+        let lin = linearize_mosfet_bsim4(&p, &[3.0, 1.8, 0.0, 0.0]);
+
+        // Drain current via companion form: at the iterate,
+        //   I_op_D = J · V_op + i_eq    (by construction)
+        let v = [3.0_f64, 1.8, 0.0, 0.0];
+        let id_recovered = reconstruct_current(&lin, 0, &v);
+        assert!(
+            id_recovered > 0.0,
+            "saturation NMOS must source positive drain current, got {id_recovered}"
+        );
+
+        // gm = ∂Id/∂Vgs = jacobian[0][1] > 0 in saturation.
+        assert!(
+            lin.jacobian[0][1] > 0.0,
+            "gm = ∂Id/∂Vgs must be positive in saturation, got {}",
+            lin.jacobian[0][1]
+        );
+        // gds (with PCLM + DIBL) > 0.
+        assert!(
+            lin.jacobian[0][0] > 0.0,
+            "gds = ∂Id/∂Vds must be positive in saturation, got {}",
+            lin.jacobian[0][0]
+        );
+    }
+
+    #[test]
+    fn bsim4_nmos_saturation_jacobian_row_sums_are_zero_kcl() {
+        // KCL at the device: the sum of currents into all four
+        // terminals is zero. Adding a uniform offset to every
+        // terminal voltage cannot change any device current, so
+        // each Jacobian row sum (∂I_t / ∂V_u summed over u) is zero.
+        let p = nmos_default();
+        let lin = linearize_mosfet_bsim4(&p, &[3.0, 1.8, 0.0, 0.0]);
+        for t in 0..MOSFET_TERMINALS {
+            let row_sum: f64 = lin.jacobian[t].iter().sum();
+            assert!(
+                approx_eq(row_sum, 0.0, 1e-12, 1e-15),
+                "Jacobian row {t} sum {row_sum} must be zero (KCL / translational invariance)",
+            );
+        }
+    }
+
+    #[test]
+    fn bsim4_nmos_saturation_jacobian_col_sums_are_zero_kcl_at_device() {
+        // The column-sum identity: ∑_t I_t = 0 for every iterate,
+        // so differentiating gives ∑_t ∂I_t/∂V_u = 0 for every u.
+        let p = nmos_default();
+        let lin = linearize_mosfet_bsim4(&p, &[3.0, 1.8, 0.0, 0.0]);
+        for u in 0..MOSFET_TERMINALS {
+            let col_sum: f64 = (0..MOSFET_TERMINALS).map(|t| lin.jacobian[t][u]).sum();
+            assert!(
+                approx_eq(col_sum, 0.0, 1e-12, 1e-15),
+                "Jacobian column {u} sum {col_sum} must be zero (KCL at device)",
+            );
+        }
+    }
+
+    // -----------------------------------------------------------------
+    // Linear / triode regime — gm > 0, output conductance > 0.
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn bsim4_nmos_triode_has_positive_id_and_high_gds() {
+        let p = nmos_default();
+        // Vgs_ov = 3.3 - 0.7 = 2.6 V; Vds = 0.2 V < Vgs_ov ⇒ triode.
+        let lin = linearize_mosfet_bsim4(&p, &[0.2, 3.3, 0.0, 0.0]);
+        // Drain current at iterate via companion identity.
+        let v = [0.2_f64, 3.3, 0.0, 0.0];
+        let id_recovered = reconstruct_current(&lin, 0, &v);
+        assert!(id_recovered > 0.0, "triode Id must be positive");
+        // In deep triode gds dominates gm (the transistor behaves
+        // like a Vds-controlled resistor).
+        assert!(lin.jacobian[0][0] > 0.0, "gds must be positive in triode");
+        assert!(lin.jacobian[0][1] > 0.0, "gm must be positive in triode");
+    }
+
+    // -----------------------------------------------------------------
+    // PMOS symmetry: a PMOS with V_S = V_B = VDD, V_G = 0, V_D = mid
+    // should sink current at the drain terminal (SPICE convention:
+    // I_D < 0 — current flows from source through the device into
+    // the drain node).
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn bsim4_pmos_saturation_sources_negative_drain_current() {
+        let p = pmos_default();
+        // V_S = V_B = 3.3, V_G = 0, V_D = 0.3 ⇒
+        //   Vgs = -3.3, Vds = -3.0  ⇒ PMOS strong inversion.
+        let lin = linearize_mosfet_bsim4(&p, &[0.3, 0.0, 3.3, 3.3]);
+        let v = [0.3_f64, 0.0, 3.3, 3.3];
+        let id_recovered = reconstruct_current(&lin, 0, &v);
+        assert!(
+            id_recovered < 0.0,
+            "PMOS strong inversion must sink current at the drain \
+             (SPICE convention: I_D < 0), got {id_recovered}",
+        );
+        // |gm| symmetry: PMOS at polarity-mirrored conditions must
+        // produce the same |gm| as NMOS at the original conditions.
+        let p_nmos = nmos_default();
+        let lin_n = linearize_mosfet_bsim4(&p_nmos, &[3.0, 3.3, 0.0, 0.0]);
+        assert!(
+            approx_eq(
+                lin.jacobian[0][1].abs(),
+                lin_n.jacobian[0][1].abs(),
+                1e-9,
+                0.0,
+            ),
+            "PMOS |gm| {} should mirror NMOS |gm| {} at polarity-folded operating point",
+            lin.jacobian[0][1].abs(),
+            lin_n.jacobian[0][1].abs(),
+        );
+    }
+
+    // -----------------------------------------------------------------
+    // Companion-model identity. For any iterate V_op:
+    //   I_t(V_op) = ∑_u J[t][u] · V_op[u] + i_eq[t]
+    // The MNA assembler relies on this exactly — the right-hand side
+    // contribution must equal the device current at the iterate.
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn bsim4_companion_model_recovers_id_at_iterate() {
+        let p = nmos_default();
+        let cases: &[[f64; 4]] = &[
+            [0.0, 0.5, 0.0, 0.0],  // cutoff
+            [3.0, 1.8, 0.0, 0.0],  // saturation
+            [0.2, 3.3, 0.0, 0.0],  // triode
+            [3.0, 2.5, 0.0, 0.0],  // deep saturation
+            [0.05, 5.0, 0.0, 0.0], // shallow triode, strong overdrive
+        ];
+        for v in cases {
+            let lin = linearize_mosfet_bsim4(&p, v);
+            // Gate (row 1) and bulk (row 3) currents must be zero at
+            // the iterate — there is no DC gate or bulk current at
+            // this scope.
+            for t in [1, 3] {
+                let reconstructed = reconstruct_current(&lin, t, v);
+                assert!(
+                    approx_eq(reconstructed, 0.0, 1e-9, 1e-15),
+                    "row {t}: gate/bulk current must be zero at iterate {v:?}, got {reconstructed}",
+                );
+            }
+            // Drain and source rows must be anti-equal (KCL).
+            let id_d = reconstruct_current(&lin, 0, v);
+            let id_s = reconstruct_current(&lin, 2, v);
+            assert!(
+                approx_eq(id_d + id_s, 0.0, 1e-9, 1e-15),
+                "drain + source row currents must cancel (KCL) at {v:?}, got {id_d} + {id_s}",
+            );
+        }
+    }
+
+    // -----------------------------------------------------------------
+    // Voltage-cap: huge NR excursions must not overflow the stamp.
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn bsim4_clamps_extreme_voltages_for_nr_robustness() {
+        let p = nmos_default();
+        // Throw 1e6 V at the stamp. The clamp pins evaluation to
+        // ±40 V, so the produced current is finite and the Jacobian
+        // entries are finite.
+        let lin = linearize_mosfet_bsim4(&p, &[1.0e6, 1.0e6, 0.0, 0.0]);
+        let v_extreme = [1.0e6_f64, 1.0e6, 0.0, 0.0];
+        let id_d_at_iter = reconstruct_current(&lin, 0, &v_extreme);
+        assert!(
+            id_d_at_iter.is_finite(),
+            "clamped stamp must produce finite drain current under huge NR excursion",
+        );
+        for t in 0..MOSFET_TERMINALS {
+            for u in 0..MOSFET_TERMINALS {
+                assert!(
+                    lin.jacobian[t][u].is_finite(),
+                    "Jacobian[{t}][{u}] = {} not finite",
+                    lin.jacobian[t][u],
+                );
+            }
+        }
+    }
+
+    // -----------------------------------------------------------------
+    // Dispatch from DeviceModel::linearize lands in the BSIM4 helper.
+    // (Confirm the wiring change in linearize_mosfet's match arm.)
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn bsim4_dispatch_through_device_model_linearize() {
+        use crate::model::DeviceModel;
+        use crate::params::MOSFETParams;
+
+        let m = DeviceModel::MOSFET(MOSFETParams::BSIM4(nmos_default()));
+        let op = OperatingPoint::MOSFET([3.0, 1.8, 0.0, 0.0]);
+        let lin = m.linearize(&op).expect("matched family must succeed");
+        match lin {
+            LinearizedModel::MOSFET(m) => {
+                // gm strictly positive at this saturation operating point —
+                // confirms the helper ran, not the zero placeholder.
+                assert!(
+                    m.jacobian[0][1] > 0.0,
+                    "BSIM4 dispatch must yield gm > 0 in saturation, got {}",
+                    m.jacobian[0][1],
+                );
+            }
+            other => panic!("expected MOSFET linearization, got {other:?}"),
+        }
+    }
+
+    // -----------------------------------------------------------------
+    // ETA0 = 0 disables DIBL — gds in saturation must drop to the
+    // pure PCLM contribution. Sanity-checks that DIBL is wired up.
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn bsim4_eta0_zero_removes_dibl_contribution() {
+        let mut p = nmos_default();
+        p.eta0 = 0.0;
+        // saturation
+        let lin = linearize_mosfet_bsim4(&p, &[3.0, 1.8, 0.0, 0.0]);
+        // With ETA0=0: gds = (KP/2) · Vgs_ov² · PCLM (pure CLM term).
+        // Compute the expected value directly.
+        let vgs_ov = 1.8 - 0.7;
+        let expected_gds = 0.5 * p.kp() * vgs_ov * vgs_ov * p.pclm;
+        assert!(
+            approx_eq(lin.jacobian[0][0], expected_gds, 1e-9, 0.0),
+            "with ETA0=0, gds should equal pure-PCLM term: got {}, expected {expected_gds}",
+            lin.jacobian[0][0],
+        );
+    }
+
+    // -----------------------------------------------------------------
+    // Cox / KP convenience accessors.
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn bsim4_cox_and_kp_match_handout_formulas() {
+        let p = MosBSIM4Params::default();
+        let cox = p.cox();
+        // Cox = 3.453e-11 / 3.0e-9 = 0.01151 F/m²
+        assert!(approx_eq(cox, 3.453e-11 / 3.0e-9, 1e-12, 0.0));
+        let kp = p.kp();
+        // KP = U0 · Cox · (W/L) = 0.067 · 0.01151 · 1.0 ≈ 7.71e-4 A/V²
+        assert!(approx_eq(kp, 0.067 * cox * 1.0, 1e-12, 0.0));
+    }
+
+    // -----------------------------------------------------------------
+    // Forward-compat raw map still empty by default; documented hatch
+    // for future BSIM4 parameter promotions.
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn bsim4_raw_map_remains_empty_by_default_after_typed_fields_added() {
+        let p = MosBSIM4Params::default();
+        assert!(
+            p.raw.is_empty(),
+            "raw forward-compat map must still be empty by default after task #13 typed fields",
         );
     }
 }

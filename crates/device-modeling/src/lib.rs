@@ -33,7 +33,11 @@
 //!   response type, the [`stamp::OperatingPoint`] request type, and
 //!   the [`DeviceModel::linearize`](crate::DeviceModel) dispatch entry
 //!   point. Per-family equation bodies land in tasks.md #9
-//!   (Diode), #10 (BJT), and #11–#13 (MOSFET levels).
+//!   (Diode), #10 (BJT), #11–#13 (MOSFET levels). As of tasks.md #13
+//!   the MOSFET BSIM4 arm is implemented
+//!   ([`stamp::linearize_mosfet_bsim4`]); the Diode, BJT, Level-1,
+//!   and `BSIM3v3` arms are still zero placeholders awaiting their
+//!   respective tasks.
 //!
 //! # Stability
 //!
@@ -65,7 +69,8 @@ pub use params::{
     MosLevel1Params, MosPolarity,
 };
 pub use stamp::{
-    linearize_bjt, linearize_diode, linearize_mosfet, BJTLinearization, DiodeLinearization,
-    LinearizedModel, MOSFETLinearization, OperatingPoint, OperatingPointFamilyMismatch,
-    BJT_TERMINALS, DIODE_MAX_EXP_ARG, DIODE_TERMINALS, MOSFET_TERMINALS,
+    linearize_bjt, linearize_diode, linearize_mosfet, linearize_mosfet_bsim4, BJTLinearization,
+    DiodeLinearization, LinearizedModel, MOSFETLinearization, OperatingPoint,
+    OperatingPointFamilyMismatch, BJT_TERMINALS, DIODE_MAX_EXP_ARG, DIODE_TERMINALS,
+    MOSFET_TERMINALS,
 };
