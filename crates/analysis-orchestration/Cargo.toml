@@ -13,6 +13,15 @@ workspace = true
 
 [dependencies]
 circuit-solver-types = { path = "../circuit-solver-types" }
+# AC analysis control loop (tasks.md #25) drives the AC sub-view
+# extractor and the complex-valued sparse-LU dispatch from the
+# numeric-solver crate. The control loop owns no MNA assembly logic
+# of its own; it composes existing numeric-solver pieces.
+numeric-solver = { path = "../numeric-solver" }
+netlist-graph = { path = "../netlist-graph" }
+num-complex = { version = "0.4", default-features = false }
 
 [dev-dependencies]
 circuit-solver-types = { path = "../circuit-solver-types" }
+numeric-solver = { path = "../numeric-solver" }
+netlist-graph = { path = "../netlist-graph" }
