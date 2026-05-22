@@ -1,7 +1,7 @@
 //! Opaque identifier newtypes used across the workspace.
 //!
-//! These are minimal stubs covering the subset of the manifest the
-//! Mixed-Signal Scheduler scenario exercises:
+//! This module hosts the identifier newtypes that name *located* things
+//! in the netlist — circuit nodes, elements, and boundary signals:
 //!
 //! - `NodeId` — an analog circuit node,
 //! - `ElementId` — an analog circuit element,
@@ -9,11 +9,10 @@
 //!   the analog solver and the digital simulator (e.g. `"vout"` driving
 //!   `"din"`).
 //!
-//! The richer enum surface required by tasks.md item #2
-//! (`ConvergenceStatus`, `AnalysisType`, `BranchId`, `ModelName`) is
-//! reserved for sibling implementer tasks and is intentionally not
-//! introduced here to keep the diff scoped to the
-//! `optimistic-advance-with-correct-prediction` scenario.
+//! The MNA `BranchId` lives in the sibling [`crate::branch`] module
+//! because branches are an MNA-system construct rather than a netlist
+//! locator; `ModelName` lives in [`crate::model`] for the same reason
+//! (it names a *kind* of device, not a located instance).
 
 use core::fmt;
 

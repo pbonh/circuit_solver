@@ -2,8 +2,8 @@
 //!
 //! This crate hosts the small, dependency-free types passed across crate
 //! boundaries: identifier newtypes, time and simulation-time units,
-//! convergence status, and the unified `AnalysisResult` envelope returned
-//! to the application frontend.
+//! convergence status, the analysis-type discriminator, and the unified
+//! `AnalysisResult` envelopes returned to the application frontend.
 //!
 //! # Stability
 //!
@@ -11,35 +11,49 @@
 //! the public Rust API is **unstable** at v1.0.0. Consumers must pin to
 //! exact versions until a future stabilization ADR.
 //!
-//! # Scope of this revision
+//! # Module map
 //!
-//! Only the subset needed by the Mixed-Signal Scheduler scenario
-//! `optimistic-advance-with-correct-prediction` is fleshed out here:
+//! - [`ids`] — identifier newtypes for analog nodes, elements, and named
+//!   boundary signals (`NodeId`, `ElementId`, `SignalName`).
+//! - [`branch`] — MNA branch identifier newtype (`BranchId`).
+//! - [`model`] — device-model name identifier (`ModelName`).
+//! - [`time`] — picosecond-resolution `SimulationTime` on the shared
+//!   scheduler timeline.
+//! - [`convergence`] — Newton-Raphson outcome (`ConvergenceStatus`),
+//!   diagnostic norms, and tolerances. ADR-0006 dictates the dual
+//!   update/residue criterion encoded here.
+//! - [`analysis`] — the closed `AnalysisType` enum the analysis
+//!   orchestrator dispatches on.
+//! - [`result`] — mixed-signal Result envelopes (`Waveform`,
+//!   `AnalogTrace`, `DigitalEventTrace`, `MixedSignalResult`, and the
+//!   scheduler-attached metadata used by the
+//!   `optimistic-advance-with-correct-prediction` scenario).
 //!
-//! - `SimulationTime` — picosecond-resolution monotonic time on the
-//!   shared scheduler timeline (mediates analog continuous time and
-//!   digital event time).
-//! - `NodeId`, `SignalName` — opaque identifiers for circuit nodes and
-//!   named boundary signals.
-//! - `Waveform`, `AnalogTrace`, `DigitalEventTrace` — the time-indexed
-//!   data carriers populated by the analog solver and digital simulator.
-//! - `RollbackEvent`, `SchedulerMetadata` — diagnostic envelopes the
-//!   scheduler attaches to a `MixedSignalResult`.
-//! - `MixedSignalResult` — the unified Result for mixed-signal analyses,
-//!   per the spec's acceptance criterion "the Result contains both
-//!   analog Waveforms and digital event traces in VCD format."
+//! # Scope of this crate
 //!
-//! Other workspace types (`ConvergenceStatus`, `AnalysisType`, `NodeId`
-//! ground bookkeeping, etc.) are reserved for sibling tasks #2 and
-//! later; they appear here as forward-compatible stubs.
+//! `circuit-solver-types` carries only the types that cross multiple
+//! workspace crates. Richer per-context data — `CircuitGraph`,
+//! `FlattenedStructure`, `DeviceModel`, `AnalysisRequest` envelopes,
+//! `OperatingPoint`, `TransferFunction`, `TopologyReport` — lives in
+//! the bounded-context crate that owns it. This keeps `types` a thin,
+//! dependency-free leaf so every other crate can depend on it without
+//! pulling in solver internals.
 
 #![deny(missing_docs)]
 
+pub mod analysis;
+pub mod branch;
+pub mod convergence;
 pub mod ids;
+pub mod model;
 pub mod result;
 pub mod time;
 
+pub use analysis::AnalysisType;
+pub use branch::BranchId;
+pub use convergence::{ConvergenceDiagnostic, ConvergenceStatus, ConvergenceTolerances};
 pub use ids::{ElementId, NodeId, SignalName};
+pub use model::ModelName;
 pub use result::{
     AnalogTrace, DigitalEventTrace, MixedSignalResult, RollbackEvent, SchedulerMetadata, Waveform,
 };
