@@ -66,7 +66,11 @@
 //!   `ImmutableHandleError` with a message that names the attempted
 //!   method and cites the immutability invariant — the direct
 //!   behavioural realisation of task #54's contract (merged in
-//!   `ebf976c`) at the scenario layer.
+//!   `ebf976c`) at the scenario layer. Prior to task #54, the
+//!   scenario relied on `getattr`-absence for each `add_*`
+//!   method as a defence-in-depth proxy; the trap-method
+//!   approach now provides a stronger, direct observable signal
+//!   that mutation is rejected.
 //! - **ADR-0010** (Unstable Public Rust API Surface for v1). This
 //!   witness uses only the names re-exported from
 //!   `crate::{PyCircuitBuilder, PyCircuitGraph, CircuitBuilderError}`,
