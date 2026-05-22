@@ -43,10 +43,15 @@
 
 #![deny(missing_docs)]
 
+pub mod companion;
 pub mod model;
 pub mod params;
 pub mod stamp;
 
+pub use companion::{
+    CapacitorCompanion, CompanionConstructionError, InductorCompanion, ReactiveCompanion,
+    ReactiveState, REACTIVE_TERMINALS,
+};
 pub use model::{DeviceFamily, DeviceModel};
 pub use params::{
     BJTParams, BJTPolarity, DiodeParams, MOSFETParams, MosBSIM3v3Params, MosBSIM4Params,
