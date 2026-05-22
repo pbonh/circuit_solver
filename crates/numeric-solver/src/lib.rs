@@ -25,6 +25,10 @@
 //!   (and any linearized device contributions) into the full MNA
 //!   matrix, producing an [`assemble::MnaSystem`] with ground row and
 //!   column intact (item #14).
+//! - [`sub_view`] — per-analysis sub-view extraction: apply ground
+//!   suppression, Gmin-stepping, and source-stepping masks to the
+//!   full MNA matrix from item #14, producing the [`sub_view::SubView`]
+//!   the linear solver consumes (item #15).
 //! - [`integration`] — implicit-integration companion models for
 //!   reactive elements. [`integration::backward_euler`] lands in
 //!   tasks.md #29 (capacitor + inductor); sibling modules for
@@ -40,6 +44,7 @@
 pub mod assemble;
 pub mod flatten;
 pub mod integration;
+pub mod sub_view;
 
 pub use assemble::{assemble, MnaAssemblyError, MnaSystem};
 pub use circuit_solver_types::flattened::{
@@ -52,3 +57,4 @@ pub use integration::{
     CompanionStamp, InductorHistory, LteEstimator, LteToleranceEnvelope, NodeHistorySample,
     StepDecision, StepOutcome, StepSizeBounds, TimestepHistory, TimestepRecord,
 };
+pub use sub_view::{source_rhs_from, SubView, SubViewBuilder, SubViewError};
