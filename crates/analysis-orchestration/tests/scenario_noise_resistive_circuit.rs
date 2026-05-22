@@ -357,6 +357,7 @@ fn noise_analysis_on_a_resistive_circuit_scenario() {
         output: out_id,
         temperature_k: ROOM_TEMPERATURE_K,
         ground: None,
+        semiconductor_noise: &[],
     })
     .expect("noise_analysis must succeed on a converged purely-resistive circuit");
 

@@ -187,6 +187,7 @@ fn integrated_noise_over_bandwidth_witness() {
         output: out_id,
         temperature_k: ROOM_TEMPERATURE_K,
         ground: None,
+        semiconductor_noise: &[],
     };
     let result = noise_analysis(req).expect("noise analysis succeeds");
     let data = result.data().cloned().expect("Ok variant");
@@ -266,6 +267,7 @@ fn integrated_noise_scales_linearly_with_resistance() {
             output: out_id,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         let data = noise_analysis(req)
             .expect("noise analysis succeeds")
