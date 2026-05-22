@@ -4,7 +4,7 @@
 //! module name registered with `CPython` is `circuit_solver` (PEP 8
 //! lowercase, distinct from the Rust crate name `circuit-solver-py`).
 //!
-//! ## Surface as of `tasks.md` items #52, #53, #54, #55, #56
+//! ## Surface as of `tasks.md` items #52, #53, #54, #55, #56, #60
 //!
 //! - [`CircuitBuilder`](builder::PyCircuitBuilder) — the incremental
 //!   construction entry point. Methods: `add_element`, `add_wire`,
@@ -36,9 +36,21 @@
 //!   are the diagnostic suspenders, so attempted mutation surfaces as
 //!   a typed, actionable error rather than the bare `AttributeError`
 //!   the missing-method path would otherwise produce.
+//! - `parse_netlist` — free function exposed on the `circuit_solver`
+//!   Python module as `circuit_solver.parse_netlist(path)` (registered
+//!   by the crate-private `parse_netlist_py` `#[pyfunction]` shim).
+//!   Reads a SPICE-format netlist file from disk and returns a
+//!   [`CircuitGraph`](graph::PyCircuitGraph) constructed the same way
+//!   the [`CircuitBuilder`](builder::PyCircuitBuilder) would build it
+//!   incrementally (tasks.md item #60; spec scenario
+//!   `python-frontend#spice-netlist-file-parsing`).
 //!
-//! `NumPy` result arrays, GIL release, and SPICE netlist parsing are
-//! tasks #57–#61.
+//! A dedicated `NetlistParseError` carrying line-number and
+//! unrecognised-token detail is tasks.md item #61 (spec scenario
+//! `python-frontend#error-on-malformed-netlist`); until that task
+//! lands, parse failures surface as `ValueError` / `IOError` /
+//! `CircuitBuilderError`.
+//! `NumPy` result arrays and GIL release are tasks #57–#59.
 //!
 //! ## Build profiles
 //!
@@ -65,6 +77,9 @@ pub mod analysis_request;
 pub mod builder;
 pub mod errors;
 pub mod graph;
+pub mod parser;
+
+use std::path::PathBuf;
 
 use pyo3::prelude::*;
 
@@ -72,6 +87,54 @@ pub use analysis_request::PyAnalysisRequest;
 pub use builder::PyCircuitBuilder;
 pub use errors::{CircuitBuilderError, ImmutableHandleError};
 pub use graph::PyCircuitGraph;
+
+/// Parse a SPICE netlist file from disk and return a
+/// [`PyCircuitGraph`].
+///
+/// Implements tasks.md item #60 — the Python-facing entry point for
+/// the `python-frontend#spice-netlist-file-parsing` Gherkin scenario:
+///
+/// ```text
+/// Given CircuitDesigner has a SPICE netlist file on disk
+/// When CircuitDesigner calls circuit_solver.parse_netlist(path)
+/// Then the returned object is a CircuitGraph
+/// And the CircuitGraph contains all elements, models, and
+///     subcircuits declared in the netlist
+/// And the CircuitGraph is identical to one built incrementally
+///     with the same topology
+/// ```
+///
+/// The implementation lives in [`parser::parse_file`]; this binding
+/// is a thin wrapper that converts the Python `path` argument into
+/// a [`PathBuf`] and re-wraps the returned [`CircuitGraph`] as
+/// [`PyCircuitGraph`].
+///
+/// # Errors
+///
+/// - `IOError` if the file cannot be read.
+/// - `ValueError` if a line is unrecognised, malformed, or violates
+///   the SPICE subset documented at [`parser`]. A dedicated
+///   `NetlistParseError` carrying line-number and unrecognised-token
+///   detail is tasks.md item #61.
+/// - `CircuitBuilderError` if the resulting builder-replay sequence
+///   is rejected by the underlying `netlist-graph` builder
+///   (duplicate element names, unknown subcircuit references,
+///   port-arity mismatches, expansion cycles).
+#[pyfunction(name = "parse_netlist")]
+#[pyo3(text_signature = "(path, /)")]
+// PyO3 derives `FromPyObject` for `PathBuf` (path-likes / strings)
+// by *constructing* a fresh `PathBuf` and handing ownership to the
+// callee; taking it by reference would force a needless clone in
+// the binding's prelude. The `needless_pass_by_value` lint is
+// suppressed for this reason.
+#[allow(clippy::needless_pass_by_value)]
+fn parse_netlist_py(path: PathBuf) -> PyResult<PyCircuitGraph> {
+    // `PathBuf` is taken by value so PyO3 can convert from the
+    // Python str/`os.PathLike` argument without an extra clone;
+    // ownership ends at the call to `parser::parse_file` below.
+    let graph = parser::parse_file(path.as_path())?;
+    Ok(PyCircuitGraph::from_inner(graph))
+}
 
 /// Python module entry point for `import circuit_solver`.
 ///
@@ -97,5 +160,6 @@ fn circuit_solver(py: Python<'_>, module: &Bound<'_, PyModule>) -> PyResult<()> 
         "ImmutableHandleError",
         py.get_type::<ImmutableHandleError>(),
     )?;
+    module.add_function(wrap_pyfunction!(parse_netlist_py, module)?)?;
     Ok(())
 }

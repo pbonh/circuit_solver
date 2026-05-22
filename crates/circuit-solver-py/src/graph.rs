@@ -66,9 +66,28 @@ pub struct PyCircuitGraph {
 impl PyCircuitGraph {
     /// Wrap an owned `netlist_graph::CircuitGraph`. Crate-private;
     /// Python user code obtains a `PyCircuitGraph` only via
-    /// `CircuitBuilder.build()`.
+    /// `CircuitBuilder.build()` or `circuit_solver.parse_netlist`.
     pub(crate) fn from_inner(inner: CircuitGraph) -> Self {
         Self { inner }
+    }
+
+    /// Test-only public re-export of [`from_inner`](Self::from_inner).
+    ///
+    /// Integration tests in `tests/*.rs` live in a separate crate
+    /// boundary from `pub(crate)` items, so they cannot reach
+    /// `from_inner` directly. This shim is `#[doc(hidden)]` and
+    /// exists solely to let the
+    /// `tests/spice_netlist_parsing.rs` harness construct a
+    /// `PyCircuitGraph` from a `netlist_graph::CircuitGraph`
+    /// without re-exporting the crate-private surface to real
+    /// downstream users. ADR-0010 keeps the Rust API unstable
+    /// either way; this entry-point is **not** part of the
+    /// stable Python contract — Python callers must use
+    /// `CircuitBuilder.build()` or `circuit_solver.parse_netlist`.
+    #[doc(hidden)]
+    #[must_use]
+    pub fn from_inner_public_for_tests(inner: CircuitGraph) -> Self {
+        Self::from_inner(inner)
     }
 
     /// Borrow the underlying graph (for tests and for downstream
