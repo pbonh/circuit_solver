@@ -378,11 +378,91 @@ fn op_family_name(op: &OperatingPoint) -> &'static str {
 // Per-family helpers — bodies filled in by tasks #9–#13
 // ---------------------------------------------------------------------
 
+/// Maximum value of the Shockley exponent argument `Vd / (N * Vt)`
+/// admitted by [`linearize_diode`] before clamping.
+///
+/// `exp(40) ≈ 2.35e17` — well below `f64::MAX ≈ 1.8e308` but still
+/// large enough that legitimate forward-bias iterates near the
+/// solver's voltage-limit cap (`vlimit ≈ 1 V`, i.e. `Vd/(N·Vt) ≈ 38`
+/// at room temperature) pass through unclamped. Clamping is a
+/// numerical safety net for *intermediate* Newton-Raphson iterates
+/// that overshoot during early iterations on stiff junctions; the
+/// numeric-solver's `vlimit` / source-stepping / Gmin homotopy
+/// (tasks.md #15) provide the actual convergence aid. ngspice and
+/// SPICE3 use the same clamp value in their `cdiode` evaluation —
+/// matching it makes per-iterate residue comparison against the
+/// golden reference (ADR-0008) bit-stable for in-range arguments
+/// and well-behaved for out-of-range ones.
+pub const DIODE_MAX_EXP_ARG: f64 = 40.0;
+
 /// Linearize a Diode at the given terminal voltages.
 ///
-/// **Placeholder at task #8.** Returns
-/// [`DiodeLinearization::zero`]. The Shockley-equation companion
-/// model lands in tasks.md #9.
+/// Implements the Shockley-equation companion model for
+/// Newton-Raphson (tasks.md #9).
+///
+/// # Equation
+///
+/// Let `Vd = V_anode - V_cathode` be the junction voltage at the
+/// current Newton iterate. The Shockley diode equation is
+///
+/// ```text
+/// I(Vd) = IS · (exp(Vd / (N · Vt)) - 1)
+/// ```
+///
+/// where positive `I` flows from anode to cathode. Linearizing
+/// around the iterate `Vd_k` gives the small-signal conductance
+/// and a companion current source:
+///
+/// ```text
+/// gd     = dI/dVd |_{Vd_k} = (IS / (N · Vt)) · exp(Vd_k / (N · Vt))
+/// I_eq   = I(Vd_k) - gd · Vd_k
+/// ```
+///
+/// so that `I(Vd) ≈ gd · Vd + I_eq` is the linear surrogate the MNA
+/// assembler stamps into the system on this iterate.
+///
+/// # Terminal-local Jacobian and companion currents
+///
+/// Define each terminal current as the current the device *draws*
+/// from the node attached to that terminal (positive = into the
+/// device). Then `I_anode = +I(Vd)` and `I_cathode = -I(Vd)`, and
+/// the 2×2 Jacobian `J[i][j] = ∂I_i / ∂V_j` is
+///
+/// ```text
+///                 V_anode    V_cathode
+///   I_anode    [   +gd          -gd   ]
+///   I_cathode  [   -gd          +gd   ]
+/// ```
+///
+/// The companion current vector is `[+I_eq, -I_eq]` — the same
+/// scalar `I_eq` with opposite signs at the two terminals so that
+/// KCL closes locally (current entering anode = current leaving
+/// cathode).
+///
+/// # Numerical safeguards
+///
+/// - The exponent argument `Vd_k / (N · Vt)` is clamped to
+///   [`DIODE_MAX_EXP_ARG`] (`40.0`, matching SPICE3/ngspice). Above
+///   the clamp the exponential is evaluated at the cap, which keeps
+///   `gd` and `I_eq` finite even when an intermediate Newton iterate
+///   overshoots deep into forward bias. The solver's `vlimit` and
+///   homotopy aids (tasks.md #15) are still expected to do the real
+///   convergence work; this clamp is only a domain-safety net.
+/// - Reverse bias (`Vd_k ≪ 0`) is evaluated directly; `exp` of a
+///   large negative number underflows cleanly to zero, leaving
+///   `I(Vd_k) ≈ -IS` (reverse saturation current) and `gd ≈ 0`.
+///
+/// # Series resistance (`RS`)
+///
+/// The diode `.MODEL` parameter [`DiodeParams::rs`] is **not** baked
+/// into the stamp by this task. The canonical SPICE treatment of
+/// `RS` splits the diode into an internal junction node connected to
+/// the external anode through a linear resistor; this split is owned
+/// by the netlist-graph elaborator (a future task under
+/// `circuit-solver-2026-05-21-v1-spec`), not by the device-modeling
+/// stamp. With the default `rs = 0.0` the omission is a no-op; for
+/// non-default `rs` the netlist-graph elaborator must perform the
+/// node split before this stamp sees the device.
 ///
 /// # Arguments
 ///
@@ -398,12 +478,32 @@ pub fn linearize_diode(
     params: &DiodeParams,
     terminal_voltages: &[f64; DIODE_TERMINALS],
 ) -> DiodeLinearization {
-    // Suppress the unused-parameter lint while the body is a
-    // placeholder. tasks.md #9 replaces this with the Shockley
-    // companion model and removes these explicit `_` bindings.
-    let _ = params;
-    let _ = terminal_voltages;
-    DiodeLinearization::zero()
+    let v_anode = terminal_voltages[0];
+    let v_cathode = terminal_voltages[1];
+    let vd = v_anode - v_cathode;
+
+    // Thermal scaling factor `N · Vt`. Both `n` and `vt` come from
+    // the parameter-extraction stage with SPICE-canonical defaults
+    // (`N = 1`, `Vt ≈ 25.85 mV`); they are always strictly positive.
+    let n_vt = params.n * params.vt;
+
+    // Clamped exponent argument. See `DIODE_MAX_EXP_ARG` docs.
+    let arg = (vd / n_vt).min(DIODE_MAX_EXP_ARG);
+    let exp_arg = arg.exp();
+
+    // Shockley current and small-signal conductance at the iterate.
+    let i_d = params.is * (exp_arg - 1.0);
+    let gd = (params.is / n_vt) * exp_arg;
+
+    // Companion current source: `I_eq = I(Vd_k) - gd · Vd_k`. The
+    // linear surrogate stamped this iterate is `I(Vd) ≈ gd · Vd +
+    // I_eq`.
+    let i_eq = i_d - gd * vd;
+
+    DiodeLinearization {
+        jacobian: [[gd, -gd], [-gd, gd]],
+        companion_current: [i_eq, -i_eq],
+    }
 }
 
 /// Linearize a BJT at the given terminal voltages.
@@ -493,15 +593,34 @@ mod tests {
 
     #[test]
     fn linearize_diode_dispatches_through_match() {
+        // Zero junction voltage is the equilibrium iterate where the
+        // Shockley equation collapses to `I = 0`, `I_eq = 0`, but
+        // `gd = IS / (N·Vt)` remains nonzero (the small-signal
+        // conductance at equilibrium). This pins the dispatch path
+        // (Diode arm of `DeviceModel::linearize`) without depending
+        // on whether the helper returns the zero placeholder or the
+        // Shockley body — both branches happen to produce
+        // `I_eq = 0` here, but the Shockley body produces non-zero
+        // Jacobian entries.
         let m = DeviceModel::Diode(DiodeParams {
             name: ModelName::new("d1"),
             ..Default::default()
         });
-        let op = OperatingPoint::Diode([0.6, 0.0]);
+        let op = OperatingPoint::Diode([0.0, 0.0]);
         let lin = m.linearize(&op).expect("matched family must succeed");
         match lin {
             LinearizedModel::Diode(d) => {
-                assert_eq!(d, DiodeLinearization::zero(), "placeholder is zero");
+                let p = DiodeParams::default();
+                let gd_eq = p.is / (p.n * p.vt);
+                assert!(
+                    (d.jacobian[0][0] - gd_eq).abs() < 1e-30,
+                    "expected gd = IS/(N·Vt) at Vd = 0, got {:?}",
+                    d.jacobian
+                );
+                assert_eq!(d.companion_current[0].to_bits(), 0.0_f64.to_bits());
+                // The cathode companion can be `-0.0` due to the
+                // `-i_eq` negation; treat ±0 as equivalent here.
+                assert!(d.companion_current[1].abs() == 0.0);
             }
             other => panic!("expected Diode linearization, got {other:?}"),
         }
@@ -630,11 +749,326 @@ mod tests {
     // when the device equations land.
     // -----------------------------------------------------------------
 
+    // -----------------------------------------------------------------
+    // Diode stamp — Shockley-equation behavior (tasks.md #9).
+    //
+    // Each test pins one observable property of the companion model:
+    // its KCL closure, its equilibrium value, its small-signal /
+    // tangent consistency, its reverse-bias saturation, and its
+    // numerical safeguards under deep forward bias.
+    // -----------------------------------------------------------------
+
+    /// Helper: evaluate the Shockley current at an iterate.
+    fn shockley_i(p: &DiodeParams, vd: f64) -> f64 {
+        let arg = (vd / (p.n * p.vt)).min(super::DIODE_MAX_EXP_ARG);
+        p.is * (arg.exp() - 1.0)
+    }
+
     #[test]
-    fn linearize_diode_helper_returns_zero_placeholder() {
+    fn diode_stamp_zero_voltage_companion_is_zero() {
+        // At Vd = 0 the diode is at equilibrium: I(0) = 0 and
+        // I_eq = I(0) - gd · 0 = 0. The Jacobian is nonzero (it is
+        // the small-signal conductance gd = IS / (N·Vt)) — this is
+        // the load-bearing distinction from the prior zero
+        // placeholder.
         let p = DiodeParams::default();
-        let lin = linearize_diode(&p, &[0.6, 0.0]);
-        assert_eq!(lin, DiodeLinearization::zero());
+        let lin = linearize_diode(&p, &[0.0, 0.0]);
+        // Note: due to the `-i_eq` negation in `linearize_diode`, the
+        // cathode companion can be `-0.0` even when `i_eq == +0.0`.
+        // Use abs-equals to treat ±0 as the same value here (KCL only
+        // cares about magnitude when both are zero).
+        assert!(lin.companion_current[0].abs() == 0.0);
+        assert!(lin.companion_current[1].abs() == 0.0);
+
+        let gd_eq = p.is / (p.n * p.vt);
+        assert!(
+            (lin.jacobian[0][0] - gd_eq).abs() < 1e-30,
+            "gd at equilibrium = IS/(N·Vt) ≈ 3.87e-13 S, got {:?}",
+            lin.jacobian,
+        );
+        assert!((lin.jacobian[1][1] - gd_eq).abs() < 1e-30);
+        assert!((lin.jacobian[0][1] + gd_eq).abs() < 1e-30);
+        assert!((lin.jacobian[1][0] + gd_eq).abs() < 1e-30);
+    }
+
+    #[test]
+    fn diode_stamp_kcl_local_closure() {
+        // For each row, the Jacobian row sums to zero: a uniform
+        // voltage shift on both terminals produces zero terminal
+        // current change (gauge invariance of KCL). The companion
+        // currents at the two terminals sum to zero: current
+        // entering the device at the anode equals current leaving
+        // at the cathode.
+        let p = DiodeParams::default();
+        for &vd in &[-1.0_f64, -0.1, 0.0, 0.1, 0.5, 0.7] {
+            let lin = linearize_diode(&p, &[vd, 0.0]);
+            for row in 0..DIODE_TERMINALS {
+                let row_sum = lin.jacobian[row][0] + lin.jacobian[row][1];
+                assert!(
+                    row_sum.abs() < 1e-30,
+                    "row {row} of Jacobian must sum to zero at Vd = {vd}, got {row_sum:e}",
+                );
+            }
+            let i_eq_sum = lin.companion_current[0] + lin.companion_current[1];
+            assert!(
+                i_eq_sum.abs() < 1e-30,
+                "companion currents must sum to zero at Vd = {vd}, got {i_eq_sum:e}",
+            );
+        }
+    }
+
+    #[test]
+    fn diode_stamp_recovers_shockley_at_iterate() {
+        // The companion model linearizes I(Vd) ≈ gd · Vd + I_eq.
+        // Evaluated at the iterate Vd_k itself the linear surrogate
+        // must reproduce the true Shockley current exactly:
+        //     gd · Vd_k + I_eq == I(Vd_k).
+        // This is the consistency property NR depends on.
+        let p = DiodeParams::default();
+        for &vd in &[-0.5_f64, -0.1, 0.0, 0.1, 0.3, 0.5, 0.7] {
+            let lin = linearize_diode(&p, &[vd, 0.0]);
+            let gd = lin.jacobian[0][0];
+            let i_eq_anode = lin.companion_current[0];
+            let linear_at_iterate = gd * vd + i_eq_anode;
+            let true_current = shockley_i(&p, vd);
+            let abs_err = (linear_at_iterate - true_current).abs();
+            let rel_err = abs_err / true_current.abs().max(1e-300);
+            assert!(
+                abs_err < 1e-15 || rel_err < 1e-12,
+                "linear surrogate must equal Shockley at iterate Vd = {vd}: \
+                 surrogate = {linear_at_iterate:e}, true = {true_current:e}, \
+                 abs_err = {abs_err:e}, rel_err = {rel_err:e}",
+            );
+        }
+    }
+
+    #[test]
+    fn diode_stamp_reverse_bias_saturates_to_minus_is() {
+        // For Vd ≪ 0 (here Vd = -1 V at room temperature, i.e.
+        // -38·Vt) the exponential underflows and I(Vd) ≈ -IS, gd ≈ 0.
+        let p = DiodeParams::default();
+        let lin = linearize_diode(&p, &[-1.0, 0.0]);
+
+        // The true Shockley current at -1V is essentially -IS.
+        let i_true = shockley_i(&p, -1.0);
+        assert!(
+            (i_true + p.is).abs() < 1e-30,
+            "reverse-saturation Shockley current at -1V must equal -IS, got {i_true:e}",
+        );
+
+        // gd must be at machine-zero scale (≈ IS · exp(-38)/(N·Vt)).
+        let gd = lin.jacobian[0][0];
+        assert!(
+            (0.0..1e-25).contains(&gd),
+            "reverse-bias gd must underflow to ≈ 0, got {gd:e}",
+        );
+
+        // The linear surrogate at the iterate still reconstructs the
+        // true current (consistency property, same as the unbiased
+        // test).
+        let linear_at_iterate = -gd + lin.companion_current[0];
+        assert!(
+            (linear_at_iterate - i_true).abs() < 1e-25,
+            "linear surrogate must equal Shockley at reverse iterate, \
+             surrogate = {linear_at_iterate:e}, true = {i_true:e}",
+        );
+    }
+
+    #[test]
+    fn diode_stamp_forward_bias_gd_matches_closed_form() {
+        // At a forward-bias iterate Vd = 0.6 V the analytic
+        // conductance gd = (IS/(N·Vt))·exp(Vd/(N·Vt)) is a known
+        // closed form. Verify the stamp matches it bit-stably (the
+        // implementation uses the same expression).
+        let p = DiodeParams::default();
+        let vd = 0.6;
+        let lin = linearize_diode(&p, &[vd, 0.0]);
+
+        let n_vt = p.n * p.vt;
+        let gd_expected = (p.is / n_vt) * (vd / n_vt).exp();
+        let gd_actual = lin.jacobian[0][0];
+        assert!(
+            ((gd_actual - gd_expected) / gd_expected).abs() < 1e-14,
+            "gd at Vd = 0.6: expected {gd_expected:e}, got {gd_actual:e}",
+        );
+
+        // Sanity: gd should be on the order of mA/mV ≈ 1/(N·Vt)·I.
+        // At 0.6V on a default diode I ≈ IS·exp(0.6/0.025852) ≈
+        // 1e-14 · 1.05e10 ≈ 1.05e-4 A, so gd ≈ 4.06e-3 S.
+        assert!(
+            (1e-4..1e-1).contains(&gd_actual),
+            "gd at Vd = 0.6V on default diode should be in [0.1mS, 0.1S], \
+             got {gd_actual:e}",
+        );
+    }
+
+    #[test]
+    fn diode_stamp_clamps_exponent_above_threshold() {
+        // For Vd ≫ N·Vt·DIODE_MAX_EXP_ARG the exponent must be
+        // clamped to DIODE_MAX_EXP_ARG so gd and I_eq remain finite.
+        // Pick Vd = 5 V which would give arg ≈ 193 unclamped (and
+        // exp overflow). After clamp, gd = (IS/(N·Vt))·exp(40).
+        let p = DiodeParams::default();
+        let lin = linearize_diode(&p, &[5.0, 0.0]);
+
+        assert!(
+            lin.jacobian[0][0].is_finite(),
+            "gd must remain finite under deep forward bias, got {:e}",
+            lin.jacobian[0][0],
+        );
+        assert!(lin.companion_current[0].is_finite());
+        assert!(lin.companion_current[1].is_finite());
+
+        // Predicted gd at the clamp.
+        let n_vt = p.n * p.vt;
+        let gd_clamped = (p.is / n_vt) * super::DIODE_MAX_EXP_ARG.exp();
+        let gd_actual = lin.jacobian[0][0];
+        assert!(
+            ((gd_actual - gd_clamped) / gd_clamped).abs() < 1e-14,
+            "clamped gd: expected {gd_clamped:e}, got {gd_actual:e}",
+        );
+    }
+
+    #[test]
+    fn diode_stamp_jacobian_is_symmetric() {
+        // The diode is a passive two-terminal device: its small-
+        // signal Jacobian must be symmetric (g_ij = g_ji).
+        let p = DiodeParams::default();
+        for &vd in &[-0.5_f64, 0.0, 0.3, 0.7] {
+            let lin = linearize_diode(&p, &[vd, 0.0]);
+            assert!(
+                (lin.jacobian[0][1] - lin.jacobian[1][0]).abs() < 1e-30,
+                "Jacobian must be symmetric at Vd = {vd}: J[0][1] = {:e}, J[1][0] = {:e}",
+                lin.jacobian[0][1],
+                lin.jacobian[1][0],
+            );
+        }
+    }
+
+    #[test]
+    fn diode_stamp_uses_floating_anode_and_cathode_voltages() {
+        // The stamp must depend only on Vd = V_anode - V_cathode,
+        // not on the absolute terminal voltages (gauge invariance).
+        // IEEE-754 subtraction is not exact (`5.6 - 5.0 ≠ 0.6` to the
+        // last bit), so we compare with a tight relative tolerance.
+        let p = DiodeParams::default();
+        let lin_a = linearize_diode(&p, &[0.6, 0.0]);
+        let lin_b = linearize_diode(&p, &[5.6, 5.0]);
+        for i in 0..DIODE_TERMINALS {
+            for j in 0..DIODE_TERMINALS {
+                let rel = (lin_a.jacobian[i][j] - lin_b.jacobian[i][j]).abs()
+                    / lin_a.jacobian[i][j].abs().max(1e-300);
+                assert!(
+                    rel < 1e-13,
+                    "stamp must be a function of Vd alone (J[{i}][{j}]): \
+                     grounded = {:e}, floating = {:e}, rel = {rel:e}",
+                    lin_a.jacobian[i][j],
+                    lin_b.jacobian[i][j],
+                );
+            }
+            let rel = (lin_a.companion_current[i] - lin_b.companion_current[i]).abs()
+                / lin_a.companion_current[i].abs().max(1e-300);
+            assert!(
+                rel < 1e-13,
+                "companion_current[{i}] must be a function of Vd alone: \
+                 grounded = {:e}, floating = {:e}, rel = {rel:e}",
+                lin_a.companion_current[i],
+                lin_b.companion_current[i],
+            );
+        }
+    }
+
+    #[test]
+    fn diode_stamp_honors_emission_coefficient() {
+        // Doubling N (emission coefficient) halves the exponent
+        // argument; at Vd = 0.6 V this changes both gd and I_eq.
+        // This pins that the parameter `N` is actually consumed (a
+        // common regression in stamp implementations).
+        let mut p = DiodeParams::default();
+        let lin_n1 = linearize_diode(&p, &[0.6, 0.0]);
+        p.n = 2.0;
+        let lin_n2 = linearize_diode(&p, &[0.6, 0.0]);
+        assert!(
+            lin_n1.jacobian[0][0] > lin_n2.jacobian[0][0] * 100.0,
+            "gd at N=1 must be much larger than at N=2 (slower exponential), \
+             N=1 gd = {:e}, N=2 gd = {:e}",
+            lin_n1.jacobian[0][0],
+            lin_n2.jacobian[0][0],
+        );
+    }
+
+    #[test]
+    fn diode_stamp_honors_saturation_current() {
+        // Doubling IS doubles both gd and (in deep forward bias)
+        // I_eq. This pins that the parameter `IS` is actually
+        // consumed.
+        let mut p = DiodeParams::default();
+        let lin_a = linearize_diode(&p, &[0.6, 0.0]);
+        p.is = 2e-14;
+        let lin_b = linearize_diode(&p, &[0.6, 0.0]);
+        // gd_b / gd_a == IS_b / IS_a == 2.
+        let ratio = lin_b.jacobian[0][0] / lin_a.jacobian[0][0];
+        assert!(
+            (ratio - 2.0).abs() < 1e-12,
+            "gd must scale linearly with IS, got ratio = {ratio}",
+        );
+    }
+
+    #[test]
+    fn diode_stamp_companion_sign_matches_forward_conduction() {
+        // At forward-bias Vd > 0, current flows anode → cathode.
+        // In our terminal convention I_anode > 0 (current INTO
+        // device at anode) and I_cathode < 0 (current OUT of device
+        // at cathode). The linear surrogate at the iterate must
+        // reproduce this sign.
+        let p = DiodeParams::default();
+        let vd = 0.7;
+        let lin = linearize_diode(&p, &[vd, 0.0]);
+        let i_anode = lin.jacobian[0][0] * vd + lin.jacobian[0][1] * 0.0 + lin.companion_current[0];
+        let i_cathode =
+            lin.jacobian[1][0] * vd + lin.jacobian[1][1] * 0.0 + lin.companion_current[1];
+        assert!(
+            i_anode > 0.0,
+            "forward-bias diode draws positive current at anode, got {i_anode:e}",
+        );
+        assert!(
+            i_cathode < 0.0,
+            "forward-bias diode supplies current at cathode, got {i_cathode:e}",
+        );
+        assert!(
+            (i_anode + i_cathode).abs() < 1e-15,
+            "I_anode + I_cathode must be zero (KCL), got {:e}",
+            i_anode + i_cathode,
+        );
+    }
+
+    #[test]
+    fn diode_stamp_floating_node_form_recovers_two_node_form() {
+        // Floating the diode between two arbitrary nodes
+        // (V_anode = 1.7, V_cathode = 1.1, so Vd = 0.6) must give
+        // the same Jacobian as the grounded form
+        // (V_anode = 0.6, V_cathode = 0.0). IEEE-754 subtraction is
+        // not exact (`1.7 - 1.1 ≠ 0.6` to the last bit), so we
+        // compare with a tight relative tolerance.
+        let p = DiodeParams::default();
+        let grounded = linearize_diode(&p, &[0.6, 0.0]);
+        let floating = linearize_diode(&p, &[1.7, 1.1]);
+        let rel = (grounded.jacobian[0][0] - floating.jacobian[0][0]).abs()
+            / grounded.jacobian[0][0].abs();
+        assert!(
+            rel < 1e-13,
+            "grounded vs floating gd: grounded = {:e}, floating = {:e}, rel = {rel:e}",
+            grounded.jacobian[0][0],
+            floating.jacobian[0][0],
+        );
+        let rel_eq = (grounded.companion_current[0] - floating.companion_current[0]).abs()
+            / grounded.companion_current[0].abs().max(1e-300);
+        assert!(
+            rel_eq < 1e-13,
+            "grounded vs floating I_eq: grounded = {:e}, floating = {:e}, rel = {rel_eq:e}",
+            grounded.companion_current[0],
+            floating.companion_current[0],
+        );
     }
 
     #[test]

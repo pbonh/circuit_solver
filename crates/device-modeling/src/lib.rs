@@ -55,5 +55,5 @@ pub use params::{
 pub use stamp::{
     linearize_bjt, linearize_diode, linearize_mosfet, BJTLinearization, DiodeLinearization,
     LinearizedModel, MOSFETLinearization, OperatingPoint, OperatingPointFamilyMismatch,
-    BJT_TERMINALS, DIODE_TERMINALS, MOSFET_TERMINALS,
+    BJT_TERMINALS, DIODE_MAX_EXP_ARG, DIODE_TERMINALS, MOSFET_TERMINALS,
 };
