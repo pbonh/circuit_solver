@@ -75,5 +75,5 @@ pub mod topology;
 pub use builder::{CircuitBuilder, ElementDecl, NetName, GROUND_NET};
 pub use element::{Element, ElementKind, ElementName, SubcircuitName};
 pub use error::NetlistGraphError;
-pub use graph::{CircuitGraph, Node};
+pub use graph::{CircuitGraph, Node, VoltageSourceOverrideError};
 pub use subcircuit::SubcircuitDefinition;

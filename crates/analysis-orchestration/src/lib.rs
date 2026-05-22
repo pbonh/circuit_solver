@@ -20,6 +20,11 @@
 //!   then [`ac_analysis`] at the converged operating point, returning
 //!   both halves in a single bundled result. Covers scenario
 //!   `ac-small-signal#ac-analysis-without-prior-operating-point`.
+//! - [`mod@dc_sweep`] — DC Sweep control loop (tasks.md #21). Wraps
+//!   [`dc_analysis`] in an outer loop over a voltage-source value
+//!   range and returns one [`OperatingPoint`] per sweep point,
+//!   addressable by sweep index. Covers scenario
+//!   `dc-operating-point#dc-sweep-over-a-voltage-source`.
 //! - [`noise`] — Noise spectral-density control loop (tasks.md #37),
 //!   its auto-DC entry point (tasks.md #40), plus the
 //!   integrated-noise-over-bandwidth summary metric
@@ -56,6 +61,7 @@
 pub mod ac;
 pub mod auto_dc_ac;
 pub mod dc;
+pub mod dc_sweep;
 pub mod mixed_signal;
 pub mod noise;
 pub mod sweep;
@@ -69,6 +75,7 @@ pub use dc::{
     dc_analysis, BranchCurrentSample, DcAnalysisError, DcAnalysisRequest, DcAnalysisResult,
     OperatingPoint,
 };
+pub use dc_sweep::{dc_sweep, DcSweepError, DcSweepPoint, DcSweepRequest, DcSweepResult};
 pub use mixed_signal::{
     AnalogSolver, AnalogStepReport, BoundarySignals, DigitalAdapterKind, DigitalSimulator,
     DigitalStepReport, MixedSignalScheduler, NextEventReport, SchedulerError, SchedulerOutcome,
