@@ -7,6 +7,9 @@ name = "analysis-orchestration"
 version = "0.0.1"
 dependencies = [
  "circuit-solver-types",
+ "netlist-graph",
+ "num-complex",
+ "numeric-solver",
 ]
 
 [[package]]

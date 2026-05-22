@@ -2,15 +2,23 @@
 //! Mixed-Signal Scheduler.
 //!
 //! This crate hosts the per-analysis driver loops (DC, AC, transient,
-//! noise) and the [`MixedSignalScheduler`][mixed_signal::MixedSignalScheduler]
+//! noise) and the [`MixedSignalScheduler`]
 //! that orchestrates a continuous-time analog solver against an
 //! event-driven digital simulator per ADR-0004 ("Optimistic Mixed-Signal
 //! Synchronization via Shared Scheduler").
 //!
-//! At present only the mixed-signal scheduler skeleton and its
-//! `optimistic-advance-with-correct-prediction` happy path are
-//! implemented; sibling implementer tasks fill in mis-prediction
-//! rollback, boundary signal exchange interpolation, conformance, etc.
+//! At present the implemented surfaces are:
+//!
+//! - [`ac`] — AC small-signal control loop (tasks.md #25). Composes
+//!   the AC sub-view extractor and the complex sparse-LU dispatch into
+//!   a per-frequency driver that produces [`TransferFunction`]
+//!   results. Covers scenarios
+//!   `ac-small-signal#ac-analysis-with-pre-computed-operating-point`
+//!   and `ac-small-signal#ac-analysis-on-purely-linear-circuit`.
+//! - [`mixed_signal`] — Mixed-Signal Scheduler skeleton with the
+//!   `optimistic-advance-with-correct-prediction` happy path. Sibling
+//!   implementer tasks fill in mis-prediction rollback, boundary
+//!   signal exchange interpolation, conformance, etc.
 //!
 //! # Stability
 //!
@@ -18,8 +26,10 @@
 
 #![deny(missing_docs)]
 
+pub mod ac;
 pub mod mixed_signal;
 
+pub use ac::{ac_analysis, AcAnalysisError, AcAnalysisRequest, AcAnalysisResult, TransferFunction};
 pub use mixed_signal::{
     AnalogSolver, AnalogStepReport, BoundarySignals, DigitalAdapterKind, DigitalSimulator,
     DigitalStepReport, MixedSignalScheduler, NextEventReport, SchedulerError, SchedulerOutcome,
