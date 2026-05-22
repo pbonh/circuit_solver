@@ -4,21 +4,27 @@
 //! module name registered with `CPython` is `circuit_solver` (PEP 8
 //! lowercase, distinct from the Rust crate name `circuit-solver-py`).
 //!
-//! ## Surface as of `tasks.md` item #55
+//! ## Surface as of `tasks.md` items #52, #53, #55
 //!
 //! - [`CircuitBuilder`](builder::PyCircuitBuilder) — the incremental
 //!   construction entry point. Methods: `add_element`, `add_wire`,
-//!   `add_model`, `add_subcircuit`. Delegates to
-//!   [`netlist_graph::CircuitBuilder`]. Item #55 adds the
-//!   `build_snapshot_element_count` inspection helper that lifts the
-//!   `python-frontend#builder-isolation-across-multiple-builds` Gherkin
-//!   scenario across the `PyO3` boundary without prematurely exposing
-//!   the full `CircuitGraph` handle (that handle is item #53's scope).
+//!   `add_model`, `add_subcircuit`, **`build()`**. Delegates to
+//!   [`netlist_graph::CircuitBuilder`]. Each `build()` call returns a
+//!   fresh immutable [`CircuitGraph`](graph::PyCircuitGraph); the
+//!   builder remains reusable, satisfying the
+//!   `python-frontend#builder-isolation-across-multiple-builds`
+//!   Gherkin scenario (tasks.md #55).
+//! - [`CircuitGraph`](graph::PyCircuitGraph) — the immutable
+//!   `#[pyclass(frozen)]` handle `build()` returns. Read-only
+//!   accessors: `element_count`, `node_count`, `model_count`,
+//!   `node_names`, `element_names`, `is_empty`, `is_fully_expanded`.
 //! - [`CircuitBuilderError`] — single Python exception class covering
 //!   every error variant of `netlist_graph::NetlistGraphError`.
 //!
-//! `CircuitBuilder.build()` (returning an immutable
-//! `CircuitGraph` `PyO3` handle) is owned by tasks.md item #53;
+//! A dedicated `ImmutableHandleError` for explicit attempted-mutation
+//! diagnostics is tasks.md item #54; until then the `frozen` pyclass
+//! attribute is the structural enforcement of ADR-0001 / scenario
+//! `python-frontend#immutable-circuit-graph-prevents-post-build-mutation`.
 //! `AnalysisRequest`, `NumPy` result arrays, GIL release, and SPICE
 //! netlist parsing are tasks #54–#61.
 //!
@@ -45,17 +51,19 @@
 
 pub mod builder;
 pub mod errors;
+pub mod graph;
 
 use pyo3::prelude::*;
 
 pub use builder::PyCircuitBuilder;
 pub use errors::CircuitBuilderError;
+pub use graph::PyCircuitGraph;
 
 /// Python module entry point for `import circuit_solver`.
 ///
 /// Registered with the `CPython` interpreter via `PyO3`'s `#[pymodule]`
-/// procedural macro. Registers the `CircuitBuilder` class and the
-/// `CircuitBuilderError` exception.
+/// procedural macro. Registers the `CircuitBuilder` class, the
+/// `CircuitGraph` class, and the `CircuitBuilderError` exception.
 ///
 /// # Errors
 ///
@@ -66,6 +74,7 @@ pub use errors::CircuitBuilderError;
 #[pymodule]
 fn circuit_solver(py: Python<'_>, module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<PyCircuitBuilder>()?;
+    module.add_class::<PyCircuitGraph>()?;
     module.add("CircuitBuilderError", py.get_type::<CircuitBuilderError>())?;
     Ok(())
 }
