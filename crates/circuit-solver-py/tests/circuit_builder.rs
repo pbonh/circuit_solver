@@ -39,7 +39,7 @@
 
 #![cfg(not(feature = "extension-module"))]
 
-use circuit_solver::PyCircuitBuilder;
+use circuit_solver::{ImmutableHandleError, PyCircuitBuilder};
 use pyo3::prelude::*;
 use pyo3::types::{IntoPyDict, PyList};
 
@@ -532,12 +532,12 @@ fn circuit_graph_repr_is_diagnostic() {
 fn circuit_graph_is_frozen_against_add_element_mutation() {
     // ADR-0001 / scenario
     // `python-frontend#immutable-circuit-graph-prevents-post-build-mutation`:
-    // the returned `CircuitGraph` does NOT expose builder-mutation
-    // methods. The `#[pyclass(frozen)]` enforcement means there is no
-    // `add_element` `#[pymethod]` on `PyCircuitGraph`, so the
-    // attribute lookup itself fails. Task #54 will replace this
-    // `AttributeError` with a dedicated `ImmutableHandleError`; for
-    // now we pin the structural property.
+    // the returned `CircuitGraph` rejects builder-mutation method
+    // calls with a typed `ImmutableHandleError` (tasks.md item #54).
+    // Before #54 this manifested as a `PyAttributeError` from the
+    // missing-method path; the trap methods added in #54 upgrade that
+    // to the dedicated, actionable error type the Gherkin scenario
+    // calls for. This test pins the upgrade.
     Python::attach(|py| {
         let b = fresh_builder(py);
         let graph = b.call_method0("build").unwrap();
@@ -545,11 +545,162 @@ fn circuit_graph_is_frozen_against_add_element_mutation() {
         let t = PyList::new(py, ["n1", "n2"]).unwrap();
         let err = graph
             .call_method("add_element", ("R1", "R", t), Some(&kwargs))
-            .expect_err("CircuitGraph must not expose add_element");
-        // Python raises AttributeError for missing methods on a class.
+            .expect_err("CircuitGraph.add_element must raise ImmutableHandleError");
         assert!(
-            err.is_instance_of::<pyo3::exceptions::PyAttributeError>(py),
+            err.is_instance_of::<ImmutableHandleError>(py),
             "unexpected error type: {err}"
+        );
+        let msg = err.to_string();
+        assert!(
+            msg.contains("add_element"),
+            "ImmutableHandleError message must name the attempted method: {msg}"
+        );
+        assert!(
+            msg.contains("immutable") || msg.contains("ADR-0001"),
+            "ImmutableHandleError message must explain why mutation is rejected: {msg}"
+        );
+    });
+}
+
+/// Gherkin scenario: `python-frontend#immutable-circuit-graph-prevents-post-build-mutation`.
+///
+/// This test executes the full Gherkin scenario verbatim:
+///
+/// ```text
+/// Given CircuitDesigner has built a CircuitGraph via the builder API
+/// When  CircuitDesigner attempts to call an add-element method on the CircuitGraph
+/// Then  a Python exception of type "ImmutableHandleError" is raised
+/// And   the CircuitGraph remains unchanged
+/// ```
+///
+/// The "remains unchanged" property is verified by capturing the
+/// element / node / model counts and the element-name list before
+/// and after the rejected mutation attempt and asserting they are
+/// pointwise identical.
+#[test]
+fn gherkin_scenario_immutable_circuit_graph_prevents_post_build_mutation() {
+    Python::attach(|py| {
+        // Given CircuitDesigner has built a CircuitGraph via the builder API.
+        // (One resistor between n1 and 0 so the snapshot has non-trivial
+        // structure to compare against — an empty graph would also satisfy
+        // "remains unchanged" trivially.)
+        let b = fresh_builder(py);
+        let kwargs_r1 = [("value", 1_000.0)].into_py_dict(py).unwrap();
+        let terminals_r1 = PyList::new(py, ["n1", "0"]).unwrap();
+        b.call_method("add_element", ("R1", "R", terminals_r1), Some(&kwargs_r1))
+            .unwrap();
+        let graph = b.call_method0("build").unwrap();
+
+        // Snapshot the observable state before the rejected mutation.
+        let before_element_count: usize = graph
+            .call_method0("element_count")
+            .unwrap()
+            .extract()
+            .unwrap();
+        let before_node_count: usize = graph.call_method0("node_count").unwrap().extract().unwrap();
+        let before_model_count: usize = graph
+            .call_method0("model_count")
+            .unwrap()
+            .extract()
+            .unwrap();
+        let before_element_names: Vec<String> = graph
+            .call_method0("element_names")
+            .unwrap()
+            .extract()
+            .unwrap();
+        assert_eq!(before_element_count, 1);
+        assert_eq!(before_element_names, vec!["R1".to_string()]);
+
+        // When CircuitDesigner attempts to call an add-element method
+        // on the CircuitGraph.
+        let kwargs_r2 = [("value", 2_000.0)].into_py_dict(py).unwrap();
+        let terminals_r2 = PyList::new(py, ["n1", "n2"]).unwrap();
+        let err = graph
+            .call_method("add_element", ("R2", "R", terminals_r2), Some(&kwargs_r2))
+            .expect_err("add_element on a built CircuitGraph must raise");
+
+        // Then a Python exception of type "ImmutableHandleError" is raised.
+        assert!(
+            err.is_instance_of::<ImmutableHandleError>(py),
+            "expected ImmutableHandleError, got: {err}"
+        );
+
+        // And the CircuitGraph remains unchanged.
+        let after_element_count: usize = graph
+            .call_method0("element_count")
+            .unwrap()
+            .extract()
+            .unwrap();
+        let after_node_count: usize = graph.call_method0("node_count").unwrap().extract().unwrap();
+        let after_model_count: usize = graph
+            .call_method0("model_count")
+            .unwrap()
+            .extract()
+            .unwrap();
+        let after_element_names: Vec<String> = graph
+            .call_method0("element_names")
+            .unwrap()
+            .extract()
+            .unwrap();
+        assert_eq!(after_element_count, before_element_count);
+        assert_eq!(after_node_count, before_node_count);
+        assert_eq!(after_model_count, before_model_count);
+        assert_eq!(after_element_names, before_element_names);
+    });
+}
+
+/// Defence-in-depth: every builder-mutation method name from
+/// `PyCircuitBuilder` (`add_element`, `add_wire`, `add_model`,
+/// `add_subcircuit`) is trapped on `PyCircuitGraph` with the same
+/// `ImmutableHandleError`. Pinning all four prevents a future addition
+/// to `PyCircuitBuilder` from silently bypassing the immutable-handle
+/// guarantee — anyone adding a fifth mutation entry point must also
+/// add a fifth trap and extend this test, which the test name calls
+/// out explicitly.
+#[test]
+fn circuit_graph_traps_every_builder_mutation_method_with_immutable_handle_error() {
+    Python::attach(|py| {
+        let b = fresh_builder(py);
+        let graph = b.call_method0("build").unwrap();
+
+        // add_element
+        let kwargs = [("value", 1_000.0)].into_py_dict(py).unwrap();
+        let terminals = PyList::new(py, ["n1", "n2"]).unwrap();
+        let err = graph
+            .call_method("add_element", ("R1", "R", terminals), Some(&kwargs))
+            .expect_err("add_element must raise");
+        assert!(
+            err.is_instance_of::<ImmutableHandleError>(py),
+            "add_element: {err}"
+        );
+
+        // add_wire
+        let err = graph
+            .call_method1("add_wire", ("n1", "n2"))
+            .expect_err("add_wire must raise");
+        assert!(
+            err.is_instance_of::<ImmutableHandleError>(py),
+            "add_wire: {err}"
+        );
+
+        // add_model
+        let err = graph
+            .call_method1("add_model", ("M1",))
+            .expect_err("add_model must raise");
+        assert!(
+            err.is_instance_of::<ImmutableHandleError>(py),
+            "add_model: {err}"
+        );
+
+        // add_subcircuit
+        let ports = PyList::new(py, ["a", "b"]).unwrap();
+        let body = PyList::empty(py);
+        let err = graph
+            .call_method1("add_subcircuit", ("SUB", ports, body))
+            .expect_err("add_subcircuit must raise");
+        assert!(
+            err.is_instance_of::<ImmutableHandleError>(py),
+            "add_subcircuit: {err}"
         );
     });
 }

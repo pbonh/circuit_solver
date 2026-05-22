@@ -18,15 +18,20 @@
 //!   `#[pyclass(frozen)]` handle `build()` returns. Read-only
 //!   accessors: `element_count`, `node_count`, `model_count`,
 //!   `node_names`, `element_names`, `is_empty`, `is_fully_expanded`.
-//! - [`CircuitBuilderError`] — single Python exception class covering
-//!   every error variant of `netlist_graph::NetlistGraphError`.
+//! - [`CircuitBuilderError`] — Python exception class covering every
+//!   error variant of `netlist_graph::NetlistGraphError`.
+//! - [`ImmutableHandleError`] — Python exception class raised when
+//!   Python code attempts to invoke a builder-mutation method on an
+//!   already-built `CircuitGraph` handle (tasks.md item #54; scenario
+//!   `python-frontend#immutable-circuit-graph-prevents-post-build-mutation`).
+//!   The `#[pyclass(frozen)]` attribute on `PyCircuitGraph` is the
+//!   structural belt; trap-methods that raise `ImmutableHandleError`
+//!   are the diagnostic suspenders, so attempted mutation surfaces as
+//!   a typed, actionable error rather than the bare `AttributeError`
+//!   the missing-method path would otherwise produce.
 //!
-//! A dedicated `ImmutableHandleError` for explicit attempted-mutation
-//! diagnostics is tasks.md item #54; until then the `frozen` pyclass
-//! attribute is the structural enforcement of ADR-0001 / scenario
-//! `python-frontend#immutable-circuit-graph-prevents-post-build-mutation`.
 //! `AnalysisRequest`, `NumPy` result arrays, GIL release, and SPICE
-//! netlist parsing are tasks #54–#61.
+//! netlist parsing are tasks #56–#61.
 //!
 //! ## Build profiles
 //!
@@ -56,14 +61,15 @@ pub mod graph;
 use pyo3::prelude::*;
 
 pub use builder::PyCircuitBuilder;
-pub use errors::CircuitBuilderError;
+pub use errors::{CircuitBuilderError, ImmutableHandleError};
 pub use graph::PyCircuitGraph;
 
 /// Python module entry point for `import circuit_solver`.
 ///
 /// Registered with the `CPython` interpreter via `PyO3`'s `#[pymodule]`
 /// procedural macro. Registers the `CircuitBuilder` class, the
-/// `CircuitGraph` class, and the `CircuitBuilderError` exception.
+/// `CircuitGraph` class, the `CircuitBuilderError` exception, and the
+/// `ImmutableHandleError` exception.
 ///
 /// # Errors
 ///
@@ -76,5 +82,9 @@ fn circuit_solver(py: Python<'_>, module: &Bound<'_, PyModule>) -> PyResult<()> 
     module.add_class::<PyCircuitBuilder>()?;
     module.add_class::<PyCircuitGraph>()?;
     module.add("CircuitBuilderError", py.get_type::<CircuitBuilderError>())?;
+    module.add(
+        "ImmutableHandleError",
+        py.get_type::<ImmutableHandleError>(),
+    )?;
     Ok(())
 }
