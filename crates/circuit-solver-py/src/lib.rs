@@ -4,7 +4,7 @@
 //! module name registered with `CPython` is `circuit_solver` (PEP 8
 //! lowercase, distinct from the Rust crate name `circuit-solver-py`).
 //!
-//! ## Surface as of `tasks.md` items #52, #53, #55
+//! ## Surface as of `tasks.md` items #52, #53, #54, #55, #56
 //!
 //! - [`CircuitBuilder`](builder::PyCircuitBuilder) — the incremental
 //!   construction entry point. Methods: `add_element`, `add_wire`,
@@ -18,6 +18,13 @@
 //!   `#[pyclass(frozen)]` handle `build()` returns. Read-only
 //!   accessors: `element_count`, `node_count`, `model_count`,
 //!   `node_names`, `element_names`, `is_empty`, `is_fully_expanded`.
+//! - [`AnalysisRequest`](analysis_request::PyAnalysisRequest) — the
+//!   immutable `#[pyclass(frozen)]` value object describing a
+//!   requested analysis. Fields: `analysis_type`, `sweep`,
+//!   `integration_method`, `boundary_interpolation` (per ADR-0007).
+//!   Tasks.md #56. The submission entry point that consumes an
+//!   `AnalysisRequest` + `CircuitGraph` and returns a `Result` is a
+//!   downstream task (#57+).
 //! - [`CircuitBuilderError`] — Python exception class covering every
 //!   error variant of `netlist_graph::NetlistGraphError`.
 //! - [`ImmutableHandleError`] — Python exception class raised when
@@ -30,8 +37,8 @@
 //!   a typed, actionable error rather than the bare `AttributeError`
 //!   the missing-method path would otherwise produce.
 //!
-//! `AnalysisRequest`, `NumPy` result arrays, GIL release, and SPICE
-//! netlist parsing are tasks #56–#61.
+//! `NumPy` result arrays, GIL release, and SPICE netlist parsing are
+//! tasks #57–#61.
 //!
 //! ## Build profiles
 //!
@@ -54,12 +61,14 @@
 
 #![deny(missing_docs)]
 
+pub mod analysis_request;
 pub mod builder;
 pub mod errors;
 pub mod graph;
 
 use pyo3::prelude::*;
 
+pub use analysis_request::PyAnalysisRequest;
 pub use builder::PyCircuitBuilder;
 pub use errors::{CircuitBuilderError, ImmutableHandleError};
 pub use graph::PyCircuitGraph;
@@ -68,8 +77,9 @@ pub use graph::PyCircuitGraph;
 ///
 /// Registered with the `CPython` interpreter via `PyO3`'s `#[pymodule]`
 /// procedural macro. Registers the `CircuitBuilder` class, the
-/// `CircuitGraph` class, the `CircuitBuilderError` exception, and the
-/// `ImmutableHandleError` exception.
+/// `CircuitGraph` class, the `AnalysisRequest` class, the
+/// `CircuitBuilderError` exception, and the `ImmutableHandleError`
+/// exception.
 ///
 /// # Errors
 ///
@@ -81,6 +91,7 @@ pub use graph::PyCircuitGraph;
 fn circuit_solver(py: Python<'_>, module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<PyCircuitBuilder>()?;
     module.add_class::<PyCircuitGraph>()?;
+    module.add_class::<PyAnalysisRequest>()?;
     module.add("CircuitBuilderError", py.get_type::<CircuitBuilderError>())?;
     module.add(
         "ImmutableHandleError",
