@@ -361,8 +361,8 @@ impl UnionFind {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use circuit_solver_types::{BranchId, ElementId};
     use circuit_solver_types::flattened::ElementIncidence;
+    use circuit_solver_types::{BranchId, ElementId};
 
     // ---------- helpers ----------------------------------------------------
 
