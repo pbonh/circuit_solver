@@ -28,9 +28,19 @@
 //!   channels of an analysis run: node voltages, branch currents,
 //!   waveforms, and transfer functions, each accessible by name.
 //!   Tasks.md #57. The submission entry point that consumes an
-//!   `AnalysisRequest` + `CircuitGraph` and returns a `Result` is a
-//!   downstream task; until it lands, `Result` is constructed
-//!   directly from Python in tests.
+//!   `AnalysisRequest` + `CircuitGraph` and returns a `Result` is
+//!   [`Simulator`](simulator::PySimulator), below.
+//! - [`Simulator`](simulator::PySimulator) — the submission entry
+//!   point. Stateless v1 class with a single
+//!   [`submit(graph, request)`](simulator::PySimulator::submit)
+//!   method that dispatches on the `AnalysisRequest`'s
+//!   `analysis_type` slug. The DC operating-point branch is wired
+//!   through `analysis_orchestration::dc_analysis` with the GIL
+//!   released around the native solver work; other analysis types
+//!   raise `NotImplementedError` until their dedicated submission
+//!   tasks land. Implements the
+//!   `python-frontend#analysis-request-and-result-retrieval`
+//!   Gherkin scenario.
 //! - [`CircuitBuilderError`] — Python exception class covering every
 //!   error variant of `netlist_graph::NetlistGraphError`.
 //! - [`ImmutableHandleError`] — Python exception class raised when
@@ -86,6 +96,7 @@ pub mod errors;
 pub mod graph;
 pub mod parser;
 pub mod result;
+pub mod simulator;
 
 use std::path::PathBuf;
 
@@ -96,6 +107,7 @@ pub use builder::PyCircuitBuilder;
 pub use errors::{CircuitBuilderError, ImmutableHandleError, NetlistParseError};
 pub use graph::PyCircuitGraph;
 pub use result::PyAnalysisResult;
+pub use simulator::PySimulator;
 
 /// Parse a SPICE netlist file from disk and return a
 /// [`PyCircuitGraph`].
@@ -156,8 +168,8 @@ fn parse_netlist_py(path: PathBuf) -> PyResult<PyCircuitGraph> {
 /// Registered with the `CPython` interpreter via `PyO3`'s `#[pymodule]`
 /// procedural macro. Registers the `CircuitBuilder` class, the
 /// `CircuitGraph` class, the `AnalysisRequest` class, the `Result`
-/// class, the `CircuitBuilderError` exception, the
-/// `ImmutableHandleError` exception, and the `NetlistParseError`
+/// class, the `Simulator` class, the `CircuitBuilderError` exception,
+/// the `ImmutableHandleError` exception, and the `NetlistParseError`
 /// exception.
 ///
 /// # Errors
@@ -172,6 +184,7 @@ fn circuit_solver(py: Python<'_>, module: &Bound<'_, PyModule>) -> PyResult<()> 
     module.add_class::<PyCircuitGraph>()?;
     module.add_class::<PyAnalysisRequest>()?;
     module.add_class::<PyAnalysisResult>()?;
+    module.add_class::<PySimulator>()?;
     module.add("CircuitBuilderError", py.get_type::<CircuitBuilderError>())?;
     module.add(
         "ImmutableHandleError",

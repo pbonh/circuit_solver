@@ -73,6 +73,15 @@ pyo3 = { version = "0.28", default-features = false, features = ["abi3-py39", "m
 # graph crate during solve. The dependency is one-way (no reverse pin).
 netlist-graph = { path = "../netlist-graph" }
 circuit-solver-types = { path = "../circuit-solver-types" }
+# tasks.md item #57 follow-up — the `Simulator` PyO3 entry point for the
+# `python-frontend#analysis-request-and-result-retrieval` scenario submits
+# an `AnalysisRequest` against a `CircuitGraph` and returns a `Result`. The
+# DC operating-point branch dispatches through `analysis_orchestration::dc_analysis`;
+# Pass 1 flattening goes through `numeric_solver::flatten`. Both deps are
+# one-way (no reverse pin) and inherit the workspace `publish = false` stance
+# per ADR-0010.
+analysis-orchestration = { path = "../analysis-orchestration" }
+numeric-solver = { path = "../numeric-solver" }
 
 [dev-dependencies]
 # Rust-side PyO3 unit tests embed the CPython interpreter to drive the
