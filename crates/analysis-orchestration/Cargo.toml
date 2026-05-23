@@ -35,8 +35,11 @@ netlist-graph = { path = "../netlist-graph" }
 device-modeling = { path = "../device-modeling" }
 # Scenario-level conformance witnesses (tasks.md #63–#68) consume the
 # golden-reference parser + `max(rel, abs)` per-node comparator from
-# the conformance-harness crate (tasks.md #62, ADR-0008). The noise
-# conformance test (tasks.md #66, scenario
+# the conformance-harness crate (tasks.md #62, ADR-0008). The AC
+# conformance test (tasks.md #64) compares the ac_analysis driver's
+# TransferFunction output against an ngspice ASCII rawfile golden using
+# the ADR-0008 max(relative, absolute) envelope. The noise conformance
+# test (tasks.md #66, scenario
 # `noise-spectral-density#noise-conformance-against-ngspice`) is the
 # first user of this dev-dep in this crate.
 conformance-harness = { path = "../conformance-harness" }
