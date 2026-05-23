@@ -70,17 +70,22 @@
 //!
 //! ## What this parser does *not* do (yet)
 //!
-//! - Differentiated `NetlistParseError` for "unrecognized device
-//!   letter" — that's tasks.md item #61 (the
-//!   `python-frontend#error-on-malformed-netlist` scenario), which
-//!   is the child task `t_ce34bc56`. The current parser surfaces
-//!   parse failures via [`netlist_graph::NetlistGraphError`] /
-//!   [`pyo3::exceptions::PyValueError`]; #61 will introduce the
-//!   dedicated `NetlistParseError` exception with line-number and
-//!   token detail and migrate the error path.
 //! - SPICE expressions, `.PARAM` substitution, `.INCLUDE` /
 //!   `.LIB` resolution, parametrized models. The minimal subset
 //!   above is the v1 contract.
+//!
+//! ## Unrecognised device letters → `NetlistParseError` (tasks.md #61)
+//!
+//! When `parse_element_card` encounters a card whose leading
+//! character is not one of the supported device letters
+//! (`R`, `C`, `L`, `V`, `I`, `D`, `Q`, `M`, `X`), it raises a
+//! [`crate::errors::NetlistParseError`] carrying the unrecognised
+//! token. The 1-indexed source line number is then prepended by
+//! `annotate_with_line` as the error bubbles out. This lights up
+//! the `python-frontend#error-on-malformed-netlist` Gherkin scenario.
+//! Other parse-time failures (arity, malformed numeric value,
+//! unterminated `.SUBCKT`, …) continue to surface as `PyValueError`
+//! pending the broader Python-error-mapping pass in tasks.md #58.
 
 use std::fs;
 use std::path::Path;
@@ -89,7 +94,7 @@ use netlist_graph::{CircuitBuilder, CircuitGraph, ElementDecl, ElementKind, Subc
 use pyo3::exceptions::{PyIOError, PyValueError};
 use pyo3::PyErr;
 
-use crate::errors::to_py_err;
+use crate::errors::{netlist_parse_error_unrecognised_device, to_py_err};
 
 /// Parse a SPICE netlist file at `path` and return the resulting
 /// [`CircuitGraph`].
@@ -106,11 +111,17 @@ use crate::errors::to_py_err;
 /// # Errors
 ///
 /// - [`PyIOError`] if the file cannot be read.
+/// - [`crate::errors::NetlistParseError`] if a card's leading character
+///   is not one of the recognised SPICE device letters
+///   (`R`, `C`, `L`, `V`, `I`, `D`, `Q`, `M`, `X`). The message
+///   identifies the 1-indexed line number and the unrecognised token,
+///   per the `python-frontend#error-on-malformed-netlist` Gherkin
+///   scenario (tasks.md #61).
 /// - [`PyValueError`] if a line cannot be tokenized into a recognized
 ///   card shape (wrong arity, missing model name, malformed numeric
-///   value, unterminated `.SUBCKT`, etc.). The differentiated
-///   `NetlistParseError` exception class is tasks.md #61's contract
-///   and will replace this `PyValueError` path in that task.
+///   value, unterminated `.SUBCKT`, etc.). The broader Python-error
+///   mapping pass that may migrate these onto a structured taxonomy
+///   is tasks.md #58.
 /// - The `CircuitBuilderError` Python exception (via
 ///   [`to_py_err`]) if the underlying [`CircuitBuilder`] rejects a
 ///   replayed `add_*` call (duplicate name, terminal arity mismatch,
@@ -509,10 +520,7 @@ fn parse_element_card(line: &str, _lineno: usize) -> Result<ElementDecl, PyErr> 
                 model: Some(circuit_solver_types::ModelName::new(model)),
             })
         }
-        other => Err(PyValueError::new_err(format!(
-            "unrecognised SPICE device letter '{other}' on card '{name}'; \
-             expected one of R, C, L, V, I, D, Q, M, X"
-        ))),
+        other => Err(netlist_parse_error_unrecognised_device(&name, other)),
     }
 }
 
@@ -623,10 +631,10 @@ fn annotate_with_line(lineno: usize) -> impl Fn(PyErr) -> PyErr {
     move |err| {
         // Carry the original exception type through (a
         // `CircuitBuilderError` stays a `CircuitBuilderError`,
-        // `PyValueError` stays a `PyValueError`) but prepend the
-        // line number to the message so callers know where the
-        // failure originated. `NetlistParseError` (tasks.md #61)
-        // will replace this with a structured exception class.
+        // `PyValueError` stays a `PyValueError`, `NetlistParseError`
+        // stays a `NetlistParseError`) but prepend the line number to
+        // the message so callers know where the failure originated.
+        // `from_type` is the PyO3 idiom for type-preserving rewrap.
         pyo3::Python::attach(|py| {
             let msg = err.value(py).to_string();
             let py_type = err.get_type(py);
@@ -834,20 +842,42 @@ V1 n1 0 5
     }
 
     #[test]
-    fn parse_unrecognised_device_letter_returns_value_error_for_now() {
-        // Pre-task-#61 behaviour: surfaces as a PyValueError with a
-        // diagnostic message. Task #61 will migrate this to a
-        // dedicated NetlistParseError.
+    fn parse_unrecognised_device_letter_returns_netlist_parse_error() {
+        // tasks.md #61 behaviour: an unrecognised SPICE device letter
+        // surfaces as a dedicated `NetlistParseError` whose message
+        // carries the line number and the offending token. Verified
+        // by exception type and message-content substrings; the
+        // Gherkin witness for `python-frontend#error-on-malformed-netlist`
+        // exercises the same contract end-to-end via the Python
+        // binding in `tests/error_on_malformed_netlist.rs`.
+        use crate::errors::NetlistParseError;
         let deck = "\
 Bad deck
 Z1 a b 1k
 ";
         let err = parse_text(deck).expect_err("unknown device letter must fail");
-        let msg = pyo3::Python::attach(|py| err.value(py).to_string());
-        assert!(
-            msg.contains('Z'),
-            "error message must identify the offending letter; got: {msg}"
-        );
+        pyo3::Python::attach(|py| {
+            assert!(
+                err.is_instance_of::<NetlistParseError>(py),
+                "must be NetlistParseError; got: {}",
+                err.value(py)
+            );
+            let msg = err.value(py).to_string();
+            assert!(
+                msg.contains('Z'),
+                "error message must identify the offending letter; got: {msg}"
+            );
+            assert!(
+                msg.contains("Z1"),
+                "error message must identify the unrecognised token ('Z1'); got: {msg}"
+            );
+            // The deck above places the bad card on physical line 2
+            // (line 1 is the SPICE title line, which is skipped).
+            assert!(
+                msg.contains("line 2"),
+                "error message must identify the line number ('line 2'); got: {msg}"
+            );
+        });
     }
 
     #[test]
