@@ -984,6 +984,7 @@ pub fn transient_analysis(
                 newton_raphson: request.newton_raphson,
                 ground: request.ground,
                 device_models: None,
+                enable_gmin_fallback: true,
             };
             let dc_result =
                 dc_analysis(dc_request).map_err(TransientAnalysisError::InitialDcFailed)?;

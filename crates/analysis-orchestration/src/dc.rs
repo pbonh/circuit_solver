@@ -137,16 +137,19 @@
 #![allow(clippy::module_name_repetitions)]
 
 use circuit_solver_types::flattened::FlattenedStructure;
-use circuit_solver_types::{BranchId, ConvergenceStatus, ModelName, NodeId, TopologyReport};
+use circuit_solver_types::{
+    BranchId, ConvergenceDiagnostic, ConvergenceStatus, ModelName, NodeId, TopologyReport,
+};
 use device_modeling::{
     DeviceFamily, DeviceModel, LinearizedModel, OperatingPoint as DeviceOperatingPoint,
     BJT_TERMINALS, DIODE_TERMINALS, MOSFET_TERMINALS,
 };
 use netlist_graph::{CircuitGraph, ElementKind};
 use numeric_solver::{
-    assemble, MnaAssemblyError, MnaSystem, NewtonRaphsonConfig, NewtonRaphsonDriver,
-    NewtonRaphsonError, NonlinearSystem, RussellRealSolver, SparseLinearSystem, SparseTriplet,
-    SubViewBuilder, SubViewError, SystemError as NrSystemError,
+    assemble, GminSchedule, GminSteppingConfig, GminSteppingDriver, GminSteppingError,
+    HomotopyStatus, MnaAssemblyError, MnaSystem, NewtonRaphsonConfig, NewtonRaphsonDriver,
+    NewtonRaphsonError, NewtonRaphsonOutcome, NonlinearSystem, RussellRealSolver,
+    SparseLinearSystem, SparseTriplet, SubViewBuilder, SubViewError, SystemError as NrSystemError,
 };
 
 // -----------------------------------------------------------------------------
@@ -209,11 +212,21 @@ pub struct DcAnalysisRequest<'a> {
     /// `HashMap<ModelName, DeviceModel>` would force `Clone` on the
     /// request envelope and a heap allocation per call).
     pub device_models: Option<&'a [DeviceModelBinding]>,
+    /// Whether to attempt Gmin-stepping homotopy fallback when
+    /// plain Newton-Raphson fails to converge on the original
+    /// system. Defaults to `true` so the convergence-failure
+    /// scenario witness (`tasks.md` item #22) and the homotopy
+    /// scenario witness (`tasks.md` item #18) work without
+    /// orchestration-level wiring. Set to `false` for debugging
+    /// or for layered callers that explicitly chain their own
+    /// fallback strategies.
+    pub enable_gmin_fallback: bool,
 }
 
 impl<'a> DcAnalysisRequest<'a> {
     /// Build a request with the SPICE-default Newton-Raphson tuning
-    /// and the structure's own ground node.
+    /// and the structure's own ground node. Gmin-stepping homotopy
+    /// fallback is enabled by default.
     #[must_use]
     pub fn new(graph: &'a CircuitGraph, structure: &'a FlattenedStructure) -> Self {
         Self {
@@ -222,6 +235,7 @@ impl<'a> DcAnalysisRequest<'a> {
             newton_raphson: None,
             ground: None,
             device_models: None,
+            enable_gmin_fallback: true,
         }
     }
 
@@ -257,6 +271,15 @@ impl<'a> DcAnalysisRequest<'a> {
     #[must_use]
     pub fn with_device_models(mut self, bindings: &'a [DeviceModelBinding]) -> Self {
         self.device_models = Some(bindings);
+        self
+    }
+
+    /// Builder-style override for the Gmin-stepping fallback flag.
+    /// Set to `false` to surface the raw NR outcome verbatim instead
+    /// of attempting recovery.
+    #[must_use]
+    pub fn with_gmin_fallback(mut self, enable: bool) -> Self {
+        self.enable_gmin_fallback = enable;
         self
     }
 }
@@ -385,13 +408,31 @@ impl OperatingPoint {
 
 /// The bundled result of a DC operating-point analysis.
 ///
-/// On convergence (the headline scenario), `operating_point` is
-/// `Some` and `convergence.is_converged()` is `true`. On
-/// non-convergence outcomes (`Stalled`, `MaxIterationsExceeded`,
-/// `Diverged`), `operating_point` carries the last-iterate
-/// node voltages / branch currents so the convergence-failure
-/// scenario witness (tasks.md #22) and the homotopy fallbacks
-/// (tasks.md #18 / #19) can read the diagnostic state.
+/// **Convergence semantics** (per `tasks.md` items #20 and #22):
+///
+/// - On [`ConvergenceStatus::Converged`] or
+///   [`ConvergenceStatus::ConvergedViaHomotopy`] —
+///   `operating_point` is `Some`. `last_iterate_voltages` is also
+///   populated as a redundant diagnostic surface (callers that only
+///   want the raw voltages can read it without unwrapping the
+///   `OperatingPoint`).
+/// - On [`ConvergenceStatus::Failed`] — `operating_point` is `None`
+///   per the spec scenario *"And no `OperatingPoint` is produced"*.
+///   `last_iterate_voltages` carries the diagnostic node voltages
+///   from the *final* attempted solve so the caller can render a
+///   useful failure report. `diagnostic_message` carries a
+///   human-readable summary naming which methods were attempted and
+///   how each terminated.
+/// - On the transient NR outcomes ([`ConvergenceStatus::Stalled`],
+///   [`ConvergenceStatus::Diverged`],
+///   [`ConvergenceStatus::MaxIterationsExceeded`]) — the orchestrator
+///   normally lifts these into `Failed` after exhausting homotopy
+///   fallbacks. These variants reach the user only when the
+///   orchestrator deliberately surfaces them without attempting a
+///   fallback (e.g., because the inputs forbid homotopy, or because
+///   a future caller is explicitly chaining fallback strategies).
+///   In such cases `operating_point` is `None` and
+///   `last_iterate_voltages` carries the NR last-iterate.
 ///
 /// The `topology_warnings` field is populated when the underlying
 /// [`FlattenedStructure`] carries an attached
@@ -401,15 +442,31 @@ impl OperatingPoint {
 /// via [`DcAnalysisError::FloatingNodeFault`] instead.
 #[derive(Debug, Clone, PartialEq)]
 pub struct DcAnalysisResult {
-    /// The converged (or last-iterate) operating point. Always
-    /// `Some` once the loop has produced at least one finite
-    /// iterate, regardless of [`convergence`](Self::convergence)
-    /// variant.
+    /// The accepted operating point. Populated on
+    /// [`ConvergenceStatus::Converged`] /
+    /// [`ConvergenceStatus::ConvergedViaHomotopy`] and `None`
+    /// otherwise — including on the terminal
+    /// [`ConvergenceStatus::Failed`] verdict where the spec mandates
+    /// *"no `OperatingPoint` is produced"*.
     pub operating_point: Option<OperatingPoint>,
-    /// The Newton-Raphson convergence outcome. The diagnostic
-    /// (final norms, iteration count, effective tolerances) is
-    /// extractable via [`ConvergenceStatus::diagnostic`].
+    /// The Newton-Raphson / homotopy convergence outcome. The
+    /// diagnostic (final norms, iteration count, effective
+    /// tolerances) is extractable via
+    /// [`ConvergenceStatus::diagnostic`].
     pub convergence: ConvergenceStatus,
+    /// Node voltages from the *final* attempted solve, in volts,
+    /// indexed by [`NodeId::index`]. Populated regardless of
+    /// `convergence` variant so the convergence-failure scenario
+    /// (`dc-operating-point-convergence-failure`) can surface
+    /// last-iterate diagnostic data even when `operating_point` is
+    /// `None`. Length equals the underlying
+    /// [`FlattenedStructure::node_count`].
+    pub last_iterate_voltages: Vec<f64>,
+    /// Human-readable diagnostic message naming which solve methods
+    /// were attempted and how each terminated. Populated *only* when
+    /// `convergence` is a failure mode (the convergence-failure
+    /// scenario requires this); `None` on success.
+    pub diagnostic_message: Option<String>,
     /// Possibly-floating nodes flagged by the Pass-1 topology
     /// checker (ADR-0009 warning level). Empty when no topology
     /// report was attached or when the report was clean. Hard
@@ -420,7 +477,8 @@ pub struct DcAnalysisResult {
 
 impl DcAnalysisResult {
     /// True iff the analysis converged (per ADR-0006's dual
-    /// criterion) *and* an operating point was produced.
+    /// criterion, or via Gmin-stepping recovery) *and* an
+    /// operating point was produced.
     #[must_use]
     pub fn is_converged(&self) -> bool {
         self.convergence.is_converged() && self.operating_point.is_some()
@@ -436,9 +494,10 @@ impl DcAnalysisResult {
 /// to its natural termination.
 ///
 /// Non-convergence outcomes (`Stalled`, `MaxIterationsExceeded`,
-/// `Diverged`) are **not** errors here; they are reported on the
-/// `Ok` path inside [`DcAnalysisResult::convergence`]. This split
-/// matches the [`NewtonRaphsonDriver`] convention:
+/// `Diverged`, and the orchestration-level `Failed`) are **not**
+/// errors here; they are reported on the `Ok` path inside
+/// [`DcAnalysisResult::convergence`]. This split matches the
+/// [`NewtonRaphsonDriver`] convention:
 ///
 /// > Convergence outcomes (including divergence and stall) are
 /// > reported as `Ok` with the appropriate `ConvergenceStatus`
@@ -476,6 +535,15 @@ pub enum DcAnalysisError {
     /// which is reported via `Ok(DcAnalysisResult { convergence: …
     /// })`.
     NewtonRaphsonFailed(NewtonRaphsonError),
+    /// The Gmin-stepping homotopy driver returned a hard pre-loop or
+    /// during-loop failure that is not classified as a convergence
+    /// outcome — for example, a malformed schedule, a dim-liar
+    /// `NonlinearSystem`, or a ground-index out-of-range against the
+    /// inner linearized system. Distinct from a homotopy *step
+    /// failure* (which is a convergence outcome surfaced via
+    /// [`DcAnalysisResult::convergence`] as
+    /// [`ConvergenceStatus::Failed`]).
+    GminHomotopyFailed(GminSteppingError),
 }
 
 impl core::fmt::Display for DcAnalysisError {
@@ -498,6 +566,12 @@ impl core::fmt::Display for DcAnalysisError {
             Self::NewtonRaphsonFailed(inner) => {
                 write!(f, "dc-analysis: newton-raphson hard failure: {inner}")
             }
+            Self::GminHomotopyFailed(inner) => {
+                write!(
+                    f,
+                    "dc-analysis: gmin-stepping homotopy hard failure: {inner}"
+                )
+            }
         }
     }
 }
@@ -513,6 +587,12 @@ impl From<MnaAssemblyError> for DcAnalysisError {
 impl From<SubViewError> for DcAnalysisError {
     fn from(value: SubViewError) -> Self {
         Self::SubViewBuildFailed(value)
+    }
+}
+
+impl From<GminSteppingError> for DcAnalysisError {
+    fn from(value: GminSteppingError) -> Self {
+        Self::GminHomotopyFailed(value)
     }
 }
 
@@ -972,22 +1052,38 @@ fn initial_iterate(dim: u32) -> Vec<f64> {
 /// 4. **Sparse lowering.** Lower the dense sub-view into a
 ///    [`SparseLinearSystem<f64>`] suitable for
 ///    [`RussellRealSolver`].
-/// 5. **Newton-Raphson.** Run [`NewtonRaphsonDriver::solve`] with
-///    the requested config; the linear adapter returns the same
-///    sparse system on every callback, so NR converges in one
-///    iteration on a well-formed linear circuit.
-/// 6. **Operating-point extraction.** Project the final iterate
-///    into a [`Vec<f64>`] of node voltages and a `Vec<BranchCurrentSample>`
-///    of branch currents, indexed via the flattened structure's
-///    per-element [`BranchId`].
+/// 5. **Direct Newton-Raphson.** Run [`NewtonRaphsonDriver::solve`]
+///    with the requested config; the linear adapter returns the same
+///    sparse system on every callback, so NR converges in two
+///    iterations on a well-formed linear circuit (ADR-0006's dual
+///    criterion forbids a one-iteration shortcut).
+/// 6. **Homotopy fallback (tasks.md #22).** If direct NR returns
+///    [`ConvergenceStatus::Stalled`],
+///    [`ConvergenceStatus::Diverged`], or
+///    [`ConvergenceStatus::MaxIterationsExceeded`] *and*
+///    [`DcAnalysisRequest::enable_gmin_fallback`] is `true`, retry
+///    with [`GminSteppingDriver::solve`] warm-starting from NR's
+///    last iterate. On full schedule success the user-facing
+///    convergence verdict becomes
+///    [`ConvergenceStatus::ConvergedViaHomotopy`]. On homotopy step
+///    failure the verdict becomes [`ConvergenceStatus::Failed`].
+/// 7. **Operating-point extraction.** Project the final iterate
+///    into an [`OperatingPoint`] only when the verdict is
+///    [`ConvergenceStatus::Converged`] or
+///    [`ConvergenceStatus::ConvergedViaHomotopy`]. On
+///    [`ConvergenceStatus::Failed`] the result carries
+///    `operating_point = None` per spec scenario
+///    `dc-operating-point#dc-operating-point-convergence-failure`
+///    (*"And no `OperatingPoint` is produced"*), with the
+///    last-iterate node voltages preserved in
+///    [`DcAnalysisResult::last_iterate_voltages`] and a
+///    human-readable summary in
+///    [`DcAnalysisResult::diagnostic_message`].
 ///
-/// On any [`NewtonRaphsonOutcome`](numeric_solver::NewtonRaphsonOutcome)
-/// status (converged or non-converged), the function returns
-/// `Ok(DcAnalysisResult)` with the *last-iterate* operating point
-/// embedded — this is the load-bearing behavior for the
-/// `dc-operating-point-convergence-failure` scenario witness
-/// (tasks.md #22). Pre-loop and during-loop hard failures (dim
-/// mismatch, modeling error, unrecoverable linear-solver error)
+/// On any natural-termination path (success, homotopy success, or
+/// terminal failure) the function returns `Ok(DcAnalysisResult)`.
+/// Pre-loop and during-loop **hard** failures (dim mismatch, modeling
+/// error, unrecoverable linear-solver error, malformed Gmin schedule)
 /// surface as `Err(DcAnalysisError)`.
 ///
 /// # Errors
@@ -1004,6 +1100,13 @@ fn initial_iterate(dim: u32) -> Vec<f64> {
 ///   driver itself returned a hard failure (dim mismatch
 ///   propagated up from a mis-paired `MnaSystem` /
 ///   `FlattenedStructure`, etc.).
+/// - [`DcAnalysisError::GminHomotopyFailed`] — The Gmin-stepping
+///   driver returned a hard pre-loop or during-loop error (malformed
+///   schedule, ground index out of range, NR hard error inside the
+///   homotopy loop). A homotopy *step failure* (NR non-convergence
+///   at an intermediate `g_min`) is *not* an error — it surfaces as
+///   `Ok(DcAnalysisResult { convergence: ConvergenceStatus::Failed,
+///   .. })`.
 ///
 /// # Panics
 ///
@@ -1029,24 +1132,41 @@ pub fn dc_analysis(req: DcAnalysisRequest<'_>) -> Result<DcAnalysisResult, DcAna
     // the same Pass-2 assembler, sub-view extractor, dense → sparse
     // lowering, and Newton-Raphson driver — only the [`NonlinearSystem`]
     // implementor changes.
-    let config = req
+    //
+    // After NR completes (whether the linear or nonlinear adapter was
+    // selected), the post-NR failure-and-homotopy tail is generic over
+    // `S: NonlinearSystem` and lives in `finalize_dc_outcome`. Both
+    // branches pass `&mut system` so the homotopy driver can warm-start
+    // from the NR last-iterate without rebuilding the adapter.
+    let nr_config = req
         .newton_raphson
         .unwrap_or(NewtonRaphsonConfig::DC_DEFAULTS);
     let solver = RussellRealSolver;
+    let ground = req.ground.unwrap_or_else(|| req.structure.ground_node());
 
-    let outcome = if req.device_models.is_some() {
+    if req.device_models.is_some() {
+        // Nonlinear adapter path: `NonlinearDcSystem` re-stamps the
+        // MNA matrix at every NR iterate via [`DeviceModel::linearize`].
         let mut system = NonlinearDcSystem::new(req);
         let dim = system.dim();
-        NewtonRaphsonDriver
-            .solve(config, &mut system, &solver, initial_iterate(dim))
-            .map_err(DcAnalysisError::from)?
+        let nr_outcome = NewtonRaphsonDriver
+            .solve(nr_config, &mut system, &solver, initial_iterate(dim))
+            .map_err(DcAnalysisError::from)?;
+        finalize_dc_outcome(
+            &req,
+            &mut system,
+            &solver,
+            nr_config,
+            ground,
+            nr_outcome,
+            topology_warnings,
+        )
     } else {
         // Linear-only path. Pass-2 assembly with empty linearization
         // slice; nonlinear scenarios (tasks.md #18 / #19) supply
         // per-iterate linearizations through the [`NonlinearDcSystem`]
         // path above.
         let mna: MnaSystem = assemble(req.structure, req.graph, &[])?;
-        let ground = req.ground.unwrap_or_else(|| req.structure.ground_node());
         let sub_view = SubViewBuilder::from_full(&mna)
             .with_ground_node(ground)
             .suppress_ground(true)
@@ -1055,19 +1175,292 @@ pub fn dc_analysis(req: DcAnalysisRequest<'_>) -> Result<DcAnalysisResult, DcAna
             mna_subview_to_sparse_linear_system(&sub_view).map_err(DcAnalysisError::from_lse)?;
         let dim = sparse.dim();
         let mut system = LinearDcSystem::new(sparse);
-        NewtonRaphsonDriver
-            .solve(config, &mut system, &solver, initial_iterate(dim))
-            .map_err(DcAnalysisError::from)?
+        let nr_outcome = NewtonRaphsonDriver
+            .solve(nr_config, &mut system, &solver, initial_iterate(dim))
+            .map_err(DcAnalysisError::from)?;
+        finalize_dc_outcome(
+            &req,
+            &mut system,
+            &solver,
+            nr_config,
+            ground,
+            nr_outcome,
+            topology_warnings,
+        )
+    }
+}
+
+/// Post-NR tail of [`dc_analysis`], generic over the
+/// [`NonlinearSystem`] adapter so it can be reused by both the linear
+/// (`LinearDcSystem`) and nonlinear (`NonlinearDcSystem`) call sites.
+///
+/// Responsibilities:
+///
+/// 1. **Success short-circuit.** If NR converged on the original
+///    system, project the iterate into an [`OperatingPoint`] and
+///    return it verbatim (tasks.md #20 happy path).
+/// 2. **`enable_gmin_fallback = false` opt-out.** Surface the raw NR
+///    non-converged variant with `operating_point = None` and a
+///    last-iterate diagnostic surface.
+/// 3. **Gmin-stepping homotopy fallback** (tasks.md #18 and #22).
+///    Warm-start from the NR last-iterate; on homotopy success lift
+///    to [`ConvergenceStatus::ConvergedViaHomotopy`]; on terminal
+///    homotopy failure lift to [`ConvergenceStatus::Failed`] with
+///    `operating_point = None`.
+///
+/// The `system` borrow flows through to
+/// [`GminSteppingDriver::solve`] so the homotopy wrapper can re-stamp
+/// the same adapter at every step. This is what makes the failure
+/// path uniform across linear and nonlinear DC: the homotopy wrapper
+/// only needs the abstract `NonlinearSystem` surface.
+fn finalize_dc_outcome<S: NonlinearSystem>(
+    req: &DcAnalysisRequest<'_>,
+    system: &mut S,
+    solver: &RussellRealSolver,
+    nr_config: NewtonRaphsonConfig,
+    ground: NodeId,
+    nr_outcome: NewtonRaphsonOutcome,
+    topology_warnings: Vec<NodeId>,
+) -> Result<DcAnalysisResult, DcAnalysisError> {
+    // (5a) Direct-NR success short-circuit.
+    if nr_outcome.status.is_converged() {
+        let op = iterate_to_operating_point(&nr_outcome.iterate, req.structure);
+        return Ok(DcAnalysisResult {
+            last_iterate_voltages: op.node_voltages.clone(),
+            operating_point: Some(op),
+            convergence: nr_outcome.status,
+            diagnostic_message: None,
+            topology_warnings,
+        });
+    }
+
+    // Direct NR did not converge. Capture the NR diagnostic *before*
+    // attempting the homotopy fallback so we can fold both attempts
+    // into the failure message if the fallback also fails.
+    let nr_failure_status = nr_outcome.status;
+    let nr_iterate = nr_outcome.iterate;
+
+    // (5b) Homotopy fallback opt-out: surface raw NR outcome verbatim.
+    if !req.enable_gmin_fallback {
+        // The orchestrator did not attempt homotopy by request, so
+        // we report whichever raw NR non-converged variant came back.
+        // No `OperatingPoint` is produced; last-iterate voltages and
+        // a diagnostic message are populated so the caller still has
+        // a usable failure surface.
+        let last_iterate_voltages = nr_iterate[..req.structure.node_count() as usize].to_vec();
+        let diagnostic_message = Some(format_failure_diagnostic(
+            &nr_failure_status,
+            None,
+            req.enable_gmin_fallback,
+        ));
+        return Ok(DcAnalysisResult {
+            operating_point: None,
+            convergence: nr_failure_status,
+            last_iterate_voltages,
+            diagnostic_message,
+            topology_warnings,
+        });
+    }
+
+    // --- (6) Gmin-stepping homotopy fallback --------------------------------
+    // Per `gmin_stepping.rs` module docs (item #22 is *the* layer
+    // where the NR-then-homotopy composition lives). We warm-start
+    // the homotopy from the NR last-iterate; if the schedule walks
+    // all the way to `g_min = 0` and converges there, we lift the
+    // outcome into `ConvergenceStatus::ConvergedViaHomotopy`. If a
+    // homotopy step fails, we lift it into `ConvergenceStatus::Failed`
+    // and report `operating_point = None`.
+    let gmin_config = GminSteppingConfig {
+        newton_raphson: nr_config,
+        // SPICE-default geometric schedule (1.0 S → ~1e-12 S, divide
+        // by 10 each step, terminal step at the final value). This
+        // matches the default homotopy retry budget across the
+        // codebase.
+        schedule: GminSchedule::default(),
+        // ADR-0009 / sub-view ground convention: the sub-view ground
+        // row is at the configured ground node's index. The Gmin
+        // wrapper must skip that row because suppress_ground already
+        // pinned it to e_g.
+        ground_node_index: ground.index(),
     };
 
-    // --- (3) Operating-point extraction -------------------------------------
-    let op = iterate_to_operating_point(&outcome.iterate, req.structure);
+    let homotopy_outcome = GminSteppingDriver
+        .solve(gmin_config, system, solver, nr_iterate.clone())
+        .map_err(DcAnalysisError::from)?;
 
-    Ok(DcAnalysisResult {
-        operating_point: Some(op),
-        convergence: outcome.status,
-        topology_warnings,
-    })
+    match homotopy_outcome.status {
+        HomotopyStatus::ConvergedViaHomotopy {
+            steps: _steps,
+            final_diagnostic,
+        } => {
+            // Lift the homotopy success into the user-facing
+            // `ConvergedViaHomotopy` verdict per spec scenario
+            // `dc-operating-point#dc-operating-point-with-gmin-stepping-homotopy`.
+            // The step count is carried in the diagnostic's
+            // iteration field of the inner NR (separate from
+            // homotopy step count) — callers wanting the step
+            // count specifically can extend the request envelope in
+            // a later change; for v1 the spec only requires the
+            // status label to read "converged-via-homotopy".
+            let op = iterate_to_operating_point(&homotopy_outcome.iterate, req.structure);
+            Ok(DcAnalysisResult {
+                last_iterate_voltages: op.node_voltages.clone(),
+                operating_point: Some(op),
+                convergence: ConvergenceStatus::ConvergedViaHomotopy(final_diagnostic),
+                diagnostic_message: None,
+                topology_warnings,
+            })
+        }
+        HomotopyStatus::StepFailed {
+            step_index: _step_index,
+            gmin_siemens: _gmin_siemens,
+            inner_status,
+        } => {
+            // Terminal failure: NR and homotopy both failed. Surface
+            // the spec's `Failed` verdict with last-iterate voltages
+            // and a diagnostic message. The carried diagnostic is
+            // from the *failing* NR run at the homotopy step.
+            let last_iterate_voltages =
+                homotopy_outcome.iterate[..req.structure.node_count() as usize].to_vec();
+            let diagnostic_message = Some(format_failure_diagnostic(
+                &nr_failure_status,
+                Some(&homotopy_outcome.status),
+                req.enable_gmin_fallback,
+            ));
+            let failed_diag = worst_diagnostic(&nr_failure_status, &inner_status);
+            Ok(DcAnalysisResult {
+                operating_point: None,
+                convergence: ConvergenceStatus::Failed(failed_diag),
+                last_iterate_voltages,
+                diagnostic_message,
+                topology_warnings,
+            })
+        }
+    }
+}
+
+/// Pick the worse of two `ConvergenceDiagnostic`s by combined
+/// (`update_norm`, `residue_norm`) magnitude. Used to fold the direct-NR
+/// failure and the homotopy-step failure into a single
+/// representative diagnostic for [`ConvergenceStatus::Failed`].
+///
+/// "Worse" is defined as the diagnostic with the larger sum of finite
+/// norms; NaN/inf is treated as the worst. Ties break in favor of the
+/// homotopy diagnostic because it was attempted *after* the direct NR
+/// and therefore reflects the orchestrator's most recent attempt.
+fn worst_diagnostic(
+    direct_nr: &ConvergenceStatus,
+    homotopy_inner: &ConvergenceStatus,
+) -> ConvergenceDiagnostic {
+    let d_a = direct_nr.diagnostic();
+    let d_b = homotopy_inner.diagnostic();
+    let badness = |d: &ConvergenceDiagnostic| -> f64 {
+        let u = if d.update_norm.is_finite() {
+            d.update_norm
+        } else {
+            f64::INFINITY
+        };
+        let r = if d.residue_norm.is_finite() {
+            d.residue_norm
+        } else {
+            f64::INFINITY
+        };
+        u + r
+    };
+    if badness(d_a) > badness(d_b) {
+        *d_a
+    } else {
+        *d_b
+    }
+}
+
+/// Render the convergence-failure scenario's "diagnostic message"
+/// human-readable summary. Names which methods were attempted and how
+/// each terminated so the user can render a uniform failure report
+/// per spec scenario `dc-operating-point#dc-operating-point-convergence-failure`
+/// (*"a diagnostic message"*).
+fn format_failure_diagnostic(
+    nr_status: &ConvergenceStatus,
+    homotopy_status: Option<&HomotopyStatus>,
+    fallback_attempted: bool,
+) -> String {
+    use core::fmt::Write as _;
+    let nr_label = match nr_status {
+        ConvergenceStatus::Stalled(_) => "stalled (small update, large residue)",
+        ConvergenceStatus::Diverged(_) => "diverged (norms grew unboundedly)",
+        ConvergenceStatus::MaxIterationsExceeded(_) => {
+            "max iterations exceeded without dual-criterion satisfaction"
+        }
+        // Defensive: the success / orchestration variants should never
+        // reach here because the caller only invokes us when NR
+        // failed; we still cover them so a future caller mistake is
+        // self-describing rather than panicking.
+        ConvergenceStatus::Converged(_) => "converged (unexpected — diagnostic caller bug)",
+        ConvergenceStatus::ConvergedViaHomotopy(_) => {
+            "converged-via-homotopy (unexpected — diagnostic caller bug)"
+        }
+        ConvergenceStatus::Failed(_) => "failed (unexpected — diagnostic caller bug)",
+    };
+    let nr_diag = nr_status.diagnostic();
+    let mut msg = format!(
+        "DC analysis: Newton-Raphson on the original system {nr_label} \
+         after {iters} iterations (final ‖Δx‖={update_norm:.3e}, \
+         ‖F(x)‖={residue_norm:.3e}; tolerances reltol={reltol:.3e}, \
+         abstol={abstol:.3e})",
+        iters = nr_diag.iterations,
+        update_norm = nr_diag.update_norm,
+        residue_norm = nr_diag.residue_norm,
+        reltol = nr_diag.tolerances.update_tol,
+        abstol = nr_diag.tolerances.residue_tol,
+    );
+    if !fallback_attempted {
+        msg.push_str(". Gmin-stepping homotopy fallback was disabled by request.");
+        return msg;
+    }
+    match homotopy_status {
+        Some(HomotopyStatus::StepFailed {
+            step_index,
+            gmin_siemens,
+            inner_status,
+        }) => {
+            let inner_label = match inner_status {
+                ConvergenceStatus::Stalled(_) => "stalled",
+                ConvergenceStatus::Diverged(_) => "diverged",
+                ConvergenceStatus::MaxIterationsExceeded(_) => "max iterations exceeded",
+                ConvergenceStatus::Converged(_) => "converged (unexpected)",
+                ConvergenceStatus::ConvergedViaHomotopy(_) => "converged-via-homotopy (unexpected)",
+                ConvergenceStatus::Failed(_) => "failed (unexpected)",
+            };
+            let inner_diag = inner_status.diagnostic();
+            write!(
+                msg,
+                ". Gmin-stepping homotopy fallback also failed: \
+                 step {step_index} at g_min={gmin_siemens:.3e} S {inner_label} \
+                 (final ‖Δx‖={update_norm:.3e}, ‖F(x)‖={residue_norm:.3e}). \
+                 No accepted operating point; last-iterate node voltages \
+                 are preserved for diagnostic use only.",
+                update_norm = inner_diag.update_norm,
+                residue_norm = inner_diag.residue_norm,
+            )
+            .expect("writing to String never fails");
+        }
+        Some(HomotopyStatus::ConvergedViaHomotopy { .. }) => {
+            // Defensive: only emitted when the orchestrator
+            // mis-classified a success as a failure. We surface the
+            // discrepancy in the message rather than asserting.
+            msg.push_str(
+                ". Gmin-stepping homotopy fallback unexpectedly converged; \
+                 this diagnostic message should not have been produced.",
+            );
+        }
+        None => {
+            msg.push_str(
+                ". Gmin-stepping homotopy fallback was not attempted (no \
+                 homotopy outcome to report).",
+            );
+        }
+    }
+    msg
 }
 
 impl DcAnalysisError {
@@ -1450,6 +1843,8 @@ mod tests {
         let r = DcAnalysisResult {
             operating_point: None,
             convergence: ConvergenceStatus::Converged(diag),
+            last_iterate_voltages: vec![],
+            diagnostic_message: None,
             topology_warnings: vec![],
         };
         assert!(!r.is_converged());
@@ -1460,8 +1855,207 @@ mod tests {
                 branch_currents: vec![],
             }),
             convergence: ConvergenceStatus::Stalled(diag),
+            last_iterate_voltages: vec![],
+            diagnostic_message: None,
             topology_warnings: vec![],
         };
         assert!(!r.is_converged());
+    }
+
+    // -------- tasks.md #22 — convergence-failure path -----------------------
+
+    /// Forcing NR's iteration budget to zero produces a guaranteed
+    /// `MaxIterationsExceeded` on direct NR. With Gmin-stepping
+    /// fallback enabled (the default) the same zero budget cascades
+    /// through every homotopy step, terminating at step 0 with
+    /// `StepFailed`. The orchestrator must lift that into the spec's
+    /// terminal `ConvergenceStatus::Failed` and produce **no**
+    /// `OperatingPoint`. This is the load-bearing assertion for
+    /// `dc-operating-point#dc-operating-point-convergence-failure`.
+    #[test]
+    fn nr_and_homotopy_both_fail_yields_terminal_failed() {
+        let (fs, g) = voltage_divider(1.0, 100.0, 100.0);
+
+        // Zero iteration budget guarantees direct NR cannot satisfy
+        // the dual criterion: the loop never runs, both norms stay at
+        // their initial `f64::INFINITY` sentinel, and NR returns
+        // `MaxIterationsExceeded`. The Gmin fallback inherits this
+        // budget at every step and fails identically at step 0.
+        let cfg = NewtonRaphsonConfig {
+            max_iterations: 0,
+            tolerances: ConvergenceTolerances::SPICE_DEFAULTS,
+        };
+        let req = DcAnalysisRequest::new(&g, &fs).with_newton_raphson(cfg);
+        let result = dc_analysis(req).expect("orchestration returns Ok on terminal failure");
+
+        // (1) Terminal verdict — `Failed`, not transient NR variants.
+        assert!(
+            matches!(result.convergence, ConvergenceStatus::Failed(_)),
+            "expected ConvergenceStatus::Failed, got {:?}",
+            result.convergence
+        );
+        assert!(result.convergence.is_terminal_failure());
+        assert!(result.convergence.is_failure());
+        assert!(!result.convergence.is_converged());
+
+        // (2) Spec: "no OperatingPoint is produced".
+        assert!(
+            result.operating_point.is_none(),
+            "Failed verdict must not carry an OperatingPoint; got {:?}",
+            result.operating_point
+        );
+
+        // (3) Spec: "the Result contains the last-iterate node
+        //     voltages". The vector length equals the structure's
+        //     node count and the entries are finite (we started from
+        //     all-zeros and never iterated, so they remain zero).
+        assert_eq!(
+            result.last_iterate_voltages.len(),
+            fs.node_count() as usize,
+            "last_iterate_voltages length matches node_count"
+        );
+        for v in &result.last_iterate_voltages {
+            assert!(v.is_finite(), "last-iterate voltage must be finite: {v}");
+        }
+
+        // (4) Spec: "a diagnostic message". Populated, non-empty,
+        //     and names both the NR failure mode and the homotopy
+        //     failure mode so the user can render a uniform report.
+        let msg = result
+            .diagnostic_message
+            .as_ref()
+            .expect("Failed verdict must populate diagnostic_message");
+        assert!(!msg.is_empty());
+        assert!(
+            msg.contains("Newton-Raphson"),
+            "diagnostic_message names NR attempt: {msg}"
+        );
+        assert!(
+            msg.contains("Gmin-stepping"),
+            "diagnostic_message names Gmin homotopy attempt: {msg}"
+        );
+    }
+
+    /// Disabling the Gmin homotopy fallback while NR fails should
+    /// surface the *raw* NR non-converged variant verbatim (not
+    /// `Failed`) so the caller has full diagnostic fidelity. No
+    /// `OperatingPoint` is still produced.
+    #[test]
+    fn nr_failure_without_fallback_surfaces_raw_nr_status() {
+        let (fs, g) = voltage_divider(1.0, 100.0, 100.0);
+        let cfg = NewtonRaphsonConfig {
+            max_iterations: 0,
+            tolerances: ConvergenceTolerances::SPICE_DEFAULTS,
+        };
+        let req = DcAnalysisRequest::new(&g, &fs)
+            .with_newton_raphson(cfg)
+            .with_gmin_fallback(false);
+        let result = dc_analysis(req).expect("ok on raw NR failure");
+
+        // Raw NR variant flows through unchanged.
+        assert!(
+            matches!(
+                result.convergence,
+                ConvergenceStatus::MaxIterationsExceeded(_)
+            ),
+            "expected raw MaxIterationsExceeded, got {:?}",
+            result.convergence
+        );
+        assert!(!result.convergence.is_terminal_failure());
+        assert!(result.convergence.is_failure());
+
+        // Still no OperatingPoint and still a diagnostic + last
+        // iterate.
+        assert!(result.operating_point.is_none());
+        assert_eq!(result.last_iterate_voltages.len(), fs.node_count() as usize);
+        let msg = result.diagnostic_message.unwrap();
+        assert!(msg.contains("Newton-Raphson"));
+        assert!(
+            msg.contains("Gmin-stepping homotopy fallback was disabled"),
+            "diagnostic_message must call out the disabled fallback: {msg}"
+        );
+    }
+
+    /// On the happy path (linear circuit, sufficient iteration budget)
+    /// the result still populates `last_iterate_voltages` as a
+    /// redundant diagnostic surface and leaves `diagnostic_message`
+    /// as `None`. Sanity check for the new fields under success.
+    #[test]
+    fn converged_path_populates_last_iterate_and_no_diagnostic() {
+        let (fs, g) = voltage_divider(10.0, 1_000.0, 1_000.0);
+        let result = dc_analysis(DcAnalysisRequest::new(&g, &fs)).expect("dc ok");
+        assert!(result.is_converged());
+        assert_eq!(result.last_iterate_voltages.len(), fs.node_count() as usize);
+        assert!(result.diagnostic_message.is_none());
+        // The two voltage surfaces must agree on success.
+        let op = result.operating_point.as_ref().unwrap();
+        assert_eq!(result.last_iterate_voltages, op.node_voltages);
+    }
+
+    /// `enable_gmin_fallback` defaults to `true` on the builder.
+    /// This is the on-by-default contract for the convergence-failure
+    /// scenario — the orchestration layer must attempt homotopy
+    /// without opt-in plumbing.
+    #[test]
+    fn gmin_fallback_default_is_enabled() {
+        let (fs, g) = voltage_divider(1.0, 100.0, 100.0);
+        let req = DcAnalysisRequest::new(&g, &fs);
+        assert!(req.enable_gmin_fallback);
+    }
+
+    /// `with_gmin_fallback(false)` toggles the field and is otherwise
+    /// a no-op on the rest of the request.
+    #[test]
+    fn with_gmin_fallback_toggles_field() {
+        let (fs, g) = voltage_divider(1.0, 100.0, 100.0);
+        let req = DcAnalysisRequest::new(&g, &fs).with_gmin_fallback(false);
+        assert!(!req.enable_gmin_fallback);
+        let req = req.with_gmin_fallback(true);
+        assert!(req.enable_gmin_fallback);
+    }
+
+    /// `worst_diagnostic` picks the diagnostic with the larger
+    /// combined norm, treating NaN/inf as worst.
+    #[test]
+    fn worst_diagnostic_prefers_larger_combined_norm() {
+        use circuit_solver_types::ConvergenceDiagnostic;
+        let small = ConvergenceDiagnostic {
+            update_norm: 1e-3,
+            residue_norm: 1e-3,
+            iterations: 5,
+            tolerances: ConvergenceTolerances::SPICE_DEFAULTS,
+        };
+        let large = ConvergenceDiagnostic {
+            update_norm: 10.0,
+            residue_norm: 100.0,
+            iterations: 5,
+            tolerances: ConvergenceTolerances::SPICE_DEFAULTS,
+        };
+        let infinite = ConvergenceDiagnostic {
+            update_norm: f64::INFINITY,
+            residue_norm: 1.0,
+            iterations: 5,
+            tolerances: ConvergenceTolerances::SPICE_DEFAULTS,
+        };
+        let w = worst_diagnostic(
+            &ConvergenceStatus::Stalled(small),
+            &ConvergenceStatus::Diverged(large),
+        );
+        assert_eq!(w, large);
+
+        // Tie-break: equal magnitudes pick the homotopy side
+        // (second argument) per docstring.
+        let w = worst_diagnostic(
+            &ConvergenceStatus::Stalled(small),
+            &ConvergenceStatus::Stalled(small),
+        );
+        assert_eq!(w, small);
+
+        // Infinite (NR side) beats finite-large (homotopy side).
+        let w = worst_diagnostic(
+            &ConvergenceStatus::Diverged(infinite),
+            &ConvergenceStatus::Stalled(large),
+        );
+        assert_eq!(w.update_norm, f64::INFINITY);
     }
 }

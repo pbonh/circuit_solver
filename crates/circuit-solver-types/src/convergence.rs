@@ -109,12 +109,32 @@ impl ConvergenceDiagnostic {
     }
 }
 
-/// The outcome of a Newton-Raphson solve.
+/// The outcome of a Newton-Raphson solve or, at the orchestration
+/// layer, a homotopy-augmented DC analysis.
 ///
 /// `ConvergenceStatus` is the typed return value of `NewtonRaphsonDriver`
-/// per ADR-0006. Every variant carries the same `ConvergenceDiagnostic`
-/// so that an analysis can decide what to surface to the user without
-/// re-running anything.
+/// per ADR-0006 *and* the user-visible convergence verdict produced by
+/// the DC analysis control loop (`tasks.md` items #20 and #22). The
+/// four original variants — `Converged`, `MaxIterationsExceeded`,
+/// `Diverged`, `Stalled` — are the *Newton-Raphson contract* and are
+/// the only variants the NR driver itself emits. The two additional
+/// variants — `ConvergedViaHomotopy` and `Failed` — are emitted *only*
+/// by the orchestration layer after composing NR with a homotopy
+/// fallback (Gmin-stepping for v1):
+///
+/// - [`Self::ConvergedViaHomotopy`] — NR failed on the original system
+///   but the Gmin-stepping continuation walked all the way to
+///   `g_min = 0` successfully (spec scenario
+///   `dc-operating-point#dc-operating-point-with-gmin-stepping-homotopy`).
+///   This is the user-visible *"converged-via-homotopy"* status.
+/// - [`Self::Failed`] — NR *and* every homotopy fallback failed; the
+///   analysis has no accepted solution to return (spec scenario
+///   `dc-operating-point#dc-operating-point-convergence-failure`).
+///   The carried diagnostic is from the *last* attempted solve so the
+///   caller can render a uniform failure report.
+///
+/// Every variant carries a [`ConvergenceDiagnostic`] so an analysis
+/// can decide what to surface to the user without re-running anything.
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum ConvergenceStatus {
     /// Both update and residue norms fell below tolerance. The current
@@ -134,19 +154,63 @@ pub enum ConvergenceStatus {
     /// convergence here. Returning `Stalled` instead of `Converged`
     /// is precisely the contribution of the dual criterion.
     Stalled(ConvergenceDiagnostic),
+    /// **Orchestration-layer variant.** Plain Newton-Raphson failed on
+    /// the original system but a homotopy continuation (Gmin-stepping
+    /// in v1) walked through its full schedule and converged at the
+    /// terminal step. The carried diagnostic is the inner NR
+    /// diagnostic from the final un-augmented step; combined with the
+    /// orchestration-layer step count this satisfies the spec phrasing
+    /// *"And the homotopy step count is reported in the Result"*.
+    ///
+    /// Never emitted by `NewtonRaphsonDriver` directly; only the DC
+    /// analysis control loop lifts a successful
+    /// [`crate::ConvergenceDiagnostic`]-bearing homotopy outcome into
+    /// this variant.
+    ConvergedViaHomotopy(ConvergenceDiagnostic),
+    /// **Orchestration-layer variant.** Newton-Raphson on the original
+    /// system *and* every homotopy fallback failed. The DC analysis
+    /// returns no accepted solution; the last-iterate node voltages
+    /// are surfaced separately on the analysis result as diagnostic
+    /// data (not as an `OperatingPoint`). The carried diagnostic is
+    /// the *worst / last* failing NR diagnostic so the user can render
+    /// a uniform message.
+    ///
+    /// Never emitted by `NewtonRaphsonDriver` directly; only the DC
+    /// analysis control loop produces this verdict after exhausting
+    /// every recovery path.
+    Failed(ConvergenceDiagnostic),
 }
 
 impl ConvergenceStatus {
-    /// True iff this status represents an accepted solution.
+    /// True iff this status represents an accepted solution. Both the
+    /// direct-NR success ([`Self::Converged`]) and the homotopy
+    /// recovery success ([`Self::ConvergedViaHomotopy`]) count as
+    /// converged — the orchestration layer is permitted to return an
+    /// `OperatingPoint` in either case.
     #[must_use]
     pub fn is_converged(&self) -> bool {
-        matches!(self, Self::Converged(_))
+        matches!(self, Self::Converged(_) | Self::ConvergedViaHomotopy(_))
     }
 
-    /// True iff the solve failed for any reason.
+    /// True iff the solve failed for any reason. Includes every
+    /// non-converged NR outcome *and* the orchestration-layer
+    /// [`Self::Failed`] terminal verdict.
     #[must_use]
     pub fn is_failure(&self) -> bool {
         !self.is_converged()
+    }
+
+    /// True iff this is the spec's terminal *"failed"* verdict — NR
+    /// and every homotopy fallback exhausted with no accepted
+    /// solution. Distinct from the *transient* NR failure modes
+    /// ([`Self::Stalled`], [`Self::Diverged`],
+    /// [`Self::MaxIterationsExceeded`]) which the orchestration layer
+    /// would normally hand off to a homotopy retry — those leak to
+    /// the user only when the orchestrator deliberately surfaces them
+    /// without attempting a fallback.
+    #[must_use]
+    pub fn is_terminal_failure(&self) -> bool {
+        matches!(self, Self::Failed(_))
     }
 
     /// Borrow the underlying diagnostic regardless of variant.
@@ -156,7 +220,9 @@ impl ConvergenceStatus {
             Self::Converged(d)
             | Self::MaxIterationsExceeded(d)
             | Self::Diverged(d)
-            | Self::Stalled(d) => d,
+            | Self::Stalled(d)
+            | Self::ConvergedViaHomotopy(d)
+            | Self::Failed(d) => d,
         }
     }
 }
@@ -219,21 +285,39 @@ mod tests {
     }
 
     #[test]
-    fn converged_variant_is_the_only_success() {
+    fn converged_and_converged_via_homotopy_are_the_only_successes() {
         let d = diag(1e-4, 1e-13);
         let s = ConvergenceStatus::Converged(d);
         assert!(s.is_converged());
         assert!(!s.is_failure());
+        assert!(!s.is_terminal_failure());
 
         let s = ConvergenceStatus::Stalled(diag(1e-4, 1.0));
         assert!(!s.is_converged());
         assert!(s.is_failure());
+        assert!(!s.is_terminal_failure());
 
         let s = ConvergenceStatus::MaxIterationsExceeded(d);
         assert!(!s.is_converged());
+        assert!(!s.is_terminal_failure());
 
         let s = ConvergenceStatus::Diverged(diag(f64::INFINITY, f64::INFINITY));
         assert!(!s.is_converged());
+        assert!(!s.is_terminal_failure());
+
+        // Orchestration-layer success: homotopy walked through to a
+        // converged terminal step. `is_converged` must accept this.
+        let s = ConvergenceStatus::ConvergedViaHomotopy(d);
+        assert!(s.is_converged());
+        assert!(!s.is_failure());
+        assert!(!s.is_terminal_failure());
+
+        // Orchestration-layer terminal failure: NR + every homotopy
+        // both failed.
+        let s = ConvergenceStatus::Failed(diag(1e-2, 1e-1));
+        assert!(!s.is_converged());
+        assert!(s.is_failure());
+        assert!(s.is_terminal_failure());
     }
 
     #[test]
@@ -244,8 +328,25 @@ mod tests {
             ConvergenceStatus::MaxIterationsExceeded(d),
             ConvergenceStatus::Diverged(d),
             ConvergenceStatus::Stalled(d),
+            ConvergenceStatus::ConvergedViaHomotopy(d),
+            ConvergenceStatus::Failed(d),
         ] {
             assert_eq!(s.diagnostic().iterations, 7);
         }
+    }
+
+    #[test]
+    fn terminal_failure_predicate_is_exclusive_to_failed_variant() {
+        // Sanity: `is_terminal_failure` returns true *only* on the
+        // `Failed` variant. The transient NR failure modes are still
+        // failures (the orchestrator would normally retry them) but
+        // not *terminal* failures.
+        let d = diag(1e-2, 1e-1);
+        assert!(ConvergenceStatus::Failed(d).is_terminal_failure());
+        assert!(!ConvergenceStatus::Stalled(d).is_terminal_failure());
+        assert!(!ConvergenceStatus::Diverged(d).is_terminal_failure());
+        assert!(!ConvergenceStatus::MaxIterationsExceeded(d).is_terminal_failure());
+        assert!(!ConvergenceStatus::Converged(d).is_terminal_failure());
+        assert!(!ConvergenceStatus::ConvergedViaHomotopy(d).is_terminal_failure());
     }
 }
