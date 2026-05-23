@@ -32,6 +32,12 @@ num-complex = { version = "0.4", default-features = false }
 circuit-solver-types = { path = "../circuit-solver-types" }
 numeric-solver = { path = "../numeric-solver" }
 netlist-graph = { path = "../netlist-graph" }
+# Third-party VCD reader used to prove the writer's output is
+# parseable by standard VCD tooling, per the
+# `mixed-signal-cosim#mixed-signal-result-contains-vcd-trace`
+# Gherkin scenario (tasks.md item #50). Test-only — does not affect
+# runtime dependency closure.
+vcd = "0.7"
 device-modeling = { path = "../device-modeling" }
 # Scenario-level conformance witnesses (tasks.md #63–#68) consume the
 # golden-reference parser + `max(rel, abs)` per-node comparator from
