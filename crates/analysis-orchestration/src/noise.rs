@@ -3284,9 +3284,20 @@ mod tests {
     /// status by setting the Newton-Raphson budget to zero on an
     /// otherwise-well-formed circuit. The control loop must NOT enter
     /// the noise loop; it returns `NoiseAnalysisWithAutoDcResult::Failed`
-    /// carrying the failing `ConvergenceStatus` and the last-iterate
-    /// `OperatingPoint`. This is the auto-DC analog of the existing
-    /// `failed_operating_point_short_circuits` witness.
+    /// carrying the failing `ConvergenceStatus`. This is the auto-DC
+    /// analog of the existing `failed_operating_point_short_circuits`
+    /// witness.
+    ///
+    /// Per the `DcAnalysisResult` contract introduced by tasks.md #22
+    /// (`dc-operating-point#dc-operating-point-convergence-failure`),
+    /// a `ConvergenceStatus::Failed` verdict produces
+    /// `operating_point: None` (no `OperatingPoint` is materialised on
+    /// terminal failure — the last-iterate node voltages are carried
+    /// on `DcAnalysisResult.last_iterate_voltages` instead, but the
+    /// auto-DC envelope only forwards the `Option<OperatingPoint>`).
+    /// The witness therefore asserts the *envelope shape* (Failed
+    /// variant + failing `dc_status` carrying the diagnostic), not
+    /// the presence of an `OperatingPoint`.
     #[test]
     fn auto_dc_failure_short_circuits_without_running_noise_loop() {
         let mut b = CircuitBuilder::default();
@@ -3324,17 +3335,26 @@ mod tests {
                 operating_point,
             } => {
                 assert!(dc_status.is_failure(), "got status={dc_status:?}");
-                // The last-iterate `OperatingPoint` is the all-zero
-                // initial iterate (Newton-Raphson never advanced),
-                // but it is `Some` — the driver always materialises
-                // an iterate. This matches `DcAnalysisResult`'s
-                // contract.
+                // Per the tasks.md #22 contract, a terminal-`Failed`
+                // DC status yields `operating_point: None`. The
+                // diagnostic detail (final norms, iteration count,
+                // homotopy attempts) is carried on `dc_status` via
+                // `ConvergenceStatus::diagnostic`. Assert the
+                // diagnostic surface is reachable, rather than
+                // demanding `Some(OperatingPoint)`.
                 assert!(
-                    operating_point.is_some(),
-                    "last-iterate OperatingPoint must be carried"
+                    operating_point.is_none(),
+                    "tasks.md #22: terminal Failed must not produce an OperatingPoint, got Some(_)"
                 );
-                let op = operating_point.unwrap();
-                assert_eq!(op.node_count(), fs.node_count() as usize);
+                // The diagnostic is always populated (driver records
+                // norms + iteration count on every status). With a
+                // zero NR budget the driver still produces a
+                // diagnostic from the zero-iterate residue check.
+                let diag = dc_status.diagnostic();
+                assert!(
+                    diag.iterations == 0 || diag.residue_norm.is_finite(),
+                    "Failed dc_status diagnostic should be coherent, got {diag:?}"
+                );
             }
             NoiseAnalysisWithAutoDcResult::Ok { .. } => unreachable!(),
         }
