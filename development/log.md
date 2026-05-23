@@ -52,3 +52,5 @@ Events include: `bootstrap-complete`, `manifest-bound`, `proposal-drafted`,
 - 2026-05-21T23:10:17Z — scientia-intent-adr — adr-drafted — circuit-solver/2026-05-21-v1-spec — adr=ADR-0010 status=accepted
 - 2026-05-22T20:31:00Z — scientia-ingest-evidence — evidence-appended — circuit-solver/2026-05-21-v1-spec — task=t_a36ef768
 - 2026-05-23T04:17:00Z — scientia-ingest-evidence — evidence-appended — circuit-solver/2026-05-21-v1-spec — task=t_c7037c7a
+- 2026-05-22T21:30:00Z — scientia-ingest-evidence — evidence-appended — circuit-solver/2026-05-21-v1-spec — task=t_9181dade
+- 2026-05-23T04:17:40Z — scientia-ingest-evidence — evidence-appended — circuit-solver/2026-05-21-v1-spec — task=t_6c4bab8b

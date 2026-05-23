@@ -118,3 +118,9 @@ Then the Simulator returns a Result with Convergence status "failed"
 And the Result contains the DC failure diagnostic
 And no AC frequency-domain data is produced
 ```
+
+## Implementation Evidence
+
+<!-- scientia-ingest-evidence-keyed -->
+- **Scenario `scenario-ac-conformance-sky130-ngspice`** — task `t_6c4bab8b` (key `ac-conformance-sky130-ngspice`) merged at `65898aaf71cd6cd2adf6d993739a08dc514b2601` by `scientia-integrator`. Verification: `cargo fmt`, `cargo build`, `cargo clippy`, `cargo test` all pass. Residual risk: none. Changed files: 2.
+
