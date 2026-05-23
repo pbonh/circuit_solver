@@ -50,3 +50,4 @@ Events include: `bootstrap-complete`, `manifest-bound`, `proposal-drafted`,
 - 2026-05-21T23:05:57Z — orchestrator — exit-phase — circuit-solver/2026-05-21-v1-spec — scientia-intent-verify complete; worst_severity=warning; passes gate (block_on=critical)
 - 2026-05-21T23:10:17Z — orchestrator — warnings-fixed — circuit-solver/2026-05-21-v1-spec — all 5 verify WARNING findings resolved
 - 2026-05-21T23:10:17Z — scientia-intent-adr — adr-drafted — circuit-solver/2026-05-21-v1-spec — adr=ADR-0010 status=accepted
+- 2026-05-22T20:31:00Z — scientia-ingest-evidence — evidence-appended — circuit-solver/2026-05-21-v1-spec — task=t_a36ef768

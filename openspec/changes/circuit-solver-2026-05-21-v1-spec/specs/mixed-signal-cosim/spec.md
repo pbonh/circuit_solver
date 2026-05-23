@@ -122,3 +122,8 @@ Then the Scheduler rolls back to the last committed checkpoint before the early 
 And the Scheduler logs a diagnostic warning about the next-event-time contract violation
 And the simulation continues from the corrected point
 ```
+
+## Implementation Evidence
+
+<!-- scientia-ingest-evidence-keyed -->
+- **Scenario `optimistic-advance-with-correct-prediction`** — task `t_a36ef768` (key `2026-05-21-v1-spec:task-48:ff89c4c7`) merged at `10a0ea1c66972d4b33ea2a75ba4f80cf85188828` by `scientia-integrator`. Verification: `cargo test -p analysis-orchestration` → 259 passed / 0 failed / 1 ignored. Residual risk: Mechanical conflict only (doc-bullet union) resolved by implementer respawn; semantic risk low. Changed files: 2.
