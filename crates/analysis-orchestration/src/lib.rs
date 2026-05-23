@@ -89,6 +89,9 @@ pub use dc::{
     DeviceModelBinding, OperatingPoint,
 };
 pub use dc_sweep::{dc_sweep, DcSweepError, DcSweepPoint, DcSweepRequest, DcSweepResult};
+pub use mixed_signal::icarus::{
+    IcarusVerilogAdapter, InMemoryVvp, ScriptedEvent, VvpAdvanceReport, VvpCall, VvpTransport,
+};
 pub use mixed_signal::{
     AnalogSolver, AnalogStepReport, BoundarySignals, DigitalAdapterKind, DigitalSimulator,
     DigitalStepReport, MixedSignalScheduler, NextEventReport, SchedulerError, SchedulerOutcome,
