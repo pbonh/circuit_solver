@@ -475,6 +475,7 @@ pub fn ac_analysis_with_auto_dc(
         structure: req.structure,
         newton_raphson: req.newton_raphson,
         ground: req.ground,
+        device_models: None,
     };
     let dc_result = dc_analysis(dc_req)?;
 
