@@ -4,7 +4,7 @@
 //! module name registered with `CPython` is `circuit_solver` (PEP 8
 //! lowercase, distinct from the Rust crate name `circuit-solver-py`).
 //!
-//! ## Surface as of `tasks.md` items #52, #53, #54, #55, #56, #60
+//! ## Surface as of `tasks.md` items #52, #53, #54, #55, #56, #57, #60
 //!
 //! - [`CircuitBuilder`](builder::PyCircuitBuilder) — the incremental
 //!   construction entry point. Methods: `add_element`, `add_wire`,
@@ -22,9 +22,15 @@
 //!   immutable `#[pyclass(frozen)]` value object describing a
 //!   requested analysis. Fields: `analysis_type`, `sweep`,
 //!   `integration_method`, `boundary_interpolation` (per ADR-0007).
-//!   Tasks.md #56. The submission entry point that consumes an
+//!   Tasks.md #56.
+//! - [`Result`](result::PyAnalysisResult) — the immutable
+//!   `#[pyclass(frozen)]` value object holding the four output
+//!   channels of an analysis run: node voltages, branch currents,
+//!   waveforms, and transfer functions, each accessible by name.
+//!   Tasks.md #57. The submission entry point that consumes an
 //!   `AnalysisRequest` + `CircuitGraph` and returns a `Result` is a
-//!   downstream task (#57+).
+//!   downstream task; until it lands, `Result` is constructed
+//!   directly from Python in tests.
 //! - [`CircuitBuilderError`] — Python exception class covering every
 //!   error variant of `netlist_graph::NetlistGraphError`.
 //! - [`ImmutableHandleError`] — Python exception class raised when
@@ -51,7 +57,7 @@
 //!   tasks.md item #61 (spec scenario
 //!   `python-frontend#error-on-malformed-netlist`).
 //!
-//! `NumPy` result arrays and GIL release are tasks #57–#59.
+//! `NumPy` result arrays and GIL release are tasks #58–#59.
 //!
 //! ## Build profiles
 //!
@@ -79,6 +85,7 @@ pub mod builder;
 pub mod errors;
 pub mod graph;
 pub mod parser;
+pub mod result;
 
 use std::path::PathBuf;
 
@@ -88,6 +95,7 @@ pub use analysis_request::PyAnalysisRequest;
 pub use builder::PyCircuitBuilder;
 pub use errors::{CircuitBuilderError, ImmutableHandleError, NetlistParseError};
 pub use graph::PyCircuitGraph;
+pub use result::PyAnalysisResult;
 
 /// Parse a SPICE netlist file from disk and return a
 /// [`PyCircuitGraph`].
@@ -147,9 +155,10 @@ fn parse_netlist_py(path: PathBuf) -> PyResult<PyCircuitGraph> {
 ///
 /// Registered with the `CPython` interpreter via `PyO3`'s `#[pymodule]`
 /// procedural macro. Registers the `CircuitBuilder` class, the
-/// `CircuitGraph` class, the `AnalysisRequest` class, the
-/// `CircuitBuilderError` exception, the `ImmutableHandleError`
-/// exception, and the `NetlistParseError` exception.
+/// `CircuitGraph` class, the `AnalysisRequest` class, the `Result`
+/// class, the `CircuitBuilderError` exception, the
+/// `ImmutableHandleError` exception, and the `NetlistParseError`
+/// exception.
 ///
 /// # Errors
 ///
@@ -162,6 +171,7 @@ fn circuit_solver(py: Python<'_>, module: &Bound<'_, PyModule>) -> PyResult<()> 
     module.add_class::<PyCircuitBuilder>()?;
     module.add_class::<PyCircuitGraph>()?;
     module.add_class::<PyAnalysisRequest>()?;
+    module.add_class::<PyAnalysisResult>()?;
     module.add("CircuitBuilderError", py.get_type::<CircuitBuilderError>())?;
     module.add(
         "ImmutableHandleError",
