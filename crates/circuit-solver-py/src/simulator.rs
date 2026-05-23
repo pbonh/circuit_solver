@@ -237,6 +237,7 @@ fn dispatch_dc(py: Python<'_>, graph: &PyCircuitGraph) -> PyResult<PyAnalysisRes
             newton_raphson: None,
             ground: None,
             device_models: None,
+            enable_gmin_fallback: true,
         })
     });
 
@@ -331,6 +332,16 @@ fn map_dc_error(e: &DcAnalysisError) -> PyErr {
         }
         DcAnalysisError::NewtonRaphsonFailed(_) => {
             PyRuntimeError::new_err(format!("DC analysis failed: {e:?}"))
+        }
+        DcAnalysisError::GminHomotopyFailed(_) => {
+            // Hard failure inside the Gmin-stepping homotopy driver
+            // (schedule validation, dim mismatch, or a non-convergence
+            // outcome the driver could not lift). Non-convergence on
+            // the user-facing surface (NR or homotopy not finding a
+            // solution) flows through the `Ok(DcAnalysisResult)` path
+            // and never reaches here; this arm is for the driver's
+            // own pre-loop / hard-error surface.
+            PyRuntimeError::new_err(format!("DC homotopy failed: {e:?}"))
         }
     }
 }
