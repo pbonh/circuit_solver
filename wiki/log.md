@@ -574,3 +574,5 @@ Ran Architecture workflow for `circuit-solver`.
 - 2026-05-23T04:17:40Z — scientia-ingest-evidence — appended — wiki/specs/ac-small-signal.md — task=t_6c4bab8b
 - 2026-05-23T04:55:37Z — scientia-ingest-evidence — appended — wiki/specs/python-frontend.md — task=t_3aa46a43
 - 2026-05-23T05:50:14Z — scientia-ingest-evidence — appended — wiki/specs/transient-time-domain.md — task=t_e81eee59
+- 2026-05-23T06:20:53Z — scientia-ingest-evidence — appended — wiki/specs/dc-operating-point.md — task=t_04b4e126
+- 2026-05-23T06:20:53Z — scientia-ingest-evidence — appended — wiki/specs/transient-time-domain.md — task=t_04b4e126

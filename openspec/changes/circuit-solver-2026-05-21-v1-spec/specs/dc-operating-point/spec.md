@@ -121,3 +121,8 @@ When ConformanceTester runs the DC operating-point Analysis on the same Circuit
 Then every node voltage in the Result matches the Golden Reference within the tolerance envelope
 And Conformance is reported as "pass"
 ```
+
+## Implementation Evidence
+
+<!-- scientia-ingest-evidence-keyed -->
+- **Scenario `conformance-test-against-ngspice-golden-reference` (ASAP7 variant)** — task `t_04b4e126` (key `t_04b4e126`) merged at `55100e5a3c51e2570e780d9623e2133af5ea8561` by `scientia-integrator`. Verification: `cargo fmt --check`, `cargo clippy --workspace --all-targets -- -D warnings`, `cargo test --workspace` (190 passed, 0 failed), `cargo doc --workspace --no-deps` all clean. Residual risk: None. Changed files: 3.
