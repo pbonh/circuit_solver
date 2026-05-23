@@ -64,6 +64,10 @@
 //!   each predicted digital event boundary so the rollback handler
 //!   (tasks.md #44) can resume from any prior good state per
 //!   ADR-0004 commitments #2 and #4.
+//! - [`mixed_signal_verilator`] — Verilator [`DigitalSimulator`]
+//!   adapter (tasks.md item #48). Same trait surface as the Icarus
+//!   adapter (item #47); the difference is the underlying runtime
+//!   binding (verilated C++ model vs. VVP process).
 //!
 //! # Stability
 //!
@@ -78,6 +82,7 @@ pub mod checkpoint;
 pub mod dc;
 pub mod dc_sweep;
 pub mod mixed_signal;
+pub mod mixed_signal_verilator;
 pub mod noise;
 pub mod sweep;
 pub mod transient;
@@ -104,6 +109,10 @@ pub use mixed_signal::rollback::{RollbackHandler, RollbackOutcome};
 pub use mixed_signal::{
     AnalogSolver, AnalogStepReport, BoundarySignals, DigitalAdapterKind, DigitalSimulator,
     DigitalStepReport, MixedSignalScheduler, NextEventReport, SchedulerError, SchedulerOutcome,
+};
+pub use mixed_signal_verilator::{
+    ScriptedVerilatorBackend, VerilatorAdapter, VerilatorBackend, VerilatorEvent,
+    VerilatorStepOutcome,
 };
 pub use noise::{
     collect_noise_sources, integrated_noise, noise_analysis, noise_analysis_with_auto_dc,
