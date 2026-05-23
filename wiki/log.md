@@ -569,3 +569,4 @@ Ran Architecture workflow for `circuit-solver`.
 ## scientia migration — 2026-05-21\n- Migrated repository to scientia workflow. Scaffolded development/ and openspec/. Fixed 15 critical lint findings (unresolved wikilinks + missing frontmatter keys). CRITICAL=0, WARNING=11, SUGGESTION=1355.\n
 - 2026-05-21T20:35:06Z — scientia-wiki-grill — confidence-bumped — default/circuit-solver — golden-reference, event-trace-equivalence, value-change-dump, global-interpreter-lock: low→medium
 - 2026-05-22T20:31:00Z — scientia-ingest-evidence — appended — wiki/specs/mixed-signal-cosim.md — task=t_a36ef768
+- 2026-05-23T04:17:00Z — scientia-ingest-evidence — appended — wiki/specs/python-frontend.md — task=t_c7037c7a
