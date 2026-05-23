@@ -44,12 +44,13 @@
 //!   the [`CircuitBuilder`](builder::PyCircuitBuilder) would build it
 //!   incrementally (tasks.md item #60; spec scenario
 //!   `python-frontend#spice-netlist-file-parsing`).
+//! - [`NetlistParseError`] — Python exception class raised by
+//!   `parse_netlist` when an input SPICE deck contains an
+//!   unrecognised device letter. The message identifies the
+//!   1-indexed source line number and the unrecognised token, per
+//!   tasks.md item #61 (spec scenario
+//!   `python-frontend#error-on-malformed-netlist`).
 //!
-//! A dedicated `NetlistParseError` carrying line-number and
-//! unrecognised-token detail is tasks.md item #61 (spec scenario
-//! `python-frontend#error-on-malformed-netlist`); until that task
-//! lands, parse failures surface as `ValueError` / `IOError` /
-//! `CircuitBuilderError`.
 //! `NumPy` result arrays and GIL release are tasks #57–#59.
 //!
 //! ## Build profiles
@@ -85,7 +86,7 @@ use pyo3::prelude::*;
 
 pub use analysis_request::PyAnalysisRequest;
 pub use builder::PyCircuitBuilder;
-pub use errors::{CircuitBuilderError, ImmutableHandleError};
+pub use errors::{CircuitBuilderError, ImmutableHandleError, NetlistParseError};
 pub use graph::PyCircuitGraph;
 
 /// Parse a SPICE netlist file from disk and return a
@@ -112,10 +113,16 @@ pub use graph::PyCircuitGraph;
 /// # Errors
 ///
 /// - `IOError` if the file cannot be read.
-/// - `ValueError` if a line is unrecognised, malformed, or violates
-///   the SPICE subset documented at [`parser`]. A dedicated
-///   `NetlistParseError` carrying line-number and unrecognised-token
-///   detail is tasks.md item #61.
+/// - `NetlistParseError` if a card's leading character is not one of
+///   the recognised SPICE device letters (`R`, `C`, `L`, `V`, `I`,
+///   `D`, `Q`, `M`, `X`). The message identifies the 1-indexed line
+///   number and the unrecognised token, per tasks.md #61 and the
+///   `python-frontend#error-on-malformed-netlist` Gherkin scenario.
+/// - `ValueError` if a line is malformed in a way other than the
+///   unrecognised-device-letter case (wrong arity, missing model
+///   name, malformed numeric value, unterminated `.SUBCKT`, etc.).
+///   The broader Python-error-mapping refactor that may migrate
+///   these onto the structured taxonomy is tasks.md #58.
 /// - `CircuitBuilderError` if the resulting builder-replay sequence
 ///   is rejected by the underlying `netlist-graph` builder
 ///   (duplicate element names, unknown subcircuit references,
@@ -141,8 +148,8 @@ fn parse_netlist_py(path: PathBuf) -> PyResult<PyCircuitGraph> {
 /// Registered with the `CPython` interpreter via `PyO3`'s `#[pymodule]`
 /// procedural macro. Registers the `CircuitBuilder` class, the
 /// `CircuitGraph` class, the `AnalysisRequest` class, the
-/// `CircuitBuilderError` exception, and the `ImmutableHandleError`
-/// exception.
+/// `CircuitBuilderError` exception, the `ImmutableHandleError`
+/// exception, and the `NetlistParseError` exception.
 ///
 /// # Errors
 ///
@@ -160,6 +167,7 @@ fn circuit_solver(py: Python<'_>, module: &Bound<'_, PyModule>) -> PyResult<()> 
         "ImmutableHandleError",
         py.get_type::<ImmutableHandleError>(),
     )?;
+    module.add("NetlistParseError", py.get_type::<NetlistParseError>())?;
     module.add_function(wrap_pyfunction!(parse_netlist_py, module)?)?;
     Ok(())
 }
