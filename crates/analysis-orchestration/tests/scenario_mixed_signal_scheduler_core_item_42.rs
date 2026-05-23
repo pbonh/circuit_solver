@@ -101,6 +101,7 @@ impl AnalogSolver for ObservingAnalog {
         Ok(AnalogStepReport {
             time_reached: target,
             checkpoint_saved: true,
+            checkpoint: None,
         })
     }
 
@@ -409,5 +410,6 @@ fn item_42_public_api_surface_is_visible() {
     let _: AnalogStepReport = AnalogStepReport {
         time_reached: SimulationTime::ZERO,
         checkpoint_saved: true,
+        checkpoint: None,
     };
 }

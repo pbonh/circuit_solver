@@ -312,6 +312,7 @@ impl AnalogSolver for CheckpointBackedAnalog {
         Ok(AnalogStepReport {
             time_reached: target,
             checkpoint_saved: true,
+            checkpoint: None,
         })
     }
 
