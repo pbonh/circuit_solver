@@ -176,26 +176,26 @@ fn analog_digital_boundary_signal_exchange_at_time_t() {
     assert!(packet.missing_sources.is_empty());
 }
 
-/// The opt-in linear interpolation mode named by ADR-0007 is reserved
-/// for tasks.md item #46. Attempting to construct an exchanger in
-/// `Linear` mode at item #45 must fail with a clear, actionable error
-/// — not silently fall back to ZOH (which would mask the user's
-/// intent) or panic (which would crash the analysis loop).
+/// The opt-in linear interpolation mode named by ADR-0007 was
+/// reserved at item #45 and **implemented at item #46**. This test
+/// witnesses the new state: constructing an exchanger in
+/// [`BoundaryInterpolationMode::Linear`] now succeeds. The ZOH path
+/// covered by the rest of this file remains the *default*; users who
+/// want linear must opt in by selecting the mode explicitly (Option C
+/// of ADR-0007).
 #[test]
-fn linear_mode_rejected_with_actionable_error_at_item_45() {
-    let result = BoundarySignalExchanger::with_mode(
+fn linear_mode_is_supported_at_item_46() {
+    let ex = BoundarySignalExchanger::with_mode(
         BoundarySignals::default(),
         BoundaryInterpolationMode::Linear,
-    );
-    let err = result.expect_err("linear mode must be rejected at item #45");
-    let msg = format!("{err}");
-    assert!(
-        msg.contains("linear"),
-        "error must name the unsupported mode: {msg}"
-    );
-    assert!(
-        msg.contains("#46"),
-        "error must point users to the item that implements linear: {msg}"
+    )
+    .expect("linear mode is supported at tasks.md item #46");
+    assert_eq!(ex.mode(), BoundaryInterpolationMode::Linear);
+    // ZOH remains the default per ADR-0007.
+    assert_eq!(
+        BoundaryInterpolationMode::default(),
+        BoundaryInterpolationMode::ZeroOrderHold,
+        "ZOH is still the default per ADR-0007; Linear is opt-in"
     );
 }
 
