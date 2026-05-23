@@ -100,6 +100,7 @@ pub use dc_sweep::{dc_sweep, DcSweepError, DcSweepPoint, DcSweepRequest, DcSweep
 pub use mixed_signal::icarus::{
     IcarusVerilogAdapter, InMemoryVvp, ScriptedEvent, VvpAdvanceReport, VvpCall, VvpTransport,
 };
+pub use mixed_signal::rollback::{RollbackHandler, RollbackOutcome};
 pub use mixed_signal::{
     AnalogSolver, AnalogStepReport, BoundarySignals, DigitalAdapterKind, DigitalSimulator,
     DigitalStepReport, MixedSignalScheduler, NextEventReport, SchedulerError, SchedulerOutcome,

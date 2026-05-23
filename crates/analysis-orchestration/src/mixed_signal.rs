@@ -47,7 +47,10 @@ use circuit_solver_types::{
 };
 use core::fmt;
 
+use crate::checkpoint::SparseCheckpoint;
+
 pub mod icarus;
+pub mod rollback;
 
 // ---------------------------------------------------------------------------
 // Boundary signals
@@ -106,6 +109,20 @@ impl fmt::Display for DigitalAdapterKind {
 // ---------------------------------------------------------------------------
 
 /// Report returned by the analog solver after a `run_until` call.
+///
+/// On the **correct-prediction path** the solver reports
+/// `time_reached == target` and `checkpoint_saved == true`, and may
+/// optionally attach the [`SparseCheckpoint`] it just saved via
+/// `checkpoint`. The scheduler's [`rollback::RollbackHandler`] then
+/// records that checkpoint in its [`crate::checkpoint::SparseCheckpointManager`] so the
+/// **misprediction path** (tasks.md #44) can later restore the
+/// nearest-before snapshot.
+///
+/// Implementations that do not yet plumb a real checkpoint payload
+/// MAY set `checkpoint` to `None` and keep `checkpoint_saved = true`;
+/// the rollback handler treats `None` as "manager did not receive a
+/// new snapshot at this boundary" and falls back to whatever the
+/// manager already holds.
 #[derive(Debug, Clone, PartialEq)]
 pub struct AnalogStepReport {
     /// The time the analog solver actually reached. On the
@@ -116,6 +133,42 @@ pub struct AnalogStepReport {
     /// `time_reached` (per ADR-0004 commitment #2). The
     /// correct-prediction path requires this to be true.
     pub checkpoint_saved: bool,
+    /// The sparse checkpoint the solver saved at `time_reached`, if
+    /// any. The scheduler stores this in its
+    /// [`crate::checkpoint::SparseCheckpointManager`] so the rollback handler can
+    /// recover it on a misprediction.
+    ///
+    /// `Some(_)` requires `checkpoint_saved == true`. `None` is
+    /// allowed for back-compatible implementations that have not yet
+    /// produced a real checkpoint payload (the scheduler will then
+    /// rely on whatever the manager already retains).
+    pub checkpoint: Option<SparseCheckpoint>,
+}
+
+impl AnalogStepReport {
+    /// Construct a report with `checkpoint = None` and
+    /// `checkpoint_saved = true`. Convenience for
+    /// back-compatible call sites that have not yet been updated to
+    /// produce a real [`SparseCheckpoint`] payload.
+    #[must_use]
+    pub fn saved_at(time_reached: SimulationTime) -> Self {
+        Self {
+            time_reached,
+            checkpoint_saved: true,
+            checkpoint: None,
+        }
+    }
+
+    /// Construct a report carrying a concrete checkpoint payload.
+    /// `checkpoint_saved` is set to `true` automatically.
+    #[must_use]
+    pub fn with_checkpoint(time_reached: SimulationTime, checkpoint: SparseCheckpoint) -> Self {
+        Self {
+            time_reached,
+            checkpoint_saved: true,
+            checkpoint: Some(checkpoint),
+        }
+    }
 }
 
 /// The continuous-time analog solver, as seen by the scheduler.
@@ -342,6 +395,7 @@ where
     boundaries: BoundarySignals,
     horizon: SimulationTime,
     metadata: SchedulerMetadata,
+    rollback: rollback::RollbackHandler,
 }
 
 impl<A, D> MixedSignalScheduler<A, D>
@@ -366,6 +420,7 @@ where
             boundaries,
             horizon,
             metadata: SchedulerMetadata::default(),
+            rollback: rollback::RollbackHandler::new(),
         }
     }
 
@@ -380,6 +435,16 @@ where
     #[must_use]
     pub fn horizon(&self) -> SimulationTime {
         self.horizon
+    }
+
+    /// Borrow the scheduler's [`rollback::RollbackHandler`].
+    /// Useful for tests that want to inspect the in-flight checkpoint
+    /// manager after [`Self::run`] (the scheduler consumes itself on
+    /// `run`, so observation must happen via a wrapping harness or by
+    /// pre-`run` poking).
+    #[must_use]
+    pub fn rollback_handler(&self) -> &rollback::RollbackHandler {
+        &self.rollback
     }
 
     /// Drive the optimistic synchronization loop until either the
@@ -443,7 +508,9 @@ where
             }
 
             // 2. Issue run-until to the analog solver. Per ADR-0004
-            //    this also saves a sparse checkpoint at the boundary.
+            //    this also saves a sparse checkpoint at the boundary,
+            //    which the rollback handler records into its manager
+            //    via `observe_step`.
             let analog_report = self.analog.run_until(next.predicted_time)?;
             debug_assert_eq!(
                 analog_report.time_reached, next.predicted_time,
@@ -453,6 +520,14 @@ where
                 analog_report.checkpoint_saved,
                 "analog solver must save a sparse checkpoint at the boundary"
             );
+            // Record the checkpoint in the rollback manager. A
+            // monotonicity violation here would be a solver bug;
+            // surface it as a scheduler error so the test can see it.
+            if let Err(err) = self.rollback.observe_step(&analog_report) {
+                return Err(SchedulerError::AnalogSolveFailed(format!(
+                    "analog solver returned non-monotonic checkpoint: {err}"
+                )));
+            }
 
             // 3. Confirm the event with the digital simulator.
             let digital_report = self.digital.confirm_event(next.predicted_time)?;
@@ -467,39 +542,44 @@ where
                     outcomes.push(SchedulerOutcome::Committed(time));
                 }
                 DigitalStepReport::Mispredicted { actual_time } => {
-                    // Mis-prediction path — reserved for sibling task
-                    // implementation. Record the rollback intent in
-                    // metadata so the test can see we noticed, then
-                    // delegate to `rollback_to` (which in the current
-                    // stub returns the analog to `actual_time`).
-                    self.analog.rollback_to(actual_time)?;
-                    self.metadata
-                        .rollbacks
-                        .push(circuit_solver_types::RollbackEvent {
-                            mispredicted_at: next.predicted_time,
-                            corrected_to: actual_time,
-                            checkpoint_at: actual_time,
-                            reason: "no-event-confirmed".into(),
-                        });
+                    // Misprediction path (tasks.md item #44). Delegate
+                    // to the rollback handler: it locates the nearest
+                    // checkpoint at-or-before `actual_time`, drives
+                    // `analog.rollback_to` and `analog.run_until`, and
+                    // returns the resulting `RollbackOutcome`.
+                    let outcome = self.rollback.rollback_to(
+                        &mut self.analog,
+                        next.predicted_time,
+                        actual_time,
+                        "no-event-confirmed",
+                    )?;
+                    let checkpoint_at = outcome.event.checkpoint_at;
+                    self.metadata.rollbacks.push(outcome.event);
+                    self.metadata.commits.push(actual_time);
                     outcomes.push(SchedulerOutcome::RolledBack {
-                        checkpoint: actual_time,
+                        checkpoint: checkpoint_at,
                         corrected: actual_time,
                     });
-                    // Re-issue run-until to the corrected time.
-                    let _ = self.analog.run_until(actual_time)?;
-                    self.metadata.commits.push(actual_time);
                 }
                 DigitalStepReport::Postponed { new_prediction } => {
                     // The digital side decided the event slipped to a
-                    // later time. Roll back to the previous commit
-                    // (or t=0 if none) and re-target.
+                    // later time. Roll back to the last commit (or
+                    // t=0 if none) and re-target. The handler also
+                    // re-issues run-until to the rollback target; we
+                    // record the rollback in metadata for the audit.
                     let rollback_target = self
                         .metadata
                         .commits
                         .last()
                         .copied()
                         .unwrap_or(SimulationTime::ZERO);
-                    self.analog.rollback_to(rollback_target)?;
+                    let postponed_outcome = self.rollback.rollback_to(
+                        &mut self.analog,
+                        next.predicted_time,
+                        rollback_target,
+                        "postponed",
+                    )?;
+                    self.metadata.rollbacks.push(postponed_outcome.event);
                     self.metadata.diagnostics.push(format!(
                         "digital postponed event from {} to {new_prediction}",
                         next.predicted_time
@@ -574,12 +654,16 @@ pub(crate) mod test_doubles {
             target: SimulationTime,
         ) -> Result<AnalogStepReport, SchedulerError> {
             self.calls.push(AnalogCall::RunUntil(target));
-            self.samples.push((target, (self.voltage_at)(target)));
+            let v = (self.voltage_at)(target);
+            self.samples.push((target, v));
             self.checkpoints.push(target);
-            Ok(AnalogStepReport {
-                time_reached: target,
-                checkpoint_saved: true,
-            })
+            // Emit a minimal-but-real checkpoint payload so the
+            // scheduler's rollback handler has something to record.
+            // We only need the observed node's voltage at `target`;
+            // reactive state is empty in this scenario.
+            let checkpoint =
+                SparseCheckpoint::empty(target).with_node_voltages(vec![(self.observed, v)]);
+            Ok(AnalogStepReport::with_checkpoint(target, checkpoint))
         }
 
         fn rollback_to(&mut self, target: SimulationTime) -> Result<(), SchedulerError> {
