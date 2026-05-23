@@ -265,12 +265,20 @@ impl<'a> AcWithAutoDcRequest<'a> {
 pub struct AcWithAutoDcResult {
     /// The DC steady-state solution that the AC step linearized at on
     /// the converged path. `Some(op)` when `dc_convergence` is
-    /// `Converged`; on the failed-DC path either `Some(last_iterate)`
-    /// (preserved for diagnostic use — `last_iterate` is *not* a
-    /// converged operating point in the ubiquitous-language sense)
-    /// or `None` if [`dc_analysis`] did not produce any finite
-    /// iterate.
+    /// `Converged` / `ConvergedViaHomotopy`; `None` on the failed-DC
+    /// path (per tasks.md #22 the convergence-failure envelope
+    /// flipped this from `Some(last_iterate)` to `None`; callers that
+    /// need diagnostic node voltages should consult
+    /// [`Self::dc_last_iterate_voltages`] instead).
     pub operating_point: Option<OperatingPoint>,
+    /// Last-iterate node voltages from the DC sub-analysis. Populated
+    /// regardless of `dc_convergence` variant so the failed-DC path
+    /// still surfaces a diagnostic voltage vector even when
+    /// `operating_point` is `None`. Per tasks.md #22 this is the
+    /// canonical diagnostic surface for non-converged DC; on the
+    /// converged path it equals `operating_point.as_ref().unwrap()
+    /// .node_voltages`.
+    pub dc_last_iterate_voltages: Vec<f64>,
     /// The Newton-Raphson convergence outcome of the DC sub-analysis.
     /// `Converged` on the happy path; one of `Stalled`,
     /// `MaxIterationsExceeded`, or `Diverged` (collectively
@@ -498,6 +506,7 @@ pub fn ac_analysis_with_auto_dc(
     if !dc_result.convergence.is_converged() {
         return Ok(AcWithAutoDcResult {
             operating_point: dc_result.operating_point,
+            dc_last_iterate_voltages: dc_result.last_iterate_voltages,
             dc_convergence: dc_result.convergence,
             dc_topology_warnings: dc_result.topology_warnings,
             ac: None,
@@ -546,6 +555,7 @@ pub fn ac_analysis_with_auto_dc(
     };
 
     Ok(AcWithAutoDcResult {
+        dc_last_iterate_voltages: operating_point.node_voltages.clone(),
         operating_point: Some(operating_point),
         dc_convergence: dc_result.convergence,
         dc_topology_warnings: dc_result.topology_warnings,
@@ -909,12 +919,16 @@ mod tests {
         );
     }
 
-    /// The last-iterate `OperatingPoint` is preserved on the
+    /// The last-iterate node voltages are preserved on the
     /// failed-DC path so the caller has diagnostic context — but the
     /// `dc_convergence` status, not the presence of `operating_point`,
-    /// is the canonical signal of failure. (This pins the contract
-    /// in case a future homotopy/refactor causes `dc_analysis` to
-    /// return `None` here; the spec scenario is satisfied either way.)
+    /// is the canonical signal of failure. Per tasks.md #22 the
+    /// failure-path contract is `operating_point = None` plus a
+    /// populated `last_iterate_voltages` diagnostic surface (the test
+    /// originally asserted `operating_point = Some(_)`; the #22
+    /// envelope flipped that to honor the spec scenario
+    /// `dc-operating-point-convergence-failure` *"no `OperatingPoint`
+    /// is produced"*).
     #[test]
     fn dc_non_convergence_preserves_last_iterate_when_available() {
         let (g, fs) = build_rc_lowpass();
@@ -926,19 +940,20 @@ mod tests {
 
         let result = ac_analysis_with_auto_dc(req).expect("DC non-convergence is Ok(_)");
 
-        // On the v1 linear DC path the NR loop produces a finite
-        // iterate even with budget = 1, so `operating_point` is
-        // `Some(_)`. We assert presence but do NOT assert any
-        // numeric value — the iterate is post-1-step, not a
-        // converged solution, and pinning numeric values here would
-        // couple this test to NR's internal initial-iterate choice.
-        let op = result
-            .operating_point
-            .as_ref()
-            .expect("last-iterate operating point must be preserved on v1 linear DC path");
+        // Per tasks.md #22: on a failed DC the convergence-failure
+        // envelope sets `operating_point = None` and populates
+        // `last_iterate_voltages` with the diagnostic node voltages
+        // from the final attempted solve. The presence of
+        // `last_iterate_voltages` is what gives the caller diagnostic
+        // context; we assert that surface here (not the value, which
+        // depends on NR's internal initial-iterate choice).
         assert!(
-            !op.node_voltages.is_empty(),
-            "last-iterate OperatingPoint must carry the per-node voltage vector"
+            result.operating_point.is_none(),
+            "Then: operating_point must be None on the failed-DC path per #22 contract"
+        );
+        assert!(
+            !result.dc_last_iterate_voltages.is_empty(),
+            "Then: last_iterate_voltages must carry the per-node voltage vector for diagnostic use"
         );
     }
 

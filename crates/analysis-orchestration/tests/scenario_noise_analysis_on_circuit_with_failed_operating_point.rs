@@ -319,23 +319,23 @@ fn noise_analysis_on_circuit_with_failed_operating_point_scenario() {
         diag.tolerances.residue_tol
     );
 
-    // The DC dispatch is documented to always materialize an iterate
-    // (the all-zero initial vector at minimum). The witness asserts
-    // that contract here so a future regression that drops the
-    // last-iterate forwarding from the `Failed` variant fails this
-    // test loudly — *without* mistaking the iterate for a converged
-    // operating point.
-    let last_iterate = failure_op.expect(
-        "Then-2: the last-iterate OperatingPoint must be forwarded \
-         alongside the diagnostic so the caller has full DC context \
-         on the failed path; it is NOT a converged steady-state \
-         solution and the caller should not treat it as one",
-    );
-    assert_eq!(
-        last_iterate.node_count(),
-        structure.node_count() as usize,
-        "Then-2: last-iterate OperatingPoint must span every flattened \
-         node so the diagnostic surface is complete"
+    // Per tasks.md #22 (DC convergence-failure envelope, reconciled
+    // by t_2eec72d7 inside noise.rs): on the failed-DC path the
+    // `Failed::operating_point` is `None`. The diagnostic node
+    // voltages are surfaced through `DcAnalysisResult::
+    // last_iterate_voltages` (not propagated through this noise
+    // result yet; callers needing them must call `dc_analysis`
+    // directly or wait for a future surface). This test originally
+    // pinned the older contract `Some(last_iterate)`; the contract
+    // flipped to `None` to honor the spec scenario
+    // `dc-operating-point-convergence-failure` *"no `OperatingPoint`
+    // is produced"*.
+    assert!(
+        failure_op.is_none(),
+        "Then-2: NoiseAnalysisWithAutoDcResult::Failed::operating_point \
+         must be None on the failed-DC path per the #22 contract; \
+         callers that need diagnostic node voltages should consult \
+         DcAnalysisResult::last_iterate_voltages on a direct DC call"
     );
 
     // [Then-3] No noise spectral-density data is produced.

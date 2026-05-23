@@ -1155,7 +1155,7 @@ pub fn dc_analysis(req: DcAnalysisRequest<'_>) -> Result<DcAnalysisResult, DcAna
         finalize_dc_outcome(
             &req,
             &mut system,
-            &solver,
+            solver,
             nr_config,
             ground,
             nr_outcome,
@@ -1181,7 +1181,7 @@ pub fn dc_analysis(req: DcAnalysisRequest<'_>) -> Result<DcAnalysisResult, DcAna
         finalize_dc_outcome(
             &req,
             &mut system,
-            &solver,
+            solver,
             nr_config,
             ground,
             nr_outcome,
@@ -1216,7 +1216,7 @@ pub fn dc_analysis(req: DcAnalysisRequest<'_>) -> Result<DcAnalysisResult, DcAna
 fn finalize_dc_outcome<S: NonlinearSystem>(
     req: &DcAnalysisRequest<'_>,
     system: &mut S,
-    solver: &RussellRealSolver,
+    solver: RussellRealSolver,
     nr_config: NewtonRaphsonConfig,
     ground: NodeId,
     nr_outcome: NewtonRaphsonOutcome,
@@ -1285,7 +1285,7 @@ fn finalize_dc_outcome<S: NonlinearSystem>(
     };
 
     let homotopy_outcome = GminSteppingDriver
-        .solve(gmin_config, system, solver, nr_iterate.clone())
+        .solve(gmin_config, system, &solver, nr_iterate.clone())
         .map_err(DcAnalysisError::from)?;
 
     match homotopy_outcome.status {
