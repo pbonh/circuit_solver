@@ -67,8 +67,9 @@ pub use mixed_signal::{
     DigitalStepReport, MixedSignalScheduler, NextEventReport, SchedulerError, SchedulerOutcome,
 };
 pub use noise::{
-    collect_noise_sources, integrated_noise, noise_analysis, IntegratedNoise, IntegratedNoiseError,
-    IntegratedNoiseRequest, IntegrationBand, NoiseAnalysisData, NoiseAnalysisError,
-    NoiseAnalysisRequest, NoiseAnalysisResult, NoiseInjection,
+    collect_noise_sources, integrated_noise, noise_analysis, DeviceNoiseContribution,
+    IntegratedNoise, IntegratedNoiseError, IntegratedNoiseRequest, IntegrationBand,
+    NoiseAnalysisData, NoiseAnalysisError, NoiseAnalysisRequest, NoiseAnalysisResult,
+    NoiseInjection, SemiconductorNoiseSource,
 };
 pub use sweep::{LogSweep, LogSweepError};

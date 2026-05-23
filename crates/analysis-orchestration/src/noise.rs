@@ -1,8 +1,8 @@
 //! Noise spectral-density analysis control loop.
 //!
-//! This module covers `tasks.md` item #37 of
-//! `circuit-solver-2026-05-21-v1-spec`. It is the per-frequency,
-//! per-noise-source driver that composes:
+//! This module covers `tasks.md` items #37 *and* #38 of
+//! `circuit-solver-2026-05-21-v1-spec`. The per-frequency,
+//! per-noise-source driver composes:
 //!
 //! - the AC sub-view extractor ([`numeric_solver::AcSubViewBuilder`],
 //!   tasks.md #24) — which linearizes the operating-point system at
@@ -18,36 +18,45 @@
 //! produces output-referred V²/Hz curves over a user-supplied
 //! frequency sweep.
 //!
-//! # Scenarios in scope at tasks.md #37
+//! # Scenarios in scope
 //!
-//! - `noise-spectral-density#noise-analysis-on-a-resistive-circuit`:
-//!   the **witness scenario**. For a circuit containing only
-//!   resistors and independent sources, each resistor `R` emits a
-//!   Johnson-Nyquist white-noise current source with PSD
-//!   `S_I(f) = 4·k_B·T / R` between its two terminals. The output
-//!   PSD at a designated node is the squared-magnitude sum of every
-//!   source's transfer function to that node, weighted by the
-//!   source's PSD.
+//! - `noise-spectral-density#noise-analysis-on-a-resistive-circuit`
+//!   (tasks.md #37): the **witness scenario** for resistor-only
+//!   circuits. For a circuit containing only resistors and
+//!   independent sources, each resistor `R` emits a Johnson-Nyquist
+//!   white-noise current source with PSD `S_I(f) = 4·k_B·T / R`
+//!   between its two terminals. The output PSD at a designated
+//!   node is the squared-magnitude sum of every source's transfer
+//!   function to that node, weighted by the source's PSD.
 //!
-//! - `noise-spectral-density#noise-analysis-on-circuit-with-failed-operating-point`:
-//!   if the DC operating-point computation failed (any
-//!   [`ConvergenceStatus`] other than `Converged`), the control loop
-//!   returns a [`NoiseAnalysisResult::Failed`] carrying the original
-//!   DC convergence diagnostic, with no spectral-density data
-//!   produced. This is the short-circuit path; see the [`noise_analysis`]
-//!   precondition below.
+//! - `noise-spectral-density#noise-analysis-on-circuit-with-failed-operating-point`
+//!   (tasks.md #37): if the DC operating-point computation failed
+//!   (any [`ConvergenceStatus`] other than `Converged`), the
+//!   control loop returns a [`NoiseAnalysisResult::Failed`]
+//!   carrying the original DC convergence diagnostic, with no
+//!   spectral-density data produced. This is the short-circuit
+//!   path; see the [`noise_analysis`] precondition below.
 //!
-//! # Scenarios *out* of scope at tasks.md #37
+//! - `noise-spectral-density#noise-analysis-with-flicker-and-shot-noise-contributions`
+//!   (tasks.md #38): the Result attaches a per-device, per-noise-type
+//!   breakdown alongside the aggregate output PSD. Resistor thermal
+//!   contributions are emitted automatically by [`collect_noise_sources`].
+//!   Semiconductor shot / flicker / channel-thermal contributions
+//!   are supplied by the caller via
+//!   [`NoiseAnalysisRequest::semiconductor_noise`]: the caller walks
+//!   the graph for [`ElementKind::Semiconductor`] elements, resolves
+//!   each device's [`device_modeling::DeviceModel`] and DC
+//!   [`device_modeling::DeviceOperatingState`], invokes
+//!   [`device_modeling::DeviceModel::noise_stamp`], and lifts each
+//!   resulting [`NoiseSource`] onto graph `NodeId`s via
+//!   [`SemiconductorNoiseSource::from_noise_source`]. The control
+//!   loop then merges those caller-supplied injections with the
+//!   resistor walk and emits a [`DeviceNoiseContribution`] entry
+//!   per (element, mechanism) on
+//!   [`NoiseAnalysisData::per_device_contributions`].
 //!
-//! - Intrinsic noise from semiconductor devices
-//!   (`noise-analysis-with-flicker-and-shot-noise-contributions`,
-//!   tasks.md #38 attaches per-device breakdown). The
-//!   [`DeviceNoiseStamp`](device_modeling::noise::DeviceNoiseStamp)
-//!   contract is already in place from tasks.md #36; this control
-//!   loop deliberately handles only resistor thermal noise to keep
-//!   the witness scenario tight. The architecture leaves a single
-//!   extension point ([`collect_noise_sources`]) where the future
-//!   device walk lands.
+//! # Scenarios *out* of scope at this layer
+//!
 //! - Auto-DC (tasks.md #40 — `noise-analysis-without-prior-operating-point`).
 //! - ngspice conformance test (tasks.md #66).
 //!
@@ -109,9 +118,9 @@
 #![allow(clippy::module_name_repetitions)]
 
 use circuit_solver_types::flattened::FlattenedStructure;
-use circuit_solver_types::{ConvergenceStatus, NodeId};
-use device_modeling::noise::{resistor_thermal_noise, NoiseSource};
-use netlist_graph::{CircuitGraph, ElementKind};
+use circuit_solver_types::{ConvergenceStatus, ElementId, NodeId};
+use device_modeling::noise::{resistor_thermal_noise, NoiseMechanism, NoiseSource};
+use netlist_graph::{CircuitGraph, ElementKind, ElementName};
 use numeric_solver::{
     AcSubViewBuilder, AcSubViewError, FaerComplexSolver, LinearSolver, LinearSolverError,
     MnaSystem, SparseLinearSystem, SparseTriplet, C64,
@@ -135,7 +144,18 @@ use numeric_solver::{
 /// [`Self::node_pos`] *into* [`Self::node_neg`]; PSD is sign-invariant
 /// (squared magnitude) so the direction matters only for the
 /// transfer-function solve consistency.
-#[derive(Debug, Clone, Copy, PartialEq)]
+///
+/// # Identity fields (tasks.md #38)
+///
+/// [`Self::element_id`], [`Self::element_name`], and
+/// [`Self::mechanism`] record *which* circuit element produced this
+/// injection and *which* physical mechanism inside that element. The
+/// per-frequency loop in [`noise_analysis`] uses this identity to
+/// attach a [`DeviceNoiseContribution`] entry to
+/// [`NoiseAnalysisData::per_device_contributions`] — the per-device,
+/// per-noise-type breakdown the spec's flicker+shot scenario
+/// requires.
+#[derive(Debug, Clone, PartialEq)]
 pub struct NoiseInjection {
     /// Positive (source) terminal of the noise current.
     pub node_pos: NodeId,
@@ -146,6 +166,20 @@ pub struct NoiseInjection {
     /// `1/f` PSD numerator, in A². The contribution at frequency
     /// `f` is `flicker_coeff / f`.
     pub flicker_coeff: f64,
+    /// `ElementId` of the originating circuit element. Used by the
+    /// per-device noise breakdown (tasks.md #38) to attribute the
+    /// output PSD contribution back to its source element.
+    pub element_id: ElementId,
+    /// User-supplied name of the originating element (e.g. `"R1"`,
+    /// `"M1"`). Surfaced verbatim on
+    /// [`DeviceNoiseContribution::element_name`] so a Result reader
+    /// can group contributions by netlist symbol without a graph
+    /// round-trip.
+    pub element_name: ElementName,
+    /// Which physical mechanism inside [`Self::element_id`]
+    /// produced this injection (thermal / shot / flicker). Surfaced
+    /// on [`DeviceNoiseContribution::mechanism`].
+    pub mechanism: NoiseMechanism,
 }
 
 impl NoiseInjection {
@@ -217,6 +251,17 @@ pub struct NoiseAnalysisRequest<'a> {
     pub temperature_k: f64,
     /// Override the ground node (defaults to [`NodeId::GROUND`]).
     pub ground: Option<NodeId>,
+    /// Caller-supplied semiconductor noise injections
+    /// (tasks.md #38). Pass `&[]` for resistor-only circuits — that
+    /// keeps existing call-sites and the resistor-only witness
+    /// scenario working unchanged.
+    ///
+    /// When non-empty, every entry's `(node_pos, node_neg)`
+    /// terminal pair must reference nodes inside the operating-point
+    /// system's `node_count`; the loop debug-asserts this. Silent
+    /// entries (both `white_psd == 0.0` and `flicker_coeff == 0.0`)
+    /// are dropped before the solve.
+    pub semiconductor_noise: &'a [SemiconductorNoiseSource],
 }
 
 /// Output of [`noise_analysis`].
@@ -274,6 +319,19 @@ impl NoiseAnalysisResult {
 /// PSD is always non-negative (sum of squared magnitudes times
 /// non-negative source PSDs). The control loop emits exactly
 /// `frequencies_hz.len()` samples; partial sweeps are not produced.
+///
+/// # Per-device breakdown (tasks.md #38)
+///
+/// [`Self::per_device_contributions`] is the optional per-device,
+/// per-noise-type contribution to the output PSD required by the
+/// spec scenario
+/// `noise-spectral-density#noise-analysis-with-flicker-and-shot-noise-contributions`.
+/// One entry per [`NoiseInjection`] that ran (silent injections are
+/// dropped before the solve). The sum over every entry's
+/// [`DeviceNoiseContribution::psd_v2_per_hz`] at index `i` equals
+/// [`Self::spectral_density_v2_per_hz`] at index `i` within
+/// floating-point round-off — this is asserted by the test
+/// `total_psd_equals_sum_of_per_device_contributions`.
 #[derive(Debug, Clone, PartialEq, Default)]
 pub struct NoiseAnalysisData {
     /// Frequency axis (Hz), echoing
@@ -282,6 +340,13 @@ pub struct NoiseAnalysisData {
     /// Output-referred power spectral density at each frequency, in
     /// V²/Hz. Always parallel to [`Self::frequencies_hz`].
     pub spectral_density_v2_per_hz: Vec<f64>,
+    /// Per-device, per-noise-type contribution breakdown
+    /// (tasks.md #38). Empty when no injections ran (e.g. a circuit
+    /// with no resistors and no semiconductor noise sources supplied);
+    /// otherwise one entry per surviving [`NoiseInjection`]. Entries
+    /// retain the injection's traversal order: resistor walks first,
+    /// then [`NoiseAnalysisRequest::semiconductor_noise`] in order.
+    pub per_device_contributions: Vec<DeviceNoiseContribution>,
 }
 
 impl NoiseAnalysisData {
@@ -297,6 +362,144 @@ impl NoiseAnalysisData {
     #[must_use]
     pub fn is_empty(&self) -> bool {
         self.frequencies_hz.is_empty()
+    }
+}
+
+// ---------------------------------------------------------------------
+// Per-device noise breakdown (tasks.md #38)
+// ---------------------------------------------------------------------
+
+/// One per-device, per-noise-type contribution to the output PSD.
+///
+/// Emitted by [`noise_analysis`] alongside the aggregate
+/// [`NoiseAnalysisData::spectral_density_v2_per_hz`] curve. The
+/// spec scenario
+/// `noise-spectral-density#noise-analysis-with-flicker-and-shot-noise-contributions`
+/// requires the Result to attribute each contribution to its
+/// originating element ([`Self::element_id`] /
+/// [`Self::element_name`]) and physical mechanism
+/// ([`Self::mechanism`]).
+///
+/// Each entry corresponds to exactly one [`NoiseInjection`] that
+/// survived the silent-source filter; if a single element produces
+/// multiple noise mechanisms (e.g. a MOSFET with both channel
+/// thermal and drain flicker), it shows up here as *two* entries
+/// with identical `element_id` / `element_name` and different
+/// `mechanism` tags.
+#[derive(Debug, Clone, PartialEq)]
+pub struct DeviceNoiseContribution {
+    /// `ElementId` of the originating circuit element.
+    pub element_id: ElementId,
+    /// User-supplied element name (echoes the netlist symbol).
+    pub element_name: ElementName,
+    /// Physical mechanism (thermal / shot / flicker).
+    pub mechanism: NoiseMechanism,
+    /// Per-frequency output-referred PSD contribution in V²/Hz.
+    /// Parallel to [`NoiseAnalysisData::frequencies_hz`]: index `i`
+    /// is the contribution this (element, mechanism) makes at
+    /// frequency `frequencies_hz[i]`. Always non-negative.
+    pub psd_v2_per_hz: Vec<f64>,
+}
+
+// ---------------------------------------------------------------------
+// Caller-supplied semiconductor noise injections (tasks.md #38)
+// ---------------------------------------------------------------------
+
+/// One pre-resolved semiconductor noise injection supplied by the
+/// caller via [`NoiseAnalysisRequest::semiconductor_noise`].
+///
+/// The noise control loop in this crate only knows how to walk the
+/// graph for *linear-resistor* thermal noise on its own (see
+/// [`collect_noise_sources`]). Junction shot / flicker / MOSFET
+/// channel-thermal / drain-flicker noise requires DC operating-point
+/// state (`I_D`, `I_B`, `I_C`, `g_m`) that is owned by an upstream
+/// caller (the simulator façade in `circuit-solver-py` /
+/// `analysis-orchestration::simulator`, not yet wired in v1). To
+/// avoid pulling a hard dependency on the device-modeling state into
+/// the noise loop and to keep this layer's surface stable, the
+/// caller is responsible for:
+///
+/// 1. walking the graph for [`ElementKind::Semiconductor`] elements,
+/// 2. resolving each element's
+///    [`device_modeling::DeviceModel`] from its
+///    [`netlist_graph::Element::model`] reference,
+/// 3. computing the per-element
+///    [`device_modeling::DeviceOperatingState`] from the DC operating
+///    point,
+/// 4. calling [`device_modeling::DeviceModel::noise_stamp`] to obtain
+///    each device's [`device_modeling::DeviceNoiseStamp`], and
+/// 5. expanding every emitted [`NoiseSource`] into a
+///    `SemiconductorNoiseSource` here, with terminal-local source
+///    indices `(a, b)` translated to graph `NodeId`s via the
+///    element's terminal vector.
+///
+/// The shape is intentionally identical to the data the loop already
+/// carries internally for resistors — same identity tag, same node
+/// pair, same `(white_psd, flicker_coeff)` decomposition.
+#[derive(Debug, Clone, PartialEq)]
+pub struct SemiconductorNoiseSource {
+    /// `ElementId` of the originating semiconductor element (a
+    /// `Diode`, `BJT`, or `MOSFET`).
+    pub element_id: ElementId,
+    /// User-supplied element name (e.g. `"M1"`, `"Q1"`, `"D1"`).
+    pub element_name: ElementName,
+    /// Physical mechanism (thermal / shot / flicker).
+    pub mechanism: NoiseMechanism,
+    /// Positive (source) terminal of the noise current — a graph
+    /// `NodeId`, *not* a terminal-local index.
+    pub node_pos: NodeId,
+    /// Negative (sink) terminal of the noise current.
+    pub node_neg: NodeId,
+    /// White PSD component, in A²/Hz (constant in `f`).
+    pub white_psd: f64,
+    /// `1/f` PSD numerator, in A². The contribution at frequency
+    /// `f` is `flicker_coeff / f`.
+    pub flicker_coeff: f64,
+}
+
+impl SemiconductorNoiseSource {
+    /// Construct a `SemiconductorNoiseSource` by lifting a
+    /// terminal-local [`NoiseSource`] onto graph `NodeId`s via
+    /// `element_terminals`. Convenience for callers walking
+    /// `Semiconductor` elements; `element_terminals` is the element's
+    /// graph-terminal vector (drain/gate/source/bulk for MOSFETs,
+    /// collector/base/emitter for BJTs, anode/cathode for diodes).
+    ///
+    /// Returns `None` if either terminal index is out of bounds for
+    /// `element_terminals` — i.e. the caller built a malformed
+    /// `NoiseSource`.
+    #[must_use]
+    pub fn from_noise_source(
+        element_id: ElementId,
+        element_name: ElementName,
+        element_terminals: &[NodeId],
+        src: NoiseSource,
+    ) -> Option<Self> {
+        let node_pos = *element_terminals.get(src.a)?;
+        let node_neg = *element_terminals.get(src.b)?;
+        Some(Self {
+            element_id,
+            element_name,
+            mechanism: src.mechanism,
+            node_pos,
+            node_neg,
+            white_psd: src.white_psd,
+            flicker_coeff: src.flicker_coeff,
+        })
+    }
+
+    /// Convert this caller-supplied source into the loop's internal
+    /// [`NoiseInjection`] representation.
+    fn into_injection(self) -> NoiseInjection {
+        NoiseInjection {
+            node_pos: self.node_pos,
+            node_neg: self.node_neg,
+            white_psd: self.white_psd,
+            flicker_coeff: self.flicker_coeff,
+            element_id: self.element_id,
+            element_name: self.element_name,
+            mechanism: self.mechanism,
+        }
     }
 }
 
@@ -489,6 +692,9 @@ pub fn collect_noise_sources(
                 node_neg,
                 white_psd: src.white_psd,
                 flicker_coeff: src.flicker_coeff,
+                element_id: elem.id(),
+                element_name: elem.name().clone(),
+                mechanism: src.mechanism,
             });
         }
     }
@@ -593,11 +799,27 @@ pub fn noise_analysis(
     }
 
     // --- Source collection -------------------------------------------------
-    let injections = collect_noise_sources(req.graph, req.temperature_k)?;
+    // Merge the resistor walk (in-crate) with the caller-supplied
+    // semiconductor injections (tasks.md #38). Resistor injections
+    // come first so the per-device breakdown's enumeration order
+    // is stable across runs.
+    let mut injections = collect_noise_sources(req.graph, req.temperature_k)?;
+    injections.reserve(req.semiconductor_noise.len());
+    for sc in req.semiconductor_noise {
+        injections.push(sc.clone().into_injection());
+    }
 
-    // --- Output buffer -----------------------------------------------------
+    // --- Output buffers ----------------------------------------------------
     let n_freq = req.frequencies_hz.len();
     let mut psd_out: Vec<f64> = vec![0.0; n_freq];
+
+    // Per-injection per-frequency contribution buffer. Parallel
+    // structure: `per_injection_contrib[j][k]` is the contribution
+    // of injection `j` at frequency index `k`. We collapse silent /
+    // zero-PSD-at-this-frequency entries to a zero curve rather
+    // than dropping them, so the breakdown has a stable shape that
+    // mirrors `injections` one-to-one.
+    let mut per_injection_contrib: Vec<Vec<f64>> = vec![vec![0.0; n_freq]; injections.len()];
 
     let solver = FaerComplexSolver;
     let out_idx = req.output.index() as usize;
@@ -641,7 +863,7 @@ pub fn noise_analysis(
             );
         }
 
-        for inj in &injections {
+        for (j, inj) in injections.iter().enumerate() {
             if inj.is_silent() {
                 continue;
             }
@@ -701,17 +923,48 @@ pub fn noise_analysis(
             let h = solution.unknowns()[out_idx];
             let h_sq = h.norm_sqr();
 
-            psd_out[k] += h_sq * s_j;
+            let contribution = h_sq * s_j;
+            psd_out[k] += contribution;
+            // tasks.md #38: stash the per-(element, mechanism)
+            // contribution alongside the aggregate.
+            per_injection_contrib[j][k] = contribution;
         }
     }
 
     // Defense in depth.
     debug_assert_eq!(psd_out.len(), n_freq);
     debug_assert!(psd_out.iter().all(|p| *p >= 0.0));
+    debug_assert_eq!(per_injection_contrib.len(), injections.len());
+
+    // --- Per-device breakdown emission (tasks.md #38) ----------------------
+    //
+    // One DeviceNoiseContribution entry per surviving (non-silent)
+    // injection, preserving the merged injection order: resistors
+    // first, then caller-supplied semiconductor noise sources.
+    // Silent injections — which were also skipped by the solve —
+    // are filtered out so the breakdown does not carry uninformative
+    // zero-vector entries.
+    let per_device_contributions: Vec<DeviceNoiseContribution> = injections
+        .iter()
+        .zip(per_injection_contrib)
+        .filter_map(|(inj, psd)| {
+            if inj.is_silent() {
+                None
+            } else {
+                Some(DeviceNoiseContribution {
+                    element_id: inj.element_id,
+                    element_name: inj.element_name.clone(),
+                    mechanism: inj.mechanism,
+                    psd_v2_per_hz: psd,
+                })
+            }
+        })
+        .collect();
 
     Ok(NoiseAnalysisResult::Ok(NoiseAnalysisData {
         frequencies_hz: req.frequencies_hz.to_vec(),
         spectral_density_v2_per_hz: psd_out,
+        per_device_contributions,
     }))
 }
 
@@ -1263,6 +1516,7 @@ mod tests {
             output: out_id,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         assert_eq!(noise_analysis(req), Err(NoiseAnalysisError::EmptySweep));
     }
@@ -1280,6 +1534,7 @@ mod tests {
             output: out_id,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         let err = noise_analysis(req).unwrap_err();
         match err {
@@ -1298,6 +1553,7 @@ mod tests {
             output: out_id,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         assert!(matches!(
             noise_analysis(req).unwrap_err(),
@@ -1317,6 +1573,7 @@ mod tests {
             output: out_id,
             temperature_k: 0.0,
             ground: None,
+            semiconductor_noise: &[],
         };
         assert!(matches!(
             noise_analysis(req).unwrap_err(),
@@ -1331,6 +1588,7 @@ mod tests {
             output: out_id,
             temperature_k: f64::NAN,
             ground: None,
+            semiconductor_noise: &[],
         };
         assert!(matches!(
             noise_analysis(req).unwrap_err(),
@@ -1352,6 +1610,7 @@ mod tests {
             output: bad,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         match noise_analysis(req).unwrap_err() {
             NoiseAnalysisError::OutputNodeOutOfRange { node, node_count } => {
@@ -1374,6 +1633,7 @@ mod tests {
             output: NodeId::GROUND,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         assert!(matches!(
             noise_analysis(req).unwrap_err(),
@@ -1398,6 +1658,7 @@ mod tests {
             output: out_id,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         let res = noise_analysis(req).expect("loop returns Ok wrapping the Failed variant");
         match res {
@@ -1441,6 +1702,7 @@ mod tests {
             output: out_id,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         let res = noise_analysis(req).expect("converges on a linear circuit");
         let data = res.data().expect("data present on Ok");
@@ -1475,6 +1737,7 @@ mod tests {
             output: out_id,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         let data = noise_analysis(req).unwrap().data().cloned().unwrap();
         let first = data.spectral_density_v2_per_hz[0];
@@ -1502,6 +1765,7 @@ mod tests {
             output: out1,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         let s1 = noise_analysis(req1)
             .unwrap()
@@ -1519,6 +1783,7 @@ mod tests {
             output: out2,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         let s2 = noise_analysis(req2)
             .unwrap()
@@ -1548,6 +1813,7 @@ mod tests {
             output: out_id,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         let s1 = noise_analysis(req1)
             .unwrap()
@@ -1564,6 +1830,7 @@ mod tests {
             output: out_id,
             temperature_k: 2.0 * ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         let s2 = noise_analysis(req2)
             .unwrap()
@@ -1633,6 +1900,9 @@ mod tests {
             node_neg: NodeId::GROUND,
             white_psd: 1.0e-18,
             flicker_coeff: 1.0e-15,
+            element_id: ElementId::new(0),
+            element_name: ElementName::new("Rtest"),
+            mechanism: NoiseMechanism::Thermal,
         };
         // At f = 1 Hz: white + flicker = 1e-18 + 1e-15.
         let s1 = inj.psd_at(1.0);
@@ -1674,6 +1944,7 @@ mod tests {
             #[allow(clippy::cast_precision_loss)]
             frequencies_hz: (1..=n).map(|i| i as f64).collect(),
             spectral_density_v2_per_hz: vec![s0; n],
+            per_device_contributions: vec![],
         }
     }
 
@@ -1682,6 +1953,7 @@ mod tests {
         let data = NoiseAnalysisData {
             frequencies_hz: vec![1.0],
             spectral_density_v2_per_hz: vec![1.0e-18],
+            per_device_contributions: vec![],
         };
         let req = IntegratedNoiseRequest {
             data: &data,
@@ -1701,6 +1973,7 @@ mod tests {
         let data = NoiseAnalysisData {
             frequencies_hz: vec![1.0, 2.0, 3.0],
             spectral_density_v2_per_hz: vec![1.0, 2.0],
+            per_device_contributions: vec![],
         };
         let req = IntegratedNoiseRequest {
             data: &data,
@@ -1723,6 +1996,7 @@ mod tests {
         let data = NoiseAnalysisData {
             frequencies_hz: vec![1.0, f64::NAN, 3.0],
             spectral_density_v2_per_hz: vec![1.0e-18, 1.0e-18, 1.0e-18],
+            per_device_contributions: vec![],
         };
         let req = IntegratedNoiseRequest {
             data: &data,
@@ -1742,6 +2016,7 @@ mod tests {
         let data = NoiseAnalysisData {
             frequencies_hz: vec![1.0, 2.0, 3.0],
             spectral_density_v2_per_hz: vec![1.0e-18, -1.0e-19, 1.0e-18],
+            per_device_contributions: vec![],
         };
         let req = IntegratedNoiseRequest {
             data: &data,
@@ -1761,6 +2036,7 @@ mod tests {
         let data = NoiseAnalysisData {
             frequencies_hz: vec![1.0, 2.0, 2.0, 3.0],
             spectral_density_v2_per_hz: vec![1.0e-18; 4],
+            per_device_contributions: vec![],
         };
         let req = IntegratedNoiseRequest {
             data: &data,
@@ -1877,6 +2153,7 @@ mod tests {
         let data = NoiseAnalysisData {
             frequencies_hz: (1..=10).map(f64::from).collect(),
             spectral_density_v2_per_hz: vec![s0; 10],
+            per_device_contributions: vec![],
         };
         let req = IntegratedNoiseRequest {
             data: &data,
@@ -1904,6 +2181,7 @@ mod tests {
         let data = NoiseAnalysisData {
             frequencies_hz: vec![1.0, 100.0, 1000.0, 10_000.0],
             spectral_density_v2_per_hz: vec![s0; 4],
+            per_device_contributions: vec![],
         };
         let req = IntegratedNoiseRequest {
             data: &data,
@@ -1959,6 +2237,7 @@ mod tests {
         let data = NoiseAnalysisData {
             frequencies_hz: freqs,
             spectral_density_v2_per_hz: psds,
+            per_device_contributions: vec![],
         };
         let req = IntegratedNoiseRequest {
             data: &data,
@@ -2022,6 +2301,7 @@ mod tests {
         let data = NoiseAnalysisData {
             frequencies_hz: vec![1.0, 10.0],
             spectral_density_v2_per_hz: vec![s0, s0],
+            per_device_contributions: vec![],
         };
         let req = IntegratedNoiseRequest {
             data: &data,
@@ -2063,6 +2343,7 @@ mod tests {
             output: out_id,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         let data = noise_analysis(req)
             .expect("noise analysis succeeds")
@@ -2120,6 +2401,7 @@ mod tests {
             output: out_id,
             temperature_k: ROOM_TEMPERATURE_K,
             ground: None,
+            semiconductor_noise: &[],
         };
         let data = noise_analysis(req)
             .expect("noise analysis succeeds")
@@ -2157,5 +2439,384 @@ mod tests {
             "1 kΩ / 1 MHz BW RMS should be ~µV: got {} V",
             out.rms_voltage_v
         );
+    }
+
+    // ---------- tasks.md #38 — per-device breakdown -----------------------
+
+    #[test]
+    fn breakdown_default_data_is_empty_and_round_trips() {
+        // Default NoiseAnalysisData (used by the Failed-path
+        // documentation / tests) carries an empty breakdown.
+        let d = NoiseAnalysisData::default();
+        assert!(d.per_device_contributions.is_empty());
+        assert!(d.is_empty());
+    }
+
+    #[test]
+    fn breakdown_resistor_only_has_one_entry_per_resistor() {
+        // Witness shape: the two-resistor fixture must yield two
+        // `DeviceNoiseContribution` entries, both tagged Thermal.
+        let r1 = 10.0e3;
+        let (fs, g, sys, out_id) = single_resistor_to_ground(r1);
+        let f_axis: Vec<f64> = vec![1.0e2, 1.0e4, 1.0e6];
+        let req = NoiseAnalysisRequest {
+            dc_status: converged_status(),
+            system: &sys,
+            structure: &fs,
+            graph: &g,
+            frequencies_hz: &f_axis,
+            output: out_id,
+            temperature_k: ROOM_TEMPERATURE_K,
+            ground: None,
+            semiconductor_noise: &[],
+        };
+        let data = noise_analysis(req).unwrap().data().cloned().unwrap();
+
+        // Both resistors are non-silent (white_psd > 0) so we get
+        // two entries.
+        assert_eq!(data.per_device_contributions.len(), 2);
+        for entry in &data.per_device_contributions {
+            assert_eq!(entry.mechanism, NoiseMechanism::Thermal);
+            assert_eq!(entry.psd_v2_per_hz.len(), f_axis.len());
+            // Every contribution is non-negative and finite.
+            for &p in &entry.psd_v2_per_hz {
+                assert!(p >= 0.0 && p.is_finite());
+            }
+        }
+
+        // The R1 / R2 element names should both appear exactly
+        // once in the breakdown.
+        let names: Vec<String> = data
+            .per_device_contributions
+            .iter()
+            .map(|e| e.element_name.as_str().to_string())
+            .collect();
+        assert!(names.contains(&"R1".to_string()));
+        assert!(names.contains(&"R2".to_string()));
+    }
+
+    #[test]
+    fn breakdown_sum_equals_total_psd_for_resistor_circuit() {
+        // Invariant the spec scenario implies: the sum of per-device
+        // contributions at each frequency must equal the aggregate
+        // output PSD within floating-point round-off. This is the
+        // "additive uncorrelated sources" property formalized.
+        let r1 = 1.0e3;
+        let (fs, g, sys, out_id) = single_resistor_to_ground(r1);
+        let f_axis: Vec<f64> = vec![1.0, 1.0e3, 1.0e6, 1.0e9];
+        let req = NoiseAnalysisRequest {
+            dc_status: converged_status(),
+            system: &sys,
+            structure: &fs,
+            graph: &g,
+            frequencies_hz: &f_axis,
+            output: out_id,
+            temperature_k: ROOM_TEMPERATURE_K,
+            ground: None,
+            semiconductor_noise: &[],
+        };
+        let data = noise_analysis(req).unwrap().data().cloned().unwrap();
+
+        for (k, &f_hz) in f_axis.iter().enumerate() {
+            let summed: f64 = data
+                .per_device_contributions
+                .iter()
+                .map(|e| e.psd_v2_per_hz[k])
+                .sum();
+            let total = data.spectral_density_v2_per_hz[k];
+            assert!(
+                approx(summed, total, 1.0e-12),
+                "f={f_hz} Hz: Σ per-device ({summed:.6e}) != total ({total:.6e})"
+            );
+        }
+    }
+
+    #[test]
+    fn breakdown_attributes_dominant_thermal_to_r1() {
+        // For the canonical V1 → R1 → n_out → R2 → gnd witness with
+        // R1 = 10 kΩ, R2 = 1 PΩ, the spectral density at n_out is
+        // dominated by R1's thermal contribution. The breakdown must
+        // attribute the dominant (≥ 99.9999 %) contribution to R1
+        // and tag it Thermal.
+        let r1 = 10.0e3;
+        let (fs, g, sys, out_id) = single_resistor_to_ground(r1);
+        let f_axis = [1.0e3];
+        let req = NoiseAnalysisRequest {
+            dc_status: converged_status(),
+            system: &sys,
+            structure: &fs,
+            graph: &g,
+            frequencies_hz: &f_axis,
+            output: out_id,
+            temperature_k: ROOM_TEMPERATURE_K,
+            ground: None,
+            semiconductor_noise: &[],
+        };
+        let data = noise_analysis(req).unwrap().data().cloned().unwrap();
+
+        let total = data.spectral_density_v2_per_hz[0];
+        let r1_entry = data
+            .per_device_contributions
+            .iter()
+            .find(|e| e.element_name.as_str() == "R1")
+            .expect("R1 entry present");
+        assert_eq!(r1_entry.mechanism, NoiseMechanism::Thermal);
+        let r1_share = r1_entry.psd_v2_per_hz[0] / total;
+        assert!(
+            r1_share > 0.999_999,
+            "R1 should dominate: share={r1_share:.6e}"
+        );
+    }
+
+    // ---------- tasks.md #38 — semiconductor injection witness -----------
+
+    #[test]
+    fn semiconductor_noise_source_lifts_terminal_local_to_graph_node_ids() {
+        // Builder helper: a caller-supplied NoiseSource at
+        // terminal-local (a=0, b=1) on an element with
+        // terminals [n_drain=3, n_source=4] must land on graph
+        // NodeIds (3, 4).
+        let terms = [NodeId::new(3), NodeId::new(4)];
+        let src = NoiseSource {
+            a: 0,
+            b: 1,
+            mechanism: NoiseMechanism::Flicker,
+            white_psd: 0.0,
+            flicker_coeff: 1.0e-15,
+        };
+        let s = SemiconductorNoiseSource::from_noise_source(
+            ElementId::new(7),
+            ElementName::new("M1"),
+            &terms,
+            src,
+        )
+        .expect("terminals in range");
+        assert_eq!(s.node_pos, NodeId::new(3));
+        assert_eq!(s.node_neg, NodeId::new(4));
+        assert_eq!(s.element_id, ElementId::new(7));
+        assert_eq!(s.element_name.as_str(), "M1");
+        assert_eq!(s.mechanism, NoiseMechanism::Flicker);
+        assert_eq!(s.flicker_coeff.to_bits(), 1.0e-15_f64.to_bits());
+        assert_eq!(s.white_psd.to_bits(), 0.0_f64.to_bits());
+
+        // Out-of-range terminal index → None.
+        let bad = NoiseSource { a: 5, b: 0, ..src };
+        assert!(SemiconductorNoiseSource::from_noise_source(
+            ElementId::new(0),
+            ElementName::new("X"),
+            &terms,
+            bad,
+        )
+        .is_none());
+    }
+
+    #[test]
+    fn breakdown_includes_caller_supplied_semiconductor_sources() {
+        // Spec scenario witness for
+        // noise-analysis-with-flicker-and-shot-noise-contributions:
+        // a circuit with a MOSFET-like device contributes
+        // separately-tagged thermal and flicker entries to the
+        // breakdown.
+        //
+        // We stage this without a real DeviceModel by using the
+        // existing two-resistor topology and injecting two
+        // *additional* caller-supplied noise sources tagged Shot
+        // and Flicker between (n_out, ground). This isolates the
+        // breakdown machinery from the upstream device-modeling
+        // layer (which is exercised separately in
+        // device_modeling::noise tests).
+        let r1 = 10.0e3;
+        let (fs, g, sys, out_id) = single_resistor_to_ground(r1);
+
+        let m1_shot = SemiconductorNoiseSource {
+            element_id: ElementId::new(100),
+            element_name: ElementName::new("M1"),
+            mechanism: NoiseMechanism::Shot,
+            node_pos: out_id,
+            node_neg: NodeId::GROUND,
+            white_psd: 1.0e-20,
+            flicker_coeff: 0.0,
+        };
+        let m1_flicker = SemiconductorNoiseSource {
+            element_id: ElementId::new(100),
+            element_name: ElementName::new("M1"),
+            mechanism: NoiseMechanism::Flicker,
+            node_pos: out_id,
+            node_neg: NodeId::GROUND,
+            white_psd: 0.0,
+            flicker_coeff: 1.0e-18,
+        };
+        let semis = [m1_shot, m1_flicker];
+
+        let f_axis: Vec<f64> = vec![1.0, 1.0e3, 1.0e6];
+        let req = NoiseAnalysisRequest {
+            dc_status: converged_status(),
+            system: &sys,
+            structure: &fs,
+            graph: &g,
+            frequencies_hz: &f_axis,
+            output: out_id,
+            temperature_k: ROOM_TEMPERATURE_K,
+            ground: None,
+            semiconductor_noise: &semis,
+        };
+        let data = noise_analysis(req).unwrap().data().cloned().unwrap();
+
+        // 2 resistor thermal entries + 2 semiconductor entries
+        // (Shot, Flicker) = 4 contributions.
+        assert_eq!(data.per_device_contributions.len(), 4);
+
+        // Find the M1 entries (both tagged with element_name M1)
+        // and assert their mechanism tags.
+        let m1_entries: Vec<&DeviceNoiseContribution> = data
+            .per_device_contributions
+            .iter()
+            .filter(|e| e.element_name.as_str() == "M1")
+            .collect();
+        assert_eq!(m1_entries.len(), 2);
+        let mechs: Vec<NoiseMechanism> = m1_entries.iter().map(|e| e.mechanism).collect();
+        assert!(mechs.contains(&NoiseMechanism::Shot));
+        assert!(mechs.contains(&NoiseMechanism::Flicker));
+
+        // The flicker entry's contribution must decrease with
+        // frequency (`1/f` PSD shape, modulo the frequency-flat
+        // transfer function of the resistive load). Check at
+        // index 0 (1 Hz) vs index 2 (1 MHz).
+        let flicker = m1_entries
+            .iter()
+            .find(|e| e.mechanism == NoiseMechanism::Flicker)
+            .unwrap();
+        assert!(
+            flicker.psd_v2_per_hz[0] > flicker.psd_v2_per_hz[2],
+            "flicker contribution must fall with frequency: {:.6e} @ 1 Hz vs {:.6e} @ 1 MHz",
+            flicker.psd_v2_per_hz[0],
+            flicker.psd_v2_per_hz[2]
+        );
+
+        // The shot entry's contribution must be ≈ frequency-flat
+        // (white) — same PSD across decades since the resistive
+        // circuit's transfer function is itself white.
+        let shot = m1_entries
+            .iter()
+            .find(|e| e.mechanism == NoiseMechanism::Shot)
+            .unwrap();
+        assert!(approx(shot.psd_v2_per_hz[0], shot.psd_v2_per_hz[2], 1.0e-9));
+
+        // Sum-of-contributions === total PSD invariant still holds.
+        for (k, &f_hz) in f_axis.iter().enumerate() {
+            let summed: f64 = data
+                .per_device_contributions
+                .iter()
+                .map(|e| e.psd_v2_per_hz[k])
+                .sum();
+            let total = data.spectral_density_v2_per_hz[k];
+            assert!(
+                approx(summed, total, 1.0e-12),
+                "f={f_hz} Hz: Σ per-device ({summed:.6e}) != total ({total:.6e})"
+            );
+        }
+    }
+
+    #[test]
+    fn breakdown_drops_silent_semiconductor_sources() {
+        // A caller-supplied source with white_psd = 0 and
+        // flicker_coeff = 0 must not produce a breakdown entry
+        // (it's a no-op the loop already skips). This keeps the
+        // breakdown free of uninformative zero curves when a
+        // device's stamp legitimately returns no noise (e.g. a
+        // diode with I_D = 0 and KF = 0).
+        let r1 = 1.0e3;
+        let (fs, g, sys, out_id) = single_resistor_to_ground(r1);
+        let silent = SemiconductorNoiseSource {
+            element_id: ElementId::new(99),
+            element_name: ElementName::new("Dquiet"),
+            mechanism: NoiseMechanism::Shot,
+            node_pos: out_id,
+            node_neg: NodeId::GROUND,
+            white_psd: 0.0,
+            flicker_coeff: 0.0,
+        };
+        let semis = [silent];
+        let req = NoiseAnalysisRequest {
+            dc_status: converged_status(),
+            system: &sys,
+            structure: &fs,
+            graph: &g,
+            frequencies_hz: &[1.0e3],
+            output: out_id,
+            temperature_k: ROOM_TEMPERATURE_K,
+            ground: None,
+            semiconductor_noise: &semis,
+        };
+        let data = noise_analysis(req).unwrap().data().cloned().unwrap();
+        // 2 resistor entries, 0 semiconductor entries (the silent
+        // one was filtered).
+        assert_eq!(data.per_device_contributions.len(), 2);
+        assert!(data
+            .per_device_contributions
+            .iter()
+            .all(|e| e.element_name.as_str() != "Dquiet"));
+    }
+
+    #[test]
+    fn breakdown_preserves_injection_order_resistors_first() {
+        // Resistor walks first, then semiconductor caller-supplied
+        // sources. This is documented in
+        // NoiseAnalysisData::per_device_contributions and the
+        // dispatcher relies on it.
+        let r1 = 1.0e3;
+        let (fs, g, sys, out_id) = single_resistor_to_ground(r1);
+        let m1 = SemiconductorNoiseSource {
+            element_id: ElementId::new(50),
+            element_name: ElementName::new("M1"),
+            mechanism: NoiseMechanism::Thermal,
+            node_pos: out_id,
+            node_neg: NodeId::GROUND,
+            white_psd: 1.0e-22,
+            flicker_coeff: 0.0,
+        };
+        let semis = [m1];
+        let req = NoiseAnalysisRequest {
+            dc_status: converged_status(),
+            system: &sys,
+            structure: &fs,
+            graph: &g,
+            frequencies_hz: &[1.0e3],
+            output: out_id,
+            temperature_k: ROOM_TEMPERATURE_K,
+            ground: None,
+            semiconductor_noise: &semis,
+        };
+        let data = noise_analysis(req).unwrap().data().cloned().unwrap();
+        // 2 resistor entries first (R1, R2), then M1.
+        let names: Vec<&str> = data
+            .per_device_contributions
+            .iter()
+            .map(|e| e.element_name.as_str())
+            .collect();
+        assert_eq!(names.len(), 3);
+        assert!(names[..2].iter().all(|n| *n == "R1" || *n == "R2"));
+        assert_eq!(names[2], "M1");
+    }
+
+    #[test]
+    fn breakdown_empty_when_failed_op_short_circuit() {
+        // A DC-failed run produces no breakdown — `Failed` carries
+        // no data at all.
+        let (fs, g, sys, out_id) = single_resistor_to_ground(1.0e3);
+        let req = NoiseAnalysisRequest {
+            dc_status: diverged_status(),
+            system: &sys,
+            structure: &fs,
+            graph: &g,
+            frequencies_hz: &[1.0e3],
+            output: out_id,
+            temperature_k: ROOM_TEMPERATURE_K,
+            ground: None,
+            semiconductor_noise: &[],
+        };
+        let res = noise_analysis(req).unwrap();
+        assert!(res.is_failed());
+        assert!(res.data().is_none());
     }
 }

@@ -338,6 +338,7 @@ fn integrated_noise_two_resistor_superposition_matches_golden_reference() {
         output: out_id,
         temperature_k: ROOM_TEMPERATURE_K,
         ground: None,
+        semiconductor_noise: &[],
     };
     let result = noise_analysis(req).expect("noise analysis succeeds");
     let data = match result {
@@ -462,6 +463,7 @@ fn integrated_noise_asymmetric_two_resistor_superposition() {
         output: out_id,
         temperature_k: ROOM_TEMPERATURE_K,
         ground: None,
+        semiconductor_noise: &[],
     };
     let data = noise_analysis(req)
         .expect("noise analysis succeeds")
@@ -565,6 +567,7 @@ fn integrated_noise_band_edges_on_sweep_grid_points() {
         output: out_id,
         temperature_k: ROOM_TEMPERATURE_K,
         ground: None,
+        semiconductor_noise: &[],
     };
     let data = noise_analysis(req)
         .expect("noise analysis succeeds")
@@ -640,6 +643,7 @@ fn integrated_noise_absolute_envelope_arm_binds_in_low_noise_regime() {
         output: out_id,
         temperature_k: ROOM_TEMPERATURE_K,
         ground: None,
+        semiconductor_noise: &[],
     };
     let data = noise_analysis(req)
         .expect("noise analysis succeeds")
