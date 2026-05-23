@@ -34,14 +34,15 @@
 //!
 //! Specifically out of scope for #57:
 //!
-//! - **Zero-copy `NumPy` arrays** — tasks.md #58 (`Implement zero-copy
-//!   NumPy result arrays: PyO3 numpy feature, Rust-owned memory viewed
-//!   as ndarray dtype float64`). For #57 the waveform/transfer-function
-//!   accessors return plain Python tuples of `list[float]`. The
-//!   `pyo3-numpy` dependency is intentionally **not** added here; #58
-//!   will refactor the array-returning getters to hand back
-//!   `numpy.ndarray` views without changing the by-name lookup
-//!   surface.
+//! - **Zero-copy `NumPy` arrays** — *delivered* by tasks.md #58
+//!   (`Implement zero-copy NumPy result arrays: PyO3 numpy feature,
+//!   Rust-owned memory viewed as ndarray dtype float64`). The
+//!   waveform / transfer-function accessors hand back tuples of
+//!   `numpy.ndarray` views (`dtype=float64`) that wrap Rust-owned
+//!   heap memory; no buffer copy is performed on access. See the
+//!   "Forward compatibility" notes on
+//!   [`PyAnalysisResult::waveform`] and
+//!   [`PyAnalysisResult::transfer_function`] for the contract.
 //! - **GIL release** — tasks.md #59. Construction is pure-Python work;
 //!   `Result` does no native solver work, so `Python::allow_threads`
 //!   has nothing to wrap here. Future `Simulator.run` entry points
@@ -71,14 +72,18 @@
 //!   the originating `CircuitGraph` and projects voltages/currents
 //!   into a name-keyed map before constructing the Python `Result`.
 //!
-//! - **Plain Python tuples of `list[float]` for arrays (for now).**
-//!   The waveform getter returns `(times, values)` as a 2-tuple of
-//!   `list[float]`; the transfer-function getter returns
-//!   `(frequencies_hz, magnitude_db, phase_degrees)` as a 3-tuple of
-//!   `list[float]`. Tasks.md #58 will refactor these to
-//!   `numpy.ndarray` views over Rust-owned memory without changing
-//!   the by-name lookup signature. The intermediate representation is
-//!   `Vec<f64>` so the #58 swap is a single-site refactor.
+//! - **`numpy.ndarray` views for arrays.** As of tasks.md #58 the
+//!   waveform getter returns `(times, values)` as a 2-tuple of
+//!   `numpy.ndarray` (`dtype=float64`); the transfer-function getter
+//!   returns `(frequencies_hz, magnitude_db, phase_degrees)` as a
+//!   3-tuple of `numpy.ndarray` (`dtype=float64`). The arrays are
+//!   **views** into Rust-owned heap memory held inside the `Result`:
+//!   accessing the same name twice returns handles to the same
+//!   underlying buffer (refcount-incrementing clone of a
+//!   `Py<PyArray1<f64>>`), and there is no `Vec → ndarray` copy on
+//!   each call. The underlying buffer is constructed once at
+//!   `__new__` time by transferring ownership of the validated
+//!   `Vec<f64>` into `numpy::PyArray1::from_vec`.
 //!
 //! - **`PyKeyError` on misses, optional accessors for soft lookups.**
 //!   The headline accessors (`node_voltage`, `branch_current`,
@@ -124,34 +129,49 @@
 
 use std::collections::BTreeMap;
 
+use numpy::PyArray1;
 use pyo3::exceptions::{PyKeyError, PyTypeError, PyValueError};
 use pyo3::prelude::*;
 use pyo3::types::{PyMapping, PyTuple};
 
-/// Internal storage for one waveform: parallel time/value vectors.
+/// Internal storage for one waveform: parallel `numpy.ndarray` handles
+/// for the time and value axes.
 ///
-/// Invariant maintained at `__new__` time: `times.len() ==
-/// values.len()` and both are finite. The vectors are `Vec<f64>` so
-/// the tasks.md #58 `NumPy` refactor can construct a zero-copy ndarray
-/// view directly without intermediate copies.
-#[derive(Debug, Clone, PartialEq)]
+/// The arrays own Rust-allocated heap buffers via
+/// [`numpy::PyArray1::from_vec`]; the `Py<PyArray1<f64>>` is a
+/// refcounted handle into the host `CPython` interpreter. Cloning the
+/// handle is a refcount increment — *not* a buffer copy — which is
+/// what makes the [`PyAnalysisResult::waveform`] accessor zero-copy
+/// (tasks.md #58 / scenario
+/// `python-frontend#zero-copy-numpy-result-arrays`).
+///
+/// Invariant maintained at `__new__` time: the two arrays share a
+/// length and every element is finite.
+#[derive(Debug)]
 struct WaveformChannel {
-    times: Vec<f64>,
-    values: Vec<f64>,
+    times: Py<PyArray1<f64>>,
+    values: Py<PyArray1<f64>>,
 }
 
-/// Internal storage for one transfer function: parallel frequency,
-/// magnitude (dB), and phase (degrees) vectors.
+/// Internal storage for one transfer function: parallel
+/// `numpy.ndarray` handles for frequency, magnitude (dB), and phase
+/// (degrees).
 ///
-/// Invariant maintained at `__new__` time: all three vectors share a
-/// common length and are finite at every index. Layout matches
+/// Same zero-copy refcount-handle scheme as [`WaveformChannel`]: the
+/// three `Py<PyArray1<f64>>` fields are refcounted views into
+/// Rust-allocated heap buffers, transferred into `NumPy` ownership at
+/// construction time so the accessor can return them without
+/// allocating or copying.
+///
+/// Invariant maintained at `__new__` time: all three arrays share a
+/// length and every element is finite. Layout matches
 /// `analysis_orchestration::TransferFunction` verbatim so the
 /// downstream `from_inner` adapter is a no-op move.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug)]
 struct TransferFunctionChannel {
-    frequencies_hz: Vec<f64>,
-    magnitude_db: Vec<f64>,
-    phase_degrees: Vec<f64>,
+    frequencies_hz: Py<PyArray1<f64>>,
+    magnitude_db: Py<PyArray1<f64>>,
+    phase_degrees: Py<PyArray1<f64>>,
 }
 
 /// Python class: `circuit_solver.Result`.
@@ -222,6 +242,7 @@ impl PyAnalysisResult {
         transfer_functions=None,
     ))]
     pub fn new(
+        py: Python<'_>,
         node_voltages: Option<&Bound<'_, PyAny>>,
         branch_currents: Option<&Bound<'_, PyAny>>,
         waveforms: Option<&Bound<'_, PyAny>>,
@@ -240,12 +261,12 @@ impl PyAnalysisResult {
         let waveforms = match waveforms {
             None => BTreeMap::new(),
             Some(obj) if obj.is_none() => BTreeMap::new(),
-            Some(obj) => parse_waveform_map(obj)?,
+            Some(obj) => parse_waveform_map(py, obj)?,
         };
         let transfer_functions = match transfer_functions {
             None => BTreeMap::new(),
             Some(obj) if obj.is_none() => BTreeMap::new(),
-            Some(obj) => parse_transfer_function_map(obj)?,
+            Some(obj) => parse_transfer_function_map(py, obj)?,
         };
 
         Ok(Self {
@@ -287,22 +308,29 @@ impl PyAnalysisResult {
     }
 
     /// Time-domain waveform at node `name`, as a `(times, values)`
-    /// tuple. Both elements are `list[float]` of the same length;
-    /// `times` is monotonically non-decreasing seconds, `values` is
-    /// volts.
+    /// tuple. Both elements are `numpy.ndarray` of `dtype=float64` and
+    /// of the same length; `times` is monotonically non-decreasing
+    /// seconds, `values` is volts.
+    ///
+    /// # Zero-copy semantics
+    ///
+    /// The returned arrays are *views* into Rust-allocated heap memory
+    /// owned by `NumPy`: the underlying buffer was transferred at
+    /// `__new__` time via [`numpy::PyArray1::from_vec`] and is held
+    /// inside the `Result` as `Py<PyArray1<f64>>`. Each accessor call
+    /// returns a clone of that handle — a refcount bump, not a buffer
+    /// copy. Accessing the same node twice yields handles to the same
+    /// underlying memory; mutating the returned ndarray (if the writer
+    /// goes through `numpy`'s C API) would mutate the cached buffer
+    /// too. The `Result` itself is `#[pyclass(frozen)]` and Python-level
+    /// reassignment of channels is therefore not possible. Satisfies
+    /// scenario `python-frontend#zero-copy-numpy-result-arrays`.
     ///
     /// # Errors
     ///
     /// - `KeyError` if no waveform is recorded for `name`.
-    /// - `PyErr` if allocating the result tuple/lists fails (only
-    ///   under host-Python OOM conditions).
-    ///
-    /// # Forward compatibility
-    ///
-    /// Tasks.md #58 will swap the inner `list[float]` for a
-    /// `numpy.ndarray` view over Rust-owned memory. The outer
-    /// 2-tuple shape and the `(times, values)` ordering are stable
-    /// across that refactor.
+    /// - `PyErr` if allocating the result tuple fails (only under
+    ///   host-Python OOM conditions).
     pub fn waveform<'py>(&self, py: Python<'py>, name: &str) -> PyResult<Bound<'py, PyTuple>> {
         let wf = self
             .waveforms
@@ -311,29 +339,30 @@ impl PyAnalysisResult {
         PyTuple::new(
             py,
             [
-                wf.times.clone().into_pyobject(py)?.into_any().unbind(),
-                wf.values.clone().into_pyobject(py)?.into_any().unbind(),
+                wf.times.clone_ref(py).into_any(),
+                wf.values.clone_ref(py).into_any(),
             ],
         )
     }
 
     /// Frequency-domain transfer function at node `name`, as a
     /// `(frequencies_hz, magnitude_db, phase_degrees)` 3-tuple of
-    /// `list[float]` of the same length. Convention matches
-    /// `analysis_orchestration::TransferFunction`: magnitude is
-    /// `20·log10|H|` in dB; phase is `arg(H)·180/π` in degrees,
-    /// principal value `(-180, 180]`.
+    /// `numpy.ndarray` (`dtype=float64`) of the same length.
+    /// Convention matches `analysis_orchestration::TransferFunction`:
+    /// magnitude is `20·log10|H|` in dB; phase is `arg(H)·180/π` in
+    /// degrees, principal value `(-180, 180]`.
+    ///
+    /// # Zero-copy semantics
+    ///
+    /// Same as [`Self::waveform`]: the three returned arrays are
+    /// refcounted handles into Rust-owned heap memory transferred to
+    /// `NumPy` ownership at `__new__` time. Accessor calls clone the
+    /// handle; the underlying buffer is shared. Tasks.md #58.
     ///
     /// # Errors
     ///
     /// - `KeyError` if no transfer function is recorded for `name`.
-    /// - `PyErr` if allocating the result tuple/lists fails.
-    ///
-    /// # Forward compatibility
-    ///
-    /// Tasks.md #58 will swap the inner `list[float]` for
-    /// `numpy.ndarray` views without changing the outer 3-tuple shape
-    /// or element ordering.
+    /// - `PyErr` if allocating the result tuple fails.
     pub fn transfer_function<'py>(
         &self,
         py: Python<'py>,
@@ -345,21 +374,9 @@ impl PyAnalysisResult {
         PyTuple::new(
             py,
             [
-                tf.frequencies_hz
-                    .clone()
-                    .into_pyobject(py)?
-                    .into_any()
-                    .unbind(),
-                tf.magnitude_db
-                    .clone()
-                    .into_pyobject(py)?
-                    .into_any()
-                    .unbind(),
-                tf.phase_degrees
-                    .clone()
-                    .into_pyobject(py)?
-                    .into_any()
-                    .unbind(),
+                tf.frequencies_hz.clone_ref(py).into_any(),
+                tf.magnitude_db.clone_ref(py).into_any(),
+                tf.phase_degrees.clone_ref(py).into_any(),
             ],
         )
     }
@@ -456,7 +473,16 @@ fn parse_scalar_map(obj: &Bound<'_, PyAny>, field: &str) -> PyResult<BTreeMap<St
 
 /// Parse the `waveforms` mapping into a `BTreeMap<String,
 /// WaveformChannel>`.
-fn parse_waveform_map(obj: &Bound<'_, PyAny>) -> PyResult<BTreeMap<String, WaveformChannel>> {
+///
+/// Each pair of finite `Vec<f64>` axes is transferred into `NumPy`
+/// ownership via [`numpy::PyArray1::from_vec`], yielding a
+/// `Py<PyArray1<f64>>` handle the channel can hand out without
+/// copying. This is the load-bearing site for the zero-copy
+/// guarantee — tasks.md #58.
+fn parse_waveform_map(
+    py: Python<'_>,
+    obj: &Bound<'_, PyAny>,
+) -> PyResult<BTreeMap<String, WaveformChannel>> {
     let mapping = downcast_mapping(obj, "waveforms")?;
     let mut out = BTreeMap::new();
     let items = mapping.items()?;
@@ -478,6 +504,8 @@ fn parse_waveform_map(obj: &Bound<'_, PyAny>) -> PyResult<BTreeMap<String, Wavef
                 values.len(),
             )));
         }
+        let times = PyArray1::from_vec(py, times).unbind();
+        let values = PyArray1::from_vec(py, values).unbind();
         out.insert(key, WaveformChannel { times, values });
     }
     Ok(out)
@@ -485,7 +513,14 @@ fn parse_waveform_map(obj: &Bound<'_, PyAny>) -> PyResult<BTreeMap<String, Wavef
 
 /// Parse the `transfer_functions` mapping into a `BTreeMap<String,
 /// TransferFunctionChannel>`.
+///
+/// Each triple of finite `Vec<f64>` axes is transferred into `NumPy`
+/// ownership via [`numpy::PyArray1::from_vec`], yielding three
+/// `Py<PyArray1<f64>>` handles the channel can hand out without
+/// copying — same zero-copy posture as
+/// [`parse_waveform_map`]. Tasks.md #58.
 fn parse_transfer_function_map(
+    py: Python<'_>,
     obj: &Bound<'_, PyAny>,
 ) -> PyResult<BTreeMap<String, TransferFunctionChannel>> {
     let mapping = downcast_mapping(obj, "transfer_functions")?;
@@ -518,6 +553,9 @@ fn parse_transfer_function_map(
                 phase_degrees.len(),
             )));
         }
+        let frequencies_hz = PyArray1::from_vec(py, frequencies_hz).unbind();
+        let magnitude_db = PyArray1::from_vec(py, magnitude_db).unbind();
+        let phase_degrees = PyArray1::from_vec(py, phase_degrees).unbind();
         out.insert(
             key,
             TransferFunctionChannel {
@@ -636,6 +674,11 @@ impl PyAnalysisResult {
     /// today; this method is the seam where the analysis-orchestration
     /// adapters will plug in once they exist.
     ///
+    /// `py` is required because waveform / transfer-function arrays
+    /// are stored as `Py<PyArray1<f64>>` (tasks.md #58 zero-copy view
+    /// over Rust-owned heap memory); constructing those handles
+    /// requires the GIL.
+    ///
     /// Currently has no in-tree consumer; the `dead_code` allow is
     /// the explicit "this is forward-declared" signal so the
     /// workspace's `-D warnings` clippy preflight does not reject it
@@ -643,6 +686,7 @@ impl PyAnalysisResult {
     #[must_use]
     #[allow(dead_code)]
     pub(crate) fn from_channels(
+        py: Python<'_>,
         node_voltages: BTreeMap<String, f64>,
         branch_currents: BTreeMap<String, f64>,
         waveforms: WaveformChannels,
@@ -653,7 +697,15 @@ impl PyAnalysisResult {
             branch_currents,
             waveforms: waveforms
                 .into_iter()
-                .map(|(k, (times, values))| (k, WaveformChannel { times, values }))
+                .map(|(k, (times, values))| {
+                    (
+                        k,
+                        WaveformChannel {
+                            times: PyArray1::from_vec(py, times).unbind(),
+                            values: PyArray1::from_vec(py, values).unbind(),
+                        },
+                    )
+                })
                 .collect(),
             transfer_functions: transfer_functions
                 .into_iter()
@@ -661,9 +713,9 @@ impl PyAnalysisResult {
                     (
                         k,
                         TransferFunctionChannel {
-                            frequencies_hz,
-                            magnitude_db,
-                            phase_degrees,
+                            frequencies_hz: PyArray1::from_vec(py, frequencies_hz).unbind(),
+                            magnitude_db: PyArray1::from_vec(py, magnitude_db).unbind(),
+                            phase_degrees: PyArray1::from_vec(py, phase_degrees).unbind(),
                         },
                     )
                 })

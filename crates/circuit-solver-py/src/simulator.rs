@@ -253,12 +253,16 @@ fn dispatch_dc(py: Python<'_>, graph: &PyCircuitGraph) -> PyResult<PyAnalysisRes
     let node_voltages = project_node_voltages(inner_graph, &op);
     let branch_currents = project_branch_currents(inner_graph, &structure, &op);
 
-    Ok(PyAnalysisResult::from_channels(
-        node_voltages,
-        branch_currents,
-        BTreeMap::new(),
-        BTreeMap::new(),
-    ))
+    Ok(Python::try_attach(|py| {
+        PyAnalysisResult::from_channels(
+            py,
+            node_voltages,
+            branch_currents,
+            BTreeMap::new(),
+            BTreeMap::new(),
+        )
+    })
+    .expect("GIL is held after Python::detach returns"))
 }
 
 /// Project the [`OperatingPoint::node_voltages`] vector (indexed by
