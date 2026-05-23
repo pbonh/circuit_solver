@@ -1,0 +1,15 @@
+[package]
+name = "conformance-harness"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+description = "Conformance harness: load ngspice golden-reference files and compare results per node under ADR-0008's max(relative, absolute) tolerance envelope (tasks.md item #62)."
+
+[lints]
+workspace = true
+
+[dependencies]
+circuit-solver-types = { path = "../circuit-solver-types" }
