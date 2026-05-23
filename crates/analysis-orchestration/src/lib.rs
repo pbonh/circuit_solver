@@ -51,6 +51,12 @@
 //!   `optimistic-advance-with-correct-prediction` happy path. Sibling
 //!   implementer tasks fill in mis-prediction rollback, boundary
 //!   signal exchange interpolation, conformance, etc.
+//! - [`boundary_exchanger`] — Analog↔digital boundary signal exchanger
+//!   with the **zero-order hold** default per ADR-0007 (tasks.md item
+//!   #45). Routes named boundary values between the analog solver and
+//!   the digital simulator at every synchronization point, holding
+//!   the last accepted value constant until the event time. Linear
+//!   interpolation opt-in is reserved for tasks.md item #46.
 //!
 //! # Stability
 //!
@@ -60,6 +66,7 @@
 
 pub mod ac;
 pub mod auto_dc_ac;
+pub mod boundary_exchanger;
 pub mod dc;
 pub mod dc_sweep;
 pub mod mixed_signal;
@@ -70,6 +77,10 @@ pub mod transient;
 pub use ac::{ac_analysis, AcAnalysisError, AcAnalysisRequest, AcAnalysisResult, TransferFunction};
 pub use auto_dc_ac::{
     ac_analysis_with_auto_dc, AcWithAutoDcError, AcWithAutoDcRequest, AcWithAutoDcResult,
+};
+pub use boundary_exchanger::{
+    AnalogValueProvider, BoundaryExchangePacket, BoundaryExchangerError, BoundaryInterpolationMode,
+    BoundarySignalExchanger, DigitalValueProvider,
 };
 pub use dc::{
     dc_analysis, BranchCurrentSample, DcAnalysisError, DcAnalysisRequest, DcAnalysisResult,
