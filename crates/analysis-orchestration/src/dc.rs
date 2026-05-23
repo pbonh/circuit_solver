@@ -137,8 +137,12 @@
 #![allow(clippy::module_name_repetitions)]
 
 use circuit_solver_types::flattened::FlattenedStructure;
-use circuit_solver_types::{BranchId, ConvergenceStatus, NodeId, TopologyReport};
-use netlist_graph::CircuitGraph;
+use circuit_solver_types::{BranchId, ConvergenceStatus, ModelName, NodeId, TopologyReport};
+use device_modeling::{
+    DeviceFamily, DeviceModel, LinearizedModel, OperatingPoint as DeviceOperatingPoint,
+    BJT_TERMINALS, DIODE_TERMINALS, MOSFET_TERMINALS,
+};
+use netlist_graph::{CircuitGraph, ElementKind};
 use numeric_solver::{
     assemble, MnaAssemblyError, MnaSystem, NewtonRaphsonConfig, NewtonRaphsonDriver,
     NewtonRaphsonError, NonlinearSystem, RussellRealSolver, SparseLinearSystem, SparseTriplet,
@@ -186,6 +190,25 @@ pub struct DcAnalysisRequest<'a> {
     /// compatibility with future structural changes per
     /// [`SubViewBuilder::with_ground_node`]).
     pub ground: Option<NodeId>,
+    /// Per-`ModelName` device-physics bindings for the semiconductor
+    /// elements referenced by the [`CircuitGraph`]. `None` (the
+    /// default) selects the linear-only adapter (`LinearDcSystem`)
+    /// and rejects any [`ElementKind::Semiconductor`] in the graph
+    /// via the assembler's
+    /// [`MnaAssemblyError::MissingLinearizationForDevice`] surface.
+    /// `Some(_)` selects the nonlinear adapter
+    /// (`NonlinearDcSystem`) which re-stamps the MNA matrix at
+    /// every Newton iterate by calling
+    /// [`DeviceModel::linearize`] on each device's resolved
+    /// parameters at the iterate-local terminal voltages.
+    ///
+    /// The slice is consulted with linear scan via
+    /// [`DeviceModelBinding::name`]; v1 circuits commonly carry only
+    /// a handful of distinct model declarations so a linear lookup
+    /// is asymptotically cheaper than the alternatives (a
+    /// `HashMap<ModelName, DeviceModel>` would force `Clone` on the
+    /// request envelope and a heap allocation per call).
+    pub device_models: Option<&'a [DeviceModelBinding]>,
 }
 
 impl<'a> DcAnalysisRequest<'a> {
@@ -198,6 +221,7 @@ impl<'a> DcAnalysisRequest<'a> {
             structure,
             newton_raphson: None,
             ground: None,
+            device_models: None,
         }
     }
 
@@ -213,6 +237,64 @@ impl<'a> DcAnalysisRequest<'a> {
     pub fn with_ground(mut self, ground: NodeId) -> Self {
         self.ground = Some(ground);
         self
+    }
+
+    /// Builder-style attach of a [`DeviceModelBinding`] slice.
+    ///
+    /// Selects the nonlinear DC adapter (`NonlinearDcSystem`)
+    /// which re-stamps the MNA matrix at every Newton iterate by
+    /// calling [`DeviceModel::linearize`] on each semiconductor
+    /// device's resolved parameters at the iterate-local terminal
+    /// voltages.
+    ///
+    /// The same slice may be reused across multiple requests on the
+    /// same `CircuitGraph`. Bindings whose `name` does not match any
+    /// element's resolved `ModelName` are ignored. Elements whose
+    /// `ModelName` is *not* in the slice are reported via
+    /// [`DcAnalysisError::AssemblyFailed`] wrapping
+    /// [`MnaAssemblyError::MissingLinearizationForDevice`] on the
+    /// first NR iteration.
+    #[must_use]
+    pub fn with_device_models(mut self, bindings: &'a [DeviceModelBinding]) -> Self {
+        self.device_models = Some(bindings);
+        self
+    }
+}
+
+/// One entry of a `ModelName → DeviceModel` lookup table passed via
+/// [`DcAnalysisRequest::device_models`].
+///
+/// The orchestrator (`PyO3` frontend at tasks.md #56+, or a hand-coded
+/// Rust caller) is responsible for assembling a slice of these from
+/// the netlist's model declarations (`.model` directives in SPICE
+/// vernacular). Each binding pairs the `ModelName` used by the
+/// [`CircuitGraph`] elements (carried in
+/// [`netlist_graph::Element::model`]) with the device-physics
+/// payload that `device-modeling::DeviceModel` provides.
+///
+/// # Why not a `HashMap`
+///
+/// A `HashMap<ModelName, DeviceModel>` would force the
+/// [`DcAnalysisRequest`] off `Copy` (and the analysis would have to
+/// `Clone` the request to satisfy the per-iteration borrow shape of
+/// the NR driver callback). Real netlists rarely carry more than a
+/// dozen distinct models, so the linear-scan lookup is fast in
+/// practice; the trade-off favors the simpler value-semantics of the
+/// request envelope.
+#[derive(Debug, Clone)]
+pub struct DeviceModelBinding {
+    /// The model name referenced by elements in the [`CircuitGraph`].
+    pub name: ModelName,
+    /// The device-physics payload `DeviceModel::linearize` reads at
+    /// every Newton iterate.
+    pub model: DeviceModel,
+}
+
+impl DeviceModelBinding {
+    /// Construct a new binding.
+    #[must_use]
+    pub fn new(name: ModelName, model: DeviceModel) -> Self {
+        Self { name, model }
     }
 }
 
@@ -509,6 +591,271 @@ impl NonlinearSystem for LinearDcSystem {
 }
 
 // -----------------------------------------------------------------------------
+// Nonlinear NonlinearSystem adapter
+// -----------------------------------------------------------------------------
+
+/// [`NonlinearSystem`] adapter for the nonlinear DC path
+/// (`nonlinear-dc-operating-point-with-direct-convergence` scenario).
+///
+/// In contrast to [`LinearDcSystem`] — whose `A` and `b` are
+/// iterate-independent — a circuit with diodes / BJTs / MOSFETs
+/// requires the MNA system to be **re-linearized at every Newton
+/// iterate** via [`DeviceModel::linearize`]. Each semiconductor
+/// element's contribution depends on its terminal voltages
+/// `(V_d, V_g, V_s, V_b)` read out of the current iterate; those
+/// voltages flow through the per-family stamp (Shockley equation
+/// for the Diode, Ebers-Moll / Gummel-Poon for the BJT,
+/// Shichman-Hodges / `BSIM3v3` / BSIM4 for the MOSFET) to produce a
+/// per-iterate [`LinearizedModel`] whose Jacobian and companion
+/// current the assembler folds into `A` and `b`.
+///
+/// On every [`NonlinearSystem::linearize`] callback the adapter
+/// performs the full Pass-2 → sub-view → sparse lowering pipeline
+/// against a freshly-built `linearizations` slice. On every
+/// [`NonlinearSystem::residue`] callback it does the same and then
+/// computes `F(x) = A(x) · x − b(x)` from the resulting sparse
+/// triplet stream. Caching the linearizations slice between the
+/// two callbacks is deferred: the driver always calls `linearize`
+/// then `residue` with the same iterate, but the [`NonlinearSystem`]
+/// trait does not pin that contract, so the safest implementation
+/// computes both freshly. The cost is one extra `assemble()` per NR
+/// step; for v1 this is acceptable, and a future optimization can
+/// thread an iterate-keyed cache through the adapter without
+/// changing the public surface.
+///
+/// # ADR alignment
+///
+/// - **ADR-0005 (closed-enum `DeviceModel` dispatch).** Every
+///   linearization callback flows through the exhaustive `match` in
+///   [`DeviceModel::linearize`]; adding a new device family at the
+///   `device-modeling` layer would break this call site and force a
+///   conscious update here.
+/// - **ADR-0006 (dual-criterion Newton-Raphson).** The driver
+///   reading `linearize` / `residue` from this adapter is the same
+///   [`NewtonRaphsonDriver`] the linear path uses; no path-specific
+///   convergence machinery lives here.
+/// - **ADR-0008 (max(rel,abs) tolerance envelope).** The conformance
+///   harness compares the *output* `OperatingPoint` against the
+///   golden reference; this adapter has no direct involvement in
+///   ADR-0008.
+/// - **ADR-0010 (unstable v1 surface).** [`NonlinearDcSystem`] is
+///   crate-private and the adapter type itself never escapes the
+///   `dc_analysis` entry point; only the [`DcAnalysisRequest`]
+///   knob `device_models` is part of the unstable v1 API.
+struct NonlinearDcSystem<'a> {
+    /// The immutable source circuit graph. Element-parameter lookups
+    /// during stamping route through this borrow.
+    graph: &'a CircuitGraph,
+    /// Pass-1 flattened incidence over `graph`.
+    structure: &'a FlattenedStructure,
+    /// Pre-resolved per-element `Option<&'a DeviceModel>`, indexed by
+    /// [`ElementId::index`]. For non-semiconductor elements the slot
+    /// is `None`; for semiconductors it points at the binding's
+    /// `DeviceModel` resolved from
+    /// [`DcAnalysisRequest::device_models`]. Slot length always
+    /// equals `graph.elements().len()`.
+    per_element_model: Vec<Option<&'a DeviceModel>>,
+    /// Ground node id used by the sub-view extractor every iteration.
+    /// Captured here once (rather than re-read from the structure on
+    /// every callback) to keep `linearize` / `residue` allocation-free
+    /// in the steady state.
+    ground: NodeId,
+}
+
+impl<'a> NonlinearDcSystem<'a> {
+    /// Build a nonlinear adapter for the given request envelope.
+    ///
+    /// Resolves the per-element `ModelName → DeviceModel` lookup
+    /// once up front so each Newton iteration runs with `O(elements)`
+    /// stamp cost instead of `O(elements * bindings)`. Missing
+    /// bindings are *not* an error here: a semiconductor element
+    /// with no matching binding leaves an `Option::None` in the
+    /// slot, which causes the first call to [`assemble`] inside
+    /// [`linearize`] to emit
+    /// [`MnaAssemblyError::MissingLinearizationForDevice`]. That is
+    /// the same error surface used by the linear path, so callers
+    /// see a consistent diagnostic regardless of which adapter
+    /// served the request.
+    fn new(req: DcAnalysisRequest<'a>) -> Self {
+        let bindings = req.device_models.unwrap_or(&[]);
+        let elements = req.graph.elements();
+        let mut per_element_model: Vec<Option<&'a DeviceModel>> =
+            Vec::with_capacity(elements.len());
+        for el in elements {
+            let resolved = match (el.kind(), el.model()) {
+                (ElementKind::Semiconductor, Some(name)) => {
+                    bindings.iter().find(|b| &b.name == name).map(|b| &b.model)
+                }
+                _ => None,
+            };
+            per_element_model.push(resolved);
+        }
+        let ground = req.ground.unwrap_or_else(|| req.structure.ground_node());
+        Self {
+            graph: req.graph,
+            structure: req.structure,
+            per_element_model,
+            ground,
+        }
+    }
+
+    /// Re-stamp the MNA system at the current iterate and lower to
+    /// the sparse [`SparseLinearSystem`] shape the driver consumes.
+    ///
+    /// Steps:
+    /// 1. For each element, materialize its [`LinearizedModel`]
+    ///    (via [`DeviceModel::linearize`]) when the element is a
+    ///    semiconductor with a resolved binding, else `None`.
+    /// 2. Call [`assemble()`] with the freshly-built linearization
+    ///    slice.
+    /// 3. Run the same sub-view → sparse lowering used by the
+    ///    linear path.
+    fn assemble_sparse_at_iterate(
+        &self,
+        iterate: &[f64],
+    ) -> Result<SparseLinearSystem<f64>, NrSystemError> {
+        let linearizations = self.build_linearizations(iterate)?;
+        let mna: MnaSystem = assemble(self.structure, self.graph, &linearizations)
+            .map_err(|e| NrSystemError::new(format!("{e}")))?;
+        let sub_view = SubViewBuilder::from_full(&mna)
+            .with_ground_node(self.ground)
+            .suppress_ground(true)
+            .build()
+            .map_err(|e| NrSystemError::new(format!("{e}")))?;
+        mna_subview_to_sparse_linear_system(&sub_view)
+            .map_err(|e| NrSystemError::new(format!("{e}")))
+    }
+
+    /// Build the per-element [`Option<LinearizedModel>`] slice
+    /// consumed by [`assemble()`].
+    ///
+    /// For each semiconductor element with a resolved
+    /// [`DeviceModel`] binding, reads the device's terminal node
+    /// voltages out of `iterate` and dispatches through
+    /// [`DeviceModel::linearize`] to obtain the family-tagged
+    /// [`LinearizedModel`]. Non-semiconductor elements (resistors,
+    /// independent sources, etc.) contribute `None` slots, which
+    /// the assembler ignores; the linear stamp logic for those
+    /// elements lives entirely inside [`assemble()`].
+    fn build_linearizations(
+        &self,
+        iterate: &[f64],
+    ) -> Result<Vec<Option<LinearizedModel>>, NrSystemError> {
+        let elements = self.graph.elements();
+        let mut linearizations: Vec<Option<LinearizedModel>> = Vec::with_capacity(elements.len());
+        for (idx, el) in elements.iter().enumerate() {
+            let Some(device_model) = self.per_element_model[idx] else {
+                linearizations.push(None);
+                continue;
+            };
+            let terminals = el.terminals();
+            let device_op = build_device_operating_point(device_model.family(), terminals, iterate)
+                .ok_or_else(|| {
+                    NrSystemError::new(format!(
+                        "nonlinear-dc: element {:?} (model family {:?}) has wrong terminal count \
+                         ({}) for its device family",
+                        el.name(),
+                        device_model.family(),
+                        terminals.len()
+                    ))
+                })?;
+            let lin = device_model.linearize(&device_op).map_err(|e| {
+                NrSystemError::new(format!(
+                    "nonlinear-dc: DeviceModel::linearize family mismatch on element {:?}: {}",
+                    el.name(),
+                    e
+                ))
+            })?;
+            linearizations.push(Some(lin));
+        }
+        Ok(linearizations)
+    }
+}
+
+impl NonlinearSystem for NonlinearDcSystem<'_> {
+    fn dim(&self) -> u32 {
+        // Sub-view dimension is node_count + branch_count, identical
+        // to MnaSystem::dim() for the underlying structure.
+        self.structure.node_count() + self.structure.branch_count()
+    }
+
+    fn linearize(&mut self, iterate: &[f64]) -> Result<SparseLinearSystem<f64>, NrSystemError> {
+        self.assemble_sparse_at_iterate(iterate)
+    }
+
+    fn residue(&mut self, iterate: &[f64]) -> Result<Vec<f64>, NrSystemError> {
+        // Compute the residue F(x) = A(x) · x − b(x) by re-stamping
+        // at the current iterate and reading off the triplet stream.
+        //
+        // This matches the linear adapter's residue computation,
+        // except the sparse system depends on `iterate` so we
+        // re-assemble first. The driver guarantees `linearize` is
+        // called before `residue` on each iterate, but caching across
+        // the two callbacks would require a separate iterate-keyed
+        // memo and we defer that optimization (see the
+        // [`NonlinearDcSystem`] docstring).
+        let system = self.assemble_sparse_at_iterate(iterate)?;
+        let dim = system.dim() as usize;
+        let mut f = vec![0.0_f64; dim];
+        for t in system.triplets() {
+            f[t.row as usize] += t.value * iterate[t.col as usize];
+        }
+        for (i, rhs_i) in system.rhs().iter().enumerate() {
+            f[i] -= *rhs_i;
+        }
+        Ok(f)
+    }
+}
+
+/// Pack the relevant terminal voltages from a Newton iterate into a
+/// per-family [`DeviceOperatingPoint`] that [`DeviceModel::linearize`]
+/// understands.
+///
+/// Returns `None` if the element's terminal count doesn't match the
+/// family — that's a graph-structure error the upstream builder
+/// should have caught (an `add_element` with a `Semiconductor` kind
+/// and a `Diode` model but three terminals, say). The caller maps
+/// this to a [`NrSystemError`] with a diagnostic message.
+fn build_device_operating_point(
+    family: DeviceFamily,
+    terminals: &[NodeId],
+    iterate: &[f64],
+) -> Option<DeviceOperatingPoint> {
+    match family {
+        DeviceFamily::Diode => {
+            if terminals.len() != DIODE_TERMINALS {
+                return None;
+            }
+            let mut voltages = [0.0_f64; DIODE_TERMINALS];
+            for (slot, node) in terminals.iter().enumerate() {
+                voltages[slot] = iterate.get(node.index() as usize).copied().unwrap_or(0.0);
+            }
+            Some(DeviceOperatingPoint::Diode(voltages))
+        }
+        DeviceFamily::BJT => {
+            if terminals.len() != BJT_TERMINALS {
+                return None;
+            }
+            let mut voltages = [0.0_f64; BJT_TERMINALS];
+            for (slot, node) in terminals.iter().enumerate() {
+                voltages[slot] = iterate.get(node.index() as usize).copied().unwrap_or(0.0);
+            }
+            Some(DeviceOperatingPoint::BJT(voltages))
+        }
+        DeviceFamily::MOSFET => {
+            if terminals.len() != MOSFET_TERMINALS {
+                return None;
+            }
+            let mut voltages = [0.0_f64; MOSFET_TERMINALS];
+            for (slot, node) in terminals.iter().enumerate() {
+                voltages[slot] = iterate.get(node.index() as usize).copied().unwrap_or(0.0);
+            }
+            Some(DeviceOperatingPoint::MOSFET(voltages))
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Dense → sparse lowering
 // -----------------------------------------------------------------------------
 
@@ -672,38 +1019,48 @@ pub fn dc_analysis(req: DcAnalysisRequest<'_>) -> Result<DcAnalysisResult, DcAna
         });
     }
 
-    // --- (2) Pass-2 assembly ------------------------------------------------
-    // Linear-only path: empty linearization slice. Nonlinear scenarios
-    // (tasks.md #18 / #19) supply per-iterate linearizations through a
-    // dedicated NonlinearSystem implementor that owns a sibling assembly
-    // path.
-    let mna: MnaSystem = assemble(req.structure, req.graph, &[])?;
-
-    // --- (3) Sub-view extraction --------------------------------------------
-    let ground = req.ground.unwrap_or_else(|| req.structure.ground_node());
-    let sub_view = SubViewBuilder::from_full(&mna)
-        .with_ground_node(ground)
-        .suppress_ground(true)
-        .build()?;
-
-    // --- (4) Sparse lowering ------------------------------------------------
-    // The Russell backend wants a SparseLinearSystem; the dense
-    // SubView is what the assembler-sub_view boundary produces.
-    let sparse =
-        mna_subview_to_sparse_linear_system(&sub_view).map_err(DcAnalysisError::from_lse)?;
-    let dim = sparse.dim();
-
-    // --- (5) Newton-Raphson -------------------------------------------------
+    // --- (2) Adapter selection ----------------------------------------------
+    //
+    // When the caller attaches a `device_models` slice, route through the
+    // nonlinear adapter that re-stamps the MNA matrix at every Newton
+    // iterate. Otherwise fall back to the linear-only adapter which
+    // assembles once with an empty linearization slice and converges in a
+    // single NR step on a well-formed linear circuit. The two paths share
+    // the same Pass-2 assembler, sub-view extractor, dense → sparse
+    // lowering, and Newton-Raphson driver — only the [`NonlinearSystem`]
+    // implementor changes.
     let config = req
         .newton_raphson
         .unwrap_or(NewtonRaphsonConfig::DC_DEFAULTS);
     let solver = RussellRealSolver;
-    let mut system = LinearDcSystem::new(sparse);
-    let outcome = NewtonRaphsonDriver
-        .solve(config, &mut system, &solver, initial_iterate(dim))
-        .map_err(DcAnalysisError::from)?;
 
-    // --- (6) Operating-point extraction ------------------------------------
+    let outcome = if req.device_models.is_some() {
+        let mut system = NonlinearDcSystem::new(req);
+        let dim = system.dim();
+        NewtonRaphsonDriver
+            .solve(config, &mut system, &solver, initial_iterate(dim))
+            .map_err(DcAnalysisError::from)?
+    } else {
+        // Linear-only path. Pass-2 assembly with empty linearization
+        // slice; nonlinear scenarios (tasks.md #18 / #19) supply
+        // per-iterate linearizations through the [`NonlinearDcSystem`]
+        // path above.
+        let mna: MnaSystem = assemble(req.structure, req.graph, &[])?;
+        let ground = req.ground.unwrap_or_else(|| req.structure.ground_node());
+        let sub_view = SubViewBuilder::from_full(&mna)
+            .with_ground_node(ground)
+            .suppress_ground(true)
+            .build()?;
+        let sparse =
+            mna_subview_to_sparse_linear_system(&sub_view).map_err(DcAnalysisError::from_lse)?;
+        let dim = sparse.dim();
+        let mut system = LinearDcSystem::new(sparse);
+        NewtonRaphsonDriver
+            .solve(config, &mut system, &solver, initial_iterate(dim))
+            .map_err(DcAnalysisError::from)?
+    };
+
+    // --- (3) Operating-point extraction -------------------------------------
     let op = iterate_to_operating_point(&outcome.iterate, req.structure);
 
     Ok(DcAnalysisResult {

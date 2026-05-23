@@ -73,7 +73,7 @@ pub use auto_dc_ac::{
 };
 pub use dc::{
     dc_analysis, BranchCurrentSample, DcAnalysisError, DcAnalysisRequest, DcAnalysisResult,
-    OperatingPoint,
+    DeviceModelBinding, OperatingPoint,
 };
 pub use dc_sweep::{dc_sweep, DcSweepError, DcSweepPoint, DcSweepRequest, DcSweepResult};
 pub use mixed_signal::{

@@ -142,8 +142,14 @@ impl OperatingPoint {
 ///
 /// - `g_ij` to the conductance matrix at `(terminal_i, terminal_j)`,
 ///   i.e. add `jacobian[i][j]` to `G[node_of(i), node_of(j)]`,
-/// - `i_eq_k` to the right-hand-side at `node_of(terminal_k)` (current
-///   leaving the node into the device companion model).
+/// - `i_eq_k` is *subtracted* from the right-hand-side at
+///   `node_of(terminal_k)`. The companion current encodes the
+///   residual current `I_term(v*) − J[k,:]·v*` the linearized model
+///   would draw at `v = 0` — i.e., the current leaving the node into
+///   the device terminal — so moving the linearized device current
+///   from the LHS (where its `J·V` part sits in the conductance
+///   matrix) to the RHS introduces the minus sign. See
+///   `numeric-solver::assemble` for the full derivation.
 ///
 /// The exact equation that produces these numbers is the Diode
 /// companion model from tasks.md #9 (Shockley equation linearized at
@@ -155,8 +161,9 @@ pub struct DiodeLinearization {
     /// ∂`I_i` / ∂`V_j` evaluated at the operating point.
     pub jacobian: [[f64; DIODE_TERMINALS]; DIODE_TERMINALS],
     /// Companion current vector, terminal-local. `companion_current[k]`
-    /// is added to the MNA right-hand-side at the node attached to
-    /// terminal `k`.
+    /// is *subtracted* from the MNA right-hand-side at the node
+    /// attached to terminal `k`. See `numeric-solver::assemble`'s
+    /// `stamp_dense_block` for the sign-convention rationale.
     pub companion_current: [f64; DIODE_TERMINALS],
 }
 
