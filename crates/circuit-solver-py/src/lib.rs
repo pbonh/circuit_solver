@@ -4,7 +4,7 @@
 //! module name registered with `CPython` is `circuit_solver` (PEP 8
 //! lowercase, distinct from the Rust crate name `circuit-solver-py`).
 //!
-//! ## Surface as of `tasks.md` items #52, #53, #54, #55, #56, #57, #60
+//! ## Surface as of `tasks.md` items #52, #53, #54, #55, #56, #57, #59, #60
 //!
 //! - [`CircuitBuilder`](builder::PyCircuitBuilder) — the incremental
 //!   construction entry point. Methods: `add_element`, `add_wire`,
@@ -13,7 +13,9 @@
 //!   fresh immutable [`CircuitGraph`](graph::PyCircuitGraph); the
 //!   builder remains reusable, satisfying the
 //!   `python-frontend#builder-isolation-across-multiple-builds`
-//!   Gherkin scenario (tasks.md #55).
+//!   Gherkin scenario (tasks.md #55). The `build()` call releases
+//!   the `CPython` GIL around its native compute (tasks.md #59;
+//!   scenario `python-frontend#gil-release-during-simulation`).
 //! - [`CircuitGraph`](graph::PyCircuitGraph) — the immutable
 //!   `#[pyclass(frozen)]` handle `build()` returns. Read-only
 //!   accessors: `element_count`, `node_count`, `model_count`,
@@ -67,7 +69,8 @@
 //!   tasks.md item #61 (spec scenario
 //!   `python-frontend#error-on-malformed-netlist`).
 //!
-//! `NumPy` result arrays and GIL release are tasks #58–#59.
+//! `NumPy` result arrays are task #58 (still pending); GIL release
+//! around solver entry points is task #59, completed here.
 //!
 //! ## Build profiles
 //!
@@ -147,6 +150,22 @@ pub use simulator::PySimulator;
 ///   is rejected by the underlying `netlist-graph` builder
 ///   (duplicate element names, unknown subcircuit references,
 ///   port-arity mismatches, expansion cycles).
+///
+/// # GIL release
+///
+/// File I/O, SPICE tokenization, and the builder-replay sweep are
+/// pure-Rust work that does not touch `CPython` data structures. We
+/// release the GIL around the entire native call via
+/// [`pyo3::Python::detach`] (the pyo3 0.28 successor to
+/// `allow_threads`) so concurrent Python threads can continue to
+/// execute while a netlist is being parsed. This is one of the two
+/// principal witness sites for tasks.md #59 / spec scenario
+/// `python-frontend#gil-release-during-simulation` (the other being
+/// [`PyCircuitBuilder::build`](builder::PyCircuitBuilder::build)).
+/// The `PyCircuitGraph::from_inner` re-wrap on the success path does
+/// no `CPython` work either, but for clarity we keep that step outside
+/// the `detach` boundary — only the long-running native compute is
+/// held inside.
 #[pyfunction(name = "parse_netlist")]
 #[pyo3(text_signature = "(path, /)")]
 // PyO3 derives `FromPyObject` for `PathBuf` (path-likes / strings)
@@ -155,11 +174,20 @@ pub use simulator::PySimulator;
 // the binding's prelude. The `needless_pass_by_value` lint is
 // suppressed for this reason.
 #[allow(clippy::needless_pass_by_value)]
-fn parse_netlist_py(path: PathBuf) -> PyResult<PyCircuitGraph> {
+fn parse_netlist_py(py: Python<'_>, path: PathBuf) -> PyResult<PyCircuitGraph> {
     // `PathBuf` is taken by value so PyO3 can convert from the
     // Python str/`os.PathLike` argument without an extra clone;
     // ownership ends at the call to `parser::parse_file` below.
-    let graph = parser::parse_file(path.as_path())?;
+    //
+    // The entire parse — file read, tokenization, builder replay,
+    // graph materialization — happens inside `py.detach` so other
+    // Python threads can run concurrently. The closure's body is
+    // pure Rust over `Send` data (`PathBuf`, `CircuitGraph`,
+    // `PyErr`), so the move-into-the-closure compiles and the
+    // returned `Result<CircuitGraph, PyErr>` ferries across the
+    // re-attach point. See tasks.md #59 / spec scenario
+    // `python-frontend#gil-release-during-simulation`.
+    let graph = py.detach(|| parser::parse_file(path.as_path()))?;
     Ok(PyCircuitGraph::from_inner(graph))
 }
 
