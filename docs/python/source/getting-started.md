@@ -130,4 +130,4 @@ Submission and result retrieval (`Simulator.run` → `Result`) is
 
 [crate]: https://github.com/pbonh/circuit_solver/tree/main/crates/circuit-solver-py
 [PyO3]: https://pyo3.rs
-[tasks.md #72]: ../../openspec/changes/circuit-solver-2026-05-21-v1-spec/tasks.md
+[tasks.md #72]: ../../../openspec/changes/circuit-solver-2026-05-21-v1-spec/tasks.md

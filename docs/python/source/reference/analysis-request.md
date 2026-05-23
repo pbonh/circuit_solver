@@ -118,5 +118,5 @@ AnalysisRequest(type=ac-small-signal, sweep=(1.0, 1000000.0, 401, "log"),
 Stable enough for log scraping but **not** part of the public
 contract — [ADR-0010] keeps the `__repr__` surface unstable.
 
-[ADR-0007]: ../../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0007-zero-order-hold-default-at-analog-digital-boundary.md
-[ADR-0010]: ../../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0010-unstable-public-rust-api-surface-for-v1.md
+[ADR-0007]: ../../../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0007-zero-order-hold-analog-digital-boundary.md
+[ADR-0010]: ../../../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0010-unstable-public-rust-api-surface-for-v1.md

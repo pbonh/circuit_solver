@@ -47,5 +47,5 @@ under #57–#59 and #62. They are **not** part of this reference.
 
 [upstream]: https://github.com/pbonh/circuit_solver
 [PyO3]: https://pyo3.rs
-[adr-0010]: ../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0010-unstable-public-rust-api-surface-for-v1.md
-[adr-0001]: ../../wiki/decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph.md
+[adr-0010]: ../../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0010-unstable-public-rust-api-surface-for-v1.md
+[adr-0001]: ../../../wiki/decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph.md

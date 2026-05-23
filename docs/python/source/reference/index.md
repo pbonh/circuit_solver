@@ -36,5 +36,5 @@ binding is the stability contract callers may depend on. See the
 | `parse_netlist`         | `python-frontend#spice-netlist-file-parsing` (#60)                                     |
 | `NetlistParseError`     | `python-frontend#error-on-malformed-netlist` (#61)                                     |
 
-[ADR-0010]: ../../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0010-unstable-public-rust-api-surface-for-v1.md
-[ADR-0001]: ../../../wiki/decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph.md
+[ADR-0010]: ../../../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0010-unstable-public-rust-api-surface-for-v1.md
+[ADR-0001]: ../../../../wiki/decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph.md

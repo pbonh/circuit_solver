@@ -191,4 +191,4 @@ and further mutations only affect graphs returned by *subsequent*
   (duplicate names, terminal arity) is performed eagerly by
   `add_element`, so `build()` itself never fails on those.
 
-[ADR-0001]: ../../../wiki/decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph.md
+[ADR-0001]: ../../../../wiki/decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph.md

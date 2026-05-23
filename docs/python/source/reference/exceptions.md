@@ -157,4 +157,4 @@ taxonomy:
 Further taxonomy refinement (`tasks.md` #58) may add more exception
 classes; the existing three are forward-compatible.
 
-[ADR-0001]: ../../../wiki/decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph.md
+[ADR-0001]: ../../../../wiki/decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph.md

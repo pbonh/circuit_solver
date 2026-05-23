@@ -82,4 +82,4 @@ policy that will apply once v1.x evolves.
   Python surface, not the Rust surface, so Python stability is
   load-bearing.
 
-[ADR-0010]: ../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0010-unstable-public-rust-api-surface-for-v1.md
+[ADR-0010]: ../../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0010-unstable-public-rust-api-surface-for-v1.md
