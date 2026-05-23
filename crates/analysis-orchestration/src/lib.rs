@@ -53,10 +53,11 @@
 //!   signal exchange interpolation, conformance, etc.
 //! - [`boundary_exchanger`] — Analog↔digital boundary signal exchanger
 //!   with the **zero-order hold** default per ADR-0007 (tasks.md item
-//!   #45). Routes named boundary values between the analog solver and
-//!   the digital simulator at every synchronization point, holding
-//!   the last accepted value constant until the event time. Linear
-//!   interpolation opt-in is reserved for tasks.md item #46.
+//!   #45) and the **linear interpolation opt-in** (tasks.md item #46).
+//!   Routes named boundary values between the analog solver and the
+//!   digital simulator at every synchronization point — ZOH holds the
+//!   last accepted value constant until the event time; Linear
+//!   retains the two most recent samples and interpolates at T.
 //!
 //! # Stability
 //!
@@ -79,8 +80,9 @@ pub use auto_dc_ac::{
     ac_analysis_with_auto_dc, AcWithAutoDcError, AcWithAutoDcRequest, AcWithAutoDcResult,
 };
 pub use boundary_exchanger::{
-    AnalogValueProvider, BoundaryExchangePacket, BoundaryExchangerError, BoundaryInterpolationMode,
-    BoundarySignalExchanger, DigitalValueProvider,
+    linear_interpolate, AnalogSampleHistoryProvider, AnalogValueProvider, BoundaryExchangePacket,
+    BoundaryExchangerError, BoundaryInterpolationMode, BoundarySample, BoundarySignalExchanger,
+    DigitalSampleHistoryProvider, DigitalValueProvider,
 };
 pub use dc::{
     dc_analysis, BranchCurrentSample, DcAnalysisError, DcAnalysisRequest, DcAnalysisResult,
