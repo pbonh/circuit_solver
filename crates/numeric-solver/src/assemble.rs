@@ -97,13 +97,20 @@
 //!
 //! 1. Add `jacobian[i][j]` to `A[node_of(i), node_of(j)]` for all
 //!    terminal pairs `(i, j)`.
-//! 2. Add `companion_current[k]` to `RHS[node_of(k)]` for all
-//!    terminal slots `k`.
+//! 2. *Subtract* `companion_current[k]` from `RHS[node_of(k)]` for
+//!    all terminal slots `k`.
 //!
-//! The companion currents are entered with a `+` sign: per the
-//! linearization contract (`crate::stamp` docstring), the companion
-//! current is the right-hand-side contribution at that terminal's
-//! node. v1 devices do not carry MNA branch rows.
+//! The minus sign on the companion current is the load-bearing
+//! convention here. Per the linearization contract
+//! (`device_modeling::stamp` docstring) `companion_current[k] =
+//! I_term(v*) − J[k,:]·v*` is the *residual* terminal current the
+//! linearized model would draw at `v = 0`, i.e., the current the
+//! device leaks OUT OF node `k` INTO the device terminal `k` once
+//! the linear `J·V` part has been moved into `A`. Standard MNA puts
+//! conductances on the LHS and external-source current injections
+//! on the RHS; the linearized device current sits on the LHS, so
+//! moving its constant part to the RHS introduces the minus sign.
+//! v1 devices do not carry MNA branch rows.
 //!
 //! # Element-to-linearization indexing
 //!
@@ -873,7 +880,23 @@ fn stamp_dense_block<const N: usize>(
     );
     for i in 0..N {
         let row = incidence_nodes[i].index();
-        b[row as usize] += companion_current[i];
+        // Companion current is the residual current the linearized
+        // model would draw at `v = 0`, in the convention used by
+        // `device-modeling`:
+        //
+        //   companion_current[k] = I_term(v*) - J[k,:]·v*
+        //
+        // where `I_term(v*)` is the current the device draws OUT of
+        // node `k` INTO terminal `k` at the iterate `v*`. The MNA
+        // form is `A·V = b` with `A` carrying conductances (positive
+        // contributions = current leaving a node per unit voltage)
+        // and `b` carrying external-source current INJECTED INTO the
+        // node. Moving the linearized device current `J·V +
+        // companion_current` from the LHS to the RHS gives `b -=
+        // companion_current` (i.e., the linearized model's residual
+        // current is *subtracted* from the source injection at this
+        // node).
+        b[row as usize] -= companion_current[i];
         for j in 0..N {
             let col = incidence_nodes[j].index();
             *ar(a, dim, row, col) += jacobian[i][j];
@@ -1162,9 +1185,14 @@ mod tests {
             sys.matrix_entry(cathode.index(), cathode.index()).unwrap(),
             1.0
         ));
-        // Companion current goes into the RHS at each terminal node.
-        assert!(approx(sys.rhs_entry(anode.index()).unwrap(), -0.5));
-        assert!(approx(sys.rhs_entry(cathode.index()).unwrap(), 0.5));
+        // Companion current is *subtracted* from the RHS at each
+        // terminal node — see `stamp_dense_block`'s docstring for
+        // the sign convention (companion_current[k] = I_term(v*) −
+        // J·v*; this is the residual current the linearized model
+        // would draw at `v=0`, which moves to `-` on the RHS when
+        // we rearrange `A·V = b` from `LHS - sources = 0`).
+        assert!(approx(sys.rhs_entry(anode.index()).unwrap(), 0.5));
+        assert!(approx(sys.rhs_entry(cathode.index()).unwrap(), -0.5));
         // Ground row/col is unaffected by this stamp.
         assert!(approx(sys.matrix_entry(0, 0).unwrap(), 0.0));
         assert!(approx(sys.rhs_entry(0).unwrap(), 0.0));
@@ -1186,8 +1214,10 @@ mod tests {
         assert!(approx(sys.matrix_entry(1, 2).unwrap(), 2.0));
         assert!(approx(sys.matrix_entry(3, 1).unwrap(), 7.0));
         assert!(approx(sys.matrix_entry(3, 3).unwrap(), 9.0));
-        assert!(approx(sys.rhs_entry(1).unwrap(), 0.1));
-        assert!(approx(sys.rhs_entry(3).unwrap(), 0.3));
+        // Companion current is subtracted on the RHS (see
+        // `stamp_dense_block` docstring).
+        assert!(approx(sys.rhs_entry(1).unwrap(), -0.1));
+        assert!(approx(sys.rhs_entry(3).unwrap(), -0.3));
     }
 
     #[test]
@@ -1215,8 +1245,10 @@ mod tests {
         assert!(approx(sys.matrix_entry(1, 4).unwrap(), 3.0));
         assert!(approx(sys.matrix_entry(2, 3).unwrap(), 12.0));
         assert!(approx(sys.matrix_entry(4, 4).unwrap(), 33.0));
-        assert!(approx(sys.rhs_entry(1).unwrap(), 0.01));
-        assert!(approx(sys.rhs_entry(4).unwrap(), 0.04));
+        // Companion current is subtracted on the RHS (see
+        // `stamp_dense_block` docstring).
+        assert!(approx(sys.rhs_entry(1).unwrap(), -0.01));
+        assert!(approx(sys.rhs_entry(4).unwrap(), -0.04));
     }
 
     #[test]
