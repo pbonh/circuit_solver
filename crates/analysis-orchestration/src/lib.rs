@@ -53,6 +53,7 @@ pub mod dc;
 pub mod mixed_signal;
 pub mod noise;
 pub mod sweep;
+pub mod transient;
 
 pub use ac::{ac_analysis, AcAnalysisError, AcAnalysisRequest, AcAnalysisResult, TransferFunction};
 pub use auto_dc_ac::{
@@ -73,3 +74,7 @@ pub use noise::{
     NoiseInjection, SemiconductorNoiseSource,
 };
 pub use sweep::{LogSweep, LogSweepError};
+pub use transient::{
+    transient_analysis, InitialState, IntegrationMethod, TransientAnalysisError,
+    TransientAnalysisRequest, TransientAnalysisResult,
+};
