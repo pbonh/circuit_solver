@@ -279,10 +279,14 @@ fn ac_analysis_without_prior_operating_point_scenario() {
     );
     let v_in = result
         .operating_point
+        .as_ref()
+        .expect("Then-1: OperatingPoint must be Some on the converged path")
         .voltage_at(NodeId::new(1))
         .expect("V(n_in) must be present in OperatingPoint");
     let v_out = result
         .operating_point
+        .as_ref()
+        .expect("Then-1: OperatingPoint must be Some on the converged path")
         .voltage_at(n_out)
         .expect("V(n_out) must be present in OperatingPoint");
     assert!(
@@ -309,11 +313,20 @@ fn ac_analysis_without_prior_operating_point_scenario() {
     // Witnessed structurally as well: the AC result is non-empty and
     // its frequency axis matches the requested sweep verbatim.
     assert_eq!(
-        result.ac.transfer_functions.len(),
+        result
+            .ac
+            .as_ref()
+            .expect("Then-2: ac must be Some on the converged path")
+            .transfer_functions
+            .len(),
         1,
         "Then-2: expected exactly one TransferFunction for one output node"
     );
-    let tf = &result.ac.transfer_functions[0];
+    let ac = result
+        .ac
+        .as_ref()
+        .expect("Then-2: ac must be Some on the converged path");
+    let tf = &ac.transfer_functions[0];
     assert_eq!(
         tf.output, n_out,
         "Then-2: TransferFunction must address n_out"
@@ -407,11 +420,21 @@ fn ac_analysis_without_prior_operating_point_scenario() {
     // a future refactor that elides either one would fail this
     // witness.
     assert!(
-        !result.operating_point.node_voltages.is_empty(),
+        !result
+            .operating_point
+            .as_ref()
+            .expect("Then-3: OperatingPoint must be Some on the converged path")
+            .node_voltages
+            .is_empty(),
         "Then-3: Result's OperatingPoint must carry node voltages"
     );
     assert!(
-        !result.ac.transfer_functions.is_empty(),
+        !result
+            .ac
+            .as_ref()
+            .expect("Then-3: ac must be Some on the converged path")
+            .transfer_functions
+            .is_empty(),
         "Then-3: Result's AC half must carry TransferFunctions"
     );
     assert!(
