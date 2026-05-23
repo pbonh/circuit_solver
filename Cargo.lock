@@ -12,6 +12,7 @@ dependencies = [
  "netlist-graph",
  "num-complex",
  "numeric-solver",
+ "vcd",
 ]
 
 [[package]]
@@ -1094,6 +1095,12 @@ name = "unicode-width"
 version = "0.1.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7dd6e30e90baa6f72411720665d41d89b9a3d039dc45b8faea1ddd07f617f6af"
+
+[[package]]
+name = "vcd"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4505774fc84de82eb04caa74d859342b0daa376f4c6df45149593245dd62c004"
 
 [[package]]
 name = "vec_map"

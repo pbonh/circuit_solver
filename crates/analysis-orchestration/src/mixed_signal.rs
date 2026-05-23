@@ -769,35 +769,21 @@ pub(crate) mod test_doubles {
         }
 
         fn take_trace(&mut self) -> DigitalEventTrace {
-            // Emit a minimal but valid VCD: timescale, scope, signal
-            // declarations, then a `#<time>` line for each confirmed
-            // event with all signals toggling to '1'. Standard VCD
-            // readers accept this shape.
-            use std::fmt::Write as _;
-
-            let mut vcd = String::new();
-            vcd.push_str("$timescale 1ps $end\n");
-            vcd.push_str("$scope module mixed_signal_test $end\n");
-            for (i, sig) in self.signals.iter().enumerate() {
-                // VCD identifier code: a single printable ASCII char.
-                // The test double's signal count is bounded by the
-                // scenario (≤ a handful), so the truncation cannot
-                // happen in practice.
-                #[allow(clippy::cast_possible_truncation)]
-                let id_byte = b'!' + (i as u8);
-                let id = char::from(id_byte);
-                let _ = writeln!(vcd, "$var wire 1 {id} {sig} $end");
-            }
-            vcd.push_str("$upscope $end\n$enddefinitions $end\n");
-            for t in &self.confirmed {
-                let _ = writeln!(vcd, "#{}", t.as_picoseconds());
-                for (i, _) in self.signals.iter().enumerate() {
-                    #[allow(clippy::cast_possible_truncation)]
-                    let id_byte = b'!' + (i as u8);
-                    let id = char::from(id_byte);
-                    let _ = writeln!(vcd, "1{id}");
-                }
-            }
+            // Emit a well-formed VCD via the standalone writer module
+            // (tasks.md item #50) so that real adapters (#47, #48) and
+            // the test double share one canonical emitter. Every
+            // confirmed event toggles every declared signal to '1'.
+            let events_by_signal_vec: Vec<Vec<SimulationTime>> = self
+                .signals
+                .iter()
+                .map(|_| self.confirmed.clone())
+                .collect();
+            let vcd =
+                super::super::vcd_writer::build_vcd(&super::super::vcd_writer::VcdTraceInput {
+                    scope_name: "mixed_signal_test",
+                    signals: &self.signals,
+                    events_by_signal: &events_by_signal_vec,
+                });
 
             // Per-signal event index: every signal toggled at every
             // confirmed event.
@@ -1036,5 +1022,198 @@ mod tests {
         );
         assert_eq!(format!("{}", DigitalAdapterKind::Verilator), "verilator");
         assert_eq!(format!("{}", DigitalAdapterKind::TestDouble), "test-double");
+    }
+
+    /// **Scenario: mixed-signal-result-contains-vcd-trace** (tasks.md #50)
+    ///
+    /// Drives the exact Gherkin block from
+    /// `openspec/changes/circuit-solver-2026-05-21-v1-spec/specs/mixed-signal-cosim/spec.md`:
+    ///
+    /// > Given SimulationEngineer has completed a mixed-signal
+    /// > simulation with Icarus Verilog as the digital kernel
+    /// > When the Result is produced
+    /// > Then the Result contains an analog Waveform section with
+    /// > time-indexed node voltages
+    /// > And the Result contains a VCD-format digital event trace
+    /// > And the VCD trace is parseable by standard VCD readers
+    ///
+    /// The "Icarus Verilog as the digital kernel" precondition is
+    /// satisfied by the scheduler-side metadata: `DigitalAdapterKind`
+    /// carries the adapter identity into the Result envelope. The
+    /// actual Icarus adapter wiring (tasks.md #47) is out of scope
+    /// for this item; the VCD-emission contract this scenario pins
+    /// must hold regardless of which adapter produced the events.
+    ///
+    /// The "parseable by standard VCD readers" clause is enforced by
+    /// feeding the resulting VCD text to the third-party `vcd` crate
+    /// (a dev-dependency for exactly this purpose) and asserting that
+    /// it surfaces the declared signals and value-change records the
+    /// scheduler captured.
+    #[test]
+    #[allow(clippy::too_many_lines)] // Single Gherkin scenario; splitting harms readability.
+    fn mixed_signal_result_contains_vcd_trace() {
+        // -----------------------------------------------------------------
+        // Given — a completed mixed-signal simulation with Icarus as
+        // the digital kernel.
+        // -----------------------------------------------------------------
+        //
+        // We use the same `DigitalSimulatorDouble` as the
+        // correct-prediction scenario; the `adapter_kind` is reported
+        // as `TestDouble` for now, but the VCD contract is adapter-
+        // agnostic so the parseability assertions are what the
+        // scenario actually requires.
+        let vout = NodeId::new(1);
+        let analog = AnalogSolverDouble::new(vout, vout_profile);
+        let signals = vec![SignalName::new("din"), SignalName::new("dout")];
+        let digital = DigitalSimulatorDouble::new(
+            [
+                SimulationTime::from_nanoseconds(20),
+                SimulationTime::from_nanoseconds(50),
+            ],
+            signals.clone(),
+        );
+        let scheduler = MixedSignalScheduler::new(
+            analog,
+            digital,
+            BoundarySignals {
+                analog_to_digital: vec![(SignalName::new("vout"), SignalName::new("din"))],
+                digital_to_analog: vec![(SignalName::new("dout"), SignalName::new("vin"))],
+            },
+            SimulationTime::from_nanoseconds(100),
+        );
+
+        // -----------------------------------------------------------------
+        // When — the Result is produced.
+        // -----------------------------------------------------------------
+        let result = scheduler.run().expect("scheduler.run must succeed");
+
+        // -----------------------------------------------------------------
+        // Then — the Result contains an analog Waveform section with
+        // time-indexed node voltages.
+        // -----------------------------------------------------------------
+        let analog_wf = result
+            .analog
+            .waveform_for(NodeId::new(1))
+            .expect("Result must contain an analog Waveform for vout");
+        assert_eq!(
+            analog_wf.times.len(),
+            analog_wf.values.len(),
+            "Waveform invariant: times and values are parallel"
+        );
+        assert!(
+            analog_wf
+                .times
+                .contains(&SimulationTime::from_nanoseconds(20)),
+            "analog Waveform must be time-indexed at the 20 ns boundary"
+        );
+        assert!(
+            analog_wf
+                .times
+                .contains(&SimulationTime::from_nanoseconds(50)),
+            "analog Waveform must be time-indexed at the 50 ns boundary"
+        );
+
+        // -----------------------------------------------------------------
+        // And — the Result contains a VCD-format digital event trace.
+        // -----------------------------------------------------------------
+        assert!(
+            !result.digital.vcd.is_empty(),
+            "Result.digital.vcd must be a non-empty VCD text"
+        );
+        // Structural sanity: every VCD declares its definitions block.
+        assert!(
+            result.digital.vcd.contains("$enddefinitions $end"),
+            "VCD must terminate its declarations block"
+        );
+
+        // -----------------------------------------------------------------
+        // And — the VCD trace is parseable by standard VCD readers.
+        // -----------------------------------------------------------------
+        //
+        // We feed the captured `vcd` text into the third-party `vcd`
+        // crate. This *is* the test for the "parseable by standard
+        // VCD readers" clause; if the parser rejects our output, the
+        // scenario fails.
+        let mut parser = vcd::Parser::new(result.digital.vcd.as_bytes());
+        let header = parser
+            .parse_header()
+            .expect("standard VCD reader must accept the trace's header");
+
+        // The timescale we declared must round-trip through the
+        // parser (1 picosecond).
+        let ts = header
+            .timescale
+            .expect("VCD header must declare a timescale");
+        assert_eq!(
+            (ts.0, ts.1),
+            (1, vcd::TimescaleUnit::PS),
+            "timescale must round-trip as (1, PS)"
+        );
+
+        // Both boundary signals are declared inside the top scope.
+        let scope = header
+            .items
+            .iter()
+            .find_map(|item| match item {
+                vcd::ScopeItem::Scope(s) => Some(s),
+                _ => None,
+            })
+            .expect("VCD header must declare a $scope module");
+        let declared_signal_names: Vec<String> = scope
+            .items
+            .iter()
+            .filter_map(|item| match item {
+                vcd::ScopeItem::Var(v) => Some(v.reference.clone()),
+                _ => None,
+            })
+            .collect();
+        assert!(
+            declared_signal_names.iter().any(|n| n == "din"),
+            "VCD must declare boundary signal 'din'; declared: {declared_signal_names:?}"
+        );
+        assert!(
+            declared_signal_names.iter().any(|n| n == "dout"),
+            "VCD must declare boundary signal 'dout'; declared: {declared_signal_names:?}"
+        );
+
+        // Drain the value-change stream and collect every Timestamp
+        // command. Each confirmed event must surface as a `#<ps>`
+        // record the parser exposes.
+        let mut timestamps_ps: Vec<u64> = Vec::new();
+        for cmd in parser {
+            let cmd = cmd.expect("standard VCD reader must accept every body command");
+            if let vcd::Command::Timestamp(t) = cmd {
+                timestamps_ps.push(t);
+            }
+        }
+        assert!(
+            timestamps_ps.contains(&20_000),
+            "VCD reader must surface a #20000 timestamp (20 ns); saw {timestamps_ps:?}"
+        );
+        assert!(
+            timestamps_ps.contains(&50_000),
+            "VCD reader must surface a #50000 timestamp (50 ns); saw {timestamps_ps:?}"
+        );
+
+        // Cross-check: the per-signal summary on `events_by_signal`
+        // matches what the scheduler captured.
+        assert_eq!(
+            result.digital.events_for(&SignalName::new("din")),
+            Some(
+                &[
+                    SimulationTime::from_nanoseconds(20),
+                    SimulationTime::from_nanoseconds(50)
+                ][..]
+            )
+        );
+        assert_eq!(
+            result.digital.events_for(&SignalName::new("dout")),
+            Some(
+                &[
+                    SimulationTime::from_nanoseconds(20),
+                    SimulationTime::from_nanoseconds(50)
+                ][..]
+            )
+        );
     }
 }

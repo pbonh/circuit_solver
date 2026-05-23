@@ -68,6 +68,10 @@
 //!   adapter (tasks.md item #48). Same trait surface as the Icarus
 //!   adapter (item #47); the difference is the underlying runtime
 //!   binding (verilated C++ model vs. VVP process).
+//! - [`vcd_writer`] — IEEE-1364 §18 conformant VCD (Value Change
+//!   Dump) emitter, called by the Mixed-Signal Scheduler's digital
+//!   trace assembly (tasks.md item #50). Reusable by the Icarus
+//!   (#47) and Verilator (#48) adapter implementations.
 //!
 //! # Stability
 //!
@@ -86,6 +90,7 @@ pub mod mixed_signal_verilator;
 pub mod noise;
 pub mod sweep;
 pub mod transient;
+pub mod vcd_writer;
 
 pub use ac::{ac_analysis, AcAnalysisError, AcAnalysisRequest, AcAnalysisResult, TransferFunction};
 pub use auto_dc_ac::{
@@ -126,3 +131,4 @@ pub use transient::{
     transient_analysis, InitialState, IntegrationMethod, TransientAnalysisError,
     TransientAnalysisRequest, TransientAnalysisResult,
 };
+pub use vcd_writer::{build_vcd, VcdTraceInput, MAX_SINGLE_CHAR_SIGNALS};
