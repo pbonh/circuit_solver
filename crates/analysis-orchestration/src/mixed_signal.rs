@@ -547,11 +547,34 @@ where
                     // checkpoint at-or-before `actual_time`, drives
                     // `analog.rollback_to` and `analog.run_until`, and
                     // returns the resulting `RollbackOutcome`.
+                    //
+                    // If the digital simulator reports an event at a
+                    // time *earlier* than its previously predicted
+                    // next-event-time, that is a contract violation
+                    // (tasks.md item #49). Log a diagnostic warning,
+                    // but do not abort — per the design archive the
+                    // scheduler continues from the corrected point.
+                    let reason = if actual_time < next.predicted_time {
+                        // The digital simulator violated the contract:
+                        // it should not report an event earlier than
+                        // the prediction it gave the scheduler.
+                        let diag = format!(
+                            "digital next-event-time contract violation: predicted {}, actual {}",
+                            next.predicted_time, actual_time
+                        );
+                        self.metadata.diagnostics.push(diag);
+                        "contract-violation"
+                    } else {
+                        // Degenerate case: actual_time ==
+                        // predicted_time (re-confirming the prediction
+                        // as a non-event boundary).
+                        "no-event-confirmed"
+                    };
                     let outcome = self.rollback.rollback_to(
                         &mut self.analog,
                         next.predicted_time,
                         actual_time,
-                        "no-event-confirmed",
+                        reason,
                     )?;
                     let checkpoint_at = outcome.event.checkpoint_at;
                     self.metadata.rollbacks.push(outcome.event);
