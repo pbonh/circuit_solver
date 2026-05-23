@@ -350,7 +350,7 @@ fn rollback_finds_nearest_before_when_earlier_checkpoint_exists() {
             mispredicted_at: t_ns(100),
             corrected_to: t_ns(80),
             checkpoint_at: t_ns(50),
-            reason: "no-event-confirmed".into(),
+            reason: "contract-violation".into(),
         },
         "rollback event must carry the nearest-before checkpoint time"
     );
