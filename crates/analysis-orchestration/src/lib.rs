@@ -9,12 +9,6 @@
 //!
 //! At present the implemented surfaces are:
 //!
-//! - [`dc`] — DC operating-point control loop (tasks.md #20). Composes
-//!   the NR driver, Gmin-stepping, and source-stepping from
-//!   `numeric-solver` into a single DC solve that produces an
-//!   [`OperatingPoint`] with per-node voltages and per-branch currents.
-//!   Covers scenario
-//!   `dc-operating-point#linear-resistive-dc-operating-point`.
 //! - [`ac`] — AC small-signal control loop (tasks.md #25). Composes
 //!   the AC sub-view extractor and the complex sparse-LU dispatch into
 //!   a per-frequency driver that produces [`TransferFunction`]
@@ -53,15 +47,6 @@
 //!   generator (tasks.md #28). Produces the frequency vector used by
 //!   [`ac_analysis`] for multi-decade Bode-style analyses. Covers
 //!   scenario `ac-small-signal#ac-frequency-sweep-over-multiple-decades`.
-//! - [`transient`] — Transient time-domain control loop (tasks.md #33).
-//!   Composes the NR driver with implicit-integration companion models
-//!   (default: Gear-2 BDF), adaptive timestep control via LTE
-//!   estimation, and the per-timestep convergence envelope of ADR-0006
-//!   and ADR-0008. Produces a [`TransientAnalysisResult`] with per-node voltage
-//!   waveforms and the adaptive-timestepping audit trail
-//!   ([`TimestepHistoryMetadata`](circuit_solver_types::TimestepHistoryMetadata)).
-//!   Covers scenario
-//!   `transient-time-domain#transient-analysis-with-default-integration-method`.
 //! - [`mixed_signal`] — Mixed-Signal Scheduler skeleton with the
 //!   `optimistic-advance-with-correct-prediction` happy path. Sibling
 //!   implementer tasks fill in mis-prediction rollback, boundary
