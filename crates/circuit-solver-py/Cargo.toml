@@ -67,6 +67,15 @@ pyo3-build-config = "0.28"
 # out and link the Python ABI directly.
 pyo3 = { version = "0.28", default-features = false, features = ["abi3-py39", "macros"] }
 
+# tasks.md item #58: zero-copy NumPy result arrays. `rust-numpy` 0.28 is the
+# version paired with `pyo3` 0.28 (the crates ship in lockstep). The
+# `Result` waveform/transfer-function accessors return `Py<PyArray1<f64>>`
+# handles — `numpy.ndarray` views over Rust-owned heap memory — so a Python
+# user touching `result.waveform("n1")` does not pay a copy. The default
+# features are sufficient; `half`/`nalgebra` interop are not required for
+# the v1 surface.
+numpy = { version = "0.28", default-features = false }
+
 # The PyO3 frontend is a thin shim over the netlist-graph builder. Per
 # the design.md C4 L1 diagram, application-frontend / circuit-solver-py
 # call `CircuitBuilder.build()` on netlist-graph and never re-enter the
