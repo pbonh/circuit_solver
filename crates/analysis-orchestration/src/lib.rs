@@ -58,6 +58,12 @@
 //!   digital simulator at every synchronization point — ZOH holds the
 //!   last accepted value constant until the event time; Linear
 //!   retains the two most recent samples and interpolates at T.
+//! - [`checkpoint`] — Sparse checkpoint manager (tasks.md #43).
+//!   Time-keyed store of `(node voltages, capacitor history,
+//!   inductor history)` snapshots that the analog solver saves at
+//!   each predicted digital event boundary so the rollback handler
+//!   (tasks.md #44) can resume from any prior good state per
+//!   ADR-0004 commitments #2 and #4.
 //!
 //! # Stability
 //!
@@ -68,6 +74,7 @@
 pub mod ac;
 pub mod auto_dc_ac;
 pub mod boundary_exchanger;
+pub mod checkpoint;
 pub mod dc;
 pub mod dc_sweep;
 pub mod mixed_signal;
@@ -84,6 +91,7 @@ pub use boundary_exchanger::{
     BoundaryExchangerError, BoundaryInterpolationMode, BoundarySample, BoundarySignalExchanger,
     DigitalSampleHistoryProvider, DigitalValueProvider,
 };
+pub use checkpoint::{CheckpointError, SparseCheckpoint, SparseCheckpointManager};
 pub use dc::{
     dc_analysis, BranchCurrentSample, DcAnalysisError, DcAnalysisRequest, DcAnalysisResult,
     DeviceModelBinding, OperatingPoint,
