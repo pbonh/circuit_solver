@@ -234,8 +234,29 @@ impl PyCircuitBuilder {
     /// cycle). Linear-element validation (duplicate names, terminal
     /// arity) is performed eagerly by `add_element`, so `build()`
     /// itself never fails on those.
-    pub fn build(&mut self) -> PyResult<PyCircuitGraph> {
-        let graph = self.inner.build().map_err(|e| to_py_err(&e))?;
+    ///
+    /// # GIL release
+    ///
+    /// `build()` is one of the two principal native-work entry points
+    /// on the Python surface (the other being the
+    /// `circuit_solver.parse_netlist` free function — see
+    /// `crate::lib::parse_netlist_py`). The bulk of the call —
+    /// subcircuit expansion, wire-equivalence resolution, and
+    /// `NodeId` assignment — is pure Rust over data that does not
+    /// touch `CPython`. We release the GIL around that core via
+    /// [`pyo3::Python::detach`] (the pyo3 0.28 successor to
+    /// `allow_threads`) so concurrent Python threads can continue to
+    /// execute while a build is in flight. This is the witness site
+    /// for tasks.md #59 / spec scenario
+    /// `python-frontend#gil-release-during-simulation`. The
+    /// `PyCircuitGraph::from_inner` re-wrap on the success path does
+    /// no `CPython` work either, but for clarity we keep that step
+    /// outside the `detach` boundary — only the long-running native
+    /// compute is held inside.
+    pub fn build(&mut self, py: Python<'_>) -> PyResult<PyCircuitGraph> {
+        let graph = py
+            .detach(|| self.inner.build())
+            .map_err(|e| to_py_err(&e))?;
         Ok(PyCircuitGraph::from_inner(graph))
     }
 }
