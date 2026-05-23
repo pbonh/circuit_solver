@@ -13,3 +13,17 @@ workspace = true
 
 [dependencies]
 circuit-solver-types = { path = "../circuit-solver-types" }
+
+# The crate itself depends only on `circuit-solver-types`. Dev-dependencies
+# below are for the per-analysis conformance test files in `tests/` —
+# tasks.md items #63 (DC, this file), #64 (AC), #65 (transient), #66 (noise),
+# #67 (mixed-signal), #68 (ASAP7) — which each consume the corresponding
+# analysis control loop. Keeping these as dev-deps preserves the crate's
+# lean runtime dependency graph (one path-dep, no transitive analysis-
+# orchestration weight) while letting the witnesses live alongside the
+# harness they exercise.
+[dev-dependencies]
+analysis-orchestration = { path = "../analysis-orchestration" }
+device-modeling = { path = "../device-modeling" }
+netlist-graph = { path = "../netlist-graph" }
+numeric-solver = { path = "../numeric-solver" }
