@@ -17,7 +17,14 @@ and acceptance criteria.
 
 ## Implementation Evidence
 
-<!-- scientia-ingest-evidence-keyed -->
-- **Scenario `optimistic-advance-with-correct-prediction`** — task `t_a36ef768` (key `2026-05-21-v1-spec:task-48:ff89c4c7`) merged at `10a0ea1c66972d4b33ea2a75ba4f80cf85188828` by `scientia-integrator`. Verification: `cargo test -p analysis-orchestration` → 259 passed / 0 failed / 1 ignored. Residual risk: Mechanical conflict only (doc-bullet union) resolved by implementer respawn; semantic risk low. Changed files: 2.
-- **Scenario `digital-simulator-violates-next-event-time-contract`** — task `t_9181dade` (key `mixed-signal-cosim:ADR-0006:digital-simulator-violates-next-event-time-contract:289b2e9b`) merged at `a7206630b042d706cbde51517deb18ae031a60b1` by `scientia-integrator`. Verification: `cargo fmt/build/clippy/test all green (190 unit + 13 integration tests passed)`. Residual risk: Merge is local-only (origin/main not updated). Prior integrator t_c786184c performed the actual merge. Changed files: 0.
-- `t_0e49004b` (#51) — mixed-signal analysis control loop — merged at `2b2b44be4973651f0c98c5895e071dc8786dde4e` via `crates/analysis-orchestration/tests/scenario_mixed_signal_analysis_control_loop_item_51.rs` (test). ADRs: `ADR-0004`, `ADR-0010`. Preflights: fmt OK, clippy OK, test 277 pass/0 fail/1 ignore.
+This section is a living-documentation mirror of the source spec.
+Updates are managed by `scientia-ingest-evidence`; do not edit manually.
+
+<!-- scientia-ingest-evidence-keyed: 2026-05-21-v1-spec:task-67:01133d40ad785833eba58aa14549fb0054ad077aacb1d3d5beb87860a765a47f -->
+- **Scenario `mixed-signal-conformance-with-event-trace-equivalence`** — task `t_c951701f` (key `2026-05-21-v1-spec:task-67:01133d40ad785833eba58aa14549fb0054ad077aacb1d3d5beb87860a765a47f`) merged at `2b0a5342f77486347bf6288fe8f1c2ec3b98bf94` by `scientia-integrator`. Verification: `cargo test --workspace` all pass (196+ tests); `cargo fmt` clean; `cargo clippy` clean; 4 integration tests pass. Residual risk: digital event-trace equivalence currently compares SimulationTime values only; analog golden synthesized from closed-form (same pattern as DC/transient/noise tests); rollback paths not exercised. Changed files: 1.
+
+<!-- scientia-ingest-evidence-keyed: 2026-05-21-v1-spec:t_1dd43f00:17cb7f610f24b7d56ce96f58858f18b2e227a694 -->
+- **Scenario `optimistic-advance-with-correct-prediction`** — task `t_1dd43f00` (key `2026-05-21-v1-spec:t_1dd43f00:17cb7f610f24b7d56ce96f58858f18b2e227a694`) merged at `17cb7f610f24b7d56ce96f58858f18b2e227a694` by `scientia-integrator` (no-op pass-through; originally merged by `t_e202ff6a`). Verification: `cargo fmt` clean; `cargo clippy` clean; `cargo test --workspace` all pass (196+ tests). Residual risk: stubbed rollback paths not exercised by this scenario. Changed files: 18.
+
+<!-- scientia-ingest-evidence-keyed: 2026-05-21-v1-spec:t_3071313c:e8263533d9e2e3720814a76e604d0bc70008e0c8ff6ad9d91e1eb09379b45552 -->
+- **Scenario `mixed-signal-conformance-with-event-trace-equivalence`** — task `t_3071313c` (key `2026-05-21-v1-spec:t_3071313c:e8263533d9e2e3720814a76e604d0bc70008e0c8ff6ad9d91e1eb09379b45552`) merged at `2b0a5342f77486347bf6288fe8f1c2ec3b98bf94` by `scientia-integrator`. No-op pass-through; work already on main from prior integrator `t_c951701f`. Verification: `cargo fmt` clean; `cargo clippy` clean; `cargo test --workspace` all pass (196+ tests); 4 mixed-signal conformance integration tests pass. Residual risk: none known. Changed files: none.
