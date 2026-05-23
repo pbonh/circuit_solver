@@ -42,4 +42,11 @@ device-modeling = { path = "../device-modeling" }
 # test (tasks.md #66, scenario
 # `noise-spectral-density#noise-conformance-against-ngspice`) is the
 # first user of this dev-dep in this crate.
+#
+# Per-analysis conformance scenario tests (tasks.md #63–#67) load a
+# committed ngspice ASCII rawfile via `conformance_harness::
+# load_ngspice_ascii` and compare the orchestrated analysis result
+# against it under ADR-0008's `max(rel, abs)` envelope. The harness
+# is a dev-only dep — production analysis code does not depend on
+# it.
 conformance-harness = { path = "../conformance-harness" }

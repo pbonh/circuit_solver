@@ -56,9 +56,13 @@
 //!   module's contribution is wiring it into the outer loop.
 //! - `transient-analysis-with-uic-initial-conditions` — covered by
 //!   choosing [`InitialState::UseInitialConditions`].
-//! - `transient-conformance-against-ngspice` — covered by the
-//!   conformance harness (tasks.md #62+), which consumes the
-//!   [`circuit_solver_types::TransientResult`] this module produces.
+//! - `transient-conformance-against-ngspice` — covered by tasks.md
+//!   item #65's per-analysis conformance test
+//!   (`tests/scenario_transient_conformance_against_ngspice.rs`),
+//!   which composes this control loop with the
+//!   [`conformance-harness`][ch] framework (tasks.md #62).
+//!
+//! [ch]: ../../../../conformance-harness/index.html
 //!
 //! # Default integration method
 //!
