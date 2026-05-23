@@ -122,9 +122,11 @@ use circuit_solver_types::{ConvergenceStatus, ElementId, NodeId};
 use device_modeling::noise::{resistor_thermal_noise, NoiseMechanism, NoiseSource};
 use netlist_graph::{CircuitGraph, ElementKind, ElementName};
 use numeric_solver::{
-    AcSubViewBuilder, AcSubViewError, FaerComplexSolver, LinearSolver, LinearSolverError,
-    MnaSystem, SparseLinearSystem, SparseTriplet, C64,
+    assemble, AcSubViewBuilder, AcSubViewError, FaerComplexSolver, LinearSolver, LinearSolverError,
+    MnaAssemblyError, MnaSystem, NewtonRaphsonConfig, SparseLinearSystem, SparseTriplet, C64,
 };
+
+use crate::dc::{dc_analysis, DcAnalysisError, DcAnalysisRequest, OperatingPoint};
 
 // ---------------------------------------------------------------------
 // Noise injection — one noise source mapped onto graph nodes
@@ -1366,6 +1368,391 @@ pub fn integrated_noise(
         integrated_psd_v2: integral,
         rms_voltage_v: rms,
         effective_band_hz: (eff_lo, eff_hi),
+    })
+}
+
+// ---------------------------------------------------------------------
+// Auto-DC entry point — tasks.md #40 (noise-analysis-without-prior-operating-point)
+// ---------------------------------------------------------------------
+
+/// Noise analysis input bundle for the auto-DC entry point.
+///
+/// Mirrors [`NoiseAnalysisRequest`] **minus** the `dc_status` /
+/// `system` / `structure` triple that the post-DC entry point demands,
+/// and **plus** a [`FlattenedStructure`] reference (for the internal
+/// DC dispatch and the subsequent MNA assembly) and the
+/// [`DcAnalysisRequest`]-equivalent tuning knobs.
+///
+/// The intent matches the Gherkin contract for
+/// `noise-spectral-density#noise-analysis-without-prior-operating-point`:
+///
+/// > Given CircuitDesigner has constructed a Circuit
+/// > And no OperatingPoint has been computed for this Circuit
+/// > When CircuitDesigner submits a noise spectral-density Analysis request
+/// > Then the Simulator first computes a DC OperatingPoint
+/// > And the Simulator proceeds with noise linearization at that OperatingPoint
+/// > And the Result contains both the OperatingPoint and the noise spectral-density data
+///
+/// — i.e., the caller has no `OperatingPoint` to hand in; this entry
+/// point internally dispatches a [`dc_analysis`] then hands its
+/// freshly-assembled [`MnaSystem`] to [`noise_analysis`]. This is the
+/// "same pattern as AC" called out in `tasks.md` item #40.
+///
+/// Per design.md's QAS-4: *"AC and noise analysis entry points check
+/// for a cached `OperatingPoint`; if absent, they internally dispatch
+/// a DC analysis first. If DC fails, they return early with
+/// Convergence "failed" and no frequency-domain data."* That short-
+/// circuit is implemented by
+/// [`NoiseAnalysisWithAutoDcResult::Failed`].
+///
+/// Per ADR-0010, this struct's *layout* is unstable for v1; the
+/// *semantics* of each field are pinned.
+#[derive(Debug, Clone, Copy)]
+pub struct NoiseAnalysisWithAutoDcRequest<'a> {
+    /// The immutable source circuit graph. Reused for both DC
+    /// assembly and the noise-source walk.
+    pub graph: &'a CircuitGraph,
+    /// The Pass-1 flattened incidence over `graph`. Reused for both
+    /// the DC sub-view extraction and the AC sub-view that the
+    /// noise loop builds at each frequency.
+    pub structure: &'a FlattenedStructure,
+    /// Frequencies (Hz) at which to evaluate the output PSD. Must be
+    /// non-empty and all `> 0` and finite — same contract as
+    /// [`NoiseAnalysisRequest::frequencies_hz`].
+    pub frequencies_hz: &'a [f64],
+    /// The single output node whose voltage PSD is reported.
+    pub output: NodeId,
+    /// Device temperature in kelvin. Pass
+    /// [`device_modeling::noise::ROOM_TEMPERATURE_K`] (the SPICE
+    /// default) when no per-device temperature is supplied.
+    pub temperature_k: f64,
+    /// Override the ground node (defaults to [`NodeId::GROUND`]).
+    /// Threaded through to both the inner DC dispatch and the
+    /// inner noise loop so they agree on the ground reference.
+    pub ground: Option<NodeId>,
+    /// Newton-Raphson tuning passed to the inner [`dc_analysis`].
+    /// `None` keeps [`NewtonRaphsonConfig::DC_DEFAULTS`] — the same
+    /// default the direct [`dc_analysis`] entry point applies.
+    pub newton_raphson: Option<NewtonRaphsonConfig>,
+}
+
+impl<'a> NoiseAnalysisWithAutoDcRequest<'a> {
+    /// Build a request with the SPICE-default Newton-Raphson tuning
+    /// and the structure's own ground node.
+    #[must_use]
+    pub fn new(
+        graph: &'a CircuitGraph,
+        structure: &'a FlattenedStructure,
+        frequencies_hz: &'a [f64],
+        output: NodeId,
+        temperature_k: f64,
+    ) -> Self {
+        Self {
+            graph,
+            structure,
+            frequencies_hz,
+            output,
+            temperature_k,
+            ground: None,
+            newton_raphson: None,
+        }
+    }
+
+    /// Builder-style override for ground node id. Same semantics as
+    /// [`DcAnalysisRequest::with_ground`] — applies to both the
+    /// inner DC dispatch and the per-frequency AC sub-view.
+    #[must_use]
+    pub fn with_ground(mut self, ground: NodeId) -> Self {
+        self.ground = Some(ground);
+        self
+    }
+
+    /// Builder-style override for Newton-Raphson configuration.
+    /// Forwarded verbatim to the inner [`dc_analysis`].
+    #[must_use]
+    pub fn with_newton_raphson(mut self, config: NewtonRaphsonConfig) -> Self {
+        self.newton_raphson = Some(config);
+        self
+    }
+}
+
+/// Output of [`noise_analysis_with_auto_dc`].
+///
+/// Two variants mirror the underlying [`NoiseAnalysisResult`], with
+/// every variant additionally carrying the [`OperatingPoint`] that
+/// the internal DC dispatch produced. The spec's acceptance criterion
+/// — *"the Result contains both the `OperatingPoint` and the noise
+/// spectral-density data"* — is realized by the
+/// [`Self::Ok`] variant; the [`Self::Failed`] variant carries the
+/// **last-iterate** `OperatingPoint` (which may be `None` only when
+/// the inner DC dispatch returned no iterate at all — currently
+/// unreachable since [`dc_analysis`] always produces at least the
+/// initial zero iterate) alongside the failing
+/// [`ConvergenceStatus`].
+///
+/// The [`Self::Failed`] short-circuit implements the
+/// `noise-analysis-on-circuit-with-failed-operating-point` half of
+/// the auto-DC contract (the failure scenario explicitly carries
+/// *"the automatic DC `OperatingPoint` computation fails"* as its
+/// precondition).
+#[derive(Debug, Clone, PartialEq)]
+pub enum NoiseAnalysisWithAutoDcResult {
+    /// DC converged and noise analysis ran to completion.
+    Ok {
+        /// The converged DC operating point produced by the internal
+        /// dispatch.
+        operating_point: OperatingPoint,
+        /// The output-referred PSD curve from the inner noise loop.
+        data: NoiseAnalysisData,
+    },
+    /// The internal DC dispatch returned a non-`Converged`
+    /// [`ConvergenceStatus`]. The noise loop did **not** run; no
+    /// spectral-density samples were produced. The last-iterate
+    /// [`OperatingPoint`] is forwarded so the caller can render the
+    /// diagnostic without re-running DC.
+    Failed {
+        /// The DC convergence status that triggered the short-circuit.
+        dc_status: ConvergenceStatus,
+        /// The last-iterate operating point from the failing DC
+        /// dispatch, or `None` if no iterate was produced (currently
+        /// unreachable; carried as `Option` to match
+        /// [`crate::dc::DcAnalysisResult::operating_point`]'s shape).
+        operating_point: Option<OperatingPoint>,
+    },
+}
+
+impl NoiseAnalysisWithAutoDcResult {
+    /// `true` iff this result carries both an operating point and
+    /// spectral-density data (the happy path).
+    #[must_use]
+    pub fn is_ok(&self) -> bool {
+        matches!(self, Self::Ok { .. })
+    }
+
+    /// `true` iff this result is the failed-DC short-circuit.
+    #[must_use]
+    pub fn is_failed(&self) -> bool {
+        matches!(self, Self::Failed { .. })
+    }
+
+    /// Borrow the converged operating point, or `None` on the
+    /// failure path (or when the failure path produced no iterate).
+    #[must_use]
+    pub fn operating_point(&self) -> Option<&OperatingPoint> {
+        match self {
+            Self::Ok {
+                operating_point, ..
+            } => Some(operating_point),
+            Self::Failed {
+                operating_point, ..
+            } => operating_point.as_ref(),
+        }
+    }
+
+    /// Borrow the noise PSD payload, or `None` on the failure path.
+    #[must_use]
+    pub fn data(&self) -> Option<&NoiseAnalysisData> {
+        match self {
+            Self::Ok { data, .. } => Some(data),
+            Self::Failed { .. } => None,
+        }
+    }
+}
+
+/// Errors raised by [`noise_analysis_with_auto_dc`].
+///
+/// Distinct surface from [`NoiseAnalysisError`] because the auto-DC
+/// entry point folds two sub-pipeline error spaces together (DC
+/// dispatch and noise loop) plus the MNA-reassembly step. We keep the
+/// variants narrow so callers can pinpoint which sub-pipeline tripped.
+///
+/// A DC **non-convergence** (`Stalled` / `MaxIterationsExceeded` /
+/// `Diverged`) is **not** an error here — those are reported via the
+/// `Ok` path inside [`NoiseAnalysisWithAutoDcResult::Failed`], mirroring
+/// the [`crate::dc::DcAnalysisResult`] convention.
+#[derive(Debug, Clone, PartialEq)]
+pub enum NoiseAnalysisWithAutoDcError {
+    /// The inner DC dispatch raised a hard error (assembly, sub-view,
+    /// topology fault, or Newton-Raphson hard failure). Carries the
+    /// wrapped [`DcAnalysisError`] verbatim.
+    DcFailed(DcAnalysisError),
+    /// The post-DC MNA reassembly failed. In practice this is
+    /// unreachable from a successful prior DC run on the same
+    /// `(graph, structure)` pair — the same `assemble()` call inside
+    /// `dc_analysis` already succeeded — but we keep the variant so
+    /// any future drift between the two assembly paths surfaces
+    /// here rather than panicking.
+    PostDcAssemblyFailed(MnaAssemblyError),
+    /// The inner noise loop raised an error after DC succeeded.
+    /// Wraps [`NoiseAnalysisError`] verbatim.
+    NoiseFailed(NoiseAnalysisError),
+}
+
+impl core::fmt::Display for NoiseAnalysisWithAutoDcError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::DcFailed(inner) => write!(
+                f,
+                "noise-analysis-with-auto-dc: inner DC dispatch raised: {inner}"
+            ),
+            Self::PostDcAssemblyFailed(inner) => write!(
+                f,
+                "noise-analysis-with-auto-dc: post-DC MNA reassembly failed: {inner}"
+            ),
+            Self::NoiseFailed(inner) => write!(
+                f,
+                "noise-analysis-with-auto-dc: inner noise loop raised: {inner}"
+            ),
+        }
+    }
+}
+
+impl std::error::Error for NoiseAnalysisWithAutoDcError {}
+
+impl From<DcAnalysisError> for NoiseAnalysisWithAutoDcError {
+    fn from(e: DcAnalysisError) -> Self {
+        Self::DcFailed(e)
+    }
+}
+
+impl From<MnaAssemblyError> for NoiseAnalysisWithAutoDcError {
+    fn from(e: MnaAssemblyError) -> Self {
+        Self::PostDcAssemblyFailed(e)
+    }
+}
+
+impl From<NoiseAnalysisError> for NoiseAnalysisWithAutoDcError {
+    fn from(e: NoiseAnalysisError) -> Self {
+        Self::NoiseFailed(e)
+    }
+}
+
+/// Run a noise spectral-density analysis without a pre-computed
+/// `OperatingPoint`.
+///
+/// This is the auto-DC entry point for `tasks.md` item #40 and the
+/// witness for `noise-spectral-density#noise-analysis-without-prior-operating-point`.
+///
+/// # Algorithm
+///
+/// 1. **Inner DC dispatch.** Build a [`DcAnalysisRequest`] from the
+///    caller's `(graph, structure, ground, newton_raphson)` and call
+///    [`dc_analysis`]. Any hard error short-circuits with
+///    [`NoiseAnalysisWithAutoDcError::DcFailed`].
+/// 2. **DC failure short-circuit.** If the DC dispatch returned with
+///    [`ConvergenceStatus`] in a non-`Converged` variant (per
+///    [`ConvergenceStatus::is_failure`]), return
+///    [`NoiseAnalysisWithAutoDcResult::Failed`] forwarding the
+///    status and the last-iterate operating point. The noise loop
+///    does not run.
+/// 3. **MNA reassembly.** On DC success, re-run
+///    [`numeric_solver::assemble()`] with the same `(structure, graph,
+///    &[])` triple to produce the [`MnaSystem`] the noise loop
+///    consumes. This duplicates the [`dc_analysis`] internal assembly
+///    (the DC entry point does not currently expose its
+///    [`MnaSystem`] in the result), but the cost is one Pass-2
+///    assembly — small compared to the per-frequency complex LU
+///    work that follows.
+/// 4. **Inner noise dispatch.** Build a [`NoiseAnalysisRequest`]
+///    threading the converged status + reassembled MNA, and call
+///    [`noise_analysis`]. The result is unwrapped into the
+///    [`NoiseAnalysisWithAutoDcResult::Ok`] variant alongside the
+///    operating point.
+///
+/// # Errors
+///
+/// See [`NoiseAnalysisWithAutoDcError`] for the complete list. The
+/// function never panics in normal operation.
+///
+/// # Note on MNA reassembly
+///
+/// We intentionally do not thread the inner DC's [`MnaSystem`]
+/// through to noise — the [`crate::dc::DcAnalysisResult`] surface in
+/// v1 only exposes the [`OperatingPoint`] and the
+/// [`ConvergenceStatus`]. Refactoring DC to expose its MNA would
+/// cross-cut every downstream consumer; we instead pay the cost of
+/// one extra Pass-2 assembly here. For purely linear circuits
+/// (every scenario this entry point targets at v1) the linear MNA
+/// is identical on the second call. For nonlinear circuits at the
+/// point where tasks.md #18 / #19 land, the linearization is
+/// stable at the converged iterate by construction — re-stamping at
+/// the same operating point is a no-op on the matrix structure and
+/// reproduces the same conductance values to within floating-point
+/// determinism. This is the same trick the AC analysis would use if
+/// it grew an auto-DC entry point at tasks.md #26.
+pub fn noise_analysis_with_auto_dc(
+    req: NoiseAnalysisWithAutoDcRequest<'_>,
+) -> Result<NoiseAnalysisWithAutoDcResult, NoiseAnalysisWithAutoDcError> {
+    // (1) Inner DC dispatch. The DC layer owns its own validation;
+    // we surface its errors verbatim through `From<DcAnalysisError>`.
+    let mut dc_req = DcAnalysisRequest::new(req.graph, req.structure);
+    if let Some(g) = req.ground {
+        dc_req = dc_req.with_ground(g);
+    }
+    if let Some(cfg) = req.newton_raphson {
+        dc_req = dc_req.with_newton_raphson(cfg);
+    }
+    let dc_result = dc_analysis(dc_req)?;
+
+    // (2) DC failure short-circuit. Implements the
+    // `noise-analysis-on-circuit-with-failed-operating-point` half
+    // of the auto-DC contract: no noise loop runs, the last-iterate
+    // OperatingPoint is forwarded to the caller.
+    if dc_result.convergence.is_failure() {
+        return Ok(NoiseAnalysisWithAutoDcResult::Failed {
+            dc_status: dc_result.convergence,
+            operating_point: dc_result.operating_point,
+        });
+    }
+
+    // Defense-in-depth: a `Converged` status from `dc_analysis` is
+    // documented to always carry `Some(operating_point)`. Treat the
+    // missing-iterate case as a logic-bug failure rather than an
+    // assertion panic; surfaces as a Failed result so the caller
+    // sees a coherent envelope.
+    let Some(operating_point) = dc_result.operating_point else {
+        return Ok(NoiseAnalysisWithAutoDcResult::Failed {
+            dc_status: dc_result.convergence,
+            operating_point: None,
+        });
+    };
+
+    // (3) MNA reassembly. Linear-only path: empty linearization
+    // slice, same as `dc_analysis` itself. The system the noise
+    // loop sees is identical to what the DC loop saw at the
+    // converged iterate.
+    let mna: MnaSystem = assemble(req.structure, req.graph, &[])?;
+
+    // (4) Inner noise dispatch. Thread the (now-known) converged
+    // status into the inner request; the inner loop's failure
+    // short-circuit is therefore unreachable on this path.
+    let inner_request = NoiseAnalysisRequest {
+        dc_status: dc_result.convergence,
+        system: &mna,
+        structure: req.structure,
+        graph: req.graph,
+        frequencies_hz: req.frequencies_hz,
+        output: req.output,
+        temperature_k: req.temperature_k,
+        ground: req.ground,
+        semiconductor_noise: &[],
+    };
+    let inner_outcome = noise_analysis(inner_request)?;
+
+    // The inner loop should never produce `Failed` here — we
+    // already guarded `dc_status.is_failure()` above. If it does
+    // anyway (e.g. a future refactor re-introduces a separate
+    // failure path inside `noise_analysis`), we forward the
+    // failure envelope rather than panic.
+    Ok(match inner_outcome {
+        NoiseAnalysisResult::Ok(data) => NoiseAnalysisWithAutoDcResult::Ok {
+            operating_point,
+            data,
+        },
+        NoiseAnalysisResult::Failed { dc_status } => NoiseAnalysisWithAutoDcResult::Failed {
+            dc_status,
+            operating_point: Some(operating_point),
+        },
     })
 }
 
@@ -2818,5 +3205,300 @@ mod tests {
         let res = noise_analysis(req).unwrap();
         assert!(res.is_failed());
         assert!(res.data().is_none());
+    }
+
+    // ---------- auto-DC entry point (tasks.md #40) -----------------------
+
+    /// Auto-DC happy path: scenario witness for
+    /// `noise-spectral-density#noise-analysis-without-prior-operating-point`.
+    /// Build *only* the `(graph, structure)` pair — no DC dispatched
+    /// up-front, no `OperatingPoint` cached — and confirm
+    /// `noise_analysis_with_auto_dc` produces both the
+    /// `OperatingPoint` (so the spec acceptance criterion
+    /// *"the Result contains both the `OperatingPoint` and the noise
+    /// spectral-density data"* holds) and a PSD curve that matches
+    /// `4·k_B·T·R` to within the same tight tolerance the
+    /// post-DC entry point achieves.
+    #[test]
+    fn auto_dc_resistor_only_returns_op_and_4ktr_psd() {
+        let r1 = 10.0e3;
+        // We do NOT call `assemble` / `single_resistor_to_ground`
+        // here — the whole point of this entry point is that the
+        // caller does not have an MNA system in hand.
+        let mut b = CircuitBuilder::default();
+        add_voltage_source(&mut b, "V1", "n_in", "0", 1.0);
+        add_resistor(&mut b, "R1", "n_in", "n_out", r1);
+        add_resistor(&mut b, "R2", "n_out", "0", 1.0e15);
+        let g = b.build().expect("build ok");
+        let fs = flatten(&g).expect("flatten ok");
+
+        // Resolve n_out's NodeId without going through `assemble`.
+        let out_id = g
+            .elements()
+            .iter()
+            .find(|e| e.name().as_str() == "R1")
+            .expect("R1 present")
+            .terminals()[1];
+
+        let f_axis: Vec<f64> = vec![1.0, 10.0, 100.0, 1.0e3, 1.0e4, 1.0e5, 1.0e6];
+        let req = NoiseAnalysisWithAutoDcRequest::new(&g, &fs, &f_axis, out_id, ROOM_TEMPERATURE_K);
+
+        let res = noise_analysis_with_auto_dc(req).expect("auto-dc converges on linear");
+
+        // Spec acceptance: both halves present.
+        assert!(res.is_ok());
+        let op = res.operating_point().expect("operating point present");
+        let data = res.data().expect("data present");
+        assert_eq!(data.len(), f_axis.len());
+
+        // V(n_in) should be 1 V (the voltage source value), V(n_out)
+        // should follow from the divider R1 / (R1 + R2 ≈ R2) ≈ 0.
+        // We don't pin the exact voltage — the witness is the PSD
+        // curve. We just sanity-check the OperatingPoint is
+        // populated, not all-zero.
+        assert_eq!(op.node_count(), fs.node_count() as usize);
+        let n_in = g
+            .nodes()
+            .iter()
+            .find(|n| n.name() == "n_in")
+            .expect("n_in present")
+            .id();
+        assert!(
+            approx(op.voltage_at(n_in).unwrap(), 1.0, 1.0e-9),
+            "V(n_in) should be 1 V, got {}",
+            op.voltage_at(n_in).unwrap()
+        );
+
+        // PSD: white, 4·k_B·T·R1.
+        let expected = 4.0 * BOLTZMANN_J_PER_K * ROOM_TEMPERATURE_K * r1;
+        for (i, &s_v) in data.spectral_density_v2_per_hz.iter().enumerate() {
+            assert!(
+                approx(s_v, expected, 1.0e-6),
+                "auto-dc f[{i}]={} Hz: expected ~{expected:.6e} V²/Hz, got {s_v:.6e}",
+                f_axis[i]
+            );
+        }
+    }
+
+    /// Auto-DC DC-failure short-circuit. Force a `MaxIterationsExceeded`
+    /// status by setting the Newton-Raphson budget to zero on an
+    /// otherwise-well-formed circuit. The control loop must NOT enter
+    /// the noise loop; it returns `NoiseAnalysisWithAutoDcResult::Failed`
+    /// carrying the failing `ConvergenceStatus` and the last-iterate
+    /// `OperatingPoint`. This is the auto-DC analog of the existing
+    /// `failed_operating_point_short_circuits` witness.
+    #[test]
+    fn auto_dc_failure_short_circuits_without_running_noise_loop() {
+        let mut b = CircuitBuilder::default();
+        add_voltage_source(&mut b, "V1", "n_in", "0", 1.0);
+        add_resistor(&mut b, "R1", "n_in", "n_out", 1.0e3);
+        add_resistor(&mut b, "R2", "n_out", "0", 1.0e15);
+        let g = b.build().expect("build ok");
+        let fs = flatten(&g).expect("flatten ok");
+        let out_id = g
+            .elements()
+            .iter()
+            .find(|e| e.name().as_str() == "R1")
+            .expect("R1 present")
+            .terminals()[1];
+
+        let zero_budget = NewtonRaphsonConfig {
+            max_iterations: 0,
+            ..NewtonRaphsonConfig::DC_DEFAULTS
+        };
+
+        let req = NoiseAnalysisWithAutoDcRequest::new(
+            &g,
+            &fs,
+            &[1.0e3, 10.0e3, 100.0e3],
+            out_id,
+            ROOM_TEMPERATURE_K,
+        )
+        .with_newton_raphson(zero_budget);
+
+        let res = noise_analysis_with_auto_dc(req).expect("hard error not expected on this path");
+        assert!(res.is_failed(), "DC budget=0 must short-circuit");
+        match res {
+            NoiseAnalysisWithAutoDcResult::Failed {
+                dc_status,
+                operating_point,
+            } => {
+                assert!(dc_status.is_failure(), "got status={dc_status:?}");
+                // The last-iterate `OperatingPoint` is the all-zero
+                // initial iterate (Newton-Raphson never advanced),
+                // but it is `Some` — the driver always materialises
+                // an iterate. This matches `DcAnalysisResult`'s
+                // contract.
+                assert!(
+                    operating_point.is_some(),
+                    "last-iterate OperatingPoint must be carried"
+                );
+                let op = operating_point.unwrap();
+                assert_eq!(op.node_count(), fs.node_count() as usize);
+            }
+            NoiseAnalysisWithAutoDcResult::Ok { .. } => unreachable!(),
+        }
+    }
+
+    /// A hard DC error (here: floating-node fault from a forged
+    /// topology report — same trick as `dc.rs`'s
+    /// `floating_topology_report_short_circuits` witness) must
+    /// propagate through `NoiseAnalysisWithAutoDcError::DcFailed`,
+    /// **not** the `Ok(Failed)` envelope. The two failure surfaces
+    /// are semantically distinct: a topology fault is structural and
+    /// unrecoverable, while a convergence failure is a numerical
+    /// outcome the caller may want to render.
+    #[test]
+    fn auto_dc_hard_dc_error_surfaces_as_dc_failed_variant() {
+        use circuit_solver_types::TopologyReport;
+
+        let mut b = CircuitBuilder::default();
+        add_voltage_source(&mut b, "V1", "n_in", "0", 1.0);
+        add_resistor(&mut b, "R1", "n_in", "n_out", 1.0e3);
+        add_resistor(&mut b, "R2", "n_out", "0", 1.0e15);
+        let g = b.build().expect("build ok");
+        let mut fs = flatten(&g).expect("flatten ok");
+        // Forge a floating-node fault. We are testing the error-
+        // propagation surface, not the checker.
+        let report = TopologyReport {
+            floating: vec![NodeId::new(2)],
+            warning: vec![],
+        };
+        fs.set_topology_report(report);
+
+        let out_id = g
+            .elements()
+            .iter()
+            .find(|e| e.name().as_str() == "R1")
+            .expect("R1 present")
+            .terminals()[1];
+
+        let req =
+            NoiseAnalysisWithAutoDcRequest::new(&g, &fs, &[1.0e3], out_id, ROOM_TEMPERATURE_K);
+        let err = noise_analysis_with_auto_dc(req).expect_err("expected DcFailed");
+        match err {
+            NoiseAnalysisWithAutoDcError::DcFailed(DcAnalysisError::FloatingNodeFault {
+                nodes,
+            }) => {
+                assert_eq!(nodes, vec![NodeId::new(2)]);
+            }
+            other => panic!("expected DcFailed(FloatingNodeFault), got {other:?}"),
+        }
+    }
+
+    /// Inner-noise validation errors propagate as
+    /// `NoiseAnalysisWithAutoDcError::NoiseFailed`. We trip the
+    /// `EmptySweep` surface deliberately — the easiest way to
+    /// witness the auto-DC → noise composition without triggering
+    /// the DC error surface.
+    #[test]
+    fn auto_dc_noise_validation_error_surfaces_as_noise_failed_variant() {
+        let mut b = CircuitBuilder::default();
+        add_voltage_source(&mut b, "V1", "n_in", "0", 1.0);
+        add_resistor(&mut b, "R1", "n_in", "n_out", 1.0e3);
+        add_resistor(&mut b, "R2", "n_out", "0", 1.0e15);
+        let g = b.build().expect("build ok");
+        let fs = flatten(&g).expect("flatten ok");
+        let out_id = g
+            .elements()
+            .iter()
+            .find(|e| e.name().as_str() == "R1")
+            .expect("R1 present")
+            .terminals()[1];
+
+        let req = NoiseAnalysisWithAutoDcRequest::new(&g, &fs, &[], out_id, ROOM_TEMPERATURE_K);
+        match noise_analysis_with_auto_dc(req).unwrap_err() {
+            NoiseAnalysisWithAutoDcError::NoiseFailed(NoiseAnalysisError::EmptySweep) => {}
+            other => panic!("expected NoiseFailed(EmptySweep), got {other:?}"),
+        }
+    }
+
+    /// `with_ground` / `with_newton_raphson` builders thread through
+    /// to the inner DC dispatch and the inner noise loop. We assert
+    /// the field mutations without depending on the resulting
+    /// computed values (those are covered by the happy path).
+    #[test]
+    fn auto_dc_request_builders_set_fields() {
+        let mut b = CircuitBuilder::default();
+        add_voltage_source(&mut b, "V1", "n_in", "0", 1.0);
+        add_resistor(&mut b, "R1", "n_in", "n_out", 1.0e3);
+        add_resistor(&mut b, "R2", "n_out", "0", 1.0e15);
+        let g = b.build().expect("build ok");
+        let fs = flatten(&g).expect("flatten ok");
+        let out_id = NodeId::new(1);
+        let f_axis = [1.0e3];
+
+        let req = NoiseAnalysisWithAutoDcRequest::new(&g, &fs, &f_axis, out_id, ROOM_TEMPERATURE_K);
+        assert!(req.ground.is_none());
+        assert!(req.newton_raphson.is_none());
+
+        let overridden = NewtonRaphsonConfig {
+            max_iterations: 7,
+            ..NewtonRaphsonConfig::DC_DEFAULTS
+        };
+        let req = req
+            .with_ground(NodeId::new(0))
+            .with_newton_raphson(overridden);
+        assert_eq!(req.ground, Some(NodeId::new(0)));
+        assert_eq!(req.newton_raphson, Some(overridden));
+        assert_eq!(req.newton_raphson.unwrap().max_iterations, 7);
+    }
+
+    /// Helper accessors on `NoiseAnalysisWithAutoDcResult` agree on
+    /// `is_ok`/`is_failed`/`operating_point`/`data` for both variants.
+    #[test]
+    fn auto_dc_result_accessors_agree_across_variants() {
+        let op = OperatingPoint {
+            node_voltages: vec![0.0, 1.0],
+            branch_currents: vec![],
+        };
+        let data = NoiseAnalysisData {
+            frequencies_hz: vec![1.0e3],
+            spectral_density_v2_per_hz: vec![4.2e-18],
+            per_device_contributions: vec![],
+        };
+        let ok = NoiseAnalysisWithAutoDcResult::Ok {
+            operating_point: op.clone(),
+            data: data.clone(),
+        };
+        assert!(ok.is_ok() && !ok.is_failed());
+        assert!(ok.operating_point().is_some());
+        assert!(ok.data().is_some());
+
+        let failed_with_iter = NoiseAnalysisWithAutoDcResult::Failed {
+            dc_status: diverged_status(),
+            operating_point: Some(op.clone()),
+        };
+        assert!(failed_with_iter.is_failed() && !failed_with_iter.is_ok());
+        assert!(failed_with_iter.operating_point().is_some());
+        assert!(failed_with_iter.data().is_none());
+
+        let failed_no_iter = NoiseAnalysisWithAutoDcResult::Failed {
+            dc_status: diverged_status(),
+            operating_point: None,
+        };
+        assert!(failed_no_iter.is_failed());
+        assert!(failed_no_iter.operating_point().is_none());
+        assert!(failed_no_iter.data().is_none());
+    }
+
+    /// `Display` for `NoiseAnalysisWithAutoDcError` includes the
+    /// inner-error message verbatim so callers debugging from logs
+    /// can grep for the root cause without unwrapping the wrapper.
+    #[test]
+    fn auto_dc_error_display_includes_inner_message() {
+        let dc_err = NoiseAnalysisWithAutoDcError::DcFailed(DcAnalysisError::FloatingNodeFault {
+            nodes: vec![NodeId::new(3)],
+        });
+        let msg = format!("{dc_err}");
+        assert!(msg.contains("inner DC dispatch raised"), "msg={msg}");
+        // The inner FloatingNodeFault displays a count + ground-path
+        // diagnostic; the wrapped surface keeps that message verbatim.
+        assert!(msg.contains("floating"), "msg={msg}");
+
+        let noise_err = NoiseAnalysisWithAutoDcError::NoiseFailed(NoiseAnalysisError::EmptySweep);
+        let msg = format!("{noise_err}");
+        assert!(msg.contains("inner noise loop raised"), "msg={msg}");
+        assert!(msg.contains("frequency sweep is empty"), "msg={msg}");
     }
 }

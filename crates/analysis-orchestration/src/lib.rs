@@ -20,18 +20,24 @@
 //!   then [`ac_analysis`] at the converged operating point, returning
 //!   both halves in a single bundled result. Covers scenario
 //!   `ac-small-signal#ac-analysis-without-prior-operating-point`.
-//! - [`noise`] — Noise spectral-density control loop (tasks.md #37)
-//!   plus the integrated-noise-over-bandwidth summary metric
+//! - [`noise`] — Noise spectral-density control loop (tasks.md #37),
+//!   its auto-DC entry point (tasks.md #40), plus the
+//!   integrated-noise-over-bandwidth summary metric
 //!   (tasks.md #39, [`integrated_noise`]).
 //!   Linearizes at the DC operating point, builds noise transfer
 //!   matrices at each frequency via the AC sub-view extractor, and
 //!   computes the output-referred PSD by summing squared-magnitude
 //!   transfer-function contributions weighted by per-source PSDs.
+//!   The [`noise::noise_analysis_with_auto_dc`] convenience composes
+//!   the internal DC dispatch + noise loop so callers without a
+//!   pre-computed `OperatingPoint` (see [`dc::OperatingPoint`]) can run
+//!   noise analysis directly from a `(graph, structure)` pair.
 //!   Covers scenarios
 //!   `noise-spectral-density#noise-analysis-on-a-resistive-circuit`,
 //!   `noise-spectral-density#integrated-noise-over-bandwidth`,
+//!   `noise-spectral-density#noise-analysis-on-circuit-with-failed-operating-point`,
 //!   and
-//!   `noise-spectral-density#noise-analysis-on-circuit-with-failed-operating-point`.
+//!   `noise-spectral-density#noise-analysis-without-prior-operating-point`.
 //! - [`sweep`] — Logarithmic frequency [`Sweep`][crate::LogSweep]
 //!   generator (tasks.md #28). Produces the frequency vector used by
 //!   [`ac_analysis`] for multi-decade Bode-style analyses. Covers
@@ -68,10 +74,11 @@ pub use mixed_signal::{
     DigitalStepReport, MixedSignalScheduler, NextEventReport, SchedulerError, SchedulerOutcome,
 };
 pub use noise::{
-    collect_noise_sources, integrated_noise, noise_analysis, DeviceNoiseContribution,
-    IntegratedNoise, IntegratedNoiseError, IntegratedNoiseRequest, IntegrationBand,
-    NoiseAnalysisData, NoiseAnalysisError, NoiseAnalysisRequest, NoiseAnalysisResult,
-    NoiseInjection, SemiconductorNoiseSource,
+    collect_noise_sources, integrated_noise, noise_analysis, noise_analysis_with_auto_dc,
+    DeviceNoiseContribution, IntegratedNoise, IntegratedNoiseError, IntegratedNoiseRequest,
+    IntegrationBand, NoiseAnalysisData, NoiseAnalysisError, NoiseAnalysisRequest,
+    NoiseAnalysisResult, NoiseAnalysisWithAutoDcError, NoiseAnalysisWithAutoDcRequest,
+    NoiseAnalysisWithAutoDcResult, NoiseInjection, SemiconductorNoiseSource,
 };
 pub use sweep::{LogSweep, LogSweepError};
 pub use transient::{
