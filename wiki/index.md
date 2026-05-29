@@ -20,7 +20,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 - Context Maps: 1
 - Grills: 1
 - Architecture: 1
-- Decisions: 5
+- Decisions: 7
 - Specs: 1
 
 ## Concepts
@@ -1661,6 +1661,8 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph|0001]] | PyO3 In-Process Binding with Immutable Circuit Graph | accepted | 2026-05-18 |
 | [[decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer|0002]] | Hybrid Sparse Direct Solver Backend (russell + faer) | accepted | 2026-05-18 |
 | [[decisions/0003-two-pass-graph-flattening-with-per-analysis-sub-views|0003]] | Two-Pass Graph Flattening with Per-Analysis Sub-Views | accepted | 2026-05-18 |
-| [[decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler|0004]] | Optimistic Mixed-Signal Synchronization via Shared Scheduler | accepted | 2026-05-18 |
+| [[decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler|0004]] | Optimistic Mixed-Signal Synchronization via Shared Scheduler | superseded | 2026-05-28 |
 | [[decisions/0005-closed-enum-device-model-dispatch|0005]] | Closed Enum Device Model Dispatch | accepted | 2026-05-18 |
+| [[decisions/0006-native-event-driven-digital-engine|0006]] | Native Event-Driven Digital Engine | accepted | 2026-05-28 |
+| [[decisions/0007-in-tree-codegen-seam-for-closed-enum-device-models|0007]] | In-Tree Codegen Seam for Closed-Enum Device Models | accepted | 2026-05-28 |
 

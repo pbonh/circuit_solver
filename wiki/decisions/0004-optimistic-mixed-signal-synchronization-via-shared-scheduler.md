@@ -12,7 +12,8 @@ tags:
 - rollback
 - checkpoint
 created: 2026-05-17
-updated: 2026-05-18
+updated: 2026-05-28
+superseded_by: decisions/0006-native-event-driven-digital-engine
 sources:
 - architecture/circuit-solver
 - grills/circuit-solver
@@ -31,7 +32,9 @@ confidence:
 
 ## Status
 
-accepted
+superseded
+
+Superseded by [[decisions/0006-native-event-driven-digital-engine|ADR-0006]] (2026-05-28), which replaces external event-driven co-simulation with an in-process native digital kernel. The optimistic time-advance + sparse-checkpoint rollback mechanism decided here is **retained** under ADR-0006, now applied to the native kernel's queue and net state rather than an external simulator.
 
 ## Context
 
