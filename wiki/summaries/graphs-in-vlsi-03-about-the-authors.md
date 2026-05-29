@@ -1,8 +1,8 @@
 ---
 title: Graphs in VLSI — About the Authors
 type: source
-id: source-graphs-in-vlsi-03-about-the-authors
-kind: derived-summary
+id: summaries/graphs-in-vlsi-03-about-the-authors
+kind: publication
 tags:
 - vlsi
 - foundational

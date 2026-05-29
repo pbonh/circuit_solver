@@ -1,8 +1,8 @@
 ---
 title: Advanced Symbolic Analysis for VLSI Systems — Preface
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-00-preface
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-00-preface
+kind: publication
 tags:
 - analog
 - symbolic

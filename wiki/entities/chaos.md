@@ -1,7 +1,7 @@
 ---
 title: Chaos
 type: entity
-id: entity-chaos
+id: entities/chaos
 tags:
 - graph
 - distributed-systems

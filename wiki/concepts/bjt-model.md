@@ -1,7 +1,7 @@
 ---
 title: BJT Model (Ebers-Moll, Hybrid-pi)
 type: claim
-id: claim-bjt-model
+id: concepts/bjt-model
 tags:
 - device-model
 - bjt
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

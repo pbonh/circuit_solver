@@ -1,7 +1,7 @@
 ---
 title: Interior Mutability
 type: claim
-id: claim-interior-mutability
+id: concepts/interior-mutability
 tags:
 - rust
 - ownership
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/rust_book/_txt/16-chapter-15-smart-pointers.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

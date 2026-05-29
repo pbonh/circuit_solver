@@ -2,8 +2,8 @@
 title: 'Prototyping Python Dashboards — Chapter 8: Deploying Your Project As a UNIX
   Service'
 type: source
-id: source-prototyping-python-dashboards-12-chapter-8-deploying-your-project-as-a-unix-service
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-12-chapter-8-deploying-your-project-as-a-unix-service
+kind: publication
 tags:
 - python
 - deployment

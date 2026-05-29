@@ -1,7 +1,7 @@
 ---
 title: Giraph++
 type: entity
-id: entity-giraph-plus-plus
+id: entities/giraph-plus-plus
 tags:
 - graph
 - distributed-systems

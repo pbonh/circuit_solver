@@ -1,7 +1,7 @@
 ---
 title: Anaconda
 type: entity
-id: entity-anaconda
+id: entities/anaconda
 tags:
 - python
 - foundational

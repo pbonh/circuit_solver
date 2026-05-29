@@ -1,7 +1,7 @@
 ---
 title: RKC
 type: entity
-id: entity-rkc
+id: entities/rkc
 tags:
 - ode
 - numerical-integration

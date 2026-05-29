@@ -1,7 +1,7 @@
 ---
 title: Silicide
 type: entity
-id: entity-silicide
+id: entities/silicide
 tags:
 - semiconductor
 - device-physics

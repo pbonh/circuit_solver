@@ -1,7 +1,7 @@
 ---
 title: Graph Algebra
 type: claim
-id: claim-graph-algebra
+id: concepts/graph-algebra
 tags:
 - graph
 - foundational
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/GuideToGraphAlgorithms/_txt/06-problem-formulations.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

@@ -1,8 +1,8 @@
 ---
 title: 'Python Data Analyst''s Toolkit — Chapter 5: Working with NumPy Arrays'
 type: source
-id: source-python-data-analysts-toolkit-09-chapter-5-working-with-numpy-arrays
-kind: derived-summary
+id: summaries/python-data-analysts-toolkit-09-chapter-5-working-with-numpy-arrays
+kind: publication
 tags:
 - python
 - numpy

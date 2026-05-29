@@ -1,7 +1,8 @@
 ---
-title: "Circuit Simulation Knowledge Base Log"
+title: Circuit Simulation Knowledge Base Log
 type: log
 updated: 2026-05-18
+id: log
 ---
 
 # Activity Log

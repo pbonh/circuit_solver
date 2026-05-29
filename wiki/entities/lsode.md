@@ -1,7 +1,7 @@
 ---
 title: LSODE
 type: entity
-id: entity-lsode
+id: entities/lsode
 tags:
 - ode
 - numerical-integration

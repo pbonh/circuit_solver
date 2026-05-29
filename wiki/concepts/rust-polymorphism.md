@@ -1,7 +1,7 @@
 ---
 title: Rust Polymorphism
 type: claim
-id: claim-rust-polymorphism
+id: concepts/rust-polymorphism
 tags:
 - rust
 - traits
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/rust_book/_txt/18-chapter-17-object-oriented-programming-features-of-rust.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

@@ -2,8 +2,8 @@
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 7: JFETs, MESFETs,
   and MODFETs'
 type: source
-id: source-sze-physics-semiconductor-devices-10-chapter-7-jfets-mesfets-and-modfets
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-10-chapter-7-jfets-mesfets-and-modfets
+kind: publication
 tags:
 - semiconductor
 - device-physics

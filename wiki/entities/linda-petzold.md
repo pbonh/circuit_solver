@@ -1,7 +1,7 @@
 ---
 title: Linda R. Petzold
 type: entity
-id: entity-linda-petzold
+id: entities/linda-petzold
 tags:
 - ode
 - numerical-integration

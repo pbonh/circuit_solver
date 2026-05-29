@@ -1,7 +1,7 @@
 ---
 title: Redis
 type: entity
-id: entity-redis
+id: entities/redis
 tags:
 - database
 - key-value

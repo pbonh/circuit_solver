@@ -2,8 +2,8 @@
 title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 4: Determinant Decision
   Diagrams'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-08-4-determinant-decision-diagrams
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-08-4-determinant-decision-diagrams
+kind: publication
 tags:
 - ddd
 - bdd

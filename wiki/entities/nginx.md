@@ -1,7 +1,7 @@
 ---
 title: NGINX
 type: entity
-id: entity-nginx
+id: entities/nginx
 tags:
 - web
 - reverse-proxy

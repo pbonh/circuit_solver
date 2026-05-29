@@ -1,7 +1,7 @@
 ---
 title: Normal Tree
 type: claim
-id: claim-normal-tree
+id: concepts/normal-tree
 tags:
 - graph
 - analog
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/06-chapter-3-graph-theoretic-formulation-of-network-equations.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

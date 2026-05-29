@@ -1,8 +1,8 @@
 ---
 title: The Rust Programming Language — Introduction
 type: source
-id: source-rust-book-01-introduction
-kind: derived-summary
+id: summaries/rust-book-01-introduction
+kind: publication
 tags:
 - rust
 - foundational

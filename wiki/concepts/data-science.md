@@ -1,7 +1,7 @@
 ---
 title: Data Science
 type: claim
-id: claim-data-science
+id: concepts/data-science
 tags:
 - data-analysis
 - foundational
@@ -12,7 +12,11 @@ sources:
 - raw/PythonDataAnalystsToolkit/_txt/02-about-the-technical-reviewer.txt
 - raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 2
+  contradicted: false
+  effective: 0.884
+  inputs_hash: 48379ae317c01c10
 ---
 
 ## Definition

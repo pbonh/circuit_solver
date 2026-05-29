@@ -1,7 +1,7 @@
 ---
 title: Chrome Developer Tools
 type: entity
-id: entity-chrome-developer-tools
+id: entities/chrome-developer-tools
 tags:
 - web
 - debugging

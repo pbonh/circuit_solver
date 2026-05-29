@@ -1,7 +1,7 @@
 ---
 title: Semiconductor Device Family
 type: entity
-id: entity-semiconductor-device-family
+id: entities/semiconductor-device-family
 tags:
 - semiconductor
 - device-physics

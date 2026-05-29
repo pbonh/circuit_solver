@@ -2,8 +2,8 @@
 title: 'Solving Ordinary Differential Equations II — Chapter IV: Stiff Problems –
   One-Step Methods'
 type: source
-id: source-hairer-ode-ii-03-chapter-iv-stiff-problems-one-step-methods
-kind: derived-summary
+id: summaries/hairer-ode-ii-03-chapter-iv-stiff-problems-one-step-methods
+kind: publication
 tags:
 - ode
 - stiff

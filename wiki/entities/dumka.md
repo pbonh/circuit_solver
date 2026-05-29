@@ -1,7 +1,7 @@
 ---
 title: DUMKA
 type: entity
-id: entity-dumka
+id: entities/dumka
 tags:
 - ode
 - numerical-integration

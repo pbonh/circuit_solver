@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Appendix A: Keywords'
 type: source
-id: source-rust-book-22-appendix-a-keywords
-kind: derived-summary
+id: summaries/rust-book-22-appendix-a-keywords
+kind: publication
 tags:
 - rust
 - reference

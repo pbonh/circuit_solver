@@ -1,8 +1,8 @@
 ---
 title: 'Modeling and Simulation of Systems — Chapter 14: Service-Based Software Systems'
 type: source
-id: source-modeling-simulation-systems-18-14-service-based-software-systems
-kind: derived-summary
+id: summaries/modeling-simulation-systems-18-14-service-based-software-systems
+kind: publication
 tags:
 - simulation
 - modeling

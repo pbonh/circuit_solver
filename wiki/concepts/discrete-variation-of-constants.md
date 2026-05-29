@@ -1,7 +1,7 @@
 ---
 title: Discrete Variation of Constants
 type: claim
-id: claim-discrete-variation-of-constants
+id: concepts/discrete-variation-of-constants
 tags:
 - ode
 - numerical-integration
@@ -14,7 +14,11 @@ updated: 2026-05-15
 sources:
 - raw/solving_ordinary_differential_equations_ii/_txt/
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

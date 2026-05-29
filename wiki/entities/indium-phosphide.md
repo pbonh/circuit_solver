@@ -1,7 +1,7 @@
 ---
 title: Indium Phosphide (InP)
 type: entity
-id: entity-indium-phosphide
+id: entities/indium-phosphide
 tags:
 - semiconductor
 - material

@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Chapter 8: Placement of On-Chip Distributed Voltage Regulators'
 type: source
-id: source-graphs-in-vlsi-11-8-placement-of-on-chip-distributed-voltage-regulators
-kind: derived-summary
+id: summaries/graphs-in-vlsi-11-8-placement-of-on-chip-distributed-voltage-regulators
+kind: publication
 tags:
 - vlsi
 - power-integrity

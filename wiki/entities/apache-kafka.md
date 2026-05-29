@@ -1,7 +1,7 @@
 ---
 title: Apache Kafka
 type: entity
-id: entity-apache-kafka
+id: entities/apache-kafka
 tags:
 - well-established
 - streaming

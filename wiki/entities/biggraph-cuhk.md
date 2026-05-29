@@ -1,7 +1,7 @@
 ---
 title: BigGraph@CUHK
 type: entity
-id: entity-biggraph-cuhk
+id: entities/biggraph-cuhk
 tags:
 - graph
 - distributed-systems

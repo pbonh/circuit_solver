@@ -1,7 +1,7 @@
 ---
 title: HTML
 type: claim
-id: claim-html
+id: concepts/html
 tags:
 - web
 - foundational
@@ -10,7 +10,11 @@ updated: 2026-05-15
 sources:
 - raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

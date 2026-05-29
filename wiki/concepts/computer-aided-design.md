@@ -1,7 +1,7 @@
 ---
 title: Computer-Aided Design (CAD)
 type: claim
-id: claim-computer-aided-design
+id: concepts/computer-aided-design
 tags:
 - foundational
 - well-established
@@ -13,7 +13,11 @@ sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/01-preface.txt
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

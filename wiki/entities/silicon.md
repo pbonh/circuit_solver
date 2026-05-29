@@ -1,7 +1,7 @@
 ---
 title: Silicon (Si)
 type: entity
-id: entity-silicon
+id: entities/silicon
 tags:
 - semiconductor
 - material

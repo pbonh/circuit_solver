@@ -1,7 +1,7 @@
 ---
 title: OpenAlea
 type: entity
-id: entity-openalea
+id: entities/openalea
 tags:
 - simulation
 - plant-modeling

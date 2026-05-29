@@ -1,8 +1,8 @@
 ---
 title: Guide to Graph Algorithms — Acknowledgments
 type: source
-id: source-guide-to-graph-algorithms-03-acknowledgments
-kind: derived-summary
+id: summaries/guide-to-graph-algorithms-03-acknowledgments
+kind: publication
 tags:
 - graph
 - algorithm

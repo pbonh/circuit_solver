@@ -1,8 +1,8 @@
 ---
 title: Guide to Graph Algorithms — About the Authors
 type: source
-id: source-guide-to-graph-algorithms-02-about-the-authors
-kind: derived-summary
+id: summaries/guide-to-graph-algorithms-02-about-the-authors
+kind: publication
 tags:
 - graph
 - algorithm

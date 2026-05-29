@@ -1,8 +1,8 @@
 ---
 title: 'Python Data Analyst''s Toolkit — Chapter 6: Prepping Your Data with Pandas'
 type: source
-id: source-python-data-analysts-toolkit-10-chapter-6-prepping-your-data-with-pandas
-kind: derived-summary
+id: summaries/python-data-analysts-toolkit-10-chapter-6-prepping-your-data-with-pandas
+kind: publication
 tags:
 - python
 - pandas

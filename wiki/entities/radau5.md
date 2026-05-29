@@ -1,7 +1,7 @@
 ---
 title: RADAU5
 type: entity
-id: entity-radau5
+id: entities/radau5
 tags:
 - ode
 - numerical-integration

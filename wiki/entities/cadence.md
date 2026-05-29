@@ -1,7 +1,7 @@
 ---
 title: Cadence Design Systems
 type: entity
-id: entity-cadence
+id: entities/cadence
 tags:
 - analog
 - mixed-signal

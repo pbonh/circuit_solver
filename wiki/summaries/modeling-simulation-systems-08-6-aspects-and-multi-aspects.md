@@ -1,8 +1,8 @@
 ---
 title: 'Modeling and Simulation of Systems — Chapter 6: Aspects and Multi-aspects'
 type: source
-id: source-modeling-simulation-systems-08-6-aspects-and-multi-aspects
-kind: derived-summary
+id: summaries/modeling-simulation-systems-08-6-aspects-and-multi-aspects
+kind: publication
 tags:
 - simulation
 - modeling

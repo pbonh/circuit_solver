@@ -1,7 +1,7 @@
 ---
 title: SymPy
 type: entity
-id: entity-sympy
+id: entities/sympy
 tags:
 - python
 - statistics

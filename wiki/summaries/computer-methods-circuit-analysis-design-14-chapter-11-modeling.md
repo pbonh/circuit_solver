@@ -1,8 +1,8 @@
 ---
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 11: Modeling'
 type: source
-id: source-computer-methods-circuit-analysis-design-14-chapter-11-modeling
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-14-chapter-11-modeling
+kind: publication
 tags:
 - foundational
 - device-model

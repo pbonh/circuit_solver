@@ -1,7 +1,7 @@
 ---
 title: Message-Logging Recovery
 type: claim
-id: claim-message-logging-recovery
+id: concepts/message-logging-recovery
 tags:
 - distributed-systems
 - fault-tolerance
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

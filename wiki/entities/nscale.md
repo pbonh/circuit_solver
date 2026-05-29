@@ -1,7 +1,7 @@
 ---
 title: NScale
 type: entity
-id: entity-nscale
+id: entities/nscale
 tags:
 - graph
 - distributed-systems

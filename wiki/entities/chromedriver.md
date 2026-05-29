@@ -1,7 +1,7 @@
 ---
 title: ChromeDriver
 type: entity
-id: entity-chromedriver
+id: entities/chromedriver
 tags:
 - web
 - automation

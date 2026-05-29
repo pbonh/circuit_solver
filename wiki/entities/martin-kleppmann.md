@@ -1,7 +1,7 @@
 ---
 title: Martin Kleppmann
 type: entity
-id: entity-martin-kleppmann
+id: entities/martin-kleppmann
 tags:
 - well-established
 - biography

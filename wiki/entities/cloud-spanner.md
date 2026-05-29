@@ -1,7 +1,7 @@
 ---
 title: Google Cloud Spanner
 type: entity
-id: entity-cloud-spanner
+id: entities/cloud-spanner
 tags:
 - database
 - newsql

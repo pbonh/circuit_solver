@@ -1,7 +1,7 @@
 ---
 title: Topological Sort
 type: claim
-id: claim-topological-sort
+id: concepts/topological-sort
 tags:
 - graph
 - algorithm
@@ -13,7 +13,11 @@ sources:
 - raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
 - raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

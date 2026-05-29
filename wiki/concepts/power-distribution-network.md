@@ -1,7 +1,7 @@
 ---
 title: Power Distribution Network
 type: claim
-id: claim-power-distribution-network
+id: concepts/power-distribution-network
 tags:
 - vlsi
 - power-integrity
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/GraphsInVLSI/_txt/03-about-the-authors.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

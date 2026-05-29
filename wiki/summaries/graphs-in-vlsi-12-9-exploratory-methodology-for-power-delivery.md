@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Chapter 9: Exploratory Methodology for Power Delivery'
 type: source
-id: source-graphs-in-vlsi-12-9-exploratory-methodology-for-power-delivery
-kind: derived-summary
+id: summaries/graphs-in-vlsi-12-9-exploratory-methodology-for-power-delivery
+kind: publication
 tags:
 - vlsi
 - power-integrity

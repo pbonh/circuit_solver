@@ -1,7 +1,7 @@
 ---
 title: TCP Networking (Rust)
 type: claim
-id: claim-tcp-networking
+id: concepts/tcp-networking
 tags:
 - rust
 - networking
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/rust_book/_txt/21-chapter-20-final-project-building-a-multithreaded-web-server.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

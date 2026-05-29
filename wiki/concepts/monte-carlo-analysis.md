@@ -1,7 +1,7 @@
 ---
 title: Monte Carlo Analysis
 type: claim
-id: claim-monte-carlo-analysis
+id: concepts/monte-carlo-analysis
 tags:
 - monte-carlo
 - statistical
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

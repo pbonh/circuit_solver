@@ -1,7 +1,7 @@
 ---
 title: Concurrency
 type: claim
-id: claim-concurrency
+id: concepts/concurrency
 tags:
 - distributed-systems
 - concurrency
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

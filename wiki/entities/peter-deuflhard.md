@@ -1,7 +1,7 @@
 ---
 title: Peter Deuflhard
 type: entity
-id: entity-peter-deuflhard
+id: entities/peter-deuflhard
 tags:
 - ode
 - numerical-integration

@@ -1,7 +1,7 @@
 ---
 title: Continuous Delivery
 type: claim
-id: claim-continuous-delivery
+id: concepts/continuous-delivery
 tags:
 - well-established
 created: 2026-05-15
@@ -9,7 +9,11 @@ updated: 2026-05-15
 sources:
 - raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

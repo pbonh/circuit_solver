@@ -1,7 +1,7 @@
 ---
 title: Pandas
 type: entity
-id: entity-pandas
+id: entities/pandas
 tags:
 - python
 - pandas

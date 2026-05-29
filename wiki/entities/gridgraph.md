@@ -1,7 +1,7 @@
 ---
 title: GridGraph
 type: entity
-id: entity-gridgraph
+id: entities/gridgraph
 tags:
 - graph
 - graph-processing

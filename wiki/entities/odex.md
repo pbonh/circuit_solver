@@ -1,7 +1,7 @@
 ---
 title: ODEX
 type: entity
-id: entity-odex
+id: entities/odex
 tags:
 - ode
 - numerical-integration

@@ -1,7 +1,7 @@
 ---
 title: Wes McKinney
 type: entity
-id: entity-wes-mckinney
+id: entities/wes-mckinney
 tags:
 - python
 - pandas

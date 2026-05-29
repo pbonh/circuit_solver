@@ -1,8 +1,10 @@
 ---
-title: "Analytics"
+title: Analytics
 type: dashboard
-tags: [meta]
+tags:
+- meta
 updated: 2026-04-08
+id: analytics
 ---
 
 # Analytics

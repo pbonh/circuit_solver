@@ -1,7 +1,7 @@
 ---
 title: SystemML (Apache)
 type: entity
-id: entity-systemml
+id: entities/systemml
 tags:
 - machine-learning
 - big-data

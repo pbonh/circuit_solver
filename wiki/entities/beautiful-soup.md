@@ -1,7 +1,7 @@
 ---
 title: Beautiful Soup
 type: entity
-id: entity-beautiful-soup
+id: entities/beautiful-soup
 tags:
 - python
 - html

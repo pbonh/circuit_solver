@@ -1,7 +1,7 @@
 ---
 title: Olavi Nevanlinna
 type: entity
-id: entity-olavi-nevanlinna
+id: entities/olavi-nevanlinna
 tags:
 - ode
 - numerical-integration

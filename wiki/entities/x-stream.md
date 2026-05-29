@@ -1,7 +1,7 @@
 ---
 title: X-Stream
 type: entity
-id: entity-x-stream
+id: entities/x-stream
 tags:
 - graph
 - graph-processing

@@ -1,7 +1,7 @@
 ---
 title: SQL
 type: entity
-id: entity-sql
+id: entities/sql
 tags:
 - well-established
 - relational

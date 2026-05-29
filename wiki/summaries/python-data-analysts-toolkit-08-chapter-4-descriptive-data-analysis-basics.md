@@ -1,8 +1,8 @@
 ---
 title: 'Python Data Analyst''s Toolkit — Chapter 4: Descriptive Data Analysis Basics'
 type: source
-id: source-python-data-analysts-toolkit-08-chapter-4-descriptive-data-analysis-basics
-kind: derived-summary
+id: summaries/python-data-analysts-toolkit-08-chapter-4-descriptive-data-analysis-basics
+kind: publication
 tags:
 - python
 - data-analysis

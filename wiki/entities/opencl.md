@@ -1,7 +1,7 @@
 ---
 title: OpenCL
 type: entity
-id: entity-opencl
+id: entities/opencl
 tags:
 - gpu
 - parallel

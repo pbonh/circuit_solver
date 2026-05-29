@@ -1,8 +1,8 @@
 ---
 title: 'Foundations of Scalable Systems — Part II: Scalable Systems (Chapters 5–9)'
 type: source
-id: source-foundations-scalable-systems-05-part-ii-scalable-systems
-kind: derived-summary
+id: summaries/foundations-scalable-systems-05-part-ii-scalable-systems
+kind: publication
 tags:
 - distributed-systems
 - scalability

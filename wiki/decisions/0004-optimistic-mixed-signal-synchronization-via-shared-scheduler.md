@@ -1,18 +1,30 @@
 ---
-title: "Optimistic Mixed-Signal Synchronization via Shared Scheduler"
+title: Optimistic Mixed-Signal Synchronization via Shared Scheduler
 type: claim
-id: claim-decision-0004-optimistic-mixed-signal-synchronization-via-shared-scheduler
-tags: [decision, circuit-solver, mixed-signal, synchronization, optimistic, scheduler, rollback, checkpoint]
+id: decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler
+tags:
+- decision
+- circuit-solver
+- mixed-signal
+- synchronization
+- optimistic
+- scheduler
+- rollback
+- checkpoint
 created: 2026-05-17
 updated: 2026-05-18
 sources:
-  - "architecture/circuit-solver"
-  - "grills/circuit-solver"
-  - "vision/circuit-solver"
-  - "contexts/analysis-orchestration"
-  - "concepts/mixed-level-simulation"
+- architecture/circuit-solver
+- grills/circuit-solver
+- vision/circuit-solver
+- contexts/analysis-orchestration
+- concepts/mixed-level-simulation
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 5
+  contradicted: false
+  effective: 1.045
+  inputs_hash: 33dd55b0a8d5dd91
 ---
 
 "In the context of mixed-signal co-simulation between a continuous-time analog solver and an external event-driven digital simulator, facing the need for efficient time synchronization with rollback on digital mispredictions while keeping the analog and digital contexts decoupled, we decided for an optimistic time-advance strategy mediated by a shared Mixed-Signal Scheduler that owns both kernels and issues run-until commands, to achieve maximal analog solver efficiency via adaptive timestepping and clean context boundaries, accepting that sparse checkpointing at predicted digital event boundaries adds memory overhead and that mispredictions trigger full re-solve from the last good checkpoint."

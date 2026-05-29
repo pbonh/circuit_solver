@@ -1,7 +1,7 @@
 ---
 title: CURAND
 type: entity
-id: entity-curand
+id: entities/curand
 tags:
 - tool
 - gpu

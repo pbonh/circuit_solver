@@ -1,7 +1,7 @@
 ---
 title: DOPRI5
 type: entity
-id: entity-dopri5
+id: entities/dopri5
 tags:
 - ode
 - numerical-integration

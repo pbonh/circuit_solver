@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Chapter 15: Smart Pointers'
 type: source
-id: source-rust-book-16-chapter-15-smart-pointers
-kind: derived-summary
+id: summaries/rust-book-16-chapter-15-smart-pointers
+kind: publication
 tags:
 - rust
 - smart-pointers

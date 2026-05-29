@@ -1,7 +1,7 @@
 ---
 title: ASAP7 PDK
 type: entity
-id: entity-asap7-pdk
+id: entities/asap7-pdk
 tags:
 - pdk
 - predictive

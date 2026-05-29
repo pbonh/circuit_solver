@@ -1,8 +1,8 @@
 ---
 title: Foundations of Scalable Systems — Preface
 type: source
-id: source-foundations-scalable-systems-03-preface
-kind: derived-summary
+id: summaries/foundations-scalable-systems-03-preface
+kind: publication
 tags:
 - distributed-systems
 - scalability

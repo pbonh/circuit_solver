@@ -1,7 +1,7 @@
 ---
 title: Werner Schiehlen
 type: entity
-id: entity-werner-schiehlen
+id: entities/werner-schiehlen
 tags:
 - ode
 - numerical-integration

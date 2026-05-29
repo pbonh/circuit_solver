@@ -1,7 +1,7 @@
 ---
 title: Branch Stamping
 type: claim
-id: claim-branch-stamping
+id: concepts/branch-stamping
 tags:
 - foundational
 - netlist
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

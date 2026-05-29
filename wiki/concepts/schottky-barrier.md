@@ -1,7 +1,7 @@
 ---
 title: Schottky Barrier
 type: claim
-id: claim-schottky-barrier
+id: concepts/schottky-barrier
 tags:
 - semiconductor
 - device-physics
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

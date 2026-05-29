@@ -1,7 +1,7 @@
 ---
 title: Hadley Wickham
 type: entity
-id: entity-hadley-wickham
+id: entities/hadley-wickham
 tags:
 - data-analysis
 - statistics

@@ -2,8 +2,8 @@
 title: 'Modeling and Simulation of Systems — Chapter 11: Interest-Based Information
   Exchange: Mappings and Models'
 type: source
-id: source-modeling-simulation-systems-14-11-interest-based-information-exchange-mappings-and-models
-kind: derived-summary
+id: summaries/modeling-simulation-systems-14-11-interest-based-information-exchange-mappings-and-models
+kind: publication
 tags:
 - simulation
 - modeling

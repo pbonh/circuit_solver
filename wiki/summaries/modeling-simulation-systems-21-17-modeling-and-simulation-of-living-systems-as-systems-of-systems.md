@@ -2,8 +2,8 @@
 title: 'Modeling and Simulation of Systems — Chapter 17: Modeling and Simulation of
   Living Systems as Systems of Systems'
 type: source
-id: source-modeling-simulation-systems-21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems
-kind: derived-summary
+id: summaries/modeling-simulation-systems-21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems
+kind: publication
 tags:
 - simulation
 - modeling

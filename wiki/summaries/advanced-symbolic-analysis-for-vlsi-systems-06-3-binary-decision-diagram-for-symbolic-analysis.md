@@ -2,8 +2,8 @@
 title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 3: Binary Decision Diagram
   for Symbolic Analysis'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-06-3-binary-decision-diagram-for-symbolic-analysis
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-06-3-binary-decision-diagram-for-symbolic-analysis
+kind: publication
 tags:
 - foundational
 - bdd

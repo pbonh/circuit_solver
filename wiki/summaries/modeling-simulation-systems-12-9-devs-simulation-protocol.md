@@ -1,8 +1,8 @@
 ---
 title: 'Modeling and Simulation of Systems — Chapter 9: DEVS Simulation Protocol'
 type: source
-id: source-modeling-simulation-systems-12-9-devs-simulation-protocol
-kind: derived-summary
+id: summaries/modeling-simulation-systems-12-9-devs-simulation-protocol
+kind: publication
 tags:
 - simulation
 - modeling

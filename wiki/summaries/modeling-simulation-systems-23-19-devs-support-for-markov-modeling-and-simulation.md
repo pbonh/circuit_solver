@@ -2,8 +2,8 @@
 title: 'Modeling and Simulation of Systems — Chapter 19: DEVS Support for Markov Modeling
   and Simulation'
 type: source
-id: source-modeling-simulation-systems-23-19-devs-support-for-markov-modeling-and-simulation
-kind: derived-summary
+id: summaries/modeling-simulation-systems-23-19-devs-support-for-markov-modeling-and-simulation
+kind: publication
 tags:
 - simulation
 - modeling

@@ -1,7 +1,7 @@
 ---
 title: Join Types (Inner / Outer / Left / Right)
 type: claim
-id: claim-join-types
+id: concepts/join-types
 tags:
 - python
 - pandas
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

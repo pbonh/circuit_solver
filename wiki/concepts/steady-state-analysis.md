@@ -1,7 +1,7 @@
 ---
 title: Steady-State Analysis
 type: claim
-id: claim-steady-state-analysis
+id: concepts/steady-state-analysis
 tags:
 - transient
 - harmonic-balance
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/19-chapter-16-time-domain-sensitivities-and-steady-state.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

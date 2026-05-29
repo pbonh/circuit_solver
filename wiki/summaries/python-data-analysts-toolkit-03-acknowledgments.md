@@ -1,8 +1,8 @@
 ---
 title: Python Data Analyst's Toolkit — Acknowledgments
 type: source
-id: source-python-data-analysts-toolkit-03-acknowledgments
-kind: derived-summary
+id: summaries/python-data-analysts-toolkit-03-acknowledgments
+kind: publication
 tags:
 - foundational
 created: 2026-05-15

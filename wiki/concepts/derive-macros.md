@@ -1,7 +1,7 @@
 ---
 title: Derive Macros
 type: claim
-id: claim-derive-macros
+id: concepts/derive-macros
 tags:
 - rust
 - macros
@@ -13,7 +13,11 @@ sources:
 - raw/rust_book/_txt/06-chapter-5-using-structs-to-structure-related-data.txt
 - raw/rust_book/_txt/24-appendix-c-derivable-traits.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

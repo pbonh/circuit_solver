@@ -1,7 +1,7 @@
 ---
 title: DASSL
 type: entity
-id: entity-dassl
+id: entities/dassl
 tags:
 - ode
 - numerical-integration

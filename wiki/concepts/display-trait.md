@@ -1,7 +1,7 @@
 ---
 title: Display Trait
 type: claim
-id: claim-display-trait
+id: concepts/display-trait
 tags:
 - rust
 - traits
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

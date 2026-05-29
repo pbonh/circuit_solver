@@ -1,7 +1,7 @@
 ---
 title: Lifetimes
 type: claim
-id: claim-lifetimes
+id: concepts/lifetimes
 tags:
 - rust
 - lifetimes
@@ -13,7 +13,11 @@ sources:
 - raw/rust_book/_txt/05-chapter-4-understanding-ownership.txt
 - raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

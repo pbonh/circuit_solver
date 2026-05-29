@@ -1,8 +1,8 @@
 ---
 title: Guide to Graph Algorithms — Graphs (Chapter 1)
 type: source
-id: source-guide-to-graph-algorithms-04-graphs
-kind: derived-summary
+id: summaries/guide-to-graph-algorithms-04-graphs
+kind: publication
 tags:
 - graph
 - foundational

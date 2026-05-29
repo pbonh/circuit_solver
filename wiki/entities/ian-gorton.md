@@ -1,7 +1,7 @@
 ---
 title: Ian Gorton
 type: entity
-id: entity-ian-gorton
+id: entities/ian-gorton
 tags:
 - author
 - academic

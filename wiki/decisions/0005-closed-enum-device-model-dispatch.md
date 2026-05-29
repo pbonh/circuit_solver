@@ -1,23 +1,34 @@
 ---
-title: "Closed Enum Device Model Dispatch"
+title: Closed Enum Device Model Dispatch
 type: claim
-id: claim-decision-0005-closed-enum-device-model-dispatch
-tags: [decision, circuit-solver, device-model, dispatch, performance, rust, zero-cost-abstractions]
+id: decisions/0005-closed-enum-device-model-dispatch
+tags:
+- decision
+- circuit-solver
+- device-model
+- dispatch
+- performance
+- rust
+- zero-cost-abstractions
 created: 2026-05-17
 updated: 2026-05-18
 sources:
-  - "architecture/circuit-solver"
-  - "grills/circuit-solver"
-  - "vision/circuit-solver"
-  - "contexts/device-modeling"
-  - "contexts/numeric-solver"
-  - "concepts/zero-cost-abstractions"
-  - "concepts/static-dispatch"
-  - "concepts/dynamic-dispatch"
-  - "concepts/trait-objects"
-  - "concepts/memory-safety"
+- architecture/circuit-solver
+- grills/circuit-solver
+- vision/circuit-solver
+- contexts/device-modeling
+- contexts/numeric-solver
+- concepts/zero-cost-abstractions
+- concepts/static-dispatch
+- concepts/dynamic-dispatch
+- concepts/trait-objects
+- concepts/memory-safety
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 10
+  contradicted: false
+  effective: 1.045
+  inputs_hash: f2c22288a1303d22
 ---
 
 "In the context of the Device Model Engine's stamp evaluation inside tight Newton-Raphson loops, facing the requirement for zero-cost dispatch and cache-friendly data layouts, we decided for a closed enum (`enum DeviceModel { Diode(...), BJT(...), MOSFET(...), ... }`) covering all in-scope core semiconductor models, to achieve compile-time monomorphized dispatch with predictable memory layout and no vtable indirection, accepting that runtime extensibility of device models is excluded from scope and that adding a new model variant is a breaking change requiring recompilation."

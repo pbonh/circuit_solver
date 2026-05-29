@@ -1,8 +1,8 @@
 ---
 title: Prototyping Python Dashboards — Introduction
 type: source
-id: source-prototyping-python-dashboards-04-introduction
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-04-introduction
+kind: publication
 tags:
 - python
 - dashboard

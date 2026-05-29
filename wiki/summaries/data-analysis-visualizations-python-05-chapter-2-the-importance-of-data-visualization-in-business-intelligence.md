@@ -2,8 +2,8 @@
 title: 'Data Analysis and Visualizations with Python — Chapter 2: The Importance of
   Data Visualization in Business Intelligence'
 type: source
-id: source-data-analysis-visualizations-python-05-chapter-2-the-importance-of-data-visualization-in-business-intelligence
-kind: derived-summary
+id: summaries/data-analysis-visualizations-python-05-chapter-2-the-importance-of-data-visualization-in-business-intelligence
+kind: publication
 tags:
 - python
 - data-visualization

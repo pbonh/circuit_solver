@@ -1,7 +1,7 @@
 ---
 title: LDO Regulator
 type: entity
-id: entity-ldo-regulator
+id: entities/ldo-regulator
 tags:
 - vlsi
 - power-integrity

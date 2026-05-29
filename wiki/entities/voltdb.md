@@ -1,7 +1,7 @@
 ---
 title: VoltDB
 type: entity
-id: entity-voltdb
+id: entities/voltdb
 tags:
 - well-established
 - distributed-systems

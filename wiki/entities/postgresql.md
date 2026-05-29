@@ -1,7 +1,7 @@
 ---
 title: PostgreSQL
 type: entity
-id: entity-postgresql
+id: entities/postgresql
 tags:
 - well-established
 - relational

@@ -2,8 +2,8 @@
 title: 'Modeling and Simulation of Systems — Chapter 12: Languages for Constructing
   DEVS Models'
 type: source
-id: source-modeling-simulation-systems-15-12-languages-for-constructing-devs-models
-kind: derived-summary
+id: summaries/modeling-simulation-systems-15-12-languages-for-constructing-devs-models
+kind: publication
 tags:
 - simulation
 - modeling

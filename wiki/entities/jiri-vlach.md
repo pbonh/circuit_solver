@@ -1,7 +1,7 @@
 ---
 title: Jiri Vlach
 type: entity
-id: entity-jiri-vlach
+id: entities/jiri-vlach
 tags:
 - author
 - foundational

@@ -1,7 +1,7 @@
 ---
 title: J. R. (Jeff) Cash
 type: entity
-id: entity-jeff-cash
+id: entities/jeff-cash
 tags:
 - ode
 - numerical-integration

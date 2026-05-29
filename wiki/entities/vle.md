@@ -1,7 +1,7 @@
 ---
 title: VLE (Virtual Laboratory Environment)
 type: entity
-id: entity-vle
+id: entities/vle
 tags:
 - simulation
 - devs

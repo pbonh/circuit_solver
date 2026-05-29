@@ -2,8 +2,8 @@
 title: 'The Rust Programming Language — Appendix G: How Rust is Made and "Nightly
   Rust"'
 type: source
-id: source-rust-book-28-appendix-g-how-rust-is-made-and-nightly-rust
-kind: derived-summary
+id: summaries/rust-book-28-appendix-g-how-rust-is-made-and-nightly-rust
+kind: publication
 tags:
 - rust
 - reference

@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Appendix F: Translations of the Book'
 type: source
-id: source-rust-book-27-appendix-f-translations-of-the-book
-kind: derived-summary
+id: summaries/rust-book-27-appendix-f-translations-of-the-book
+kind: publication
 tags:
 - rust
 - reference

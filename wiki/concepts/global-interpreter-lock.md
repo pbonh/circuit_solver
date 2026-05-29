@@ -1,7 +1,7 @@
 ---
 title: Global Interpreter Lock (GIL)
 type: claim
-id: claim-global-interpreter-lock
+id: concepts/global-interpreter-lock
 tags:
 - python
 - concurrency
@@ -12,7 +12,11 @@ updated: 2026-05-18
 sources:
 - wiki/specs/circuit-solver
 confidence:
-  base: 0.45
+  base: 0.7
+  source_count: 1
+  contradicted: false
+  effective: 0.7
+  inputs_hash: 86fb3e99d617ff2d
 ---
 
 ## Definition

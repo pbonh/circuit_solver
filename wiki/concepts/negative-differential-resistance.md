@@ -1,7 +1,7 @@
 ---
 title: Negative Differential Resistance
 type: claim
-id: claim-negative-differential-resistance
+id: concepts/negative-differential-resistance
 tags:
 - semiconductor
 - device-physics
@@ -13,7 +13,11 @@ sources:
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/12-chapter-8-tunnel-devices.txt
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/14-chapter-10-transferred-electron-and-real-space-transfer-devices.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 2
+  contradicted: false
+  effective: 0.884
+  inputs_hash: 48379ae317c01c10
 ---
 
 ## Definition

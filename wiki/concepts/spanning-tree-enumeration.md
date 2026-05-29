@@ -1,7 +1,7 @@
 ---
 title: Spanning-Tree Enumeration
 type: claim
-id: claim-spanning-tree-enumeration
+id: concepts/spanning-tree-enumeration
 tags:
 - graph
 - foundational
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

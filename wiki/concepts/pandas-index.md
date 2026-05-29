@@ -1,7 +1,7 @@
 ---
 title: Pandas Index
 type: claim
-id: claim-pandas-index
+id: concepts/pandas-index
 tags:
 - python
 - pandas
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

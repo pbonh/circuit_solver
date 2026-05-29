@@ -1,7 +1,7 @@
 ---
 title: Algebraic-Differential Equations (DAEs)
 type: claim
-id: claim-algebraic-differential-equations
+id: concepts/algebraic-differential-equations
 tags:
 - foundational
 - transient
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/16-chapter-13-numerical-integration-of-differential-and-algebraic-differential-equations.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

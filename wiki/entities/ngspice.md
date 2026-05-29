@@ -1,7 +1,7 @@
 ---
 title: Ngspice
 type: entity
-id: entity-ngspice
+id: entities/ngspice
 tags:
 - eda
 - simulation

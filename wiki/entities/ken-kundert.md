@@ -1,7 +1,7 @@
 ---
 title: Ken Kundert
 type: entity
-id: entity-ken-kundert
+id: entities/ken-kundert
 tags:
 - analog
 - mixed-signal

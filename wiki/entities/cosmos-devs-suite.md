@@ -1,7 +1,7 @@
 ---
 title: CoSMoS / DEVS-Suite
 type: entity
-id: entity-cosmos-devs-suite
+id: entities/cosmos-devs-suite
 tags:
 - simulation
 - devs

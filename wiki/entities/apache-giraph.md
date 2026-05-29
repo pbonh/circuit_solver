@@ -1,7 +1,7 @@
 ---
 title: Apache Giraph
 type: entity
-id: entity-apache-giraph
+id: entities/apache-giraph
 tags:
 - graph
 - distributed-systems

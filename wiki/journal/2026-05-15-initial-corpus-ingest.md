@@ -1,7 +1,7 @@
 ---
 title: Initial Corpus Ingest — 2026-05-15
 type: source
-id: source-journal-2026-05-15-initial-corpus-ingest
+id: journal/2026-05-15-initial-corpus-ingest
 kind: journal
 tags:
 - meta

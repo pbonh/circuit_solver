@@ -1,7 +1,7 @@
 ---
 title: SciPy
 type: entity
-id: entity-scipy
+id: entities/scipy
 tags:
 - python
 - statistics

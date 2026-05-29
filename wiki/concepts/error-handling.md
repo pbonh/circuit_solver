@@ -1,7 +1,7 @@
 ---
 title: Error Handling
 type: claim
-id: claim-error-handling
+id: concepts/error-handling
 tags:
 - rust
 - foundational
@@ -13,7 +13,11 @@ sources:
 - raw/rust_book/_txt/10-chapter-9-error-handling.txt
 - raw/rust_book/_txt/03-chapter-2-programming-a-guessing-game.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

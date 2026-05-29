@@ -1,7 +1,7 @@
 ---
 title: Rustup
 type: claim
-id: claim-rustup
+id: concepts/rustup
 tags:
 - rust
 - tooling
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/rust_book/_txt/02-chapter-1-getting-started.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

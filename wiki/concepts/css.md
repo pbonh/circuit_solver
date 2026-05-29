@@ -1,7 +1,7 @@
 ---
 title: CSS
 type: claim
-id: claim-css
+id: concepts/css
 tags:
 - web
 - css
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/PrototypingPythonDashboards/_txt/09-chapter-5-our-first-dashboard.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

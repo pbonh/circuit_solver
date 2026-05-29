@@ -1,7 +1,7 @@
 ---
 title: Levelized DDD (GPU-Friendly Layout)
 type: claim
-id: claim-levelized-ddd
+id: concepts/levelized-ddd
 tags:
 - ddd
 - gpu
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

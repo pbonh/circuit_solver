@@ -1,7 +1,7 @@
 ---
 title: Python `re` Module
 type: entity
-id: entity-python-re-module
+id: entities/python-re-module
 tags:
 - python
 - foundational

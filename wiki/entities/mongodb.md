@@ -1,7 +1,7 @@
 ---
 title: MongoDB
 type: entity
-id: entity-mongodb
+id: entities/mongodb
 tags:
 - well-established
 - nosql

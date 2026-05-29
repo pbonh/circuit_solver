@@ -1,7 +1,7 @@
 ---
 title: GraphX
 type: entity
-id: entity-graphx
+id: entities/graphx
 tags:
 - graph
 - distributed-systems

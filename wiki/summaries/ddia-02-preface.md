@@ -1,8 +1,8 @@
 ---
 title: Designing Data-Intensive Applications — Preface
 type: source
-id: source-ddia-02-preface
-kind: derived-summary
+id: summaries/ddia-02-preface
+kind: publication
 tags:
 - foundational
 - well-established

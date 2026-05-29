@@ -1,7 +1,7 @@
 ---
 title: Blogel
 type: entity
-id: entity-blogel
+id: entities/blogel
 tags:
 - graph
 - distributed-systems

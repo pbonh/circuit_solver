@@ -1,7 +1,7 @@
 ---
 title: Google Spanner
 type: entity
-id: entity-spanner
+id: entities/spanner
 tags:
 - well-established
 - distributed-systems

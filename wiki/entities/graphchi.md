@@ -1,7 +1,7 @@
 ---
 title: GraphChi
 type: entity
-id: entity-graphchi
+id: entities/graphchi
 tags:
 - graph
 - graph-processing

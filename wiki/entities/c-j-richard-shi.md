@@ -1,7 +1,7 @@
 ---
 title: C.-J. Richard Shi
 type: entity
-id: entity-c-j-richard-shi
+id: entities/c-j-richard-shi
 tags:
 - person
 - researcher

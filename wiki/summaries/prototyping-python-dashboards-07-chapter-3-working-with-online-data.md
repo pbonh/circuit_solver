@@ -1,8 +1,8 @@
 ---
 title: 'Prototyping Python Dashboards — Chapter 3: Working with Online Data'
 type: source
-id: source-prototyping-python-dashboards-07-chapter-3-working-with-online-data
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-07-chapter-3-working-with-online-data
+kind: publication
 tags:
 - python
 - screen-scraping

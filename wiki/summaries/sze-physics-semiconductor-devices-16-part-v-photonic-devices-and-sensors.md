@@ -2,8 +2,8 @@
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Part V: Photonic Devices
   and Sensors'
 type: source
-id: source-sze-physics-semiconductor-devices-16-part-v-photonic-devices-and-sensors
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-16-part-v-photonic-devices-and-sensors
+kind: publication
 tags:
 - semiconductor
 - device-physics

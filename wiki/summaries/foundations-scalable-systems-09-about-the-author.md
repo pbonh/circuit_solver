@@ -1,8 +1,8 @@
 ---
 title: Foundations of Scalable Systems — About the Author
 type: source
-id: source-foundations-scalable-systems-09-about-the-author
-kind: derived-summary
+id: summaries/foundations-scalable-systems-09-about-the-author
+kind: publication
 tags:
 - foundational
 - book-back-matter

@@ -1,7 +1,7 @@
 ---
 title: Quantum-Mechanical Tunneling
 type: claim
-id: claim-quantum-mechanical-tunneling
+id: concepts/quantum-mechanical-tunneling
 tags:
 - semiconductor
 - device-physics
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

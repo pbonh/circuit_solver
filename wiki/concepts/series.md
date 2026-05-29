@@ -1,7 +1,7 @@
 ---
 title: Pandas Series
 type: claim
-id: claim-series
+id: concepts/series
 tags:
 - python
 - pandas
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/PrototypingPythonDashboards/_txt/05-chapter-1-working-with-python.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

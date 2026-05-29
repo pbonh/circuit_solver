@@ -2,8 +2,8 @@
 title: 'The Rust Programming Language — Chapter 17: Object-Oriented Programming Features
   of Rust'
 type: source
-id: source-rust-book-18-chapter-17-object-oriented-programming-features-of-rust
-kind: derived-summary
+id: summaries/rust-book-18-chapter-17-object-oriented-programming-features-of-rust
+kind: publication
 tags:
 - rust
 - foundational

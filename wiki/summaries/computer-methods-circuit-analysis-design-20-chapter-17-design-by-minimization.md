@@ -1,8 +1,8 @@
 ---
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 17: Design by Minimization'
 type: source
-id: source-computer-methods-circuit-analysis-design-20-chapter-17-design-by-minimization
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-20-chapter-17-design-by-minimization
+kind: publication
 tags:
 - optimization
 - analog

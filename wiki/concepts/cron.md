@@ -1,7 +1,7 @@
 ---
 title: Cron
 type: claim
-id: claim-cron
+id: concepts/cron
 tags:
 - unix
 - automation
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/PrototypingPythonDashboards/_txt/17-appendix-a-utilities-for-managing-atads-data.txt
 confidence:
-  base: 0.45
+  base: 0.7
+  source_count: 1
+  contradicted: false
+  effective: 0.7
+  inputs_hash: 86fb3e99d617ff2d
 ---
 
 > The source mentions cron only as an automation suggestion: "This data management scheme could be easily modified for greater efficiency and automated to run monthly using a Unix cron job if desired." (Appendix A of Prototyping Python Dashboards). The book does not teach cron syntax; the content below is general knowledge.

@@ -1,7 +1,7 @@
 ---
 title: Alexander Ostermann
 type: entity
-id: entity-alexander-ostermann
+id: entities/alexander-ostermann
 tags:
 - ode
 - numerical-integration

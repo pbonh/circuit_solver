@@ -1,7 +1,7 @@
 ---
 title: Kishore Singhal
 type: entity
-id: entity-kishore-singhal
+id: entities/kishore-singhal
 tags:
 - author
 - foundational

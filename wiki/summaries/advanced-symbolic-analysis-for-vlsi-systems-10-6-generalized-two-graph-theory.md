@@ -2,8 +2,8 @@
 title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 6: Generalized Two-Graph
   Theory'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-10-6-generalized-two-graph-theory
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-10-6-generalized-two-graph-theory
+kind: publication
 tags:
 - graph
 - symbolic

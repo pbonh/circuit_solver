@@ -1,7 +1,7 @@
 ---
 title: Pathological Element
 type: claim
-id: claim-pathological-element
+id: concepts/pathological-element
 tags:
 - analog
 - foundational
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/10-6-generalized-two-graph-theory.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

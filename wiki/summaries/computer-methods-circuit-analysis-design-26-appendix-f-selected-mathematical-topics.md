@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Appendix F: Selected Mathematical
   Topics'
 type: source
-id: source-computer-methods-circuit-analysis-design-26-appendix-f-selected-mathematical-topics
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-26-appendix-f-selected-mathematical-topics
+kind: publication
 tags:
 - foundational
 - math

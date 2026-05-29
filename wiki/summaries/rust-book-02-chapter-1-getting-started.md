@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Chapter 1: Getting Started'
 type: source
-id: source-rust-book-02-chapter-1-getting-started
-kind: derived-summary
+id: summaries/rust-book-02-chapter-1-getting-started
+kind: publication
 tags:
 - rust
 - foundational

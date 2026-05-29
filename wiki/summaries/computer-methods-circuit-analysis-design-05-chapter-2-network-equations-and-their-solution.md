@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 2: Network Equations
   and Their Solution'
 type: source
-id: source-computer-methods-circuit-analysis-design-05-chapter-2-network-equations-and-their-solution
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-05-chapter-2-network-equations-and-their-solution
+kind: publication
 tags:
 - foundational
 - analog

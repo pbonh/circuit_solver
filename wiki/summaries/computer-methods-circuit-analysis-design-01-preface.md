@@ -1,8 +1,8 @@
 ---
 title: Computer Methods for Circuit Analysis and Design — Preface
 type: source
-id: source-computer-methods-circuit-analysis-design-01-preface
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-01-preface
+kind: publication
 tags:
 - foundational
 - analog

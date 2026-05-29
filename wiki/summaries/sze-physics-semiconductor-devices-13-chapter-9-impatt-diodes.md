@@ -1,8 +1,8 @@
 ---
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 9: IMPATT Diodes'
 type: source
-id: source-sze-physics-semiconductor-devices-13-chapter-9-impatt-diodes
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-13-chapter-9-impatt-diodes
+kind: publication
 tags:
 - semiconductor
 - device-physics

@@ -1,7 +1,7 @@
 ---
 title: GRACE
 type: entity
-id: entity-grace
+id: entities/grace
 tags:
 - graph
 - graph-processing

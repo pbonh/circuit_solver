@@ -1,7 +1,7 @@
 ---
 title: Permutation Graph
 type: claim
-id: claim-permutation-graph
+id: concepts/permutation-graph
 tags:
 - graph
 - foundational
@@ -12,7 +12,11 @@ sources:
 - raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
 - raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

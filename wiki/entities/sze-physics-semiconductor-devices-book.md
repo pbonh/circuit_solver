@@ -1,7 +1,7 @@
 ---
 title: Physics of Semiconductor Devices (Sze & Ng, 3rd Ed., 2006)
 type: entity
-id: entity-sze-physics-semiconductor-devices-book
+id: entities/sze-physics-semiconductor-devices-book
 tags:
 - semiconductor
 - device-physics

@@ -1,7 +1,7 @@
 ---
 title: Kron's Branch Tearing
 type: claim
-id: claim-branch-tearing
+id: concepts/branch-tearing
 tags:
 - graph
 - decomposition
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/15-10-symbolic-moment-computation.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

@@ -1,7 +1,7 @@
 ---
 title: RODAS5
 type: entity
-id: entity-rodas5
+id: entities/rodas5
 tags:
 - ode
 - numerical-integration

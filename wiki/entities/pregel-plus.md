@@ -1,7 +1,7 @@
 ---
 title: Pregel+
 type: entity
-id: entity-pregel-plus
+id: entities/pregel-plus
 tags:
 - graph
 - distributed-systems

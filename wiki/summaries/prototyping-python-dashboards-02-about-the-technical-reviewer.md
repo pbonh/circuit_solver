@@ -1,8 +1,8 @@
 ---
 title: Prototyping Python Dashboards — About the Technical Reviewer
 type: source
-id: source-prototyping-python-dashboards-02-about-the-technical-reviewer
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-02-about-the-technical-reviewer
+kind: publication
 tags:
 - python
 - data-science

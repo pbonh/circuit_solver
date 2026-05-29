@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Appendix E: Editions'
 type: source
-id: source-rust-book-26-appendix-e-editions
-kind: derived-summary
+id: summaries/rust-book-26-appendix-e-editions
+kind: publication
 tags:
 - rust
 - reference

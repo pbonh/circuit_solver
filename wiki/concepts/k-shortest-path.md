@@ -1,7 +1,7 @@
 ---
 title: k-Shortest Path on DAGs
 type: claim
-id: claim-k-shortest-path
+id: concepts/k-shortest-path
 tags:
 - algorithm
 - graph
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/08-4-determinant-decision-diagrams.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

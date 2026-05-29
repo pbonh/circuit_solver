@@ -1,7 +1,7 @@
 ---
 title: DARPA F6 Frontier MSE
 type: entity
-id: entity-darpa-f6-frontier
+id: entities/darpa-f6-frontier
 tags:
 - simulation
 - modeling

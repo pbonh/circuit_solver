@@ -2,8 +2,8 @@
 title: 'Data Analysis and Visualizations with Python — Chapter 6: Data Exploring and
   Analysis'
 type: source
-id: source-data-analysis-visualizations-python-09-chapter-6-data-exploring-and-analysis
-kind: derived-summary
+id: summaries/data-analysis-visualizations-python-09-chapter-6-data-exploring-and-analysis
+kind: publication
 tags:
 - python
 - pandas

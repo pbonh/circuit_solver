@@ -1,7 +1,7 @@
 ---
 title: 'Architecture: Circuit Solver'
 type: entity
-id: entity-arch-circuit-solver
+id: architecture/circuit-solver
 tags:
 - architecture
 - c4

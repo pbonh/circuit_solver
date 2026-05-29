@@ -1,7 +1,7 @@
 ---
 title: Python `datetime` Module
 type: entity
-id: entity-python-datetime-module
+id: entities/python-datetime-module
 tags:
 - python
 - foundational

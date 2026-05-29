@@ -1,7 +1,7 @@
 ---
 title: Ernst Hairer
 type: entity
-id: entity-ernst-hairer
+id: entities/ernst-hairer
 tags:
 - ode
 - numerical-integration

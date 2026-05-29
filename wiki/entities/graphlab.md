@@ -1,7 +1,7 @@
 ---
 title: GraphLab
 type: entity
-id: entity-graphlab
+id: entities/graphlab
 tags:
 - graph
 - distributed-systems

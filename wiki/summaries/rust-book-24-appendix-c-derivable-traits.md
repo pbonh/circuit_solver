@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Appendix C: Derivable Traits'
 type: source
-id: source-rust-book-24-appendix-c-derivable-traits
-kind: derived-summary
+id: summaries/rust-book-24-appendix-c-derivable-traits
+kind: publication
 tags:
 - rust
 - reference

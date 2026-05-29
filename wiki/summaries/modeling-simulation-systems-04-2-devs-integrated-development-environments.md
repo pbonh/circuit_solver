@@ -2,8 +2,8 @@
 title: 'Modeling and Simulation of Systems — Chapter 2: DEVS Integrated Development
   Environments'
 type: source
-id: source-modeling-simulation-systems-04-2-devs-integrated-development-environments
-kind: derived-summary
+id: summaries/modeling-simulation-systems-04-2-devs-integrated-development-environments
+kind: publication
 tags:
 - simulation
 - modeling

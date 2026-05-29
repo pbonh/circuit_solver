@@ -1,7 +1,7 @@
 ---
 title: Statistical Timing Analysis (SSTA)
 type: claim
-id: claim-statistical-timing-analysis
+id: concepts/statistical-timing-analysis
 tags:
 - statistical
 - timing
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/15-10-symbolic-moment-computation.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

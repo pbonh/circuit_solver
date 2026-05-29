@@ -1,7 +1,7 @@
 ---
 title: Bryant 1986 BDD Paper
 type: entity
-id: entity-bryant-bdd-paper
+id: entities/bryant-bdd-paper
 tags:
 - paper
 - bdd

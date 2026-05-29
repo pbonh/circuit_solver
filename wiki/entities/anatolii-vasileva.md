@@ -1,7 +1,7 @@
 ---
 title: Anatolii B. Vasil'eva
 type: entity
-id: entity-anatolii-vasileva
+id: entities/anatolii-vasileva
 tags:
 - ode
 - numerical-integration

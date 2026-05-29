@@ -1,7 +1,7 @@
 ---
 title: Built-in Potential
 type: claim
-id: claim-built-in-potential
+id: concepts/built-in-potential
 tags:
 - semiconductor
 - device-physics
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/06-chapter-2-p-n-junctions.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

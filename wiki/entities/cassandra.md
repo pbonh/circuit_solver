@@ -1,7 +1,7 @@
 ---
 title: Apache Cassandra
 type: entity
-id: entity-cassandra
+id: entities/cassandra
 tags:
 - well-established
 - nosql

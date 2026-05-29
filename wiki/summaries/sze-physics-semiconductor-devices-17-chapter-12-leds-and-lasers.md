@@ -2,8 +2,8 @@
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 12: LEDs and
   Lasers'
 type: source
-id: source-sze-physics-semiconductor-devices-17-chapter-12-leds-and-lasers
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-17-chapter-12-leds-and-lasers
+kind: publication
 tags:
 - semiconductor
 - device-physics

@@ -1,7 +1,7 @@
 ---
 title: Separation of Concerns
 type: claim
-id: claim-separation-of-concerns
+id: concepts/separation-of-concerns
 tags:
 - rust
 - foundational
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/rust_book/_txt/13-chapter-12-an-i-o-project-building-a-command-line-program.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

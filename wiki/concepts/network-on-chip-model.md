@@ -1,7 +1,7 @@
 ---
 title: Network-on-Chip (NoC) Model
 type: claim
-id: claim-network-on-chip-model
+id: concepts/network-on-chip-model
 tags:
 - simulation
 - modeling
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/ModelingAndSimulationOfSystems/_txt/20-16-model-development-and-execution-process-with-repositories-validation-and-verification.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

@@ -1,8 +1,8 @@
 ---
 title: 'Prototyping Python Dashboards — Chapter 6: Dashboard Enhancements'
 type: source
-id: source-prototyping-python-dashboards-10-chapter-6-dashboard-enhancements
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-10-chapter-6-dashboard-enhancements
+kind: publication
 tags:
 - python
 - dashboard

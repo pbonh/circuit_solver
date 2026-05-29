@@ -1,7 +1,8 @@
 ---
-title: "Circuit Simulation Knowledge Base Index"
+title: Circuit Simulation Knowledge Base Index
 type: index
-updated: 2026-05-18
+updated: 2026-05-28
+id: index
 ---
 
 # Circuit Simulation Knowledge Base Index
@@ -26,10 +27,10 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 
 | Page | Tags | Confidence | Updated |
 |------|------|------------|---------|
-| [[concepts/a-alpha-stability|A(alpha)-Stability]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/a-alpha-stability|A(alpha)-Stability]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/a-stability|A-Stability]] | transient, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/a-star-algorithm|A* (A-star) Algorithm]] | graph, algorithm, foundational | high | 2026-05-15 |
-| [[concepts/absolutely-monotonic-function|Absolutely Monotonic Function]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/absolutely-monotonic-function|Absolutely Monotonic Function]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/abstract-devs-simulator|Abstract DEVS Simulator]] | simulation, modeling, devs | high | 2026-05-15 |
 | [[concepts/abstraction-layer|Abstraction Layer]] | vlsi, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/ac-analysis|AC Analysis]] | analog, ac, foundational | high | 2026-05-15 |
@@ -39,7 +40,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/activity-based-modeling|Activity-Based Modeling]] | simulation, modeling, devs | medium | 2026-05-15 |
 | [[concepts/activity-tracking|Activity Tracking]] | simulation, modeling, devs | medium | 2026-05-15 |
 | [[concepts/adams-bashforth|Adams-Bashforth Method]] | transient, numerical-integration, well-established | medium | 2026-05-15 |
-| [[concepts/adams-method|Adams Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/adams-method|Adams Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/adams-moulton|Adams-Moulton Method]] | transient, numerical-integration, well-established | medium | 2026-05-15 |
 | [[concepts/adaptive-service-based-software-system|Adaptive Service-Based Software System (ASBS)]] | simulation, modeling, soa | medium | 2026-05-15 |
 | [[concepts/adjacency-matrix|Adjacency Matrix]] | graph, foundational, well-established | high | 2026-05-15 |
@@ -51,17 +52,17 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/algebraic-differential-equations|Algebraic-Differential Equations (DAEs)]] | foundational, transient, numerical-integration | high | 2026-05-15 |
 | [[concepts/algebraic-graph-theory|Algebraic Graph Theory]] | graph, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/algebraic-multigrid|Algebraic Multigrid (AMG)]] | algorithm, linear-algebra, sparse-matrix | medium | 2026-05-15 |
-| [[concepts/algebraic-stability|Algebraic Stability]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/algebraic-stability|Algebraic Stability]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/amdahls-law|Amdahl's Law]] | concurrency, performance, foundational | high | 2026-05-15 |
 | [[concepts/amplitude-phase-group-delay|Amplitude, Phase, and Group Delay]] | foundational, analog, ac | high | 2026-05-15 |
-| [[concepts/an-stability|AN-Stability]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/an-stability|AN-Stability]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/and-inverter-graph|And-Inverter Graph (AIG)]] | graph, digital, boolean | high | 2026-05-15 |
 | [[concepts/anisotropic-grid|Anisotropic Resistive Grid]] | vlsi, power-integrity, graph | medium | 2026-05-15 |
 | [[concepts/anova|ANOVA]] | statistics, well-established | high | 2026-05-15 |
 | [[concepts/anti-entropy-repair|Anti-Entropy Repair]] | distributed-systems, replication, well-established | medium | 2026-05-15 |
 | [[concepts/antimatroid|Antimatroid]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/antipodality|Antipodality]] | graph, advanced, well-established | high | 2026-05-15 |
-| [[concepts/ao-stability|Ao-Stability]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/ao-stability|Ao-Stability]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/api-gateway|API Gateway]] | microservices, networking, well-established | high | 2026-05-15 |
 | [[concepts/arc-type|Arc Type]] | rust, concurrency, smart-pointers | high | 2026-05-15 |
 | [[concepts/architectural-decision-record|Architectural Decision Record]] | architecture, documentation, well-established | high | 2026-05-17 |
@@ -72,7 +73,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/associated-function|Associated Function]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/associated-types|Associated Types]] | rust, traits, advanced | high | 2026-05-15 |
 | [[concepts/asteroidal-triple|Asteroidal Triple]] | graph, foundational, well-established | high | 2026-05-15 |
-| [[concepts/asymptotic-expansion|Asymptotic Expansion]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/asymptotic-expansion|Asymptotic Expansion]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/asynchronous-messaging|Asynchronous Messaging]] | distributed-systems, messaging, foundational | high | 2026-05-15 |
 | [[concepts/at-free-graph|AT-Free Graph]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/atomic-devs-model|Atomic DEVS Model]] | simulation, modeling, devs | high | 2026-05-15 |
@@ -80,25 +81,25 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/auto-scaling-group|Auto Scaling Group]] | scalability, well-established | medium | 2026-05-15 |
 | [[concepts/automated-pruning|Automated Pruning]] | simulation, modeling, ses | medium | 2026-05-15 |
 | [[concepts/automated-tests|Automated Tests (Rust)]] | rust, foundational, testing | high | 2026-05-15 |
-| [[concepts/automatic-stiffness-detection|Automatic Stiffness Detection]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/automatic-stiffness-detection|Automatic Stiffness Detection]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/availability|Availability]] | distributed-systems, foundational, well-established | high | 2026-05-15 |
 | [[concepts/avalanche-breakdown|Avalanche Breakdown]] | semiconductor, device-physics, p-n-junction | high | 2026-05-15 |
 | [[concepts/avalanche-photodiode|Avalanche Photodiode (APD)]] | semiconductor, device-physics, photonic | medium | 2026-05-15 |
-| [[concepts/b-convergence|B-Convergence]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/b-stability|B-Stability]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/b-convergence|B-Convergence]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/b-stability|B-Stability]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/b-tree|B-Tree]] | storage, foundational, well-established | high | 2026-05-15 |
 | [[concepts/backend-for-frontend|Backend for Frontend (BFF)]] | microservices, well-established | medium | 2026-05-15 |
 | [[concepts/backpressure|Backpressure]] | distributed-systems, fault-tolerance, well-established | medium | 2026-05-15 |
 | [[concepts/backward-and-forward-compatibility|Backward and Forward Compatibility]] | well-established, distributed-systems, encoding | high | 2026-05-15 |
-| [[concepts/backward-error-analysis-manifolds|Backward Error Analysis on Manifolds]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/backward-error-analysis|Backward Error Analysis]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/backward-error-analysis-manifolds|Backward Error Analysis on Manifolds]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
+| [[concepts/backward-error-analysis|Backward Error Analysis]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/backward-euler|Backward Euler]] | analog, transient, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/bakers-method|Baker's Method]] | graph, algorithm, foundational | high | 2026-05-15 |
 | [[concepts/balanced-truncation|Balanced Truncation (TBR / PMTBR)]] | mor, interconnect, ac | medium | 2026-05-15 |
 | [[concepts/bandgap|Bandgap]] | semiconductor, device-physics, band-structure | high | 2026-05-15 |
 | [[concepts/barrier-synchronization|Barrier Synchronization]] | concurrency, well-established | medium | 2026-05-15 |
 | [[concepts/batch-processing|Batch Processing]] | foundational, well-established | high | 2026-05-15 |
-| [[concepts/baumgarte-stabilization|Baumgarte Stabilization]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/baumgarte-stabilization|Baumgarte Stabilization]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/bayes-theorem|Bayes Theorem]] | statistics, foundational, well-established | high | 2026-05-15 |
 | [[concepts/bellman-ford-algorithm|Bellman-Ford Algorithm]] | graph, algorithm, foundational | high | 2026-05-15 |
 | [[concepts/binary-decision-diagram|Binary Decision Diagram (BDD)]] | bdd, foundational, graph | high | 2026-05-15 |
@@ -107,15 +108,15 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/bipolar-junction-transistor|Bipolar Junction Transistor (BJT)]] | semiconductor, device-physics, bjt | medium | 2026-05-15 |
 | [[concepts/bjt-model|BJT Model (Ebers-Moll, Hybrid-pi)]] | device-model, bjt, analog | high | 2026-05-15 |
 | [[concepts/blanket-impls|Blanket Impls]] | rust, foundational, traits | high | 2026-05-15 |
-| [[concepts/blended-multistep-method|Blended Multistep Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/blended-multistep-method|Blended Multistep Method]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/block-centric-computation|Block-Centric Computation]] | graph, distributed-systems, big-data | high | 2026-05-15 |
 | [[concepts/block-sensitivity|Block Sensitivity]] | algorithm, advanced, well-established | high | 2026-05-15 |
 | [[concepts/bloom-filter|Bloom Filter]] | storage, well-established, indexing | medium | 2026-05-15 |
-| [[concepts/board-level-routing|Board-Level Routing]] | vlsi, power-integrity, routing | low | 2026-05-15 |
+| [[concepts/board-level-routing|Board-Level Routing]] | vlsi, power-integrity, routing | medium | 2026-05-15 |
 | [[concepts/boolean-satisfiability|Boolean Satisfiability (SAT)]] | algorithm, digital, boolean | high | 2026-05-15 |
 | [[concepts/borrowing|Borrowing]] | rust, ownership, foundational | high | 2026-05-15 |
 | [[concepts/bottleneck-domination|Bottleneck Domination]] | graph, algorithm, well-established | high | 2026-05-15 |
-| [[concepts/boundary-layer|Boundary Layer]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/boundary-layer|Boundary Layer]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/box-plot|Box Plot]] | python, visualization, statistics | high | 2026-05-15 |
 | [[concepts/box-type|Box Type]] | rust, smart-pointers, foundational | high | 2026-05-15 |
 | [[concepts/bramble|Bramble]] | graph, advanced, well-established | high | 2026-05-15 |
@@ -124,17 +125,17 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/breadth-first-search|Breadth-First Search (BFS)]] | graph, algorithm, foundational | high | 2026-05-15 |
 | [[concepts/broadcasting|Broadcasting (NumPy)]] | python, numpy, foundational | high | 2026-05-15 |
 | [[concepts/bron-kerbosch-algorithm|Bron-Kerbosch Algorithm]] | graph, algorithm, well-established | high | 2026-05-15 |
-| [[concepts/brusselator|Brusselator]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/brusselator|Brusselator]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/built-in-potential|Built-in Potential]] | semiconductor, device-physics, p-n-junction | high | 2026-05-15 |
 | [[concepts/bulk-synchronous-parallel|Bulk Synchronous Parallel (BSP)]] | parallel, distributed-systems, foundational | high | 2026-05-15 |
 | [[concepts/bulkhead-pattern|Bulkhead Pattern]] | distributed-systems, fault-tolerance, well-established | medium | 2026-05-15 |
-| [[concepts/burgers-equation|Burgers Equation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/burgers-equation|Burgers Equation]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/business-intelligence|Business Intelligence]] | business-intelligence, data-visualization, data-analysis | medium | 2026-05-15 |
-| [[concepts/butcher-simplifying-assumptions|Butcher Simplifying Assumptions]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/butcher-simplifying-assumptions|Butcher Simplifying Assumptions]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/byzantine-fault-tolerance|Byzantine Fault Tolerance]] | distributed-systems, advanced, consensus | medium | 2026-05-15 |
 | [[concepts/byzantine-faults|Byzantine Faults]] | distributed-systems, fault-tolerance, advanced | medium | 2026-05-15 |
 | [[concepts/cache-aside|Cache-Aside Pattern]] | caching, foundational, well-established | high | 2026-05-15 |
-| [[concepts/calculus|Calculus]] | statistics, foundational, well-established | low | 2026-05-15 |
+| [[concepts/calculus|Calculus]] | statistics, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/callback|Callback]] | python, dash, reactive-programming | high | 2026-05-15 |
 | [[concepts/cap-theorem|CAP Theorem]] | distributed-systems, consistency, foundational | high | 2026-05-15 |
 | [[concepts/capacitor|Capacitor]] | foundational, analog, ac | high | 2026-05-15 |
@@ -160,7 +161,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/charge-conservation|Charge Conservation]] | analog, transient, device-model | high | 2026-05-15 |
 | [[concepts/charge-coupled-device|Charge-Coupled Device (CCD)]] | semiconductor, device-physics, photonic | medium | 2026-05-15 |
 | [[concepts/charge-flux-formulation|Charge-Flux Formulation (Nonlinear Reactive Elements)]] | transient, analog, well-established | high | 2026-05-15 |
-| [[concepts/chebyshev-method|Chebyshev Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/chebyshev-method|Chebyshev Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/checkpoint|Checkpoint]] | streaming, fault-tolerance, well-established | medium | 2026-05-15 |
 | [[concepts/chi-boundedness|χ-Boundedness]] | graph, advanced, well-established | high | 2026-05-15 |
 | [[concepts/chi-square-test|Chi-Square Test]] | statistics, well-established | high | 2026-05-15 |
@@ -188,22 +189,22 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/closures|Closures]] | rust, foundational, functional-programming | high | 2026-05-15 |
 | [[concepts/cloud-system|Cloud System]] | simulation, modeling, cloud | medium | 2026-05-15 |
 | [[concepts/clustered-coloring|Clustered Coloring]] | graph, algorithm, advanced | high | 2026-05-15 |
-| [[concepts/cmos-logic|CMOS Logic]] | semiconductor, device-physics, digital | low | 2026-05-15 |
-| [[concepts/coercivity-coefficient|Coercivity Coefficient]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/cmos-logic|CMOS Logic]] | semiconductor, device-physics, digital | medium | 2026-05-15 |
+| [[concepts/coercivity-coefficient|Coercivity Coefficient]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/cograph|Cograph]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/cold-start|Cold Start]] | cloud, performance, well-established | medium | 2026-05-15 |
 | [[concepts/collections|Collections (Rust std)]] | rust, foundational, collections | high | 2026-05-15 |
-| [[concepts/collocation-method|Collocation Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/collocation-method|Collocation Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/column-oriented-storage|Column-Oriented Storage]] | storage, well-established, olap | high | 2026-05-15 |
 | [[concepts/companion-model|Companion Model]] | vlsi, circuit, analysis | high | 2026-05-15 |
 | [[concepts/competing-consumers|Competing Consumers]] | messaging, well-established | high | 2026-05-15 |
 | [[concepts/complement|Complement]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/component|Component]] | graph, foundational, well-established | high | 2026-05-15 |
-| [[concepts/composition-method|Composition Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/composition-method|Composition Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/compound-types|Compound Types]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/computation-intensive-vs-data-intensive|Computation-Intensive vs. Data-Intensive Workloads]] | distributed-systems, big-data, foundational | high | 2026-05-15 |
 | [[concepts/computer-aided-design|Computer-Aided Design (CAD)]] | foundational, well-established, analog | high | 2026-05-15 |
-| [[concepts/concept-name|Concept Name]] | speculative, foundational | low | 2026-05-15 |
+| [[concepts/concept-name|Concept Name]] | speculative, foundational | medium | 2026-05-15 |
 | [[concepts/concurrency|Concurrency]] | distributed-systems, concurrency, foundational | high | 2026-05-15 |
 | [[concepts/condition-number|Condition Number]] | foundational, math, numerical | high | 2026-05-15 |
 | [[concepts/confidence-interval|Confidence Interval]] | statistics, foundational, well-established | high | 2026-05-15 |
@@ -212,8 +213,8 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/consensus|Consensus]] | distributed-systems, consistency, foundational | high | 2026-05-15 |
 | [[concepts/conservative-model|Conservative Model]] | analog, mixed-signal, device-model | high | 2026-05-15 |
 | [[concepts/constrained-devs|Constrained DEVS]] | simulation, modeling, devs | medium | 2026-05-15 |
-| [[concepts/constrained-hamiltonian-system|Constrained Hamiltonian System]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/constrained-mechanical-system|Constrained Mechanical System]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/constrained-hamiltonian-system|Constrained Hamiltonian System]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/constrained-mechanical-system|Constrained Mechanical System]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/constrained-natural-language|Constrained Natural Language (for DEVS/SES)]] | simulation, modeling, dsl | medium | 2026-05-15 |
 | [[concepts/constraint-graph|Constraint Graph]] | graph, vlsi, timing | high | 2026-05-15 |
 | [[concepts/consumer-group|Consumer Group]] | streaming, well-established | high | 2026-05-15 |
@@ -222,9 +223,9 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/continuity-equation|Continuity Equation (Semiconductor)]] | semiconductor, device-physics, transport | high | 2026-05-15 |
 | [[concepts/continuous-delivery|Continuous Delivery]] | well-established | medium | 2026-05-15 |
 | [[concepts/continuous-time-markov|Continuous Time Markov (CTM)]] | simulation, modeling, markov | medium | 2026-05-15 |
-| [[concepts/contractivity|Contractivity]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/contractivity|Contractivity]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/control-flow|Control Flow (Python)]] | python, foundational, well-established | high | 2026-05-15 |
-| [[concepts/control-problem-dae|Control Problem (DAE)]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/control-problem-dae|Control Problem (DAE)]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/convertor|Convertor (Impedance Convertor)]] | foundational, analog, well-established | medium | 2026-05-15 |
 | [[concepts/coordination-avoiding-data-systems|Coordination-Avoiding Data Systems]] | distributed-systems, emerging, performance | medium | 2026-05-15 |
 | [[concepts/copy-trait|Copy Trait]] | rust, ownership, foundational | high | 2026-05-15 |
@@ -238,7 +239,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/crates-io|crates.io]] | rust, cargo, foundational | high | 2026-05-15 |
 | [[concepts/crates|Crates]] | rust, cargo, foundational | high | 2026-05-15 |
 | [[concepts/crdt|Conflict-Free Replicated Data Types (CRDT)]] | distributed-systems, consistency, advanced | medium | 2026-05-15 |
-| [[concepts/cron|Cron]] | unix, automation, scheduling | low | 2026-05-15 |
+| [[concepts/cron|Cron]] | unix, automation, scheduling | medium | 2026-05-15 |
 | [[concepts/crout-algorithm|Crout Algorithm (LU Variant)]] | foundational, numerical, well-established | medium | 2026-05-15 |
 | [[concepts/css-grid|CSS Grid]] | web, css, layout | high | 2026-05-15 |
 | [[concepts/css|CSS]] | web, css, layout | high | 2026-05-15 |
@@ -247,15 +248,15 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/cutset-matrix|Cutset Matrix (Q)]] | foundational, graph, analog | high | 2026-05-15 |
 | [[concepts/cycle|Cycle]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/dag|DAG (Directed Acyclic Graph)]] | graph, foundational, well-established | high | 2026-05-15 |
-| [[concepts/dahlquist-barrier|Dahlquist Barrier]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/dahlquist-test-equation|Dahlquist Test Equation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/dahlquist-barrier|Dahlquist Barrier]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/dahlquist-test-equation|Dahlquist Test Equation]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/damped-newton|Damped Newton Method]] | dc, numerical, well-established | medium | 2026-05-15 |
-| [[concepts/daniel-moore-conjecture|Daniel-Moore Conjecture]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/daniel-moore-conjecture|Daniel-Moore Conjecture]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/dashboard|Dashboard]] | dashboard, visualization, web | high | 2026-05-15 |
 | [[concepts/data-abstraction|Data Abstraction]] | python, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/data-aggregation|Data Aggregation]] | pandas, data-analysis, groupby | medium | 2026-05-15 |
 | [[concepts/data-analysis|Data Analysis]] | data-analysis, foundational, well-established | high | 2026-05-15 |
-| [[concepts/data-analytics|Data Analytics]] | data-analysis, foundational, well-established | low | 2026-05-15 |
+| [[concepts/data-analytics|Data Analytics]] | data-analysis, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/data-cleaning|Data Cleaning]] | data-cleaning, data-analysis, pandas | medium | 2026-05-15 |
 | [[concepts/data-distribution-middleware|Data Distribution Middleware]] | simulation, distributed, middleware | medium | 2026-05-15 |
 | [[concepts/data-distribution-service|Data Distribution Service (DDS)]] | simulation, modeling, middleware | medium | 2026-05-15 |
@@ -263,10 +264,10 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/data-extraction|Data Extraction]] | data-analysis, data-extraction, text-processing | medium | 2026-05-15 |
 | [[concepts/data-lake|Data Lake]] | databases, well-established | medium | 2026-05-15 |
 | [[concepts/data-levels|Data Levels (Nominal / Ordinal / Interval / Ratio)]] | statistics, data-analysis, foundational | high | 2026-05-15 |
-| [[concepts/data-mining|Data Mining]] | data-mining, data-analysis, foundational | low | 2026-05-15 |
+| [[concepts/data-mining|Data Mining]] | data-mining, data-analysis, foundational | medium | 2026-05-15 |
 | [[concepts/data-provenance|Data Provenance]] | well-established, derived-data, audit | medium | 2026-05-15 |
 | [[concepts/data-race|Data Race]] | rust, concurrency, foundational | high | 2026-05-15 |
-| [[concepts/data-science|Data Science]] | data-analysis, foundational, well-established | low | 2026-05-15 |
+| [[concepts/data-science|Data Science]] | data-analysis, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/data-visualization|Data Visualization]] | visualization, data-analysis, foundational | medium | 2026-05-15 |
 | [[concepts/data-warehouse|Data Warehouse]] | olap, well-established, data-warehouse | high | 2026-05-15 |
 | [[concepts/data-wrangling|Data Wrangling]] | data-analysis, pandas, foundational | high | 2026-05-15 |
@@ -286,12 +287,12 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/delta-accumulative-iterative-computation|Delta-Based Accumulative Iterative Computation (DAIC)]] | graph, distributed-systems, asynchronous | high | 2026-05-15 |
 | [[concepts/dennard-scaling|Dennard Scaling]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
 | [[concepts/denormalization|Denormalization]] | databases, well-established | high | 2026-05-15 |
-| [[concepts/dense-output|Dense Output]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/dense-output|Dense Output]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/dependent-source|Dependent Sources (Transducers)]] | foundational, analog, well-established | high | 2026-05-15 |
 | [[concepts/depletion-region|Depletion Region]] | semiconductor, device-physics, p-n-junction | high | 2026-05-15 |
 | [[concepts/depth-first-search|Depth-First Search (DFS)]] | graph, algorithm, foundational | high | 2026-05-15 |
 | [[concepts/deref-trait|Deref Trait]] | rust, smart-pointers, foundational | high | 2026-05-15 |
-| [[concepts/derivative-array|Derivative Array]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/derivative-array|Derivative Array]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/derive-macros|Derive Macros]] | rust, macros, foundational | high | 2026-05-15 |
 | [[concepts/derived-data|Derived Data]] | foundational, well-established, distributed-systems | high | 2026-05-15 |
 | [[concepts/descriptive-statistics|Descriptive Statistics]] | statistics, data-analysis, foundational | medium | 2026-05-15 |
@@ -306,25 +307,25 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/devs-simulation-protocol|DEVS Simulation Protocol]] | simulation, modeling, devs | high | 2026-05-15 |
 | [[concepts/devs-soa|DEVS/SOA]] | simulation, modeling, devs | medium | 2026-05-15 |
 | [[concepts/devs-transducer|DEVS Transducer]] | simulation, modeling, devs | medium | 2026-05-15 |
-| [[concepts/devs-uml-mapping|DEVS↔UML Mapping]] | simulation, modeling, devs | low | 2026-05-15 |
+| [[concepts/devs-uml-mapping|DEVS↔UML Mapping]] | simulation, modeling, devs | medium | 2026-05-15 |
 | [[concepts/devs-universality-and-uniqueness|DEVS Universality and Uniqueness]] | simulation, modeling, devs | high | 2026-05-15 |
 | [[concepts/dft-fft|Discrete and Fast Fourier Transform (DFT/FFT)]] | foundational, math, well-established | high | 2026-05-15 |
 | [[concepts/dictionary|Python Dictionary]] | python, foundational | high | 2026-05-15 |
 | [[concepts/dielectric-breakdown|Dielectric Breakdown]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
-| [[concepts/differential-algebraic-equation|Differential-Algebraic Equation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/differential-algebraic-tree|Differential-Algebraic Tree]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/differentiation-index|Differentiation Index]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/differential-algebraic-equation|Differential-Algebraic Equation]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/differential-algebraic-tree|Differential-Algebraic Tree]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
+| [[concepts/differentiation-index|Differentiation Index]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/digital-network-analysis|Digital Network Analysis]] | digital, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/dijkstras-algorithm|Dijkstra's Algorithm]] | graph, algorithm, foundational | high | 2026-05-15 |
 | [[concepts/diode-model|Diode Model]] | device-model, analog, well-established | high | 2026-05-15 |
 | [[concepts/dirac-impulse|Dirac Impulse (Unit Impulse)]] | foundational, math, well-established | high | 2026-05-15 |
 | [[concepts/directed-acyclic-graph|Directed Acyclic Graph (DAG)]] | graph, foundational, well-established | high | 2026-05-15 |
-| [[concepts/dirk-method|DIRK Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/dirk-method|DIRK Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/discrete-event-system-specification|Discrete-Event System Specification (DEVS)]] | simulation, modeling, devs | high | 2026-05-15 |
-| [[concepts/discrete-time-markov|Discrete-Time Markov (DTM)]] | simulation, modeling, markov | low | 2026-05-15 |
+| [[concepts/discrete-time-markov|Discrete-Time Markov (DTM)]] | simulation, modeling, markov | medium | 2026-05-15 |
 | [[concepts/discrete-time-signal|Discrete-Time Signal]] | digital, foundational, well-established | high | 2026-05-15 |
-| [[concepts/discrete-variation-of-constants|Discrete Variation of Constants]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/display-trait|Display Trait]] | speculative, foundational | low | 2026-05-15 |
+| [[concepts/discrete-variation-of-constants|Discrete Variation of Constants]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
+| [[concepts/display-trait|Display Trait]] | speculative, foundational | medium | 2026-05-15 |
 | [[concepts/distance-hereditary-graph|Distance-Hereditary Graph]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/distributed-cache|Distributed Cache]] | distributed-systems, caching, scalability | high | 2026-05-15 |
 | [[concepts/distributed-database|Distributed Database]] | distributed-systems, databases, foundational | high | 2026-05-15 |
@@ -343,7 +344,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/donor-acceptor-doping|Donor and Acceptor Doping]] | semiconductor, device-physics, doping | high | 2026-05-15 |
 | [[concepts/dot-product|Dot Product]] | python, numpy, foundational | medium | 2026-05-15 |
 | [[concepts/drift-diffusion-equation|Drift-Diffusion Equation]] | semiconductor, device-physics, transport | high | 2026-05-15 |
-| [[concepts/drift-off|Drift-Off]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/drift-off|Drift-Off]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/drop-trait|Drop Trait]] | rust, ownership, foundational | high | 2026-05-15 |
 | [[concepts/dynamic-dispatch|Dynamic Dispatch (Rust)]] | rust, traits, advanced | high | 2026-05-15 |
 | [[concepts/dynamic-structure-devs|Dynamic Structure DEVS]] | simulation, modeling, devs | medium | 2026-05-15 |
@@ -356,41 +357,41 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/effective-resistance|Effective Resistance]] | graph, vlsi, analysis | high | 2026-05-15 |
 | [[concepts/einstein-relation|Einstein Relation (Semiconductor)]] | semiconductor, device-physics, transport | high | 2026-05-15 |
 | [[concepts/elastic-scaling|Elastic Scaling]] | scalability, distributed-systems, well-established | high | 2026-05-15 |
-| [[concepts/electromigration|Electromigration]] | vlsi, reliability, well-established | low | 2026-05-15 |
+| [[concepts/electromigration|Electromigration]] | vlsi, reliability, well-established | medium | 2026-05-15 |
 | [[concepts/electronic-design-automation|Electronic Design Automation (EDA)]] | vlsi, eda, foundational | high | 2026-05-15 |
 | [[concepts/elimination-graph|Elimination Graph]] | sparse-matrix, graph, foundational | high | 2026-05-15 |
 | [[concepts/elmore-delay|Elmore Delay]] | vlsi, timing, interconnect | high | 2026-05-15 |
-| [[concepts/emergence|Emergence (Simulation)]] | simulation, modeling, complex-systems | low | 2026-05-15 |
-| [[concepts/emf-devs|EMF-DEVS]] | simulation, modeling, devs | low | 2026-05-15 |
+| [[concepts/emergence|Emergence (Simulation)]] | simulation, modeling, complex-systems | medium | 2026-05-15 |
+| [[concepts/emf-devs|EMF-DEVS]] | simulation, modeling, devs | medium | 2026-05-15 |
 | [[concepts/encapsulation|Encapsulation]] | python, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/end-to-end-argument|End-to-End Argument]] | foundational, well-established, distributed-systems | high | 2026-05-15 |
 | [[concepts/energy-band-structure|Energy Band Structure]] | semiconductor, device-physics, band-structure | high | 2026-05-15 |
-| [[concepts/enright-method|Enright Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/enright-method|Enright Method]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/enum-type|Enum Type]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/environment-variables|Environment Variables (Rust)]] | rust, foundational, well-established | medium | 2026-05-15 |
-| [[concepts/epsilon-embedding-method|Epsilon-Embedding Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/epsilon-embedding-method|Epsilon-Embedding Method]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/equivalence-cover|Equivalence Cover]] | graph, np-hard, advanced | high | 2026-05-15 |
-| [[concepts/error-constant|Error Constant]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/error-growth-function|Error Growth Function]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/error-constant|Error Constant]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/error-growth-function|Error Growth Function]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/error-handling|Error Handling]] | rust, foundational, error-handling | high | 2026-05-15 |
 | [[concepts/error-trait|Error Trait]] | rust, foundational, error-handling | medium | 2026-05-15 |
 | [[concepts/etag|ETag]] | caching, networking, well-established | medium | 2026-05-15 |
-| [[concepts/euler-lagrange-equation|Euler-Lagrange Equation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/euler-lagrange-equation|Euler-Lagrange Equation]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/event-driven-architecture|Event-Driven Architecture]] | distributed-systems, messaging, foundational | high | 2026-05-15 |
 | [[concepts/event-log|Event Log]] | distributed-systems, streaming, well-established | high | 2026-05-15 |
 | [[concepts/event-scheduling-simulation|Event-Scheduling Simulation]] | simulation, modeling, discrete-event | medium | 2026-05-15 |
 | [[concepts/event-sourcing|Event Sourcing]] | well-established, distributed-systems, derived-data | high | 2026-05-15 |
-| [[concepts/event-trace-equivalence|Event-Trace Equivalence]] | digital, verification, foundational | low | 2026-05-18 |
+| [[concepts/event-trace-equivalence|Event-Trace Equivalence]] | digital, verification, foundational | medium | 2026-05-18 |
 | [[concepts/eventual-consistency|Eventual Consistency]] | distributed-systems, consistency, foundational | high | 2026-05-15 |
 | [[concepts/exactly-once-processing|Exactly-Once Processing]] | messaging, fault-tolerance, advanced | medium | 2026-05-15 |
 | [[concepts/exactly-once-semantics|Exactly-Once Semantics]] | streaming, distributed-systems, well-established | high | 2026-05-15 |
 | [[concepts/exception-handling|Exception Handling (Python)]] | python, foundational, well-established | high | 2026-05-15 |
 | [[concepts/experimental-frame|Experimental Frame]] | simulation, modeling, devs | high | 2026-05-15 |
-| [[concepts/explicit-runge-kutta|Explicit Runge-Kutta]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/explicit-runge-kutta|Explicit Runge-Kutta]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/exploratory-data-analysis|Exploratory Data Analysis]] | data-analysis, exploratory-data-analysis, visualization | medium | 2026-05-15 |
 | [[concepts/exponential-distribution-sampling|Exponential Distribution Sampling]] | simulation, modeling, stochastic | medium | 2026-05-15 |
-| [[concepts/extended-bdf-method|Extended BDF (EBDF)]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/extrapolation-method|Extrapolation Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/extended-bdf-method|Extended BDF (EBDF)]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
+| [[concepts/extrapolation-method|Extrapolation Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/extrapolation-steady-state|Extrapolation Steady-State Method]] | transient, advanced, emerging | medium | 2026-05-15 |
 | [[concepts/facet-grid|Facet Grid]] | python, visualization, well-established | medium | 2026-05-15 |
 | [[concepts/fail-fast|Fail Fast]] | distributed-systems, fault-tolerance, well-established | high | 2026-05-15 |
@@ -409,9 +410,9 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/fiduccia-mattheyses-algorithm|Fiduccia-Mattheyses Algorithm]] | graph, algorithm, partitioning | high | 2026-05-15 |
 | [[concepts/file-io|File I/O (Python)]] | python, foundational, well-established | high | 2026-05-15 |
 | [[concepts/fill-in|Fill-In]] | sparse-matrix, foundational, well-established | high | 2026-05-15 |
-| [[concepts/finfet|FinFET]] | semiconductor, device-physics, mosfet | low | 2026-05-15 |
+| [[concepts/finfet|FinFET]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
 | [[concepts/finite-deterministic-devs|Finite Deterministic DEVS (FDDEVS)]] | simulation, modeling, devs | medium | 2026-05-15 |
-| [[concepts/finite-probability-devs|Finite Probability DEVS (FP-DEVS)]] | simulation, modeling, devs | low | 2026-05-15 |
+| [[concepts/finite-probability-devs|Finite Probability DEVS (FP-DEVS)]] | simulation, modeling, devs | medium | 2026-05-15 |
 | [[concepts/finite-state-machine|Finite State Machine]] | graph, digital, foundational | high | 2026-05-15 |
 | [[concepts/fixed-parameter-tractability|Fixed-Parameter Tractability (FPT)]] | algorithm, foundational, well-established | high | 2026-05-15 |
 | [[concepts/flatband-voltage|Flatband Voltage]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
@@ -426,23 +427,23 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/fractionated-satellite-systems|Fractionated Satellite Systems]] | simulation, modeling, applications | medium | 2026-05-15 |
 | [[concepts/function-pointers|Function Pointers]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/functions|Functions]] | rust, foundational, well-established | high | 2026-05-15 |
-| [[concepts/g-stability|G-Stability]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/g-stability|G-Stability]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/gain-sensitivity-product|Gain-Sensitivity Product (Moschytz)]] | sensitivity, analog, well-established | medium | 2026-05-15 |
 | [[concepts/gals-design-pattern|GALS Design Pattern]] | simulation, modeling, hardware | medium | 2026-05-15 |
-| [[concepts/galvanically-asynchronous-locally-synchronous|Globally Asynchronous, Locally Synchronous (GALS)]] | vlsi, digital, synchronization | low | 2026-05-15 |
+| [[concepts/galvanically-asynchronous-locally-synchronous|Globally Asynchronous, Locally Synchronous (GALS)]] | vlsi, digital, synchronization | medium | 2026-05-15 |
 | [[concepts/gas-model|GAS (Gather-Apply-Scatter) Model]] | graph, distributed-systems, graph-processing | high | 2026-05-15 |
-| [[concepts/gauss-method|Gauss Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/gauss-method|Gauss Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/gaussian-elimination|Gaussian Elimination]] | foundational, numerical, well-established | high | 2026-05-15 |
 | [[concepts/gear-bdf|Gear's Backward Differentiation Formula (BDF)]] | analog, transient, foundational | high | 2026-05-15 |
-| [[concepts/general-linear-method|General Linear Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/general-linear-method|General Linear Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/general-partition-graph|General Partition Graph]] | graph, advanced, well-established | high | 2026-05-15 |
-| [[concepts/generalized-coordinate-partitioning|Generalized Coordinate Partitioning]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/generalized-coordinate-partitioning|Generalized Coordinate Partitioning]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/generalized-matrix-vector-multiplication|Generalized Matrix-Vector Multiplication]] | graph, sparse-matrix, big-data | high | 2026-05-15 |
 | [[concepts/generics|Generics]] | rust, foundational, generics | high | 2026-05-15 |
-| [[concepts/ggl-formulation|GGL Formulation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/global-interpreter-lock|Global Interpreter Lock (GIL)]] | python, concurrency, foundational, well-established | low | 2026-05-18 |
+| [[concepts/ggl-formulation|GGL Formulation]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/global-interpreter-lock|Global Interpreter Lock (GIL)]] | python, concurrency, foundational, well-established | medium | 2026-05-18 |
 | [[concepts/gmin-stepping|Gmin Stepping]] | analog, dc, well-established | high | 2026-05-15 |
-| [[concepts/golden-reference|Golden Reference]] | verification, testing, foundational | low | 2026-05-18 |
+| [[concepts/golden-reference|Golden Reference]] | verification, testing, foundational | medium | 2026-05-18 |
 | [[concepts/gpu-parallel-monte-carlo|GPU-Parallel Monte Carlo]] | monte-carlo, gpu, parallel | medium | 2026-05-15 |
 | [[concepts/gradient|Gradient]] | optimization, foundational, well-established | high | 2026-05-15 |
 | [[concepts/graph-algebra|Graph Algebra]] | graph, foundational, well-established | medium | 2026-05-15 |
@@ -459,7 +460,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/grundy-value|Grundy Value]] | graph, algorithm, foundational | high | 2026-05-15 |
 | [[concepts/gyrator|Gyrator]] | foundational, analog, well-established | high | 2026-05-15 |
 | [[concepts/h-tree|H-Tree]] | vlsi, clock, foundational | high | 2026-05-15 |
-| [[concepts/half-explicit-method|Half-Explicit Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/half-explicit-method|Half-Explicit Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/hall-effect|Hall Effect]] | semiconductor, device-physics, transport | high | 2026-05-15 |
 | [[concepts/hanan-grid|Hanan Grid]] | graph, vlsi, routing | high | 2026-05-15 |
 | [[concepts/hash-map|Hash Map]] | rust, foundational, collections | high | 2026-05-15 |
@@ -467,13 +468,13 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/hedetniemi-conjecture|Hedetniemi's Conjecture]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/heterogeneous-power-delivery|Heterogeneous Power Delivery]] | vlsi, power-integrity, architecture | medium | 2026-05-15 |
 | [[concepts/heterojunction|Heterojunction]] | semiconductor, device-physics, band-engineering | medium | 2026-05-15 |
-| [[concepts/hidden-constraint|Hidden Constraint]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/hidden-constraint|Hidden Constraint]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/hierarchical-matrix|Hierarchical Matrix (H-Matrix)]] | algorithm, linear-algebra, sparse-matrix | medium | 2026-05-15 |
 | [[concepts/hierarchical-symbolic-analysis|Hierarchical Symbolic Analysis]] | analog, symbolic, hierarchical | high | 2026-05-15 |
 | [[concepts/higher-order-sensitivity|Higher-Order Sensitivity (Second Derivatives)]] | sensitivity, advanced, well-established | medium | 2026-05-15 |
 | [[concepts/higmans-lemma|Higman's Lemma]] | algorithm, foundational, well-established | high | 2026-05-15 |
 | [[concepts/hinted-handoff|Hinted Handoff]] | distributed-systems, replication, advanced | medium | 2026-05-15 |
-| [[concepts/holomorphic-semigroup|Holomorphic Semigroup]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/holomorphic-semigroup|Holomorphic Semigroup]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/homomorphism|Homomorphism]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/homotopy-method|Homotopy Method (Continuation)]] | analog, dc, foundational | high | 2026-05-15 |
 | [[concepts/horizontal-partitioning|Horizontal Partitioning]] | databases, scalability, well-established | medium | 2026-05-15 |
@@ -490,7 +491,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/ideal-transformer|Ideal Transformer]] | foundational, analog, well-established | high | 2026-05-15 |
 | [[concepts/idempotency|Idempotency]] | distributed-systems, fault-tolerance, foundational | high | 2026-05-15 |
 | [[concepts/if-let|if let]] | rust, foundational, well-established | high | 2026-05-15 |
-| [[concepts/igbt|Insulated-Gate Bipolar Transistor (IGBT)]] | semiconductor, device-physics, power-device | low | 2026-05-15 |
+| [[concepts/igbt|Insulated-Gate Bipolar Transistor (IGBT)]] | semiconductor, device-physics, power-device | medium | 2026-05-15 |
 | [[concepts/image-force-lowering|Image-Force Lowering]] | semiconductor, device-physics, schottky-barrier | medium | 2026-05-15 |
 | [[concepts/immersion|Immersion]] | graph, advanced, well-established | high | 2026-05-15 |
 | [[concepts/impact-ionization|Impact Ionization]] | semiconductor, device-physics, transport | high | 2026-05-15 |
@@ -498,19 +499,19 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/impedance-admittance|Impedance and Admittance]] | foundational, analog, ac | high | 2026-05-15 |
 | [[concepts/impl-block|Impl Block]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/impl-trait|impl Trait]] | rust, foundational, traits | high | 2026-05-15 |
-| [[concepts/implicit-function-theorem|Implicit Function Theorem]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/implicit-runge-kutta|Implicit Runge-Kutta]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/implicit-function-theorem|Implicit Function Theorem]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/implicit-runge-kutta|Implicit Runge-Kutta]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/in-sync-replica|In-Sync Replica (ISR)]] | streaming, replication, well-established | medium | 2026-05-15 |
 | [[concepts/incidence-matrix|Incidence Matrix]] | graph, sparse-matrix, foundational | high | 2026-05-15 |
 | [[concepts/independent-current-source|Independent Current Source]] | foundational, analog, well-established | high | 2026-05-15 |
 | [[concepts/independent-set|Independent Set]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/independent-voltage-source|Independent Voltage Source]] | foundational, analog, well-established | high | 2026-05-15 |
-| [[concepts/index-1-dae|Index-1 DAE]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/index-2-dae|Index-2 DAE]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/index-3-dae|Index-3 DAE]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/index-of-a-dae|Index of a DAE]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/index-of-nilpotency|Index of Nilpotency]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/index-reduction|Index Reduction]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/index-1-dae|Index-1 DAE]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/index-2-dae|Index-2 DAE]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/index-3-dae|Index-3 DAE]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/index-of-a-dae|Index of a DAE]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/index-of-nilpotency|Index of Nilpotency]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
+| [[concepts/index-reduction|Index Reduction]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/induced-subgraph|Induced Subgraph]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/inductor|Inductor]] | foundational, analog, ac | high | 2026-05-15 |
 | [[concepts/infinity-mirror-technique|Infinity Mirror Technique]] | vlsi, power-integrity, graph | medium | 2026-05-15 |
@@ -524,42 +525,42 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/interface-traps|Interface Traps]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
 | [[concepts/interference-graph|Interference Graph]] | graph, compiler, vlsi | high | 2026-05-15 |
 | [[concepts/interior-mutability|Interior Mutability]] | rust, ownership, advanced | high | 2026-05-15 |
-| [[concepts/interior-point-algorithm|Interior Point Algorithm]] | algorithm, optimization, well-established | low | 2026-05-15 |
+| [[concepts/interior-point-algorithm|Interior Point Algorithm]] | algorithm, optimization, well-established | medium | 2026-05-15 |
 | [[concepts/interpolation-condition-number|Interpolation Condition Number]] | foundational, math, numerical | medium | 2026-05-15 |
 | [[concepts/intersection-graph|Intersection Graph]] | graph, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/interval-arithmetic|Interval (and Affine) Arithmetic]] | foundational, numerical, statistical | medium | 2026-05-15 |
 | [[concepts/interval-graph|Interval Graph]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/inversion-layer|Inversion Layer]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
-| [[concepts/ion-sensitive-fet|Ion-Sensitive FET (ISFET)]] | semiconductor, device-physics, mosfet | low | 2026-05-15 |
+| [[concepts/ion-sensitive-fet|Ion-Sensitive FET (ISFET)]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
 | [[concepts/ir-drop-analysis|IR Drop Analysis]] | vlsi, power-integrity, analysis | medium | 2026-05-15 |
 | [[concepts/ite-operator|ITE Operator (If-Then-Else)]] | bdd, foundational, logic | high | 2026-05-15 |
 | [[concepts/iterators|Iterators]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/jacobian-matrix|Jacobian Matrix (in Nonlinear DC Analysis)]] | foundational, dc, numerical | high | 2026-05-15 |
 | [[concepts/jfet|Junction Field-Effect Transistor (JFET)]] | semiconductor, device-physics, analog | medium | 2026-05-15 |
 | [[concepts/join-types|Join Types (Inner / Outer / Left / Right)]] | python, pandas, data-analysis | high | 2026-05-15 |
-| [[concepts/josephson-junction|Josephson Junction]] | superconductive, device, emerging | low | 2026-05-15 |
-| [[concepts/josephson-transmission-line|Josephson Transmission Line (JTL)]] | superconductive, vlsi, interconnect | low | 2026-05-15 |
+| [[concepts/josephson-junction|Josephson Junction]] | superconductive, device, emerging | medium | 2026-05-15 |
+| [[concepts/josephson-transmission-line|Josephson Transmission Line (JTL)]] | superconductive, vlsi, interconnect | medium | 2026-05-15 |
 | [[concepts/junction-capacitance|Junction Capacitance]] | semiconductor, device-physics, p-n-junction | high | 2026-05-15 |
-| [[concepts/junction-termination|Junction Termination]] | semiconductor, device-physics, power-device | low | 2026-05-15 |
+| [[concepts/junction-termination|Junction Termination]] | semiconductor, device-physics, power-device | medium | 2026-05-15 |
 | [[concepts/k-cograph|k-Cograph]] | graph, advanced, well-established | high | 2026-05-15 |
 | [[concepts/k-outerplanar-graph|k-Outerplanar Graph]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/k-shortest-path-algorithm|k-Shortest Paths Algorithm]] | graph, algorithm, well-established | medium | 2026-05-15 |
 | [[concepts/k-shortest-path|k-Shortest Path on DAGs]] | algorithm, graph, foundational | medium | 2026-05-15 |
 | [[concepts/kahns-algorithm|Kahn's Algorithm]] | graph, algorithm, foundational | high | 2026-05-15 |
 | [[concepts/kappa-architecture|Kappa Architecture]] | streaming, well-established | medium | 2026-05-15 |
-| [[concepts/kepler-problem|Kepler Problem]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/kepler-problem|Kepler Problem]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/kernel-density-estimate|Kernel Density Estimate]] | python, visualization, statistics | medium | 2026-05-15 |
 | [[concepts/kernighan-lin-algorithm|Kernighan-Lin Algorithm]] | graph, algorithm, partitioning | high | 2026-05-15 |
 | [[concepts/key-value-store|Key-Value Store]] | databases, nosql, well-established | high | 2026-05-15 |
-| [[concepts/kharitonov-bounds|Kharitonov Bounds (Robust Stability)]] | control-theory, robust, foundational | low | 2026-05-15 |
+| [[concepts/kharitonov-bounds|Kharitonov Bounds (Robust Stability)]] | control-theory, robust, foundational | medium | 2026-05-15 |
 | [[concepts/kirchhoff-current-law|Kirchhoff Current Law (KCL)]] | foundational, analog, well-established | high | 2026-05-15 |
 | [[concepts/kirchhoff-voltage-law|Kirchhoff Voltage Law (KVL)]] | foundational, analog, well-established | high | 2026-05-15 |
-| [[concepts/kreiss-matrix-theorem|Kreiss Matrix Theorem]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/kreiss-matrix-theorem|Kreiss Matrix Theorem]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/kruskal-theorem|Kruskal's Tree Theorem]] | algorithm, foundational, well-established | high | 2026-05-15 |
 | [[concepts/krylov-subspace-method|Krylov Subspace Method]] | algorithm, linear-algebra, sparse-matrix | medium | 2026-05-15 |
 | [[concepts/krylov-subspace-mor|Krylov Subspace Model Order Reduction]] | mor, interconnect, ac | medium | 2026-05-15 |
-| [[concepts/l-stability|L-Stability]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/lagrange-multiplier|Lagrange Multiplier]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/l-stability|L-Stability]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/lagrange-multiplier|Lagrange Multiplier]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/lagrange-multipliers|Lagrange Multipliers]] | optimization, foundational, well-established | high | 2026-05-15 |
 | [[concepts/laguerre-method|Laguerre's Method (Polynomial Root Finder)]] | math, numerical, well-established | medium | 2026-05-15 |
 | [[concepts/lambda-architecture|Lambda Architecture]] | streaming, well-established | medium | 2026-05-15 |
@@ -584,21 +585,21 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/linear-multistep-methods|Linear Multistep Methods]] | numerical-integration, transient, foundational | medium | 2026-05-15 |
 | [[concepts/linear-regression|Linear Regression]] | statistics, regression, data-analysis | medium | 2026-05-15 |
 | [[concepts/linearizability|Linearizability]] | distributed-systems, consistency, well-established | high | 2026-05-15 |
-| [[concepts/linearly-implicit-euler|Linearly Implicit Euler Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/linearly-implicit-euler|Linearly Implicit Euler Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/linegraph|Linegraph]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/list-comprehension|List Comprehension]] | python, foundational, well-established | high | 2026-05-15 |
 | [[concepts/list|Python List]] | python, dataframe, foundational | high | 2026-05-15 |
 | [[concepts/living-systems-modeling|Living Systems Modeling]] | simulation, modeling, devs | medium | 2026-05-15 |
 | [[concepts/load-balancing|Load Balancing]] | distributed-systems, scalability, foundational | high | 2026-05-15 |
-| [[concepts/load-clustering|Load Clustering]] | vlsi, power-integrity, optimization | low | 2026-05-15 |
-| [[concepts/lobatto-iiia-iiib-pair|Lobatto IIIA-IIIB Pair]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/lobatto-iiia-method|Lobatto IIIA Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/lobatto-iiib-method|Lobatto IIIB Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/lobatto-iiic-method|Lobatto IIIC Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/load-clustering|Load Clustering]] | vlsi, power-integrity, optimization | medium | 2026-05-15 |
+| [[concepts/lobatto-iiia-iiib-pair|Lobatto IIIA-IIIB Pair]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/lobatto-iiia-method|Lobatto IIIA Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/lobatto-iiib-method|Lobatto IIIB Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/lobatto-iiic-method|Lobatto IIIC Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/local-truncation-error|Local Truncation Error]] | analog, transient, foundational | high | 2026-05-15 |
 | [[concepts/log-based-message-broker|Log-Based Message Broker]] | well-established, streaming, distributed-systems | high | 2026-05-15 |
 | [[concepts/log-compaction|Log Compaction]] | streaming, well-established | medium | 2026-05-15 |
-| [[concepts/logarithmic-norm|Logarithmic Norm]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/logarithmic-norm|Logarithmic Norm]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/logical-clock|Logical Clock]] | distributed-systems, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/long-tail-latency|Long-Tail Latency]] | distributed-systems, performance, well-established | high | 2026-05-15 |
 | [[concepts/loopset-matrix|Loopset Matrix (B)]] | foundational, graph, analog | high | 2026-05-15 |
@@ -608,11 +609,11 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/lru-vertex-cache|LRU Vertex Cache]] | distributed-systems, caching, graph-processing | medium | 2026-05-15 |
 | [[concepts/lsm-tree|LSM-Tree (Log-Structured Merge-Tree)]] | storage, well-established, indexing | high | 2026-05-15 |
 | [[concepts/lu-decomposition|LU Decomposition (Triangular Factorization)]] | foundational, numerical, well-established | high | 2026-05-15 |
-| [[concepts/machine-learning|Machine Learning]] | machine-learning, data-analysis, foundational | low | 2026-05-15 |
+| [[concepts/machine-learning|Machine Learning]] | machine-learning, data-analysis, foundational | medium | 2026-05-15 |
 | [[concepts/macromodeling|Macromodeling]] | device-model, analog, well-established | medium | 2026-05-15 |
 | [[concepts/macros|Macros]] | rust, macros, advanced | high | 2026-05-15 |
 | [[concepts/maintainability|Maintainability]] | distributed-systems, foundational, well-established | high | 2026-05-15 |
-| [[concepts/manifold-differential-equation|Manifold Differential Equation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/manifold-differential-equation|Manifold Differential Equation]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/mapreduce|MapReduce]] | batch, distributed-systems, big-data, batch-processing, foundational | high | 2026-05-15 |
 | [[concepts/markov-matrix-model|Markov Matrix Model]] | simulation, modeling, markov | medium | 2026-05-15 |
 | [[concepts/masked-array|Masked Array (NumPy)]] | python, numpy, well-established | medium | 2026-05-15 |
@@ -623,12 +624,12 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/matrix-based-graph-analytics|Matrix-Based Graph Analytics]] | graph, sparse-matrix, big-data | high | 2026-05-15 |
 | [[concepts/matrix-blocking|Matrix Blocking]] | sparse-matrix, big-data, optimization | high | 2026-05-15 |
 | [[concepts/matrix-norm|Matrix Norm]] | foundational, math, numerical | high | 2026-05-15 |
-| [[concepts/matrix-pencil|Matrix Pencil]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/matrix-pencil|Matrix Pencil]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/maximal-clique-enumeration|Maximal Clique Enumeration]] | graph, graph-mining, algorithm | medium | 2026-05-15 |
 | [[concepts/maximal-clique|Maximal Clique]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/maze-routing|Maze Routing (Lee's Algorithm)]] | vlsi, routing, algorithm | high | 2026-05-15 |
 | [[concepts/mean-square-objective|Mean-Square Objective Function]] | optimization, well-established | medium | 2026-05-15 |
-| [[concepts/mean-time-to-failure|Mean Time to Failure (MTTF)]] | vlsi, reliability, well-established | low | 2026-05-15 |
+| [[concepts/mean-time-to-failure|Mean Time to Failure (MTTF)]] | vlsi, reliability, well-established | medium | 2026-05-15 |
 | [[concepts/median-order|Median Order]] | graph, algorithm, well-established | high | 2026-05-15 |
 | [[concepts/memory-safety|Memory Safety]] | rust, foundational, memory-safety | high | 2026-05-15 |
 | [[concepts/merkle-tree|Merkle Tree]] | distributed-systems, data-structure, well-established | medium | 2026-05-15 |
@@ -641,7 +642,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/message-persistence|Message Persistence]] | messaging, well-established | medium | 2026-05-15 |
 | [[concepts/message-queue|Message Queue]] | messaging, distributed-systems, well-established | high | 2026-05-15 |
 | [[concepts/method-of-images|Method of Images]] | analysis, foundational, well-established | medium | 2026-05-15 |
-| [[concepts/method-of-lines|Method of Lines]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/method-of-lines|Method of Lines]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/method-of-means-and-medians|Method of Means and Medians (MMM)]] | vlsi, clock, algorithm | medium | 2026-05-15 |
 | [[concepts/methods|Methods]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/microbatching|Microbatching]] | streaming, well-established, fault-tolerance | medium | 2026-05-15 |
@@ -658,7 +659,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/missing-data-handling|Missing Data Handling]] | data-analysis, pandas, data-cleaning | medium | 2026-05-15 |
 | [[concepts/missing-data-imputation|Missing Data Imputation]] | python, pandas, data-analysis | high | 2026-05-15 |
 | [[concepts/mixed-level-simulation|Mixed-Level Simulation]] | mixed-signal, analog, digital | high | 2026-05-15 |
-| [[concepts/model-continuity|Model Continuity]] | simulation, modeling, devs | low | 2026-05-15 |
+| [[concepts/model-continuity|Model Continuity]] | simulation, modeling, devs | medium | 2026-05-15 |
 | [[concepts/model-order-reduction|Model Order Reduction (MOR)]] | interconnect, foundational, ac | high | 2026-05-15 |
 | [[concepts/model-validation|Model Validation]] | simulation, modeling, validation | medium | 2026-05-15 |
 | [[concepts/model-verification|Model Verification]] | simulation, modeling, verification | medium | 2026-05-15 |
@@ -678,25 +679,25 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/mosfet-small-signal-model|MOSFET Small-Signal Model]] | mosfet, analog, device-model | medium | 2026-05-15 |
 | [[concepts/mosfet|MOSFET (Metal-Oxide-Semiconductor Field-Effect Transistor)]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
 | [[concepts/move-semantics|Move Semantics]] | rust, ownership, foundational | high | 2026-05-15 |
-| [[concepts/moving-finite-elements|Moving Finite Elements]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/moving-finite-elements|Moving Finite Elements]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/multi-formalism-modeling|Multi-formalism Modeling]] | simulation, modeling, devs | medium | 2026-05-15 |
-| [[concepts/multibody-system|Multibody System]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/multibody-system|Multibody System]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/multigrid-method|Multigrid Method]] | algorithm, linear-algebra, well-established | high | 2026-05-15 |
-| [[concepts/multilayer-routing|Multilayer Routing]] | vlsi, routing, algorithm | low | 2026-05-15 |
+| [[concepts/multilayer-routing|Multilayer Routing]] | vlsi, routing, algorithm | medium | 2026-05-15 |
 | [[concepts/multilinear-function|Multilinear (Bilinear) Network Function]] | analog, well-established, foundational | medium | 2026-05-15 |
 | [[concepts/multiparameter-sensitivity|Multiparameter Sensitivity (Worst-Case, Tracking, Statistical)]] | sensitivity, analog, well-established | high | 2026-05-15 |
-| [[concepts/multiplier-technique|Multiplier Technique]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/multistep-collocation|Multistep Collocation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/multiplier-technique|Multiplier Technique]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
+| [[concepts/multistep-collocation|Multistep Collocation]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/mutex|Mutex (Rust)]] | rust, concurrency, foundational | high | 2026-05-15 |
 | [[concepts/mutually-coupled-inductors|Mutually Coupled Inductors]] | foundational, analog, ac | high | 2026-05-15 |
 | [[concepts/ndarray|NumPy ndarray]] | python, numpy, foundational | high | 2026-05-15 |
 | [[concepts/negative-differential-resistance|Negative Differential Resistance]] | semiconductor, device-physics, rf | medium | 2026-05-15 |
 | [[concepts/neighborhood|Neighborhood]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/network-function|Network Function]] | foundational, analog, ac | high | 2026-05-15 |
-| [[concepts/network-on-chip-model|Network-on-Chip (NoC) Model]] | simulation, modeling, network-on-chip | low | 2026-05-15 |
+| [[concepts/network-on-chip-model|Network-on-Chip (NoC) Model]] | simulation, modeling, network-on-chip | medium | 2026-05-15 |
 | [[concepts/network-partition|Network Partition]] | distributed-systems, well-established, fault-tolerance | high | 2026-05-15 |
 | [[concepts/network-scaling|Network Scaling (Impedance and Frequency)]] | foundational, analog, well-established | high | 2026-05-15 |
-| [[concepts/networks-on-chip|Networks-on-Chip (NoC)]] | vlsi, graph, digital | low | 2026-05-15 |
+| [[concepts/networks-on-chip|Networks-on-Chip (NoC)]] | vlsi, graph, digital | medium | 2026-05-15 |
 | [[concepts/never-type|Never Type]] | rust, advanced, well-established | medium | 2026-05-15 |
 | [[concepts/newsql|NewSQL]] | databases, distributed-systems, well-established | medium | 2026-05-15 |
 | [[concepts/newton-raphson-method|Newton-Raphson Method]] | analog, foundational, well-established | high | 2026-05-15 |
@@ -721,7 +722,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/numerical-damping|Numerical Damping]] | analog, transient, well-established | high | 2026-05-15 |
 | [[concepts/numerical-integration-odes|Numerical Integration of ODEs]] | transient, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/numerical-laplace-transform-inversion|Numerical Laplace Transform Inversion]] | transient, analog, foundational | medium | 2026-05-15 |
-| [[concepts/nystrom-method|Nystrom Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/nystrom-method|Nystrom Method]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/object-oriented-design|Object-Oriented Design]] | foundational, software-design | high | 2026-05-15 |
 | [[concepts/object-oriented-programming|Object-Oriented Programming]] | python, foundational, well-established | high | 2026-05-15 |
 | [[concepts/object-oriented-simulation|Object-Oriented Simulation]] | simulation, modeling, object-oriented | medium | 2026-05-15 |
@@ -731,8 +732,8 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/ohmic-contact|Ohmic Contact]] | semiconductor, device-physics, contact | high | 2026-05-15 |
 | [[concepts/oltp-vs-olap|OLTP vs OLAP]] | foundational, well-established, storage | high | 2026-05-15 |
 | [[concepts/on-chip-voltage-regulator|On-Chip Voltage Regulator]] | vlsi, power-integrity, analog | medium | 2026-05-15 |
-| [[concepts/one-leg-method|One-Leg Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/one-sided-lipschitz-condition|One-Sided Lipschitz Condition]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/one-leg-method|One-Leg Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/one-sided-lipschitz-condition|One-Sided Lipschitz Condition]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/openapi|OpenAPI]] | distributed-systems, networking, well-established | medium | 2026-05-15 |
 | [[concepts/operational-amplifier-macromodel|Operational Amplifier Macromodel]] | device-model, analog, well-established | medium | 2026-05-15 |
 | [[concepts/operational-amplifier|Operational Amplifier (OPAMP)]] | foundational, analog, well-established | high | 2026-05-15 |
@@ -742,15 +743,15 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/orchestration|Orchestration]] | microservices, well-established | medium | 2026-05-15 |
 | [[concepts/order-control|Order Control (Variable-Order Integration)]] | transient, numerical-integration, well-established | medium | 2026-05-15 |
 | [[concepts/order-of-integration|Order of Integration and Truncation Error]] | transient, numerical-integration, foundational | high | 2026-05-15 |
-| [[concepts/order-reduction|Order Reduction]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/order-star|Order Star]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/order-reduction|Order Reduction]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/order-star|Order Star]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/ordered-binary-decision-diagram|Ordered Binary Decision Diagram (OBDD)]] | graph, digital, boolean | high | 2026-05-15 |
 | [[concepts/oriented-graph|Oriented Graph (of a Network)]] | foundational, graph, analog | high | 2026-05-15 |
 | [[concepts/orphan-rule|Orphan Rule]] | rust, foundational, traits | high | 2026-05-15 |
 | [[concepts/orthogonality-relations|Orthogonality Relations (B Q^T = 0)]] | foundational, graph, analog | high | 2026-05-15 |
 | [[concepts/out-of-core-graph-processing|Out-of-Core Graph Processing]] | graph, distributed-systems, big-data | high | 2026-05-15 |
 | [[concepts/outerplanar-graph|Outerplanar Graph]] | graph, foundational, well-established | high | 2026-05-15 |
-| [[concepts/overdetermined-dae|Overdetermined DAE]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/overdetermined-dae|Overdetermined DAE]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/ownership|Ownership]] | rust, ownership, foundational | high | 2026-05-15 |
 | [[concepts/oxide-charge|Oxide Charge]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
 | [[concepts/p-i-n-diode|p-i-n Diode]] | semiconductor, device-physics, p-n-junction | medium | 2026-05-15 |
@@ -767,28 +768,28 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/partial-fraction-expansion|Partial Fraction Expansion]] | foundational, math, well-established | high | 2026-05-15 |
 | [[concepts/particle-swarm-optimization|Particle Swarm Optimization (PSO)]] | algorithm, optimization, well-established | medium | 2026-05-15 |
 | [[concepts/partitioning|Partitioning (Sharding)]] | distributed-systems, well-established, foundational | high | 2026-05-15 |
-| [[concepts/passive-transmission-line|Passive Transmission Line (PTL)]] | superconductive, vlsi, interconnect | low | 2026-05-15 |
+| [[concepts/passive-transmission-line|Passive Transmission Line (PTL)]] | superconductive, vlsi, interconnect | medium | 2026-05-15 |
 | [[concepts/path|Path]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/pathological-element|Pathological Element]] | analog, foundational, behavioral | medium | 2026-05-15 |
 | [[concepts/pattern-matching|Pattern Matching]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/paxos|Paxos]] | distributed-systems, consensus, algorithm, advanced, foundational | high | 2026-05-15 |
-| [[concepts/peano-kernel|Peano Kernel]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/peano-kernel|Peano Kernel]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/peer-message-exchange|Peer Message Exchange (DEVS)]] | simulation, modeling, devs | medium | 2026-05-15 |
-| [[concepts/pendulum-equation|Pendulum Equation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/pendulum-equation|Pendulum Equation]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/pep-8|PEP 8 — Python Style Guide]] | python, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/perfect-graph|Perfect Graph]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/performance-bound-analysis|Performance Bound Analysis]] | analog, statistical, process-variation | medium | 2026-05-15 |
 | [[concepts/permissible-range|Permissible Range (Clock Skew)]] | vlsi, timing, synchronization | high | 2026-05-15 |
 | [[concepts/permutation-graph|Permutation Graph]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/permutations-and-combinations|Permutations and Combinations]] | statistics, foundational, well-established | high | 2026-05-15 |
-| [[concepts/perturbation-index|Perturbation Index]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/perturbed-asymptotic-expansion|Perturbed Asymptotic Expansion]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/phase-locked-loop|Phase-Locked Loop (PLL)]] | vlsi, analog, mixed-signal | low | 2026-05-15 |
-| [[concepts/photoconductor|Photoconductor]] | semiconductor, device-physics, photonic | low | 2026-05-15 |
+| [[concepts/perturbation-index|Perturbation Index]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/perturbed-asymptotic-expansion|Perturbed Asymptotic Expansion]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
+| [[concepts/phase-locked-loop|Phase-Locked Loop (PLL)]] | vlsi, analog, mixed-signal | medium | 2026-05-15 |
+| [[concepts/photoconductor|Photoconductor]] | semiconductor, device-physics, photonic | medium | 2026-05-15 |
 | [[concepts/photodiode|Photodiode]] | semiconductor, device-physics, photonic | medium | 2026-05-15 |
-| [[concepts/pi-step-size-control|PI Step Size Control]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/pi-step-size-control|PI Step Size Control]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/piecewise-linear-analysis|Piecewise-Linear Analysis (Katzenelson)]] | dc, analog, well-established | medium | 2026-05-15 |
-| [[concepts/piezoresistivity|Piezoresistivity]] | semiconductor, device-physics, sensor | low | 2026-05-15 |
+| [[concepts/piezoresistivity|Piezoresistivity]] | semiconductor, device-physics, sensor | medium | 2026-05-15 |
 | [[concepts/pivoting|Pivoting (Partial and Full)]] | foundational, numerical, well-established | high | 2026-05-15 |
 | [[concepts/placement|Placement]] | vlsi, physical-design, graph | high | 2026-05-15 |
 | [[concepts/pointer-jumping|Pointer Jumping (Path Doubling)]] | graph, parallel, algorithm | high | 2026-05-15 |
@@ -798,8 +799,8 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/pole-sensitivity-singular-matrix|Pole Sensitivity via Singular-Matrix LU]] | sensitivity, analog, ac | medium | 2026-05-15 |
 | [[concepts/pole-zero-sensitivity|Pole and Zero Sensitivity]] | sensitivity, analog, ac | high | 2026-05-15 |
 | [[concepts/poles-and-zeros|Poles and Zeros]] | foundational, analog, ac | high | 2026-05-15 |
-| [[concepts/poly-silicon-gate|Polysilicon Gate]] | semiconductor, device-physics, mosfet | low | 2026-05-15 |
-| [[concepts/polygon-clipping|Polygon Clipping]] | algorithm, computational-geometry, well-established | low | 2026-05-15 |
+| [[concepts/poly-silicon-gate|Polysilicon Gate]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
+| [[concepts/polygon-clipping|Polygon Clipping]] | algorithm, computational-geometry, well-established | medium | 2026-05-15 |
 | [[concepts/polymorphism|Polymorphism]] | python, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/polynomial|Polynomial]] | math, modeling, foundational | high | 2026-05-15 |
 | [[concepts/population-inversion|Population Inversion]] | semiconductor, device-physics, photonic | medium | 2026-05-15 |
@@ -808,17 +809,17 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/power-distribution-network|Power Distribution Network]] | vlsi, power-integrity, analog | medium | 2026-05-15 |
 | [[concepts/pq-tree|PQ-Tree]] | algorithm, foundational, well-established | high | 2026-05-15 |
 | [[concepts/preconditioning|Preconditioning]] | algorithm, linear-algebra, sparse-matrix | medium | 2026-05-15 |
-| [[concepts/predictive-modeling|Predictive Modeling]] | data-analysis, advanced, well-established | low | 2026-05-15 |
-| [[concepts/predictive-step-size-control|Predictive Step Size Control]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/predictor-corrector-method|Predictor-Corrector Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/predictive-modeling|Predictive Modeling]] | data-analysis, advanced, well-established | medium | 2026-05-15 |
+| [[concepts/predictive-step-size-control|Predictive Step Size Control]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/predictor-corrector-method|Predictor-Corrector Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/predictor-corrector|Predictor-Corrector Methods]] | transient, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/probability-distributions|Probability Distributions]] | statistics, foundational, well-established | high | 2026-05-15 |
 | [[concepts/probability|Probability]] | statistics, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/procedural-macros|Procedural Macros]] | rust, macros, advanced | high | 2026-05-15 |
 | [[concepts/process-variation|Process Variation]] | analog, process-variation, statistical | high | 2026-05-15 |
-| [[concepts/projected-runge-kutta|Projected Runge-Kutta]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/projection-method-dae|Projection Method for DAEs]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/property-c|Property C]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/projected-runge-kutta|Projected Runge-Kutta]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/projection-method-dae|Projection Method for DAEs]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/property-c|Property C]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/prototyping|Prototyping]] | foundational, software-design, dashboard | high | 2026-05-15 |
 | [[concepts/provisioned-concurrency|Provisioned Concurrency]] | cloud, scalability, well-established | medium | 2026-05-15 |
 | [[concepts/proxy-graph|Proxy Graph]] | vlsi, routing, algorithm | medium | 2026-05-15 |
@@ -833,32 +834,32 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/q-omega-sensitivity|Q and omega_0 Sensitivity]] | sensitivity, analog, ac | high | 2026-05-15 |
 | [[concepts/quality-attributes|Quality Attributes]] | architecture, requirements, foundational | high | 2026-05-17 |
 | [[concepts/quality-of-service|Quality of Service (QoS)]] | simulation, modeling, soa | medium | 2026-05-15 |
-| [[concepts/quantum-cascade-laser|Quantum-Cascade Laser]] | semiconductor, device-physics, photonic | low | 2026-05-15 |
+| [[concepts/quantum-cascade-laser|Quantum-Cascade Laser]] | semiconductor, device-physics, photonic | medium | 2026-05-15 |
 | [[concepts/quantum-mechanical-tunneling|Quantum-Mechanical Tunneling]] | semiconductor, device-physics, transport | medium | 2026-05-15 |
-| [[concepts/quantum-well-infrared-photodetector|Quantum-Well Infrared Photodetector (QWIP)]] | semiconductor, device-physics, photonic | low | 2026-05-15 |
+| [[concepts/quantum-well-infrared-photodetector|Quantum-Well Infrared Photodetector (QWIP)]] | semiconductor, device-physics, photonic | medium | 2026-05-15 |
 | [[concepts/quantum-well|Quantum Well]] | semiconductor, device-physics, quantum | medium | 2026-05-15 |
 | [[concepts/quasi-newton-method|Quasi-Newton Method (BFGS, DFP)]] | optimization, foundational, well-established | medium | 2026-05-15 |
-| [[concepts/quasilinear-dae|Quasilinear DAE]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/quasilinear-dae|Quasilinear DAE]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/question-mark-operator|Question Mark Operator]] | rust, foundational, error-handling | high | 2026-05-15 |
 | [[concepts/quorum|Quorum]] | distributed-systems, consistency, well-established | high | 2026-05-15 |
 | [[concepts/qz-algorithm|QZ Algorithm (Generalized Eigenvalue)]] | foundational, numerical, well-established | medium | 2026-05-15 |
 | [[concepts/race-condition|Race Condition]] | concurrency, foundational, well-established | high | 2026-05-15 |
-| [[concepts/radau-ia-method|Radau IA Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/radau-iia-method|Radau IIA Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/radau-ia-method|Radau IA Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/radau-iia-method|Radau IIA Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/radiative-recombination|Radiative Recombination]] | semiconductor, device-physics, photonic | medium | 2026-05-15 |
 | [[concepts/raft|Raft]] | distributed-systems, consensus, algorithm, well-established | high | 2026-05-15 |
-| [[concepts/raii|Raii]] | speculative, foundational | low | 2026-05-15 |
+| [[concepts/raii|Raii]] | speculative, foundational | medium | 2026-05-15 |
 | [[concepts/random-walk|Random Walk]] | algorithm, stochastic, graph | medium | 2026-05-15 |
 | [[concepts/rankwidth|Rankwidth]] | graph, foundational, well-established | high | 2026-05-15 |
-| [[concepts/rattle-algorithm|RATTLE Algorithm]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/raw-pointers|Raw Pointers]] | speculative, foundational | low | 2026-05-15 |
+| [[concepts/rattle-algorithm|RATTLE Algorithm]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/raw-pointers|Raw Pointers]] | speculative, foundational | medium | 2026-05-15 |
 | [[concepts/rc-type|Rc Type]] | rust, smart-pointers, advanced | high | 2026-05-15 |
 | [[concepts/reactive-programming|Reactive Programming]] | python, dashboard, reactive-programming | high | 2026-05-15 |
 | [[concepts/read-replica|Read Replica]] | databases, replication, well-established | high | 2026-05-15 |
 | [[concepts/read-through-cache|Read-Through Cache]] | caching, well-established | medium | 2026-05-15 |
 | [[concepts/read-your-own-writes|Read Your Own Writes (RYOWs)]] | distributed-systems, consistency, well-established | high | 2026-05-15 |
 | [[concepts/real-time-devs-simulation|Real-Time DEVS Simulation]] | simulation, modeling, devs | medium | 2026-05-15 |
-| [[concepts/reduced-system|Reduced System]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/reduced-system|Reduced System]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/refcell-type|RefCell Type]] | rust, smart-pointers, advanced | high | 2026-05-15 |
 | [[concepts/references|References]] | rust, foundational, ownership | high | 2026-05-15 |
 | [[concepts/refutability|Refutability]] | rust, foundational, well-established | high | 2026-05-15 |
@@ -881,19 +882,19 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/retract|Retract]] | graph, advanced, well-established | high | 2026-05-15 |
 | [[concepts/reverse-proxy|Reverse Proxy]] | web, deployment, networking | high | 2026-05-15 |
 | [[concepts/reverse-recovery|Reverse Recovery]] | semiconductor, device-physics, p-n-junction | medium | 2026-05-15 |
-| [[concepts/riemann-surface|Riemann Surface]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/riemann-surface|Riemann Surface]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/robdd|Reduced Ordered BDD (ROBDD)]] | bdd, foundational, canonical | high | 2026-05-15 |
-| [[concepts/root-locus-curve|Root Locus Curve]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/root-locus-curve|Root Locus Curve]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/root-refinement|Root Refinement (System-Matrix-Based)]] | foundational, ac, well-established | medium | 2026-05-15 |
-| [[concepts/rosenbrock-method|Rosenbrock Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/rosenbrock-method|Rosenbrock Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/rpc|Remote Procedure Call (RPC)]] | distributed-systems, networking, well-established | high | 2026-05-15 |
-| [[concepts/rsfq|Rapid Single Flux Quantum (RSFQ)]] | superconductive, digital, emerging | low | 2026-05-15 |
+| [[concepts/rsfq|Rapid Single Flux Quantum (RSFQ)]] | superconductive, digital, emerging | medium | 2026-05-15 |
 | [[concepts/rule-based-pruning|Rule-Based Pruning]] | simulation, modeling, ses | medium | 2026-05-15 |
-| [[concepts/runge-kutta-collocation|Runge-Kutta Collocation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/runge-kutta-method|Runge-Kutta Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/runge-kutta-collocation|Runge-Kutta Collocation]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
+| [[concepts/runge-kutta-method|Runge-Kutta Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/rust-control-flow|Rust Control Flow]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/rust-encapsulation|Rust Encapsulation]] | rust, foundational, well-established | high | 2026-05-15 |
-| [[concepts/rust-language-server|Rust Language Server]] | rust, tooling, foundational | low | 2026-05-15 |
+| [[concepts/rust-language-server|Rust Language Server]] | rust, tooling, foundational | medium | 2026-05-15 |
 | [[concepts/rust-language|Rust Language]] | rust, foundational, systems-programming | high | 2026-05-15 |
 | [[concepts/rust-polymorphism|Rust Polymorphism]] | rust, traits, foundational | high | 2026-05-15 |
 | [[concepts/rust-release-process|Rust Release Process]] | rust, foundational, well-established | high | 2026-05-15 |
@@ -912,8 +913,8 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/schottky-barrier|Schottky Barrier]] | semiconductor, device-physics, diode | medium | 2026-05-15 |
 | [[concepts/schur-decomposition|Schur Decomposition (Matrix Partitioning)]] | linear-algebra, hierarchical, sparse-matrix | medium | 2026-05-15 |
 | [[concepts/screen-scraping|Screen Scraping]] | python, web, data-extraction | high | 2026-05-15 |
-| [[concepts/sdbdf-method|Second-Derivative BDF (SDBDF)]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/sdirk-method|SDIRK Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/sdbdf-method|Second-Derivative BDF (SDBDF)]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
+| [[concepts/sdirk-method|SDIRK Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/secondary-index|Secondary Index]] | storage, well-established, indexing | high | 2026-05-15 |
 | [[concepts/semi-normalized-sensitivity|Semi-Normalized Sensitivity]] | sensitivity, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/semiconductor-device|Semiconductor Device]] | semiconductor, device-physics, foundational | high | 2026-05-15 |
@@ -935,7 +936,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/serializable-snapshot-isolation|Serializable Snapshot Isolation (SSI)]] | emerging, well-established, transactions | high | 2026-05-15 |
 | [[concepts/series|Pandas Series]] | python, pandas, dataframe | high | 2026-05-15 |
 | [[concepts/serverless|Serverless]] | cloud, scalability, well-established | high | 2026-05-15 |
-| [[concepts/service-context|Service Context]] | simulation, modeling, soa | low | 2026-05-15 |
+| [[concepts/service-context|Service Context]] | simulation, modeling, soa | medium | 2026-05-15 |
 | [[concepts/service-oriented-architecture|Service-Oriented Architecture (for M&S)]] | simulation, modeling, soa | medium | 2026-05-15 |
 | [[concepts/service-oriented-computing|Service-Oriented Computing (SOC)]] | simulation, modeling, soa | medium | 2026-05-15 |
 | [[concepts/ses-aspect|SES Aspect]] | simulation, modeling, ses | high | 2026-05-15 |
@@ -954,9 +955,9 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/ses-variables|SES Variables]] | simulation, modeling, ses | medium | 2026-05-15 |
 | [[concepts/ses-xml-mapping|SES↔XML Mapping]] | simulation, modeling, ses | medium | 2026-05-15 |
 | [[concepts/session-state|Session State]] | distributed-systems, microservices, well-established | high | 2026-05-15 |
-| [[concepts/set-theory|Set Theory]] | statistics, foundational, well-established | low | 2026-05-15 |
+| [[concepts/set-theory|Set Theory]] | statistics, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/shadowing|Shadowing]] | rust, foundational, well-established | high | 2026-05-15 |
-| [[concepts/shake-algorithm|SHAKE Algorithm]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/shake-algorithm|SHAKE Algorithm]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/shannon-expansion|Shannon Expansion]] | foundational, bdd, logic | high | 2026-05-15 |
 | [[concepts/sharding|Sharding]] | databases, scalability, foundational | high | 2026-05-15 |
 | [[concepts/shared-everything-architecture|Shared-Everything Architecture]] | distributed-systems, databases, well-established | medium | 2026-05-15 |
@@ -967,15 +968,15 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/shooting-method|Shooting Method (for Steady State)]] | transient, advanced, well-established | medium | 2026-05-15 |
 | [[concepts/short-channel-effects|Short-Channel Effects]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
 | [[concepts/signal-flow-model|Signal-Flow Model]] | mixed-signal, foundational, well-established | high | 2026-05-15 |
-| [[concepts/silicon-on-insulator|Silicon-on-Insulator (SOI)]] | semiconductor, device-physics, mosfet | low | 2026-05-15 |
+| [[concepts/silicon-on-insulator|Silicon-on-Insulator (SOI)]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
 | [[concepts/simplicial-vertex|Simplicial Vertex]] | graph, foundational, well-established | high | 2026-05-15 |
-| [[concepts/simplified-newton-iteration|Simplified Newton Iteration]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/simplified-newton-iteration|Simplified Newton Iteration]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/simulation-executive|Simulation Executive]] | simulation, modeling, devs | medium | 2026-05-15 |
 | [[concepts/simulation-interoperability|Simulation Interoperability]] | simulation, modeling, devs | medium | 2026-05-15 |
-| [[concepts/simulation|Simulation]] | simulation, modeling, foundational | low | 2026-05-15 |
-| [[concepts/single-electron-transistor|Single-Electron Transistor (SET)]] | semiconductor, device-physics, quantum | low | 2026-05-15 |
-| [[concepts/single-flux-quantum|Single Flux Quantum (SFQ)]] | superconductive, digital, emerging | low | 2026-05-15 |
-| [[concepts/singular-perturbation-problem|Singular Perturbation Problem]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/simulation|Simulation]] | simulation, modeling, foundational | medium | 2026-05-15 |
+| [[concepts/single-electron-transistor|Single-Electron Transistor (SET)]] | semiconductor, device-physics, quantum | medium | 2026-05-15 |
+| [[concepts/single-flux-quantum|Single Flux Quantum (SFQ)]] | superconductive, digital, emerging | medium | 2026-05-15 |
+| [[concepts/singular-perturbation-problem|Singular Perturbation Problem]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/singular-values|Singular Values]] | foundational, math, numerical | medium | 2026-05-15 |
 | [[concepts/sized-trait|Sized Trait]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/slew-rate|Slew Rate]] | device-model, analog, well-established | medium | 2026-05-15 |
@@ -1004,17 +1005,17 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/spline-approximation|Spline Approximation (for Device Nonlinearities)]] | device-model, numerical, well-established | medium | 2026-05-15 |
 | [[concepts/split-apply-combine|Split-Apply-Combine]] | python, pandas, data-analysis | high | 2026-05-15 |
 | [[concepts/splitgraph|Splitgraph]] | graph, foundational, well-established | high | 2026-05-15 |
-| [[concepts/squeezer-mechanism|Squeezer Mechanism]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/squeezer-mechanism|Squeezer Mechanism]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/sstable|SSTable (Sorted String Table)]] | storage, well-established, indexing | high | 2026-05-15 |
-| [[concepts/stability-domain|Stability Domain]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/stability-function|Stability Function]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/stability-region|Stability Region]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/stability-domain|Stability Domain]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/stability-function|Stability Function]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/stability-region|Stability Region]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/stack-and-heap|Stack and Heap]] | rust, foundational, well-established | high | 2026-05-15 |
-| [[concepts/stage-order|Stage Order]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/stage-order|Stage Order]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/standard-deviation|Standard Deviation]] | statistics, foundational | high | 2026-05-15 |
 | [[concepts/standard-streams|Standard Streams (Rust)]] | rust, foundational, well-established | medium | 2026-05-15 |
 | [[concepts/star-schema|Star Schema]] | data-warehouse, well-established, olap | high | 2026-05-15 |
-| [[concepts/state-space-form|State Space Form]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/state-space-form|State Space Form]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/state-space-model|State-Space Model]] | analysis, simulation, well-established | medium | 2026-05-15 |
 | [[concepts/state-variable-formulation|State Variable Formulation]] | foundational, analog, transient | high | 2026-05-15 |
 | [[concepts/stateful-stream|Stateful Stream]] | streaming, well-established | medium | 2026-05-15 |
@@ -1032,7 +1033,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/stiff-circuit|Stiff Circuit]] | analog, transient, foundational | high | 2026-05-15 |
 | [[concepts/stiff-stability|Stiff Stability]] | transient, numerical-integration, well-established | medium | 2026-05-15 |
 | [[concepts/stiff-systems|Stiff Systems]] | transient, numerical-integration, foundational | high | 2026-05-15 |
-| [[concepts/stiffly-accurate-method|Stiffly Accurate Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/stiffly-accurate-method|Stiffly Accurate Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/stream-barrier|Stream Barrier]] | streaming, advanced | medium | 2026-05-15 |
 | [[concepts/stream-processing|Stream Processing]] | streaming, distributed-systems, foundational | high | 2026-05-15 |
 | [[concepts/string-type|String Type]] | rust, foundational, well-established | high | 2026-05-15 |
@@ -1040,7 +1041,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/strong-immersion|Strong Immersion]] | graph, advanced, well-established | high | 2026-05-15 |
 | [[concepts/struct-type|Struct Type]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/subgraph-centric-computation|Subgraph-Centric Computation]] | graph, distributed-systems, graph-mining | high | 2026-05-15 |
-| [[concepts/subgraph-reheating|Subgraph Reheating]] | vlsi, routing, algorithm | low | 2026-05-15 |
+| [[concepts/subgraph-reheating|Subgraph Reheating]] | vlsi, routing, algorithm | medium | 2026-05-15 |
 | [[concepts/substrate-noise|Substrate Noise]] | vlsi, mixed-signal, analog | medium | 2026-05-15 |
 | [[concepts/subthreshold-conduction|Subthreshold Conduction]] | semiconductor, device-physics, mosfet | medium | 2026-05-15 |
 | [[concepts/superstep-sharing|Superstep-Sharing]] | graph, distributed-systems, query-processing | high | 2026-05-15 |
@@ -1056,8 +1057,8 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/symbolic-noise-analysis|Symbolic Noise Analysis]] | analog, noise, symbolic | medium | 2026-05-15 |
 | [[concepts/symbolic-sensitivity-analysis|Symbolic Sensitivity Analysis]] | symbolic, analog, sensitivity | medium | 2026-05-15 |
 | [[concepts/symbolic-stamp|Symbolic Stamp]] | hierarchical, symbolic, analog | medium | 2026-05-15 |
-| [[concepts/symplectic-integrator|Symplectic Integrator]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/symplectic-method|Symplectic Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/symplectic-integrator|Symplectic Integrator]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/symplectic-method|Symplectic Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/system-architecture|System Architecture]] | architecture, foundational | high | 2026-05-17 |
 | [[concepts/system-entity-structure|System Entity Structure (SES)]] | simulation, modeling, ontology | high | 2026-05-15 |
 | [[concepts/system-of-record|System of Record]] | foundational, well-established, distributed-systems | high | 2026-05-15 |
@@ -1067,7 +1068,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/szemeredi-regularity-lemma|Szemerédi's Regularity Lemma]] | graph, advanced, well-established | high | 2026-05-15 |
 | [[concepts/t-test|T-Test]] | statistics, well-established | high | 2026-05-15 |
 | [[concepts/tableau-formulation|Tableau Formulation]] | foundational, analog, dc | medium | 2026-05-15 |
-| [[concepts/tangent-space-parametrization|Tangent Space Parametrization]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/tangent-space-parametrization|Tangent Space Parametrization]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/task-batching|Task Batching]] | distributed-systems, scheduling, optimization | medium | 2026-05-15 |
 | [[concepts/task-scheduling|Task Scheduling]] | graph, algorithm, well-established | medium | 2026-05-15 |
 | [[concepts/tcp-networking|TCP Networking (Rust)]] | rust, networking, foundational | medium | 2026-05-15 |
@@ -1078,18 +1079,18 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/tensor-product|Tensor Product]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/test-organization|Test Organization (Rust)]] | rust, foundational, testing | high | 2026-05-15 |
 | [[concepts/thermionic-emission|Thermionic Emission]] | semiconductor, device-physics, transport | medium | 2026-05-15 |
-| [[concepts/thermistor|Thermistor]] | semiconductor, device-physics, sensor | low | 2026-05-15 |
+| [[concepts/thermistor|Thermistor]] | semiconductor, device-physics, sensor | medium | 2026-05-15 |
 | [[concepts/thevenin-norton-equivalents|Thevenin and Norton Equivalents]] | foundational, analog, dc | high | 2026-05-15 |
 | [[concepts/think-like-a-graph|Think Like a Graph]] | graph, distributed-systems, graph-processing | medium | 2026-05-15 |
 | [[concepts/thread-pool|Thread Pool]] | concurrency, foundational, well-established | high | 2026-05-15 |
 | [[concepts/thread|Thread]] | concurrency, foundational, well-established | high | 2026-05-15 |
 | [[concepts/threads|Threads (Rust)]] | rust, concurrency, foundational | high | 2026-05-15 |
-| [[concepts/threshold-factor|Threshold Factor]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/threshold-factor|Threshold Factor]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
 | [[concepts/threshold-graph|Threshold Graph]] | graph, foundational, well-established | high | 2026-05-15 |
 | [[concepts/threshold-voltage|Threshold Voltage]] | semiconductor, device-physics, mosfet | high | 2026-05-15 |
 | [[concepts/threshold-width|Threshold-Width]] | graph, advanced, well-established | high | 2026-05-15 |
 | [[concepts/throttling|Throttling]] | distributed-systems, fault-tolerance, well-established | high | 2026-05-15 |
-| [[concepts/thyristor|Thyristor]] | semiconductor, device-physics, power-device | low | 2026-05-15 |
+| [[concepts/thyristor|Thyristor]] | semiconductor, device-physics, power-device | medium | 2026-05-15 |
 | [[concepts/tidy-data|Tidy Data]] | python, pandas, data-analysis | high | 2026-05-15 |
 | [[concepts/time-domain-sensitivity|Time-Domain Sensitivity]] | sensitivity, transient, analog | medium | 2026-05-15 |
 | [[concepts/time-series|Time Series]] | data, foundational, modeling | high | 2026-05-15 |
@@ -1109,7 +1110,7 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/transaction|Transaction]] | foundational, well-established, transactions | high | 2026-05-15 |
 | [[concepts/transferred-electron-device|Transferred-Electron Device (Gunn Diode)]] | semiconductor, device-physics, rf | medium | 2026-05-15 |
 | [[concepts/transient-analysis|Transient Analysis]] | analog, transient, foundational | high | 2026-05-15 |
-| [[concepts/transistor-amplifier|Transistor Amplifier (DAE)]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/transistor-amplifier|Transistor Amplifier (DAE)]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/transpose-system-method|Transpose System (Adjoint) Sensitivity Method]] | sensitivity, foundational, well-established | high | 2026-05-15 |
 | [[concepts/trapezoidal-rule|Trapezoidal Rule]] | analog, transient, foundational | high | 2026-05-15 |
 | [[concepts/tree-cotree|Tree and Cotree]] | foundational, graph, analog | high | 2026-05-15 |
@@ -1138,13 +1139,13 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/unsafe-rust|Unsafe Rust]] | rust, advanced, well-established | high | 2026-05-15 |
 | [[concepts/use-declarations|Use Declarations]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/v-and-v-tools|V&V Tools (Verification and Validation)]] | simulation, modeling, verification | medium | 2026-05-15 |
-| [[concepts/value-change-dump|Value Change Dump (VCD)]] | digital, verification, foundational, well-established | low | 2026-05-18 |
-| [[concepts/van-der-pol-equation|Van der Pol Equation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/value-change-dump|Value Change Dump (VCD)]] | digital, verification, foundational, well-established | medium | 2026-05-18 |
+| [[concepts/van-der-pol-equation|Van der Pol Equation]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/varactor-diode|Varactor Diode]] | semiconductor, device-physics, p-n-junction | medium | 2026-05-15 |
 | [[concepts/variable-ordering|Variable Ordering (BDD)]] | bdd, foundational, np-complete | high | 2026-05-15 |
 | [[concepts/variables-and-mutability|Variables and Mutability]] | rust, foundational, well-established | high | 2026-05-15 |
 | [[concepts/variational-mor|Variational / Parameterized MOR]] | mor, process-variation, statistical | medium | 2026-05-15 |
-| [[concepts/vcsel|VCSEL (Vertical-Cavity Surface-Emitting Laser)]] | semiconductor, device-physics, photonic | low | 2026-05-15 |
+| [[concepts/vcsel|VCSEL (Vertical-Cavity Surface-Emitting Laser)]] | semiconductor, device-physics, photonic | medium | 2026-05-15 |
 | [[concepts/vec-type|Vec Type]] | rust, foundational, collections | high | 2026-05-15 |
 | [[concepts/vector-space|Vector Space]] | foundational, math, well-established | high | 2026-05-15 |
 | [[concepts/vectorization|Vectorization]] | python, numpy, foundational | high | 2026-05-15 |
@@ -1162,14 +1163,14 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[concepts/vlsi-design|VLSI Design]] | vlsi, digital, foundational | high | 2026-05-15 |
 | [[concepts/voltage-domain|Voltage Domain]] | vlsi, power-integrity, architecture | medium | 2026-05-15 |
 | [[concepts/voltage-regulator-placement|Voltage Regulator Placement]] | vlsi, power-integrity, optimization | medium | 2026-05-15 |
-| [[concepts/von-neumann-theorem|Von Neumann Theorem]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/w-method|W-Method]] | ode, numerical-integration, foundational | low | 2026-05-15 |
-| [[concepts/w-transformation|W-Transformation]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/von-neumann-theorem|Von Neumann Theorem]] | ode, numerical-integration, foundational | medium | 2026-05-15 |
+| [[concepts/w-method|W-Method]] | ode, numerical-integration, foundational | high | 2026-05-15 |
+| [[concepts/w-transformation|W-Transformation]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/wave-pipelining|Wave Pipelining]] | vlsi, digital, timing | medium | 2026-05-15 |
 | [[concepts/weak-references|Weak References]] | rust, smart-pointers, advanced | high | 2026-05-15 |
 | [[concepts/web-portal|Web Portal]] | web, dashboard, documentation | high | 2026-05-15 |
 | [[concepts/web-scraping|Web Scraping]] | python, data-analysis, well-established | medium | 2026-05-15 |
-| [[concepts/weierstrass-kronecker-form|Weierstrass-Kronecker Form]] | ode, numerical-integration, foundational | low | 2026-05-15 |
+| [[concepts/weierstrass-kronecker-form|Weierstrass-Kronecker Form]] | ode, numerical-integration, foundational | high | 2026-05-15 |
 | [[concepts/well-quasi-order|Well-Quasi-Order]] | algorithm, foundational, well-established | high | 2026-05-15 |
 | [[concepts/wide-column-store|Wide-Column Store]] | databases, nosql, well-established | medium | 2026-05-15 |
 | [[concepts/write-ahead-log|Write-Ahead Log (WAL)]] | storage, well-established, durability | high | 2026-05-15 |

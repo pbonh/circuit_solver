@@ -1,7 +1,7 @@
 ---
 title: Nicholas Matsakis
 type: entity
-id: entity-nicholas-matsakis
+id: entities/nicholas-matsakis
 tags:
 - rust
 - person

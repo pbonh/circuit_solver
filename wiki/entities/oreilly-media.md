@@ -1,7 +1,7 @@
 ---
 title: O'Reilly Media
 type: entity
-id: entity-oreilly-media
+id: entities/oreilly-media
 tags:
 - publisher
 - technical-publishing

@@ -1,7 +1,7 @@
 ---
 title: Van Nostrand Reinhold
 type: entity
-id: entity-van-nostrand-reinhold
+id: entities/van-nostrand-reinhold
 tags:
 - publisher
 - foundational

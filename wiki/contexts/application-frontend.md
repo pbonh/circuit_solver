@@ -1,7 +1,7 @@
 ---
 title: Application Frontend
 type: entity
-id: entity-context-application-frontend
+id: contexts/application-frontend
 tags:
 - frontend
 - python

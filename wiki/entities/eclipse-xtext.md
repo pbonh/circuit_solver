@@ -1,7 +1,7 @@
 ---
 title: Eclipse / Xtext
 type: entity
-id: entity-eclipse-xtext
+id: entities/eclipse-xtext
 tags:
 - tooling
 - ide

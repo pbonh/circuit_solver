@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Chapter 16: Fearless Concurrency'
 type: source
-id: source-rust-book-17-chapter-16-fearless-concurrency
-kind: derived-summary
+id: summaries/rust-book-17-chapter-16-fearless-concurrency
+kind: publication
 tags:
 - rust
 - concurrency

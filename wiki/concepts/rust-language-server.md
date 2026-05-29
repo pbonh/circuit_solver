@@ -1,7 +1,7 @@
 ---
 title: Rust Language Server
 type: claim
-id: claim-rust-language-server
+id: concepts/rust-language-server
 tags:
 - rust
 - tooling
@@ -12,7 +12,11 @@ sources:
 - raw/rust_book/_txt/01-introduction.txt
 - raw/rust_book/_txt/02-chapter-1-getting-started.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 2
+  contradicted: false
+  effective: 0.884
+  inputs_hash: 48379ae317c01c10
 ---
 
 ## Definition

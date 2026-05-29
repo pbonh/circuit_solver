@@ -1,7 +1,7 @@
 ---
 title: Two-Graph Formulation (I-Graph and V-Graph)
 type: claim
-id: claim-two-graph-formulation
+id: concepts/two-graph-formulation
 tags:
 - foundational
 - graph
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

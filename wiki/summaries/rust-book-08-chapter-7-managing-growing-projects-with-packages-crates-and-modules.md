@@ -2,8 +2,8 @@
 title: 'The Rust Programming Language — Chapter 7: Managing Growing Projects with
   Packages, Crates, and Modules'
 type: source
-id: source-rust-book-08-chapter-7-managing-growing-projects-with-packages-crates-and-modules
-kind: derived-summary
+id: summaries/rust-book-08-chapter-7-managing-growing-projects-with-packages-crates-and-modules
+kind: publication
 tags:
 - rust
 - foundational

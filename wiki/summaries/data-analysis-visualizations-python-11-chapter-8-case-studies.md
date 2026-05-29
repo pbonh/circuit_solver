@@ -1,8 +1,8 @@
 ---
 title: 'Data Analysis and Visualizations with Python — Chapter 8: Case Studies'
 type: source
-id: source-data-analysis-visualizations-python-11-chapter-8-case-studies
-kind: derived-summary
+id: summaries/data-analysis-visualizations-python-11-chapter-8-case-studies
+kind: publication
 tags:
 - python
 - pandas

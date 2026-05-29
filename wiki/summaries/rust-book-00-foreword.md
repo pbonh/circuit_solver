@@ -1,8 +1,8 @@
 ---
 title: The Rust Programming Language — Foreword
 type: source
-id: source-rust-book-00-foreword
-kind: derived-summary
+id: summaries/rust-book-00-foreword
+kind: publication
 tags:
 - rust
 - foundational

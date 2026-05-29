@@ -1,7 +1,7 @@
 ---
 title: Junction Termination
 type: claim
-id: claim-junction-termination
+id: concepts/junction-termination
 tags:
 - semiconductor
 - device-physics
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/15-chapter-11-thyristors-and-power-devices.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 > Sze & Ng Chapter 11 cites the foundational termination references — Cornu, Schweitzer & Kuhn (1974) on "Double Positive Beveling: A Better Edge Contour for High Voltage Devices" and Davies & Gentry (1964) on "Control of Electric Field at the Surface of p-n Junctions" — but does not treat the design rules in the main text. The general-knowledge content below is consistent with those references and the implied power-device requirements throughout Sect. 11.

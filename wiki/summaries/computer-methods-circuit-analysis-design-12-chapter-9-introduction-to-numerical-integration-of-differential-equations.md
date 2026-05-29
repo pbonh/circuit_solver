@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 9: Introduction
   to Numerical Integration of Differential Equations'
 type: source
-id: source-computer-methods-circuit-analysis-design-12-chapter-9-introduction-to-numerical-integration-of-differential-equations
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-12-chapter-9-introduction-to-numerical-integration-of-differential-equations
+kind: publication
 tags:
 - foundational
 - transient

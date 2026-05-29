@@ -1,7 +1,7 @@
 ---
 title: Use Declarations
 type: claim
-id: claim-use-declarations
+id: concepts/use-declarations
 tags:
 - rust
 - foundational
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/rust_book/_txt/08-chapter-7-managing-growing-projects-with-packages-crates-and-modules.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

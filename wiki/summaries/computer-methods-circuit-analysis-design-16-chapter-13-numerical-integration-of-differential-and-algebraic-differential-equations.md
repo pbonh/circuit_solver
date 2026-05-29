@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 13: Numerical Integration
   of Differential and Algebraic-Differential Equations'
 type: source
-id: source-computer-methods-circuit-analysis-design-16-chapter-13-numerical-integration-of-differential-and-algebraic-differential-equations
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-16-chapter-13-numerical-integration-of-differential-and-algebraic-differential-equations
+kind: publication
 tags:
 - foundational
 - transient

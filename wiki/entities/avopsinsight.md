@@ -1,7 +1,7 @@
 ---
 title: AVOPSinsight
 type: entity
-id: entity-avopsinsight
+id: entities/avopsinsight
 tags:
 - web
 - dashboard

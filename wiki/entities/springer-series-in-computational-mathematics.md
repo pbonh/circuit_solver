@@ -1,7 +1,7 @@
 ---
 title: Springer Series in Computational Mathematics
 type: entity
-id: entity-springer-series-in-computational-mathematics
+id: entities/springer-series-in-computational-mathematics
 tags:
 - ode
 - numerical-integration

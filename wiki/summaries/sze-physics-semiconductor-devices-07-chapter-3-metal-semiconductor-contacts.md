@@ -2,8 +2,8 @@
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 3: Metal-Semiconductor
   Contacts'
 type: source
-id: source-sze-physics-semiconductor-devices-07-chapter-3-metal-semiconductor-contacts
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-07-chapter-3-metal-semiconductor-contacts
+kind: publication
 tags:
 - semiconductor
 - device-physics

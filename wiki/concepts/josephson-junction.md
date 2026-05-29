@@ -1,7 +1,7 @@
 ---
 title: Josephson Junction
 type: claim
-id: claim-josephson-junction
+id: concepts/josephson-junction
 tags:
 - superconductive
 - device
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 > GraphsInVLSI Chapter 11 treats Josephson junctions (JJ) operationally — as the device whose switching emits an SFQ pulse — rather than deriving the device physics. The chapter cites Likharev & Semenov [587] for the fundamental RSFQ theory and reports current manufacturing density of "over 6,000 Josephson junctions (JJ) per mm² [582]". Each junction in an active Josephson transmission line "[requires] bias current" to operate as a relay element.

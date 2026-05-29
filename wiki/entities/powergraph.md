@@ -1,7 +1,7 @@
 ---
 title: PowerGraph
 type: entity
-id: entity-powergraph
+id: entities/powergraph
 tags:
 - graph
 - distributed-systems

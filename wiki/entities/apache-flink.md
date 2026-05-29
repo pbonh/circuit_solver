@@ -1,7 +1,7 @@
 ---
 title: Apache Flink
 type: entity
-id: entity-apache-flink
+id: entities/apache-flink
 tags:
 - streaming
 - dataflow

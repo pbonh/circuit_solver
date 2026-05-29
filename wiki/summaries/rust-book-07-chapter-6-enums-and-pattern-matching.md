@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Chapter 6: Enums and Pattern Matching'
 type: source
-id: source-rust-book-07-chapter-6-enums-and-pattern-matching
-kind: derived-summary
+id: summaries/rust-book-07-chapter-6-enums-and-pattern-matching
+kind: publication
 tags:
 - rust
 - foundational

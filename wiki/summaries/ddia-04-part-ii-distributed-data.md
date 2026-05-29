@@ -2,8 +2,8 @@
 title: 'Designing Data-Intensive Applications — Part II: Distributed Data (Chapters
   5–9)'
 type: source
-id: source-ddia-04-part-ii-distributed-data
-kind: derived-summary
+id: summaries/ddia-04-part-ii-distributed-data
+kind: publication
 tags:
 - distributed-systems
 - replication

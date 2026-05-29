@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 15: Introduction
   to Optimization Theory'
 type: source
-id: source-computer-methods-circuit-analysis-design-18-chapter-15-introduction-to-optimization-theory
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-18-chapter-15-introduction-to-optimization-theory
+kind: publication
 tags:
 - optimization
 - foundational

@@ -1,7 +1,7 @@
 ---
 title: Icarus Verilog
 type: entity
-id: entity-icarus-verilog
+id: entities/icarus-verilog
 tags:
 - digital
 - simulator

@@ -1,7 +1,7 @@
 ---
 title: Enum Type
 type: claim
-id: claim-enum-type
+id: concepts/enum-type
 tags:
 - rust
 - foundational
@@ -12,7 +12,11 @@ sources:
 - raw/rust_book/_txt/03-chapter-2-programming-a-guessing-game.txt
 - raw/rust_book/_txt/07-chapter-6-enums-and-pattern-matching.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

@@ -1,7 +1,7 @@
 ---
 title: Laurent Jay
 type: entity
-id: entity-laurent-jay
+id: entities/laurent-jay
 tags:
 - ode
 - numerical-integration

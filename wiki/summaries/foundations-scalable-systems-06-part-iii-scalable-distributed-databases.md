@@ -2,8 +2,8 @@
 title: 'Foundations of Scalable Systems — Part III: Scalable Distributed Databases
   (Chapters 10–13)'
 type: source
-id: source-foundations-scalable-systems-06-part-iii-scalable-distributed-databases
-kind: derived-summary
+id: summaries/foundations-scalable-systems-06-part-iii-scalable-distributed-databases
+kind: publication
 tags:
 - distributed-systems
 - replication

@@ -1,8 +1,8 @@
 ---
 title: Guide to Graph Algorithms — Preface
 type: source
-id: source-guide-to-graph-algorithms-01-preface
-kind: derived-summary
+id: summaries/guide-to-graph-algorithms-01-preface
+kind: publication
 tags:
 - graph
 - algorithm

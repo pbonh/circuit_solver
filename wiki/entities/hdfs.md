@@ -1,7 +1,7 @@
 ---
 title: HDFS (Hadoop Distributed File System)
 type: entity
-id: entity-hdfs
+id: entities/hdfs
 tags:
 - distributed-systems
 - big-data

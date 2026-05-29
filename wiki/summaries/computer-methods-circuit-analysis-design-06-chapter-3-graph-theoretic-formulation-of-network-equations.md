@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 3: Graph-Theoretic
   Formulation of Network Equations'
 type: source
-id: source-computer-methods-circuit-analysis-design-06-chapter-3-graph-theoretic-formulation-of-network-equations
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-06-chapter-3-graph-theoretic-formulation-of-network-equations
+kind: publication
 tags:
 - foundational
 - analog

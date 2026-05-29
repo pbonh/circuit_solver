@@ -1,7 +1,7 @@
 ---
 title: 'Grill: Circuit Solver'
 type: question
-id: question-grill-circuit-solver
+id: grills/circuit-solver
 tags:
 - grill
 - design

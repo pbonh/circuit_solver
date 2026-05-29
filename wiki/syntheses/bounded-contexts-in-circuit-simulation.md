@@ -1,7 +1,7 @@
 ---
 title: Bounded Contexts in Circuit Simulation
 type: claim
-id: claim-synthesis-bounded-contexts-in-circuit-simulation
+id: syntheses/bounded-contexts-in-circuit-simulation
 tags:
 - ddd
 - circuit-simulation
@@ -23,7 +23,11 @@ sources:
 - concepts/floorplanning
 - concepts/discrete-event-system-specification
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 12
+  contradicted: false
+  effective: 0.935
+  inputs_hash: ebdf5891bb2f7c75
 ---
 
 ## Comparison

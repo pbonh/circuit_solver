@@ -1,8 +1,8 @@
 ---
 title: 'Modeling and Simulation of Systems — Chapter 3: System Entity Structure Basics'
 type: source
-id: source-modeling-simulation-systems-05-3-system-entity-structure-basics
-kind: derived-summary
+id: summaries/modeling-simulation-systems-05-3-system-entity-structure-basics
+kind: publication
 tags:
 - simulation
 - modeling

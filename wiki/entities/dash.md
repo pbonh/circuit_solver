@@ -1,7 +1,7 @@
 ---
 title: Dash
 type: entity
-id: entity-dash
+id: entities/dash
 tags:
 - python
 - dashboard

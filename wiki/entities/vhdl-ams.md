@@ -1,7 +1,7 @@
 ---
 title: VHDL-AMS
 type: entity
-id: entity-vhdl-ams
+id: entities/vhdl-ams
 tags:
 - mixed-signal
 - analog

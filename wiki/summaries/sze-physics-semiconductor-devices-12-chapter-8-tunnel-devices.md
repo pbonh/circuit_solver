@@ -1,8 +1,8 @@
 ---
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 8: Tunnel Devices'
 type: source
-id: source-sze-physics-semiconductor-devices-12-chapter-8-tunnel-devices
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-12-chapter-8-tunnel-devices
+kind: publication
 tags:
 - semiconductor
 - device-physics

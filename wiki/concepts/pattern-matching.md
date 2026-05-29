@@ -1,7 +1,7 @@
 ---
 title: Pattern Matching
 type: claim
-id: claim-pattern-matching
+id: concepts/pattern-matching
 tags:
 - rust
 - foundational
@@ -13,7 +13,11 @@ sources:
 - raw/rust_book/_txt/07-chapter-6-enums-and-pattern-matching.txt
 - raw/rust_book/_txt/19-chapter-18-patterns-and-matching.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 3
+  contradicted: false
+  effective: 1.026
+  inputs_hash: 5a90c05bd2bbff0d
 ---
 
 ## Definition

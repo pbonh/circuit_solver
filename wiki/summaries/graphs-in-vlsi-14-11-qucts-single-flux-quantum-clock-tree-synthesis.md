@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Chapter 11: QuCTS — single flux Quantum Clock Tree Synthesis'
 type: source
-id: source-graphs-in-vlsi-14-11-qucts-single-flux-quantum-clock-tree-synthesis
-kind: derived-summary
+id: summaries/graphs-in-vlsi-14-11-qucts-single-flux-quantum-clock-tree-synthesis
+kind: publication
 tags:
 - vlsi
 - superconductive

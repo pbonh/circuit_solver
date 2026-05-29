@@ -1,7 +1,7 @@
 ---
 title: Piezoresistivity
 type: claim
-id: claim-piezoresistivity
+id: concepts/piezoresistivity
 tags:
 - semiconductor
 - device-physics
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/19-chapter-14-sensors.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 > Sze & Ng Sect. 14.3 illustrates the use of piezoresistance (Fig. 6a, "Si pressure sensor") and Fig. 6b ("acceleration sensor") with diffused Si gauges where "the diaphragm is formed by chemical etching of the silicon substrate" and "the built-in diffused gauge monitors the piezoresistance under differential pressure", citing C.S. Smith, "Piezoresistance Effect in Germanium and Silicon" (Phys. Rev. 94, 42, 1954) as the founding reference.

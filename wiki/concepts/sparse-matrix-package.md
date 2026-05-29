@@ -1,7 +1,7 @@
 ---
 title: Sparse Matrix Package (Vlach & Singhal Appendix E)
 type: claim
-id: claim-sparse-matrix-package
+id: concepts/sparse-matrix-package
 tags:
 - sparse-matrix
 - foundational
@@ -13,7 +13,11 @@ sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/01-preface.txt
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 2
+  contradicted: false
+  effective: 0.884
+  inputs_hash: 48379ae317c01c10
 ---
 
 ## Definition

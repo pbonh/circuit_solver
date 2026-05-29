@@ -1,7 +1,7 @@
 ---
 title: WordPress
 type: entity
-id: entity-wordpress
+id: entities/wordpress
 tags:
 - web
 - cms

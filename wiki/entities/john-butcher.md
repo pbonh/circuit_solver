@@ -1,7 +1,7 @@
 ---
 title: John C. Butcher
 type: entity
-id: entity-john-butcher
+id: entities/john-butcher
 tags:
 - ode
 - numerical-integration

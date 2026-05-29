@@ -1,8 +1,8 @@
 ---
 title: Foundations of Scalable Systems — Cover
 type: source
-id: source-foundations-scalable-systems-00-cover
-kind: derived-summary
+id: summaries/foundations-scalable-systems-00-cover
+kind: publication
 tags:
 - distributed-systems
 - scalability

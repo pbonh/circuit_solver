@@ -1,7 +1,7 @@
 ---
 title: Feedback Vertex Set
 type: claim
-id: claim-feedback-vertex-set
+id: concepts/feedback-vertex-set
 tags:
 - graph
 - algorithm
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

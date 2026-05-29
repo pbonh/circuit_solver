@@ -1,7 +1,7 @@
 ---
 title: Heinz-Otto Kreiss
 type: entity
-id: entity-heinz-otto-kreiss
+id: entities/heinz-otto-kreiss
 tags:
 - ode
 - numerical-integration

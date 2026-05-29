@@ -1,7 +1,7 @@
 ---
 title: Seaborn
 type: entity
-id: entity-seaborn
+id: entities/seaborn
 tags:
 - python
 - visualization

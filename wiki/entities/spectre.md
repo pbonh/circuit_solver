@@ -1,7 +1,7 @@
 ---
 title: Spectre
 type: entity
-id: entity-spectre
+id: entities/spectre
 tags:
 - analog
 - mixed-signal

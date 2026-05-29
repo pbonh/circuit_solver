@@ -1,8 +1,8 @@
 ---
 title: 'Modeling and Simulation of Systems — Chapter 7: Managing Inheritance in Pruning'
 type: source
-id: source-modeling-simulation-systems-09-7-managing-inheritance-in-pruning
-kind: derived-summary
+id: summaries/modeling-simulation-systems-09-7-managing-inheritance-in-pruning
+kind: publication
 tags:
 - simulation
 - modeling

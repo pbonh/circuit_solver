@@ -1,7 +1,7 @@
 ---
 title: Electromigration
 type: claim
-id: claim-electromigration
+id: concepts/electromigration
 tags:
 - vlsi
 - reliability
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/GraphsInVLSI/_txt/11-8-placement-of-on-chip-distributed-voltage-regulators.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 > GraphsInVLSI Chapter 8 treats electromigration operationally as a design constraint on the on-chip power-delivery network: "objectives include dissipating less power while limiting the current density to reduce the likelihood of electromigration" and "even if the size of the regulator is unlimited, electromigration [525] limits the maximum current density that can be produced by a regulator. The current capacity of a regulator is therefore limited." The chapter extends its fast grid analysis to support an `Imax: S → R` function bounding each regulator's current capacity.

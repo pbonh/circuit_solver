@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 7: Network Functions
   in the Frequency Domain'
 type: source
-id: source-computer-methods-circuit-analysis-design-10-chapter-7-network-functions-in-the-frequency-domain
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-10-chapter-7-network-functions-in-the-frequency-domain
+kind: publication
 tags:
 - foundational
 - analog

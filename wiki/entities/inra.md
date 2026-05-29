@@ -1,7 +1,7 @@
 ---
 title: INRA (French National Institute for Agricultural Research)
 type: entity
-id: entity-inra
+id: entities/inra
 tags:
 - simulation
 - agriculture

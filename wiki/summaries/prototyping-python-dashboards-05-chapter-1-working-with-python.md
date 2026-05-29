@@ -1,8 +1,8 @@
 ---
 title: 'Prototyping Python Dashboards — Chapter 1: Working with Python'
 type: source
-id: source-prototyping-python-dashboards-05-chapter-1-working-with-python
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-05-chapter-1-working-with-python
+kind: publication
 tags:
 - python
 - dataframe

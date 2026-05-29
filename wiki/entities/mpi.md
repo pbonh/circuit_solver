@@ -1,7 +1,7 @@
 ---
 title: MPI (Message Passing Interface)
 type: entity
-id: entity-mpi
+id: entities/mpi
 tags:
 - distributed-systems
 - parallel

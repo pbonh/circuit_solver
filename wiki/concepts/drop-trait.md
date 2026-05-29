@@ -1,7 +1,7 @@
 ---
 title: Drop Trait
 type: claim
-id: claim-drop-trait
+id: concepts/drop-trait
 tags:
 - rust
 - ownership
@@ -13,7 +13,11 @@ sources:
 - raw/rust_book/_txt/05-chapter-4-understanding-ownership.txt
 - raw/rust_book/_txt/16-chapter-15-smart-pointers.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

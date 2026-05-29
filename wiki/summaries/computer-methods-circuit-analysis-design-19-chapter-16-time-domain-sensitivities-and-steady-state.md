@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 16: Time-Domain
   Sensitivities and Steady State'
 type: source
-id: source-computer-methods-circuit-analysis-design-19-chapter-16-time-domain-sensitivities-and-steady-state
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-19-chapter-16-time-domain-sensitivities-and-steady-state
+kind: publication
 tags:
 - advanced
 - transient

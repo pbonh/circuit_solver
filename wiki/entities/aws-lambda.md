@@ -1,7 +1,7 @@
 ---
 title: AWS Lambda
 type: entity
-id: entity-aws-lambda
+id: entities/aws-lambda
 tags:
 - cloud
 - serverless

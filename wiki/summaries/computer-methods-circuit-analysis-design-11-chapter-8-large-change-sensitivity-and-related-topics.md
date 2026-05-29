@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 8: Large Change
   Sensitivity and Related Topics'
 type: source
-id: source-computer-methods-circuit-analysis-design-11-chapter-8-large-change-sensitivity-and-related-topics
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-11-chapter-8-large-change-sensitivity-and-related-topics
+kind: publication
 tags:
 - foundational
 - analog

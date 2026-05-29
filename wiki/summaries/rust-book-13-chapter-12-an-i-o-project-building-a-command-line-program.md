@@ -2,8 +2,8 @@
 title: 'The Rust Programming Language — Chapter 12: An I/O Project: Building a Command-Line
   Program'
 type: source
-id: source-rust-book-13-chapter-12-an-i-o-project-building-a-command-line-program
-kind: derived-summary
+id: summaries/rust-book-13-chapter-12-an-i-o-project-building-a-command-line-program
+kind: publication
 tags:
 - rust
 - project

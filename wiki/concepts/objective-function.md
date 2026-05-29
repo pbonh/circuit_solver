@@ -1,7 +1,7 @@
 ---
 title: Objective Function
 type: claim
-id: claim-objective-function
+id: concepts/objective-function
 tags:
 - optimization
 - foundational
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/18-chapter-15-introduction-to-optimization-theory.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

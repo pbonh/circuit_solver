@@ -2,8 +2,8 @@
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Part II: Device Building
   Blocks'
 type: source
-id: source-sze-physics-semiconductor-devices-05-part-ii-device-building-blocks
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-05-part-ii-device-building-blocks
+kind: publication
 tags:
 - semiconductor
 - device-physics

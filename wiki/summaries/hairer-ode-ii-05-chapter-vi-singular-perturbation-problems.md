@@ -2,8 +2,8 @@
 title: 'Solving Ordinary Differential Equations II — Chapter VI: Singular Perturbation
   Problems and Index 1 Problems'
 type: source
-id: source-hairer-ode-ii-05-chapter-vi-singular-perturbation-problems
-kind: derived-summary
+id: summaries/hairer-ode-ii-05-chapter-vi-singular-perturbation-problems
+kind: publication
 tags:
 - ode
 - dae

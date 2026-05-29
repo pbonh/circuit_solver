@@ -2,8 +2,8 @@
 title: 'Modeling and Simulation of Systems — Chapter 10: Dynamic Structure: Agent
   Modeling and Publish/Subscribe'
 type: source
-id: source-modeling-simulation-systems-13-10-dynamic-structure-agent-modeling-and-publish-subscribe
-kind: derived-summary
+id: summaries/modeling-simulation-systems-13-10-dynamic-structure-agent-modeling-and-publish-subscribe
+kind: publication
 tags:
 - simulation
 - modeling

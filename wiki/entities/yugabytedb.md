@@ -1,7 +1,7 @@
 ---
 title: YugabyteDB
 type: entity
-id: entity-yugabytedb
+id: entities/yugabytedb
 tags:
 - database
 - newsql

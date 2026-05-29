@@ -1,7 +1,7 @@
 ---
 title: Esteban Tlelo-Cuautle
 type: entity
-id: entity-esteban-tlelo-cuautle
+id: entities/esteban-tlelo-cuautle
 tags:
 - person
 - author

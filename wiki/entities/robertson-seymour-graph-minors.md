@@ -1,7 +1,7 @@
 ---
 title: Robertson-Seymour Graph Minors Series
 type: entity
-id: entity-robertson-seymour-graph-minors
+id: entities/robertson-seymour-graph-minors
 tags:
 - graph
 - foundational

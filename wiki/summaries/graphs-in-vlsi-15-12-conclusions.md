@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Chapter 12: Conclusions'
 type: source
-id: source-graphs-in-vlsi-15-12-conclusions
-kind: derived-summary
+id: summaries/graphs-in-vlsi-15-12-conclusions
+kind: publication
 tags:
 - vlsi
 - graph

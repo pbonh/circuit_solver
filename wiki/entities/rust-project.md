@@ -1,7 +1,7 @@
 ---
 title: Rust Project
 type: entity
-id: entity-rust-project
+id: entities/rust-project
 tags:
 - rust
 - organization

@@ -2,8 +2,8 @@
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Part IV: Negative-Resistance
   and Power Devices'
 type: source
-id: source-sze-physics-semiconductor-devices-11-part-iv-negative-resistance-and-power-devices
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-11-part-iv-negative-resistance-and-power-devices
+kind: publication
 tags:
 - semiconductor
 - device-physics

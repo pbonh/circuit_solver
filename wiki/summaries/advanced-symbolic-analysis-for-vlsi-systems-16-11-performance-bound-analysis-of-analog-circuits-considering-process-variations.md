@@ -2,8 +2,8 @@
 title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 11: Performance Bound
   Analysis under Process Variations'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-16-11-performance-bound-analysis-of-analog-circuits-considering-process-variations
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-16-11-performance-bound-analysis-of-analog-circuits-considering-process-variations
+kind: publication
 tags:
 - analog
 - process-variation

@@ -1,7 +1,7 @@
 ---
 title: Sebastian Reich
 type: entity
-id: entity-sebastian-reich
+id: entities/sebastian-reich
 tags:
 - ode
 - numerical-integration

@@ -1,7 +1,7 @@
 ---
 title: k-Shortest Paths Algorithm
 type: claim
-id: claim-k-shortest-path-algorithm
+id: concepts/k-shortest-path-algorithm
 tags:
 - graph
 - algorithm
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

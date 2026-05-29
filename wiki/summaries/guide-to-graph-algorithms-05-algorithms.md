@@ -1,8 +1,8 @@
 ---
 title: Guide to Graph Algorithms — Algorithms (Chapter 2)
 type: source
-id: source-guide-to-graph-algorithms-05-algorithms
-kind: derived-summary
+id: summaries/guide-to-graph-algorithms-05-algorithms
+kind: publication
 tags:
 - graph
 - algorithm

@@ -1,8 +1,8 @@
 ---
 title: Data Analysis and Visualizations with Python — About the Technical Reviewers
 type: source
-id: source-data-analysis-visualizations-python-02-about-the-technical-reviewers
-kind: derived-summary
+id: summaries/data-analysis-visualizations-python-02-about-the-technical-reviewers
+kind: publication
 tags:
 - data-analysis
 - python

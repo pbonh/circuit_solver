@@ -1,7 +1,7 @@
 ---
 title: Quegel
 type: entity
-id: entity-quegel
+id: entities/quegel
 tags:
 - graph
 - distributed-systems

@@ -1,7 +1,7 @@
 ---
 title: SPICE
 type: entity
-id: entity-spice
+id: entities/spice
 tags:
 - tool
 - analog

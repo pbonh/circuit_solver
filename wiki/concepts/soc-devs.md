@@ -1,7 +1,7 @@
 ---
 title: SOC-DEVS
 type: claim
-id: claim-soc-devs
+id: concepts/soc-devs
 tags:
 - simulation
 - modeling
@@ -15,7 +15,11 @@ updated: 2026-05-15
 sources:
 - raw/ModelingAndSimulationOfSystems/_txt/19-15-cloud-system-simulation-modeling.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

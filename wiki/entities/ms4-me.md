@@ -1,7 +1,7 @@
 ---
 title: MS4 Me
 type: entity
-id: entity-ms4-me
+id: entities/ms4-me
 tags:
 - simulation
 - devs

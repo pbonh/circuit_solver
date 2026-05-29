@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Chapter 5: Circuit Analysis'
 type: source
-id: source-graphs-in-vlsi-08-5-circuit-analysis
-kind: derived-summary
+id: summaries/graphs-in-vlsi-08-5-circuit-analysis
+kind: publication
 tags:
 - vlsi
 - circuit

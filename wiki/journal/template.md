@@ -1,7 +1,7 @@
 ---
 title: Journal Entry — YYYY-MM-DD
 type: source
-id: source-journal-template
+id: journal/template
 kind: journal
 tags:
 - journal

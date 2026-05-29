@@ -1,7 +1,7 @@
 ---
 title: GUNICORN
 type: entity
-id: entity-gunicorn
+id: entities/gunicorn
 tags:
 - python
 - web

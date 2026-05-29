@@ -2,8 +2,8 @@
 title: 'Python Data Analyst''s Toolkit — Chapter 9: Statistics and Probability with
   Python'
 type: source
-id: source-python-data-analysts-toolkit-13-chapter-9-statistics-and-probability-with-python
-kind: derived-summary
+id: summaries/python-data-analysts-toolkit-13-chapter-9-statistics-and-probability-with-python
+kind: publication
 tags:
 - python
 - statistics

@@ -1,8 +1,8 @@
 ---
 title: 'Prototyping Python Dashboards — Chapter 12: Afterword'
 type: source
-id: source-prototyping-python-dashboards-16-chapter-12-afterword
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-16-chapter-12-afterword
+kind: publication
 tags:
 - python
 - dashboard

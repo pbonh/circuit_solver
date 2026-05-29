@@ -1,7 +1,7 @@
 ---
 title: etcd
 type: entity
-id: entity-etcd
+id: entities/etcd
 tags:
 - well-established
 - distributed-systems

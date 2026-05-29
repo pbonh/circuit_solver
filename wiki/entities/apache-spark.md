@@ -1,7 +1,7 @@
 ---
 title: Apache Spark
 type: entity
-id: entity-apache-spark
+id: entities/apache-spark
 tags:
 - distributed-systems
 - big-data

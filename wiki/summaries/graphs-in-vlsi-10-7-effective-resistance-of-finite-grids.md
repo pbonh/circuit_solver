@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Chapter 7: Effective Resistance of Finite Grids'
 type: source
-id: source-graphs-in-vlsi-10-7-effective-resistance-of-finite-grids
-kind: derived-summary
+id: summaries/graphs-in-vlsi-10-7-effective-resistance-of-finite-grids
+kind: publication
 tags:
 - vlsi
 - power-integrity

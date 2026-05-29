@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 14: Digital and
   Switched-Capacitor Networks'
 type: source
-id: source-computer-methods-circuit-analysis-design-17-chapter-14-digital-and-switched-capacitor-networks
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-17-chapter-14-digital-and-switched-capacitor-networks
+kind: publication
 tags:
 - digital
 - switched-capacitor

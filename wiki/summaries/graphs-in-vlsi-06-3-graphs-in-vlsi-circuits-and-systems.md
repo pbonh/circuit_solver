@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Chapter 3: Graphs in VLSI Circuits and Systems'
 type: source
-id: source-graphs-in-vlsi-06-3-graphs-in-vlsi-circuits-and-systems
-kind: derived-summary
+id: summaries/graphs-in-vlsi-06-3-graphs-in-vlsi-circuits-and-systems
+kind: publication
 tags:
 - graph
 - vlsi

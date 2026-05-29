@@ -1,7 +1,7 @@
 ---
 title: Netlist Graph
 type: entity
-id: entity-context-netlist-graph
+id: contexts/netlist-graph
 tags:
 - netlist
 - graph

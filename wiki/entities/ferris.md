@@ -1,7 +1,7 @@
 ---
 title: Ferris
 type: entity
-id: entity-ferris
+id: entities/ferris
 tags:
 - rust
 - mascot

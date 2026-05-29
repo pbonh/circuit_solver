@@ -1,7 +1,7 @@
 ---
 title: PHEM56
 type: entity
-id: entity-phem56
+id: entities/phem56
 tags:
 - ode
 - numerical-integration

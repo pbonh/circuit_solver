@@ -1,8 +1,8 @@
 ---
 title: 'Modeling and Simulation of Systems — Chapter 5: Specialization and Pruning'
 type: source
-id: source-modeling-simulation-systems-07-5-specialization-and-pruning
-kind: derived-summary
+id: summaries/modeling-simulation-systems-07-5-specialization-and-pruning
+kind: publication
 tags:
 - simulation
 - modeling

@@ -1,7 +1,7 @@
 ---
 title: SEULEX
 type: entity
-id: entity-seulex
+id: entities/seulex
 tags:
 - ode
 - numerical-integration

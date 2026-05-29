@@ -1,7 +1,7 @@
 ---
 title: Gerhard Wanner
 type: entity
-id: entity-gerhard-wanner
+id: entities/gerhard-wanner
 tags:
 - ode
 - numerical-integration

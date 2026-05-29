@@ -1,7 +1,7 @@
 ---
 title: RADAUP
 type: entity
-id: entity-radaup
+id: entities/radaup
 tags:
 - ode
 - numerical-integration

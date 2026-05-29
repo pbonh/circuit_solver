@@ -1,7 +1,7 @@
 ---
 title: Interconnect Routing
 type: claim
-id: claim-interconnect-routing
+id: concepts/interconnect-routing
 tags:
 - vlsi
 - physical-design
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

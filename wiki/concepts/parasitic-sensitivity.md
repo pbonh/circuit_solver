@@ -1,7 +1,7 @@
 ---
 title: Parasitic Sensitivity
 type: claim
-id: claim-parasitic-sensitivity
+id: concepts/parasitic-sensitivity
 tags:
 - sensitivity
 - analog
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/08-chapter-5-sensitivities.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

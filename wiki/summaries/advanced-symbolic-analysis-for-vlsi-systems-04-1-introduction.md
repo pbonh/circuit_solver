@@ -1,8 +1,8 @@
 ---
 title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 1: Introduction'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-04-1-introduction
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-04-1-introduction
+kind: publication
 tags:
 - foundational
 - symbolic

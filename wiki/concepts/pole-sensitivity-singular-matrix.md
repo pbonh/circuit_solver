@@ -1,7 +1,7 @@
 ---
 title: Pole Sensitivity via Singular-Matrix LU
 type: claim
-id: claim-pole-sensitivity-singular-matrix
+id: concepts/pole-sensitivity-singular-matrix
 tags:
 - sensitivity
 - analog
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

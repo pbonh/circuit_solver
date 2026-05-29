@@ -1,7 +1,7 @@
 ---
 title: systemd
 type: entity
-id: entity-systemd
+id: entities/systemd
 tags:
 - unix
 - deployment

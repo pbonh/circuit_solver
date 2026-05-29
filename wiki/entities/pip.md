@@ -1,7 +1,7 @@
 ---
 title: pip
 type: entity
-id: entity-pip
+id: entities/pip
 tags:
 - python
 - package-manager

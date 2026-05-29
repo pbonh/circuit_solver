@@ -1,7 +1,7 @@
 ---
 title: Data Cleaning
 type: claim
-id: claim-data-cleaning
+id: concepts/data-cleaning
 tags:
 - data-cleaning
 - data-analysis
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/DataAnalysisAndVisualizationsPython/_txt/08-chapter-5-data-gathering-and-cleaning.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

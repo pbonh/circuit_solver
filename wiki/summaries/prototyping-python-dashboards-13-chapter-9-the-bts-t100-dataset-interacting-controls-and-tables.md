@@ -2,8 +2,8 @@
 title: 'Prototyping Python Dashboards — Chapter 9: The BTS T100 Dataset — Interacting
   Controls and Tables'
 type: source
-id: source-prototyping-python-dashboards-13-chapter-9-the-bts-t100-dataset-interacting-controls-and-tables
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-13-chapter-9-the-bts-t100-dataset-interacting-controls-and-tables
+kind: publication
 tags:
 - python
 - dashboard

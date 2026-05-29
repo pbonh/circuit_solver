@@ -1,8 +1,8 @@
 ---
 title: Systems for Big Graph Analytics — Introduction
 type: source
-id: source-systems-big-graph-analytics-01-1-introduction
-kind: derived-summary
+id: summaries/systems-big-graph-analytics-01-1-introduction
+kind: publication
 tags:
 - graph
 - big-data

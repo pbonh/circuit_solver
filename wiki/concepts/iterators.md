@@ -1,7 +1,7 @@
 ---
 title: Iterators
 type: claim
-id: claim-iterators
+id: concepts/iterators
 tags:
 - rust
 - foundational
@@ -12,7 +12,11 @@ sources:
 - raw/rust_book/_txt/14-chapter-13-functional-language-features-iterators-and-closures.txt
 - raw/rust_book/_txt/09-chapter-8-common-collections.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

@@ -1,7 +1,7 @@
 ---
 title: Partial Fraction Expansion
 type: claim
-id: claim-partial-fraction-expansion
+id: concepts/partial-fraction-expansion
 tags:
 - foundational
 - math
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

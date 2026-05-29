@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 4: General Formulation
   Methods'
 type: source
-id: source-computer-methods-circuit-analysis-design-07-chapter-4-general-formulation-methods
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-07-chapter-4-general-formulation-methods
+kind: publication
 tags:
 - foundational
 - analog

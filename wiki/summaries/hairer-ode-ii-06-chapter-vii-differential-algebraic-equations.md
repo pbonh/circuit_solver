@@ -2,8 +2,8 @@
 title: 'Solving Ordinary Differential Equations II — Chapter VII: Differential-Algebraic
   Equations of Higher Index'
 type: source
-id: source-hairer-ode-ii-06-chapter-vii-differential-algebraic-equations
-kind: derived-summary
+id: summaries/hairer-ode-ii-06-chapter-vii-differential-algebraic-equations
+kind: publication
 tags:
 - ode
 - dae

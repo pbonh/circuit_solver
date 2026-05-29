@@ -1,7 +1,7 @@
 ---
 title: Charge-Flux Formulation (Nonlinear Reactive Elements)
 type: claim
-id: claim-charge-flux-formulation
+id: concepts/charge-flux-formulation
 tags:
 - transient
 - analog
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/16-chapter-13-numerical-integration-of-differential-and-algebraic-differential-equations.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

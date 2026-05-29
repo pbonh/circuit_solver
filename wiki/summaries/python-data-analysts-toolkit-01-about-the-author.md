@@ -1,8 +1,8 @@
 ---
 title: Python Data Analyst's Toolkit — About the Author
 type: source
-id: source-python-data-analysts-toolkit-01-about-the-author
-kind: derived-summary
+id: summaries/python-data-analysts-toolkit-01-about-the-author
+kind: publication
 tags:
 - python
 - data-analysis

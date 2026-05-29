@@ -1,7 +1,7 @@
 ---
 title: Image-Force Lowering
 type: claim
-id: claim-image-force-lowering
+id: concepts/image-force-lowering
 tags:
 - semiconductor
 - device-physics
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/07-chapter-3-metal-semiconductor-contacts.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

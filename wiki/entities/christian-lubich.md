@@ -1,7 +1,7 @@
 ---
 title: Christian Lubich
 type: entity
-id: entity-christian-lubich
+id: entities/christian-lubich
 tags:
 - ode
 - numerical-integration

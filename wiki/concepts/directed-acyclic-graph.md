@@ -1,7 +1,7 @@
 ---
 title: Directed Acyclic Graph (DAG)
 type: claim
-id: claim-directed-acyclic-graph
+id: concepts/directed-acyclic-graph
 tags:
 - graph
 - foundational
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

@@ -1,7 +1,7 @@
 ---
 title: Apache Samza
 type: entity
-id: entity-samza
+id: entities/samza
 tags:
 - well-established
 - distributed-systems

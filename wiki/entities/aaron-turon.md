@@ -1,7 +1,7 @@
 ---
 title: Aaron Turon
 type: entity
-id: entity-aaron-turon
+id: entities/aaron-turon
 tags:
 - rust
 - person

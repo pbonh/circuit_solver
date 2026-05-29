@@ -1,7 +1,7 @@
 ---
 title: Grafana
 type: entity
-id: entity-grafana
+id: entities/grafana
 tags:
 - observability
 - dashboarding

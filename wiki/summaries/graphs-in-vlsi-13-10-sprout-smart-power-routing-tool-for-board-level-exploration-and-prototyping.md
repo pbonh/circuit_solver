@@ -2,8 +2,8 @@
 title: 'Graphs in VLSI — Chapter 10: SPROUT — Smart Power Routing Tool for Board-Level
   Exploration and Prototyping'
 type: source
-id: source-graphs-in-vlsi-13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping
-kind: derived-summary
+id: summaries/graphs-in-vlsi-13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping
+kind: publication
 tags:
 - vlsi
 - power-integrity

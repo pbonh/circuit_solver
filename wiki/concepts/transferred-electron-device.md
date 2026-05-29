@@ -1,7 +1,7 @@
 ---
 title: Transferred-Electron Device (Gunn Diode)
 type: claim
-id: claim-transferred-electron-device
+id: concepts/transferred-electron-device
 tags:
 - semiconductor
 - device-physics
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/14-chapter-10-transferred-electron-and-real-space-transfer-devices.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

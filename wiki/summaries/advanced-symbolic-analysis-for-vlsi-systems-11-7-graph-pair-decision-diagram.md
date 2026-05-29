@@ -2,8 +2,8 @@
 title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 7: Graph-Pair Decision
   Diagram'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-11-7-graph-pair-decision-diagram
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-11-7-graph-pair-decision-diagram
+kind: publication
 tags:
 - gpdd
 - bdd

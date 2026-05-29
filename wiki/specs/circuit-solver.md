@@ -1,20 +1,32 @@
 ---
-title: "Spec: Circuit Solver"
+title: 'Spec: Circuit Solver'
 type: spec
-tags: [spec, circuit-solver, gherkin, analog, digital, mixed-signal]
+tags:
+- spec
+- circuit-solver
+- gherkin
+- analog
+- digital
+- mixed-signal
 created: 2026-05-17
 updated: 2026-05-18
 sources:
-  - "vision/circuit-solver"
-  - "grills/circuit-solver"
-  - "architecture/circuit-solver"
-  - "decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph"
-  - "decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer"
-  - "decisions/0003-two-pass-graph-flattening-with-per-analysis-sub-views"
-  - "decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler"
-  - "decisions/0005-closed-enum-device-model-dispatch"
-adr_ids: ["0001", "0002", "0003", "0004", "0005"]
+- vision/circuit-solver
+- grills/circuit-solver
+- architecture/circuit-solver
+- decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph
+- decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer
+- decisions/0003-two-pass-graph-flattening-with-per-analysis-sub-views
+- decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler
+- decisions/0005-closed-enum-device-model-dispatch
+adr_ids:
+- '0001'
+- '0002'
+- '0003'
+- '0004'
+- '0005'
 confidence: high
+id: specs/circuit-solver
 ---
 
 ## Goal

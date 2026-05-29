@@ -1,8 +1,8 @@
 ---
 title: Designing Data-Intensive Applications — Copyright and Dedication
 type: source
-id: source-ddia-00-copyright
-kind: derived-summary
+id: summaries/ddia-00-copyright
+kind: publication
 tags:
 - foundational
 - well-established

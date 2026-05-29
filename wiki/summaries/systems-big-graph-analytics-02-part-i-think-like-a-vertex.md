@@ -2,8 +2,8 @@
 title: 'Systems for Big Graph Analytics — Part I: Think Like a Vertex (Pregel-Like,
   Hands-On, Shared Memory)'
 type: source
-id: source-systems-big-graph-analytics-02-part-i-think-like-a-vertex
-kind: derived-summary
+id: summaries/systems-big-graph-analytics-02-part-i-think-like-a-vertex
+kind: publication
 tags:
 - graph
 - distributed-systems

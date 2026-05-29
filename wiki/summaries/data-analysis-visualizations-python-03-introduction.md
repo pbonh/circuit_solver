@@ -1,8 +1,8 @@
 ---
 title: Data Analysis and Visualizations with Python — Introduction
 type: source
-id: source-data-analysis-visualizations-python-03-introduction
-kind: derived-summary
+id: summaries/data-analysis-visualizations-python-03-introduction
+kind: publication
 tags:
 - python
 - data-analysis

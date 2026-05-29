@@ -1,7 +1,7 @@
 ---
 title: MOSFET (Metal-Oxide-Semiconductor Field-Effect Transistor)
 type: claim
-id: claim-mosfet
+id: concepts/mosfet
 tags:
 - semiconductor
 - device-physics
@@ -17,7 +17,11 @@ sources:
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/00-preface.txt
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 2
+  contradicted: false
+  effective: 0.884
+  inputs_hash: 48379ae317c01c10
 ---
 
 ## Definition

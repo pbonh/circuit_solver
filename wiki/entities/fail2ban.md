@@ -1,7 +1,7 @@
 ---
 title: Fail2ban
 type: entity
-id: entity-fail2ban
+id: entities/fail2ban
 tags:
 - unix
 - security

@@ -1,7 +1,7 @@
 ---
 title: Jupyter Notebook
 type: entity
-id: entity-jupyter-notebook
+id: entities/jupyter-notebook
 tags:
 - python
 - foundational

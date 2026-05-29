@@ -1,7 +1,7 @@
 ---
 title: uWSGI
 type: entity
-id: entity-uwsgi
+id: entities/uwsgi
 tags:
 - python
 - web

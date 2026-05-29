@@ -1,8 +1,8 @@
 ---
 title: Prototyping Python Dashboards — About the Author
 type: source
-id: source-prototyping-python-dashboards-01-about-the-author
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-01-about-the-author
+kind: publication
 tags:
 - python
 - dashboard

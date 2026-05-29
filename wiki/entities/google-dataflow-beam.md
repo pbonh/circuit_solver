@@ -1,7 +1,7 @@
 ---
 title: Google Cloud Dataflow / Apache Beam
 type: entity
-id: entity-google-dataflow-beam
+id: entities/google-dataflow-beam
 tags:
 - well-established
 - distributed-systems

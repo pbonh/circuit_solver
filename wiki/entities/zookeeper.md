@@ -1,7 +1,7 @@
 ---
 title: Apache ZooKeeper
 type: entity
-id: entity-zookeeper
+id: entities/zookeeper
 tags:
 - well-established
 - distributed-systems

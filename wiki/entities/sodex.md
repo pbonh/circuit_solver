@@ -1,7 +1,7 @@
 ---
 title: SODEX
 type: entity
-id: entity-sodex
+id: entities/sodex
 tags:
 - ode
 - numerical-integration

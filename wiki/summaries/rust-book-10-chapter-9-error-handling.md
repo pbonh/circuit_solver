@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Chapter 9: Error Handling'
 type: source
-id: source-rust-book-10-chapter-9-error-handling
-kind: derived-summary
+id: summaries/rust-book-10-chapter-9-error-handling
+kind: publication
 tags:
 - rust
 - foundational

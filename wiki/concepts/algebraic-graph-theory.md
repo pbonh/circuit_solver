@@ -1,7 +1,7 @@
 ---
 title: Algebraic Graph Theory
 type: claim
-id: claim-algebraic-graph-theory
+id: concepts/algebraic-graph-theory
 tags:
 - graph
 - foundational
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

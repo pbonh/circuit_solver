@@ -2,8 +2,8 @@
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 13: Photodetectors
   and Solar Cells'
 type: source
-id: source-sze-physics-semiconductor-devices-18-chapter-13-photodetectors-and-solar-cells
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-18-chapter-13-photodetectors-and-solar-cells
+kind: publication
 tags:
 - semiconductor
 - device-physics

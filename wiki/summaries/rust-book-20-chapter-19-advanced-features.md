@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Chapter 19: Advanced Features'
 type: source
-id: source-rust-book-20-chapter-19-advanced-features
-kind: derived-summary
+id: summaries/rust-book-20-chapter-19-advanced-features
+kind: publication
 tags:
 - rust
 - advanced

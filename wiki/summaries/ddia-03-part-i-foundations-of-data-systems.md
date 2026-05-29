@@ -2,8 +2,8 @@
 title: 'Designing Data-Intensive Applications — Part I: Foundations of Data Systems
   (Chapters 1–4)'
 type: source
-id: source-ddia-03-part-i-foundations-of-data-systems
-kind: derived-summary
+id: summaries/ddia-03-part-i-foundations-of-data-systems
+kind: publication
 tags:
 - distributed-systems
 - storage

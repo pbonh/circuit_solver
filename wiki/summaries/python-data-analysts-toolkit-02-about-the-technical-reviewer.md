@@ -1,8 +1,8 @@
 ---
 title: Python Data Analyst's Toolkit — About the Technical Reviewer
 type: source
-id: source-python-data-analysts-toolkit-02-about-the-technical-reviewer
-kind: derived-summary
+id: summaries/python-data-analysts-toolkit-02-about-the-technical-reviewer
+kind: publication
 tags:
 - python
 - data-analysis

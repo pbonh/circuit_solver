@@ -1,7 +1,7 @@
 ---
 title: HSPICE
 type: entity
-id: entity-hspice
+id: entities/hspice
 tags:
 - tool
 - analog

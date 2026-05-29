@@ -1,7 +1,7 @@
 ---
 title: Guoyong Shi
 type: entity
-id: entity-guoyong-shi
+id: entities/guoyong-shi
 tags:
 - person
 - author

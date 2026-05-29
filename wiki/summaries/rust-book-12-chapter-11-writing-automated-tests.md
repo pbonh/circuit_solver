@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Chapter 11: Writing Automated Tests'
 type: source
-id: source-rust-book-12-chapter-11-writing-automated-tests
-kind: derived-summary
+id: summaries/rust-book-12-chapter-11-writing-automated-tests
+kind: publication
 tags:
 - rust
 - foundational

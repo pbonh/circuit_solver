@@ -1,7 +1,7 @@
 ---
 title: DEVS-Suite
 type: entity
-id: entity-devs-suite
+id: entities/devs-suite
 tags:
 - simulation
 - devs

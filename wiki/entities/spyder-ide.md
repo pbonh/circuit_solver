@@ -1,7 +1,7 @@
 ---
 title: Spyder IDE
 type: entity
-id: entity-spyder-ide
+id: entities/spyder-ide
 tags:
 - python
 - ide

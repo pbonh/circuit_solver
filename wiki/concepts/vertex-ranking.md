@@ -1,7 +1,7 @@
 ---
 title: Vertex Ranking
 type: claim
-id: claim-vertex-ranking
+id: concepts/vertex-ranking
 tags:
 - graph
 - algorithm
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

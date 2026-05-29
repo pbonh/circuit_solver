@@ -1,8 +1,8 @@
 ---
 title: 'Prototyping Python Dashboards — Chapter 5: Our First Dashboard'
 type: source
-id: source-prototyping-python-dashboards-09-chapter-5-our-first-dashboard
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-09-chapter-5-our-first-dashboard
+kind: publication
 tags:
 - python
 - dashboard

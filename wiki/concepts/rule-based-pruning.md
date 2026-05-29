@@ -1,7 +1,7 @@
 ---
 title: Rule-Based Pruning
 type: claim
-id: claim-rule-based-pruning
+id: concepts/rule-based-pruning
 tags:
 - simulation
 - modeling
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/ModelingAndSimulationOfSystems/_txt/10-8-automated-and-rule-based-pruning-and-experimental-execution.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

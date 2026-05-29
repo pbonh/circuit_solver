@@ -1,7 +1,7 @@
 ---
 title: SCAD3
 type: entity
-id: entity-scad3
+id: entities/scad3
 tags:
 - tool
 - symbolic

@@ -1,8 +1,8 @@
 ---
 title: Computer Methods for Circuit Analysis and Design — Cover and Front Matter
 type: source
-id: source-computer-methods-circuit-analysis-design-00-cover-and-front-matter
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-00-cover-and-front-matter
+kind: publication
 tags:
 - foundational
 - analog

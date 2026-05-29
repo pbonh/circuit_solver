@@ -2,8 +2,8 @@
 title: 'Prototyping Python Dashboards — Chapter 7: Hosting an Application on a UNIX
   Server'
 type: source
-id: source-prototyping-python-dashboards-11-chapter-7-hosting-an-application-on-a-unix-server
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-11-chapter-7-hosting-an-application-on-a-unix-server
+kind: publication
 tags:
 - python
 - deployment

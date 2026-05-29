@@ -1,8 +1,8 @@
 ---
 title: 'Modeling and Simulation of Systems — Part I: Basic Concepts'
 type: source
-id: source-modeling-simulation-systems-02-basic-concepts
-kind: derived-summary
+id: summaries/modeling-simulation-systems-02-basic-concepts
+kind: publication
 tags:
 - simulation
 - modeling

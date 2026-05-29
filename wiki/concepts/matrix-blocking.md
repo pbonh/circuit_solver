@@ -1,7 +1,7 @@
 ---
 title: Matrix Blocking
 type: claim
-id: claim-matrix-blocking
+id: concepts/matrix-blocking
 tags:
 - sparse-matrix
 - big-data
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

@@ -1,8 +1,8 @@
 ---
 title: Python Data Analyst's Toolkit — Introduction
 type: source
-id: source-python-data-analysts-toolkit-04-introduction
-kind: derived-summary
+id: summaries/python-data-analysts-toolkit-04-introduction
+kind: publication
 tags:
 - python
 - data-analysis

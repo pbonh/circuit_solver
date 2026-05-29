@@ -2,8 +2,8 @@
 title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 10: Symbolic Moment
   Computation'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-15-10-symbolic-moment-computation
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-15-10-symbolic-moment-computation
+kind: publication
 tags:
 - interconnect
 - symbolic

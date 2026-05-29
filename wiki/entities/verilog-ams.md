@@ -1,7 +1,7 @@
 ---
 title: Verilog-AMS
 type: entity
-id: entity-verilog-ams
+id: entities/verilog-ams
 tags:
 - mixed-signal
 - analog

@@ -2,8 +2,8 @@
 title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 12: Statistical Parallel
   Monte-Carlo Analysis on GPUs'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-17-12-statistical-parallel-monte-carlo-analysis-on-gpus
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-17-12-statistical-parallel-monte-carlo-analysis-on-gpus
+kind: publication
 tags:
 - gpu
 - monte-carlo

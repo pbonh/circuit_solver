@@ -2,8 +2,8 @@
 title: 'Python Data Analyst''s Toolkit — Chapter 3: Regular Expressions and Math with
   Python'
 type: source
-id: source-python-data-analysts-toolkit-07-chapter-3-regular-expressions-and-math-with-python
-kind: derived-summary
+id: summaries/python-data-analysts-toolkit-07-chapter-3-regular-expressions-and-math-with-python
+kind: publication
 tags:
 - python
 - foundational

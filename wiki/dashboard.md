@@ -1,8 +1,10 @@
 ---
-title: "Dashboard"
+title: Dashboard
 type: dashboard
-tags: [meta]
+tags:
+- meta
 updated: 2026-04-08
+id: dashboard
 ---
 
 # Dashboard

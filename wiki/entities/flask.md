@@ -1,7 +1,7 @@
 ---
 title: Flask
 type: entity
-id: entity-flask
+id: entities/flask
 tags:
 - python
 - web

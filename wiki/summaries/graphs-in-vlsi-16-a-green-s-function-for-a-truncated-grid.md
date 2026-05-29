@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Appendix A: Green''s Function for a Truncated Grid'
 type: source
-id: source-graphs-in-vlsi-16-a-green-s-function-for-a-truncated-grid
-kind: derived-summary
+id: summaries/graphs-in-vlsi-16-a-green-s-function-for-a-truncated-grid
+kind: publication
 tags:
 - vlsi
 - power-integrity

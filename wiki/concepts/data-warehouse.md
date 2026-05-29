@@ -1,7 +1,7 @@
 ---
 title: Data Warehouse
 type: claim
-id: claim-data-warehouse
+id: concepts/data-warehouse
 tags:
 - olap
 - well-established
@@ -14,7 +14,11 @@ sources:
 - raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
   and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

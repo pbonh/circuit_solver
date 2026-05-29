@@ -1,7 +1,7 @@
 ---
 title: Apache Thrift
 type: entity
-id: entity-apache-thrift
+id: entities/apache-thrift
 tags:
 - well-established
 - encoding

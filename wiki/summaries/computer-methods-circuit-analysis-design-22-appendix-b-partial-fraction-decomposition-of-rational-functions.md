@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Appendix B: Partial Fraction
   Decomposition of Rational Functions'
 type: source
-id: source-computer-methods-circuit-analysis-design-22-appendix-b-partial-fraction-decomposition-of-rational-functions
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-22-appendix-b-partial-fraction-decomposition-of-rational-functions
+kind: publication
 tags:
 - foundational
 - math

@@ -1,7 +1,7 @@
 ---
 title: Python `csv` Module
 type: entity
-id: entity-python-csv-module
+id: entities/python-csv-module
 tags:
 - python
 - foundational

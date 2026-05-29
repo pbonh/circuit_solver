@@ -1,7 +1,7 @@
 ---
 title: ISAAC
 type: entity
-id: entity-isaac
+id: entities/isaac
 tags:
 - tool
 - symbolic

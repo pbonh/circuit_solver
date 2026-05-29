@@ -1,7 +1,7 @@
 ---
 title: Ubuntu
 type: entity
-id: entity-ubuntu
+id: entities/ubuntu
 tags:
 - unix
 - linux

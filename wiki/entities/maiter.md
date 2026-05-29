@@ -1,7 +1,7 @@
 ---
 title: Maiter
 type: entity
-id: entity-maiter
+id: entities/maiter
 tags:
 - graph
 - distributed-systems

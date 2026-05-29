@@ -2,8 +2,8 @@
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Part I: Semiconductor
   Physics'
 type: source
-id: source-sze-physics-semiconductor-devices-03-part-i-semiconductor-physics
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-03-part-i-semiconductor-physics
+kind: publication
 tags:
 - semiconductor
 - device-physics

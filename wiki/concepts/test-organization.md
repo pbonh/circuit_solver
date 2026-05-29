@@ -1,7 +1,7 @@
 ---
 title: Test Organization (Rust)
 type: claim
-id: claim-test-organization
+id: concepts/test-organization
 tags:
 - rust
 - foundational
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/rust_book/_txt/12-chapter-11-writing-automated-tests.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

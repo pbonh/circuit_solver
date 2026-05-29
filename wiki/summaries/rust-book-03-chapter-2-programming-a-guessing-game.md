@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Chapter 2: Programming a Guessing Game'
 type: source
-id: source-rust-book-03-chapter-2-programming-a-guessing-game
-kind: derived-summary
+id: summaries/rust-book-03-chapter-2-programming-a-guessing-game
+kind: publication
 tags:
 - rust
 - foundational

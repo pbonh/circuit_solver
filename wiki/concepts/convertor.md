@@ -1,7 +1,7 @@
 ---
 title: Convertor (Impedance Convertor)
 type: claim
-id: claim-convertor
+id: concepts/convertor
 tags:
 - foundational
 - analog
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

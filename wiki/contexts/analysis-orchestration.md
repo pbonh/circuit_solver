@@ -1,7 +1,7 @@
 ---
 title: Analysis Orchestration
 type: entity
-id: entity-context-analysis-orchestration
+id: contexts/analysis-orchestration
 tags:
 - analysis
 - circuit-solver

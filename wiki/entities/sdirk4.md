@@ -1,7 +1,7 @@
 ---
 title: SDIRK4
 type: entity
-id: entity-sdirk4
+id: entities/sdirk4
 tags:
 - ode
 - numerical-integration

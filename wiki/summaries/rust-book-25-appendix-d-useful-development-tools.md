@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Appendix D: Useful Development Tools'
 type: source
-id: source-rust-book-25-appendix-d-useful-development-tools
-kind: derived-summary
+id: summaries/rust-book-25-appendix-d-useful-development-tools
+kind: publication
 tags:
 - rust
 - reference

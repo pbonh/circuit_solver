@@ -1,7 +1,7 @@
 ---
 title: Operational Amplifier Macromodel
 type: claim
-id: claim-operational-amplifier-macromodel
+id: concepts/operational-amplifier-macromodel
 tags:
 - device-model
 - analog
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

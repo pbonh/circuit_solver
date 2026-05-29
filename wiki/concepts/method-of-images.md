@@ -1,7 +1,7 @@
 ---
 title: Method of Images
 type: claim
-id: claim-method-of-images
+id: concepts/method-of-images
 tags:
 - analysis
 - foundational
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/GraphsInVLSI/_txt/09-6-effective-resistance-of-truncated-infinite-mesh-structures.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

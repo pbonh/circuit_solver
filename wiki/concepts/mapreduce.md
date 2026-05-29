@@ -1,7 +1,7 @@
 ---
 title: MapReduce
 type: claim
-id: claim-mapreduce
+id: concepts/mapreduce
 tags:
 - batch
 - distributed-systems
@@ -18,7 +18,11 @@ sources:
   and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt
 - raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 3
+  contradicted: false
+  effective: 1.026
+  inputs_hash: 5a90c05bd2bbff0d
 ---
 
 ## Definition

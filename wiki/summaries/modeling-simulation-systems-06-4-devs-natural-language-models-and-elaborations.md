@@ -2,8 +2,8 @@
 title: 'Modeling and Simulation of Systems — Chapter 4: DEVS Natural Language Models
   and Elaborations'
 type: source
-id: source-modeling-simulation-systems-06-4-devs-natural-language-models-and-elaborations
-kind: derived-summary
+id: summaries/modeling-simulation-systems-06-4-devs-natural-language-models-and-elaborations
+kind: publication
 tags:
 - simulation
 - modeling

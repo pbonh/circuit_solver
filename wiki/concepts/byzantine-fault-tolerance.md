@@ -1,7 +1,7 @@
 ---
 title: Byzantine Fault Tolerance
 type: claim
-id: claim-byzantine-fault-tolerance
+id: concepts/byzantine-fault-tolerance
 tags:
 - distributed-systems
 - advanced
@@ -13,7 +13,11 @@ sources:
 - raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
   and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

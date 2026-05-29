@@ -1,7 +1,7 @@
 ---
 title: VENUS
 type: entity
-id: entity-venus
+id: entities/venus
 tags:
 - graph
 - graph-processing

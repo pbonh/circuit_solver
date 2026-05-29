@@ -2,8 +2,8 @@
 title: 'Prototyping Python Dashboards — Chapter 2: Reactive Programming with PLOTLY
   and DASH'
 type: source
-id: source-prototyping-python-dashboards-06-chapter-2-reactive-programming-with-plotly-and-dash
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-06-chapter-2-reactive-programming-with-plotly-and-dash
+kind: publication
 tags:
 - python
 - plotly

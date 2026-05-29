@@ -1,7 +1,7 @@
 ---
 title: Neo4j
 type: entity
-id: entity-neo4j
+id: entities/neo4j
 tags:
 - database
 - graph

@@ -1,7 +1,7 @@
 ---
 title: System Architecture
 type: claim
-id: claim-system-architecture
+id: concepts/system-architecture
 tags:
 - architecture
 - foundational
@@ -11,7 +11,11 @@ updated: 2026-05-17
 sources:
 - decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

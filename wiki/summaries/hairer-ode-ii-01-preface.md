@@ -1,8 +1,8 @@
 ---
 title: Solving Ordinary Differential Equations II — Preface
 type: source
-id: source-hairer-ode-ii-01-preface
-kind: derived-summary
+id: summaries/hairer-ode-ii-01-preface
+kind: publication
 tags:
 - ode
 - dae

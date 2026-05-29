@@ -2,8 +2,8 @@
 title: 'Systems for Big Graph Analytics — Part II: Think Like a Graph (Block-Centric
   and Subgraph-Centric)'
 type: source
-id: source-systems-big-graph-analytics-03-part-ii-think-like-a-graph
-kind: derived-summary
+id: summaries/systems-big-graph-analytics-03-part-ii-think-like-a-graph
+kind: publication
 tags:
 - graph
 - distributed-systems

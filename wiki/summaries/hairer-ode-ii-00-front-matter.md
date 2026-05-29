@@ -1,8 +1,8 @@
 ---
 title: Solving Ordinary Differential Equations II — Front Matter
 type: source
-id: source-hairer-ode-ii-00-front-matter
-kind: derived-summary
+id: summaries/hairer-ode-ii-00-front-matter
+kind: publication
 tags:
 - ode
 - dae

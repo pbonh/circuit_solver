@@ -1,7 +1,7 @@
 ---
 title: Symbolic Function Generation (Interpolation-Based)
 type: claim
-id: claim-symbolic-function-generation
+id: concepts/symbolic-function-generation
 tags:
 - analog
 - ac
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/10-chapter-7-network-functions-in-the-frequency-domain.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

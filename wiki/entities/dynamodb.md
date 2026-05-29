@@ -1,7 +1,7 @@
 ---
 title: Amazon DynamoDB
 type: entity
-id: entity-dynamodb
+id: entities/dynamodb
 tags:
 - well-established
 - distributed-systems

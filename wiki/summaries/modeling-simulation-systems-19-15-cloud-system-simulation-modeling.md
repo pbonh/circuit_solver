@@ -1,8 +1,8 @@
 ---
 title: 'Modeling and Simulation of Systems — Chapter 15: Cloud System Simulation Modeling'
 type: source
-id: source-modeling-simulation-systems-19-15-cloud-system-simulation-modeling
-kind: derived-summary
+id: summaries/modeling-simulation-systems-19-15-cloud-system-simulation-modeling
+kind: publication
 tags:
 - simulation
 - modeling

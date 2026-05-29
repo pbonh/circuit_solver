@@ -1,8 +1,8 @@
 ---
 title: 'Prototyping Python Dashboards — Chapter 4: Planning the Dashboard Prototype'
 type: source
-id: source-prototyping-python-dashboards-08-chapter-4-planning-the-dashboard-prototype
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-08-chapter-4-planning-the-dashboard-prototype
+kind: publication
 tags:
 - python
 - dashboard

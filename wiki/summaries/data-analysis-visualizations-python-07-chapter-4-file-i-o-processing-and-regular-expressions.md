@@ -2,8 +2,8 @@
 title: 'Data Analysis and Visualizations with Python — Chapter 4: File I/O Processing
   and Regular Expressions'
 type: source
-id: source-data-analysis-visualizations-python-07-chapter-4-file-i-o-processing-and-regular-expressions
-kind: derived-summary
+id: summaries/data-analysis-visualizations-python-07-chapter-4-file-i-o-processing-and-regular-expressions
+kind: publication
 tags:
 - python
 - file-io

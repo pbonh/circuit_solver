@@ -2,8 +2,8 @@
 title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 8: Hierarchical Analysis
   Methods'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-12-8-hierarchical-analysis-methods
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-12-8-hierarchical-analysis-methods
+kind: publication
 tags:
 - hierarchical
 - ddd

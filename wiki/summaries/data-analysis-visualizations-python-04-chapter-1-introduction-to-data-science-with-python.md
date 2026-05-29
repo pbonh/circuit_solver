@@ -2,8 +2,8 @@
 title: 'Data Analysis and Visualizations with Python — Chapter 1: Introduction to
   Data Science with Python'
 type: source
-id: source-data-analysis-visualizations-python-04-chapter-1-introduction-to-data-science-with-python
-kind: derived-summary
+id: summaries/data-analysis-visualizations-python-04-chapter-1-introduction-to-data-science-with-python
+kind: publication
 tags:
 - python
 - data-science

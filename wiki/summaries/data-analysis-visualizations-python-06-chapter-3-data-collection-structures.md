@@ -2,8 +2,8 @@
 title: 'Data Analysis and Visualizations with Python — Chapter 3: Data Collection
   Structures'
 type: source
-id: source-data-analysis-visualizations-python-06-chapter-3-data-collection-structures
-kind: derived-summary
+id: summaries/data-analysis-visualizations-python-06-chapter-3-data-collection-structures
+kind: publication
 tags:
 - python
 - pandas

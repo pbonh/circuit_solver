@@ -1,7 +1,7 @@
 ---
 title: faer
 type: entity
-id: entity-faer
+id: entities/faer
 tags:
 - rust
 - sparse-matrix

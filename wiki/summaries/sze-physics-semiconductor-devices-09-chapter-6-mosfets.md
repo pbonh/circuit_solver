@@ -1,8 +1,8 @@
 ---
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 6: MOSFETs'
 type: source
-id: source-sze-physics-semiconductor-devices-09-chapter-6-mosfets
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-09-chapter-6-mosfets
+kind: publication
 tags:
 - semiconductor
 - device-physics

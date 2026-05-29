@@ -1,7 +1,7 @@
 ---
 title: Protocol Buffers
 type: entity
-id: entity-protocol-buffers
+id: entities/protocol-buffers
 tags:
 - well-established
 - encoding

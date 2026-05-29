@@ -1,7 +1,7 @@
 ---
 title: SemVer
 type: claim
-id: claim-semver
+id: concepts/semver
 tags:
 - rust
 - foundational
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/rust_book/_txt/15-chapter-14-more-about-cargo-and-crates-io.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

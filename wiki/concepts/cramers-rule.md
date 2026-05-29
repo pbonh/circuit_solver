@@ -1,7 +1,7 @@
 ---
 title: Cramer's Rule
 type: claim
-id: claim-cramers-rule
+id: concepts/cramers-rule
 tags:
 - foundational
 - symbolic
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

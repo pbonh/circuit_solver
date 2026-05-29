@@ -1,8 +1,8 @@
 ---
 title: 'Prototyping Python Dashboards — Appendix A: Utilities for Managing ATADS Data'
 type: source
-id: source-prototyping-python-dashboards-17-appendix-a-utilities-for-managing-atads-data
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-17-appendix-a-utilities-for-managing-atads-data
+kind: publication
 tags:
 - python
 - screen-scraping

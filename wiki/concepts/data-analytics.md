@@ -1,7 +1,7 @@
 ---
 title: Data Analytics
 type: claim
-id: claim-data-analytics
+id: concepts/data-analytics
 tags:
 - data-analysis
 - foundational
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/PythonDataAnalystsToolkit/_txt/01-about-the-author.txt
 confidence:
-  base: 0.45
+  base: 0.7
+  source_count: 1
+  contradicted: false
+  effective: 0.7
+  inputs_hash: 86fb3e99d617ff2d
 ---
 
 > The cited source (a one-page author bio in Python Data Analyst's Toolkit) lists "data analytics" only as one of the author's focus areas: "Some of her key focus areas include Python, data analytics, machine learning, statistics, and deep learning." No substantive definition appears in the source. This page provides general-knowledge content consistent with the framing.

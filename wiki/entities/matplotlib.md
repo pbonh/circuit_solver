@@ -1,7 +1,7 @@
 ---
 title: Matplotlib
 type: entity
-id: entity-matplotlib
+id: entities/matplotlib
 tags:
 - python
 - visualization

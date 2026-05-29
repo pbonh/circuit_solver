@@ -1,7 +1,7 @@
 ---
 title: DataFrame
 type: claim
-id: claim-dataframe
+id: concepts/dataframe
 tags:
 - pandas
 - dataframe
@@ -14,7 +14,11 @@ updated: 2026-05-15
 sources:
 - raw/DataAnalysisAndVisualizationsPython/_txt/06-chapter-3-data-collection-structures.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

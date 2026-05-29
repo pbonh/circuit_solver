@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Chapter 4: Understanding Ownership'
 type: source
-id: source-rust-book-05-chapter-4-understanding-ownership
-kind: derived-summary
+id: summaries/rust-book-05-chapter-4-understanding-ownership
+kind: publication
 tags:
 - rust
 - ownership

@@ -1,7 +1,7 @@
 ---
 title: Finite State Machine
 type: claim
-id: claim-finite-state-machine
+id: concepts/finite-state-machine
 tags:
 - graph
 - digital
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/GraphsInVLSI/_txt/04-1-introduction.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

@@ -1,7 +1,7 @@
 ---
 title: Apache Avro
 type: entity
-id: entity-apache-avro
+id: entities/apache-avro
 tags:
 - well-established
 - encoding

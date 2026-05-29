@@ -1,7 +1,7 @@
 ---
 title: Russell
 type: entity
-id: entity-russell
+id: entities/russell
 tags:
 - rust
 - sparse-matrix

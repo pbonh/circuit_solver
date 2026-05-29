@@ -1,8 +1,8 @@
 ---
 title: Graphs in VLSI — Acknowledgments
 type: source
-id: source-graphs-in-vlsi-01-acknowledgments
-kind: derived-summary
+id: summaries/graphs-in-vlsi-01-acknowledgments
+kind: publication
 tags:
 - vlsi
 - foundational

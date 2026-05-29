@@ -1,7 +1,7 @@
 ---
 title: Forward Euler
 type: claim
-id: claim-forward-euler
+id: concepts/forward-euler
 tags:
 - analog
 - transient
@@ -14,7 +14,11 @@ sources:
 - raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/12-chapter-9-introduction-to-numerical-integration-of-differential-equations.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

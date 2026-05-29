@@ -1,7 +1,7 @@
 ---
 title: Hash Map
 type: claim
-id: claim-hash-map
+id: concepts/hash-map
 tags:
 - rust
 - foundational
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/rust_book/_txt/09-chapter-8-common-collections.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

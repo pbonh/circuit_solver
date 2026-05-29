@@ -1,7 +1,7 @@
 ---
 title: PEGASUS
 type: entity
-id: entity-pegasus
+id: entities/pegasus
 tags:
 - graph
 - big-data

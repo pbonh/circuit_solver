@@ -1,7 +1,7 @@
 ---
 title: NumPy
 type: entity
-id: entity-numpy
+id: entities/numpy
 tags:
 - python
 - numpy

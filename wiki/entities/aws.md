@@ -1,7 +1,7 @@
 ---
 title: Amazon Web Services (AWS)
 type: entity
-id: entity-aws
+id: entities/aws
 tags:
 - cloud
 - infrastructure

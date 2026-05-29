@@ -1,8 +1,8 @@
 ---
 title: 'Foundations of Scalable Systems — Part I: The Basics (Chapters 1–4)'
 type: source
-id: source-foundations-scalable-systems-04-part-i-the-basics
-kind: derived-summary
+id: summaries/foundations-scalable-systems-04-part-i-the-basics
+kind: publication
 tags:
 - distributed-systems
 - scalability

@@ -1,7 +1,7 @@
 ---
 title: Quality of Service (QoS)
 type: claim
-id: claim-quality-of-service
+id: concepts/quality-of-service
 tags:
 - simulation
 - modeling
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

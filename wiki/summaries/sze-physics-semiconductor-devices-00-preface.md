@@ -1,8 +1,8 @@
 ---
 title: Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Preface
 type: source
-id: source-sze-physics-semiconductor-devices-00-preface
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-00-preface
+kind: publication
 tags:
 - semiconductor
 - device-physics

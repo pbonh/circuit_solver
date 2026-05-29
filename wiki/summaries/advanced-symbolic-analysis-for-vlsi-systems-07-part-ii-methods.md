@@ -1,8 +1,8 @@
 ---
 title: 'Advanced Symbolic Analysis for VLSI Systems — Part II: Methods'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-07-part-ii-methods
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-07-part-ii-methods
+kind: publication
 tags:
 - foundational
 - symbolic

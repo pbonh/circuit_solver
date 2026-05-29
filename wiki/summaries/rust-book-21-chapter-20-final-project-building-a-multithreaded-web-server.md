@@ -2,8 +2,8 @@
 title: 'The Rust Programming Language — Chapter 20: Final Project: Building a Multithreaded
   Web Server'
 type: source
-id: source-rust-book-21-chapter-20-final-project-building-a-multithreaded-web-server
-kind: derived-summary
+id: summaries/rust-book-21-chapter-20-final-project-building-a-multithreaded-web-server
+kind: publication
 tags:
 - rust
 - project

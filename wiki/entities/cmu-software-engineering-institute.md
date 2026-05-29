@@ -1,7 +1,7 @@
 ---
 title: Carnegie Mellon Software Engineering Institute
 type: entity
-id: entity-cmu-software-engineering-institute
+id: entities/cmu-software-engineering-institute
 tags:
 - academic
 - research

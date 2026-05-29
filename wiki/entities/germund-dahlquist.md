@@ -1,7 +1,7 @@
 ---
 title: Germund Dahlquist
 type: entity
-id: entity-germund-dahlquist
+id: entities/germund-dahlquist
 tags:
 - ode
 - numerical-integration

@@ -1,7 +1,7 @@
 ---
 title: Interior Point Algorithm
 type: claim
-id: claim-interior-point-algorithm
+id: concepts/interior-point-algorithm
 tags:
 - algorithm
 - optimization
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 > GraphsInVLSI Chapter 9 uses interior-point as the workhorse continuous optimizer: "The Interior Point Algorithm, part of MATLAB Optimization Toolbox [557] and HSPICE [540], is used in this case study. The optimization functions, circuit parameters, and external parameters are inputs to the optimization algorithm. The optimization procedure has been run on an Intel Core i7-6700 3.40 GHz 8-core computer using different initial conditions to avoid any local minima."

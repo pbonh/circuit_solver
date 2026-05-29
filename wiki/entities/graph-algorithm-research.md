@@ -1,7 +1,7 @@
 ---
 title: Graph Algorithm Research
 type: entity
-id: entity-graph-algorithm-research
+id: entities/graph-algorithm-research
 tags:
 - graph
 - algorithm

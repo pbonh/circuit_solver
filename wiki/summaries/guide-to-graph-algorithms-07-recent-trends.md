@@ -1,8 +1,8 @@
 ---
 title: Guide to Graph Algorithms — Recent Trends (Chapter 4)
 type: source
-id: source-guide-to-graph-algorithms-07-recent-trends
-kind: derived-summary
+id: summaries/guide-to-graph-algorithms-07-recent-trends
+kind: publication
 tags:
 - graph
 - algorithm

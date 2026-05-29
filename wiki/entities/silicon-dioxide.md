@@ -1,7 +1,7 @@
 ---
 title: Silicon Dioxide (SiO2)
 type: entity
-id: entity-silicon-dioxide
+id: entities/silicon-dioxide
 tags:
 - semiconductor
 - device-physics

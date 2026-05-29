@@ -1,7 +1,7 @@
 ---
 title: CockroachDB
 type: entity
-id: entity-cockroachdb
+id: entities/cockroachdb
 tags:
 - database
 - newsql

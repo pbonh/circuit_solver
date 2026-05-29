@@ -1,7 +1,7 @@
 ---
 title: Backend for Frontend (BFF)
 type: claim
-id: claim-backend-for-frontend
+id: concepts/backend-for-frontend
 tags:
 - microservices
 - well-established
@@ -10,7 +10,11 @@ updated: 2026-05-15
 sources:
 - raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

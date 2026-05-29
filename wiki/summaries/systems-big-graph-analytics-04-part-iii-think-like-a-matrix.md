@@ -2,8 +2,8 @@
 title: 'Systems for Big Graph Analytics — Part III: Think Like a Matrix (PEGASUS,
   GBASE, SystemML) and Conclusions'
 type: source
-id: source-systems-big-graph-analytics-04-part-iii-think-like-a-matrix
-kind: derived-summary
+id: summaries/systems-big-graph-analytics-04-part-iii-think-like-a-matrix
+kind: publication
 tags:
 - graph
 - distributed-systems

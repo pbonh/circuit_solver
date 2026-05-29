@@ -1,7 +1,7 @@
 ---
 title: MySQL
 type: entity
-id: entity-mysql
+id: entities/mysql
 tags:
 - database
 - sql

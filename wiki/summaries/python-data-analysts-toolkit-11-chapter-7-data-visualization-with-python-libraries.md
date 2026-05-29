@@ -2,8 +2,8 @@
 title: 'Python Data Analyst''s Toolkit — Chapter 7: Data Visualization with Python
   Libraries'
 type: source
-id: source-python-data-analysts-toolkit-11-chapter-7-data-visualization-with-python-libraries
-kind: derived-summary
+id: summaries/python-data-analysts-toolkit-11-chapter-7-data-visualization-with-python-libraries
+kind: publication
 tags:
 - python
 - visualization

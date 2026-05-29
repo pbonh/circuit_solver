@@ -1,7 +1,7 @@
 ---
 title: C. W. Gear
 type: entity
-id: entity-c-w-gear
+id: entities/c-w-gear
 tags:
 - ode
 - numerical-integration

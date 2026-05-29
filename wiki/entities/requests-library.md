@@ -1,7 +1,7 @@
 ---
 title: Python `requests` Library
 type: entity
-id: entity-requests-library
+id: entities/requests-library
 tags:
 - python
 - well-established

@@ -1,7 +1,7 @@
 ---
 title: Macros
 type: claim
-id: claim-macros
+id: concepts/macros
 tags:
 - rust
 - macros
@@ -13,7 +13,11 @@ sources:
 - raw/rust_book/_txt/02-chapter-1-getting-started.txt
 - raw/rust_book/_txt/20-chapter-19-advanced-features.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

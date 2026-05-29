@@ -1,7 +1,7 @@
 ---
 title: UFW (Uncomplicated Firewall)
 type: entity
-id: entity-ufw
+id: entities/ufw
 tags:
 - unix
 - security

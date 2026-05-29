@@ -1,7 +1,7 @@
 ---
 title: Graph Voronoi Diagram (GVD) Partitioner
 type: claim
-id: claim-graph-voronoi-diagram
+id: concepts/graph-voronoi-diagram
 tags:
 - graph
 - graph-partitioning
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

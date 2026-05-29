@@ -1,7 +1,7 @@
 ---
 title: R Language
 type: entity
-id: entity-r-language
+id: entities/r-language
 tags:
 - r
 - statistics

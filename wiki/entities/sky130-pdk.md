@@ -1,7 +1,7 @@
 ---
 title: Sky130 PDK
 type: entity
-id: entity-sky130-pdk
+id: entities/sky130-pdk
 tags:
 - pdk
 - foundry

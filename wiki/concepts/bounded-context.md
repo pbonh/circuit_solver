@@ -1,7 +1,7 @@
 ---
 title: Bounded Context
 type: claim
-id: claim-bounded-context
+id: concepts/bounded-context
 tags:
 - foundational
 - domain-driven-design
@@ -10,7 +10,11 @@ created: 2026-05-17
 updated: 2026-05-17
 sources: []
 confidence:
-  base: 0.45
+  base: 0.7
+  source_count: 0
+  contradicted: false
+  effective: 0.7
+  inputs_hash: d1b8530c9cc46384
 ---
 
 ## Definition

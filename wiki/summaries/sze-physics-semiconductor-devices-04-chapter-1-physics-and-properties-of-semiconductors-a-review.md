@@ -2,8 +2,8 @@
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 1: Physics
   and Properties of Semiconductors (A Review)'
 type: source
-id: source-sze-physics-semiconductor-devices-04-chapter-1-physics-and-properties-of-semiconductors-a-review
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-04-chapter-1-physics-and-properties-of-semiconductors-a-review
+kind: publication
 tags:
 - semiconductor
 - device-physics

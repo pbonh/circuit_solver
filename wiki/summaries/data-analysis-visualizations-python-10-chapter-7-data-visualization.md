@@ -1,8 +1,8 @@
 ---
 title: 'Data Analysis and Visualizations with Python — Chapter 7: Data Visualization'
 type: source
-id: source-data-analysis-visualizations-python-10-chapter-7-data-visualization
-kind: derived-summary
+id: summaries/data-analysis-visualizations-python-10-chapter-7-data-visualization
+kind: publication
 tags:
 - python
 - data-visualization

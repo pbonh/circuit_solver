@@ -2,8 +2,8 @@
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 10: Transferred-Electron
   and Real-Space-Transfer Devices'
 type: source
-id: source-sze-physics-semiconductor-devices-14-chapter-10-transferred-electron-and-real-space-transfer-devices
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-14-chapter-10-transferred-electron-and-real-space-transfer-devices
+kind: publication
 tags:
 - semiconductor
 - device-physics

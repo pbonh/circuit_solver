@@ -1,8 +1,8 @@
 ---
 title: Designing Data-Intensive Applications — About the Author and Colophon
 type: source
-id: source-ddia-08-about-the-author
-kind: derived-summary
+id: summaries/ddia-08-about-the-author
+kind: publication
 tags:
 - foundational
 - well-established

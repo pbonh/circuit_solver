@@ -1,8 +1,8 @@
 ---
 title: Guide to Graph Algorithms — Problem Formulations (Chapter 3)
 type: source
-id: source-guide-to-graph-algorithms-06-problem-formulations
-kind: derived-summary
+id: summaries/guide-to-graph-algorithms-06-problem-formulations
+kind: publication
 tags:
 - graph
 - algorithm

@@ -2,13 +2,17 @@
 marp: true
 theme: default
 paginate: true
-title: "Example Presentation"
+title: Example Presentation
 type: presentation
-tags: [presentation, meta]
+tags:
+- presentation
+- meta
 created: 2026-04-08
 updated: 2026-04-08
-sources: ["index.md"]
+sources:
+- index.md
 confidence: high
+id: presentations/example
 ---
 
 # Example Presentation

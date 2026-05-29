@@ -1,7 +1,7 @@
 ---
 title: Circuit Solver Context Map
 type: entity
-id: entity-context-map-circuit-solver
+id: context-maps/circuit-solver
 tags:
 - circuit-solver
 - context-map

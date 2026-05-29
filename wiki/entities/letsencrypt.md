@@ -1,7 +1,7 @@
 ---
 title: Let's Encrypt
 type: entity
-id: entity-letsencrypt
+id: entities/letsencrypt
 tags:
 - web
 - security

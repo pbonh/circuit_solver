@@ -1,7 +1,7 @@
 ---
 title: SPROUT
 type: entity
-id: entity-sprout
+id: entities/sprout
 tags:
 - vlsi
 - power-integrity

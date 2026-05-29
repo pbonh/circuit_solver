@@ -1,7 +1,7 @@
 ---
 title: ROS4
 type: entity
-id: entity-ros4
+id: entities/ros4
 tags:
 - ode
 - numerical-integration

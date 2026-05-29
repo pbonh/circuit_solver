@@ -1,8 +1,8 @@
 ---
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 2: p-n Junctions'
 type: source
-id: source-sze-physics-semiconductor-devices-06-chapter-2-p-n-junctions
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-06-chapter-2-p-n-junctions
+kind: publication
 tags:
 - semiconductor
 - device-physics

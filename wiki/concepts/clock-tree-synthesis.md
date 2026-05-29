@@ -1,7 +1,7 @@
 ---
 title: Clock Tree Synthesis
 type: claim
-id: claim-clock-tree-synthesis
+id: concepts/clock-tree-synthesis
 tags:
 - vlsi
 - digital
@@ -14,7 +14,11 @@ updated: 2026-05-15
 sources:
 - raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

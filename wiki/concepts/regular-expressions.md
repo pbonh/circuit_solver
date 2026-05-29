@@ -1,7 +1,7 @@
 ---
 title: Regular Expressions
 type: claim
-id: claim-regular-expressions
+id: concepts/regular-expressions
 tags:
 - python
 - regular-expressions
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/DataAnalysisAndVisualizationsPython/_txt/03-introduction.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

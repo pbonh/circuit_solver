@@ -2,8 +2,8 @@
 title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 9: Symbolic Nodal Analysis
   Using Nullors'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-13-9-symbolic-nodal-analysis-of-analog-circuits-using-nullors
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-13-9-symbolic-nodal-analysis-of-analog-circuits-using-nullors
+kind: publication
 tags:
 - analog
 - symbolic

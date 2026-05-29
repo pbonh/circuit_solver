@@ -2,8 +2,8 @@
 title: 'Modeling and Simulation of Systems — Chapter 8: Automated and Rule-Based Pruning
   and Experimental Execution'
 type: source
-id: source-modeling-simulation-systems-10-8-automated-and-rule-based-pruning-and-experimental-execution
-kind: derived-summary
+id: summaries/modeling-simulation-systems-10-8-automated-and-rule-based-pruning-and-experimental-execution
+kind: publication
 tags:
 - simulation
 - modeling

@@ -1,7 +1,7 @@
 ---
 title: Sheldon X.-D. Tan
 type: entity
-id: entity-sheldon-x-d-tan
+id: entities/sheldon-x-d-tan
 tags:
 - person
 - author

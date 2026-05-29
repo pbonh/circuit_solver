@@ -1,7 +1,7 @@
 ---
 title: Charles F. Curtiss
 type: entity
-id: entity-charles-curtiss
+id: entities/charles-curtiss
 tags:
 - ode
 - numerical-integration

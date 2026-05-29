@@ -1,7 +1,7 @@
 ---
 title: Google App Engine
 type: entity
-id: entity-google-app-engine
+id: entities/google-app-engine
 tags:
 - cloud
 - paas

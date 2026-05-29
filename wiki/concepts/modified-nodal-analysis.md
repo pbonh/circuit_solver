@@ -1,7 +1,7 @@
 ---
 title: Modified Nodal Analysis (MNA)
 type: claim
-id: claim-modified-nodal-analysis
+id: concepts/modified-nodal-analysis
 tags:
 - analog
 - sparse-matrix
@@ -15,7 +15,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

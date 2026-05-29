@@ -1,7 +1,7 @@
 ---
 title: EULSIM
 type: entity
-id: entity-eulsim
+id: entities/eulsim
 tags:
 - ode
 - numerical-integration

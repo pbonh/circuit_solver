@@ -1,7 +1,7 @@
 ---
 title: Microbatching
 type: claim
-id: claim-microbatching
+id: concepts/microbatching
 tags:
 - streaming
 - well-established
@@ -12,7 +12,11 @@ sources:
 - raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
   and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

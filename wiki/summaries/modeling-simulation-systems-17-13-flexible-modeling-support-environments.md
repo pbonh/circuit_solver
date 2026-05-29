@@ -2,8 +2,8 @@
 title: 'Modeling and Simulation of Systems — Chapter 13: Flexible Modeling Support
   Environments'
 type: source
-id: source-modeling-simulation-systems-17-13-flexible-modeling-support-environments
-kind: derived-summary
+id: summaries/modeling-simulation-systems-17-13-flexible-modeling-support-environments
+kind: publication
 tags:
 - simulation
 - modeling

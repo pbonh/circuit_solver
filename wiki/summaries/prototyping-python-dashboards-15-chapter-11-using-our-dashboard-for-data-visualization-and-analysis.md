@@ -2,8 +2,8 @@
 title: 'Prototyping Python Dashboards — Chapter 11: Using Our Dashboard for Data Visualization
   and Analysis'
 type: source
-id: source-prototyping-python-dashboards-15-chapter-11-using-our-dashboard-for-data-visualization-and-analysis
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-15-chapter-11-using-our-dashboard-for-data-visualization-and-analysis
+kind: publication
 tags:
 - python
 - visualization

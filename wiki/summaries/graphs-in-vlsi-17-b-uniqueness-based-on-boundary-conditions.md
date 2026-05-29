@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Appendix B: Uniqueness Based on Boundary Conditions'
 type: source
-id: source-graphs-in-vlsi-17-b-uniqueness-based-on-boundary-conditions
-kind: derived-summary
+id: summaries/graphs-in-vlsi-17-b-uniqueness-based-on-boundary-conditions
+kind: publication
 tags:
 - vlsi
 - mathematics

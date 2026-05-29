@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Appendix E: Sparse Matrix
   Solver'
 type: source
-id: source-computer-methods-circuit-analysis-design-25-appendix-e-sparse-matrix-solver
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-25-appendix-e-sparse-matrix-solver
+kind: publication
 tags:
 - sparse-matrix
 - software

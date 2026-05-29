@@ -2,8 +2,8 @@
 title: 'Solving Ordinary Differential Equations II — Chapter V: Multistep Methods
   for Stiff Problems'
 type: source
-id: source-hairer-ode-ii-04-chapter-v-multistep-methods-for-stiff-problems
-kind: derived-summary
+id: summaries/hairer-ode-ii-04-chapter-v-multistep-methods-for-stiff-problems
+kind: publication
 tags:
 - ode
 - stiff

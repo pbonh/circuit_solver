@@ -1,8 +1,8 @@
 ---
 title: 'Modeling and Simulation of Systems — Part II: Advanced Concepts'
 type: source
-id: source-modeling-simulation-systems-11-advanced-concepts
-kind: derived-summary
+id: summaries/modeling-simulation-systems-11-advanced-concepts
+kind: publication
 tags:
 - simulation
 - modeling

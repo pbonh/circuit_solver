@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Appendix C: Multilayer Routing Algorithm'
 type: source
-id: source-graphs-in-vlsi-18-c-multilayer-routing-algorithm
-kind: derived-summary
+id: summaries/graphs-in-vlsi-18-c-multilayer-routing-algorithm
+kind: publication
 tags:
 - vlsi
 - routing

@@ -1,8 +1,8 @@
 ---
 title: 'Python Data Analyst''s Toolkit — Chapter 8: Data Analysis Case Studies'
 type: source
-id: source-python-data-analysts-toolkit-12-chapter-8-data-analysis-case-studies
-kind: derived-summary
+id: summaries/python-data-analysts-toolkit-12-chapter-8-data-analysis-case-studies
+kind: publication
 tags:
 - python
 - pandas

@@ -1,7 +1,7 @@
 ---
 title: Virtual Build and Test
 type: claim
-id: claim-virtual-build-and-test
+id: concepts/virtual-build-and-test
 tags:
 - simulation
 - modeling
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

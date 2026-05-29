@@ -2,8 +2,8 @@
 title: 'Data Analysis and Visualizations with Python — Chapter 5: Data Gathering and
   Cleaning'
 type: source
-id: source-data-analysis-visualizations-python-08-chapter-5-data-gathering-and-cleaning
-kind: derived-summary
+id: summaries/data-analysis-visualizations-python-08-chapter-5-data-gathering-and-cleaning
+kind: publication
 tags:
 - python
 - pandas

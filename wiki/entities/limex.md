@@ -1,7 +1,7 @@
 ---
 title: LIMEX
 type: entity
-id: entity-limex
+id: entities/limex
 tags:
 - ode
 - numerical-integration

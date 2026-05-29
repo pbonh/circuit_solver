@@ -1,7 +1,7 @@
 ---
 title: PyO3
 type: entity
-id: entity-pyo3
+id: entities/pyo3
 tags:
 - rust
 - python

@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Chapter 14: More about Cargo and Crates.io'
 type: source
-id: source-rust-book-15-chapter-14-more-about-cargo-and-crates-io
-kind: derived-summary
+id: summaries/rust-book-15-chapter-14-more-about-cargo-and-crates-io
+kind: publication
 tags:
 - rust
 - foundational

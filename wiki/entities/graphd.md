@@ -1,7 +1,7 @@
 ---
 title: GraphD
 type: entity
-id: entity-graphd
+id: entities/graphd
 tags:
 - graph
 - distributed-systems

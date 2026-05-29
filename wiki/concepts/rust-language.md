@@ -1,7 +1,7 @@
 ---
 title: Rust Language
 type: claim
-id: claim-rust-language
+id: concepts/rust-language
 tags:
 - rust
 - foundational
@@ -13,7 +13,11 @@ sources:
 - raw/rust_book/_txt/00-foreword.txt
 - raw/rust_book/_txt/01-introduction.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

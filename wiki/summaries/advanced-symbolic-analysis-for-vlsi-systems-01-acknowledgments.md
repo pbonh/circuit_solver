@@ -1,8 +1,8 @@
 ---
 title: Advanced Symbolic Analysis for VLSI Systems — Acknowledgments
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-01-acknowledgments
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-01-acknowledgments
+kind: publication
 tags:
 - foundational
 - vlsi

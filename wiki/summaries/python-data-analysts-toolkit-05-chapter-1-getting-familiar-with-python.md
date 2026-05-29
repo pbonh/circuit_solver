@@ -1,8 +1,8 @@
 ---
 title: 'Python Data Analyst''s Toolkit — Chapter 1: Getting Familiar with Python'
 type: source
-id: source-python-data-analysts-toolkit-05-chapter-1-getting-familiar-with-python
-kind: derived-summary
+id: summaries/python-data-analysts-toolkit-05-chapter-1-getting-familiar-with-python
+kind: publication
 tags:
 - python
 - foundational

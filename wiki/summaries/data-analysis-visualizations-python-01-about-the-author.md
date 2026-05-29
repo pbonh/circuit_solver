@@ -1,8 +1,8 @@
 ---
 title: Data Analysis and Visualizations with Python — About the Author
 type: source
-id: source-data-analysis-visualizations-python-01-about-the-author
-kind: derived-summary
+id: summaries/data-analysis-visualizations-python-01-about-the-author
+kind: publication
 tags:
 - python
 - data-analysis

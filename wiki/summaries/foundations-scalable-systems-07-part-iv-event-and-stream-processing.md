@@ -2,8 +2,8 @@
 title: 'Foundations of Scalable Systems — Part IV: Event and Stream Processing (Chapters
   14–16)'
 type: source
-id: source-foundations-scalable-systems-07-part-iv-event-and-stream-processing
-kind: derived-summary
+id: summaries/foundations-scalable-systems-07-part-iv-event-and-stream-processing
+kind: publication
 tags:
 - distributed-systems
 - scalability

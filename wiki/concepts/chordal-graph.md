@@ -1,7 +1,7 @@
 ---
 title: Chordal Graph
 type: claim
-id: claim-chordal-graph
+id: concepts/chordal-graph
 tags:
 - graph
 - foundational
@@ -12,7 +12,11 @@ sources:
 - raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
 - raw/GuideToGraphAlgorithms/_txt/06-problem-formulations.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

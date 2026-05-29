@@ -1,7 +1,7 @@
 ---
 title: Device Modeling
 type: entity
-id: entity-context-device-modeling
+id: contexts/device-modeling
 tags:
 - device-model
 - circuit-solver

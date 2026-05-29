@@ -1,7 +1,7 @@
 ---
 title: University of Waterloo
 type: entity
-id: entity-university-of-waterloo
+id: entities/university-of-waterloo
 tags:
 - institution
 - foundational

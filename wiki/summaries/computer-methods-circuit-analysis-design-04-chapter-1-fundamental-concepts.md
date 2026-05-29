@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 1: Fundamental
   Concepts'
 type: source
-id: source-computer-methods-circuit-analysis-design-04-chapter-1-fundamental-concepts
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-04-chapter-1-fundamental-concepts
+kind: publication
 tags:
 - foundational
 - analog

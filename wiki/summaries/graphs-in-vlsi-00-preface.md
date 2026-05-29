@@ -1,8 +1,8 @@
 ---
 title: Graphs in VLSI — Preface
 type: source
-id: source-graphs-in-vlsi-00-preface
-kind: derived-summary
+id: summaries/graphs-in-vlsi-00-preface
+kind: publication
 tags:
 - graph
 - vlsi

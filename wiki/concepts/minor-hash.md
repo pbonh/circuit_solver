@@ -1,7 +1,7 @@
 ---
 title: Minor Hash (DDD Implementation)
 type: claim
-id: claim-minor-hash
+id: concepts/minor-hash
 tags:
 - ddd
 - bdd
@@ -14,7 +14,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/09-5-ddd-implementation.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

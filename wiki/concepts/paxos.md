@@ -1,7 +1,7 @@
 ---
 title: Paxos
 type: claim
-id: claim-paxos
+id: concepts/paxos
 tags:
 - distributed-systems
 - consensus
@@ -16,7 +16,11 @@ sources:
 - raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
   and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

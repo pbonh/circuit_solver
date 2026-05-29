@@ -1,7 +1,7 @@
 ---
 title: CUDA Programming Model
 type: claim
-id: claim-cuda-programming-model
+id: concepts/cuda-programming-model
 tags:
 - gpu
 - cuda
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

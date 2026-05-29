@@ -1,7 +1,7 @@
 ---
 title: RAII (Resource Acquisition Is Initialization)
 type: claim
-id: claim-raii
+id: concepts/raii
 tags:
 - rust
 - c-plus-plus
@@ -14,7 +14,11 @@ updated: 2026-05-15
 sources:
 - raw/rust_book/_txt/16-chapter-15-smart-pointers.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

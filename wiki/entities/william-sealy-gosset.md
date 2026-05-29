@@ -1,7 +1,7 @@
 ---
 title: William Sealy Gosset
 type: entity
-id: entity-william-sealy-gosset
+id: entities/william-sealy-gosset
 tags:
 - statistics
 - well-established

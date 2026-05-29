@@ -1,7 +1,7 @@
 ---
 title: NVIDIA CUDA
 type: entity
-id: entity-nvidia-cuda
+id: entities/nvidia-cuda
 tags:
 - tool
 - gpu

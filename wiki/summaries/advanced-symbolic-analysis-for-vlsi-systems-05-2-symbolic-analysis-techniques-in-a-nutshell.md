@@ -2,8 +2,8 @@
 title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 2: Symbolic Analysis
   Techniques in a Nutshell'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-05-2-symbolic-analysis-techniques-in-a-nutshell
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-05-2-symbolic-analysis-techniques-in-a-nutshell
+kind: publication
 tags:
 - foundational
 - symbolic

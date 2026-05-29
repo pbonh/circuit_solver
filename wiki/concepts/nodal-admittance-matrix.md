@@ -1,7 +1,7 @@
 ---
 title: Nodal Admittance Matrix (NAM)
 type: claim
-id: claim-nodal-admittance-matrix
+id: concepts/nodal-admittance-matrix
 tags:
 - analog
 - sparse-matrix
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/10-6-generalized-two-graph-theory.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

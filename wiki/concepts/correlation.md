@@ -1,7 +1,7 @@
 ---
 title: Correlation
 type: claim
-id: claim-correlation
+id: concepts/correlation
 tags:
 - statistics
 - data-analysis
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

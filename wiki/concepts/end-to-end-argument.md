@@ -1,7 +1,7 @@
 ---
 title: End-to-End Argument
 type: claim
-id: claim-end-to-end-argument
+id: concepts/end-to-end-argument
 tags:
 - foundational
 - well-established
@@ -14,7 +14,11 @@ sources:
 - raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
   and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

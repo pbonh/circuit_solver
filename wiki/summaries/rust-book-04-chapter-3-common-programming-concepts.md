@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Chapter 3: Common Programming Concepts'
 type: source
-id: source-rust-book-04-chapter-3-common-programming-concepts
-kind: derived-summary
+id: summaries/rust-book-04-chapter-3-common-programming-concepts
+kind: publication
 tags:
 - rust
 - foundational

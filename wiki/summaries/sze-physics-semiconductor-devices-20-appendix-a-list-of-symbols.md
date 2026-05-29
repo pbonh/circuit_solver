@@ -2,8 +2,8 @@
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Appendix A: List of
   Symbols'
 type: source
-id: source-sze-physics-semiconductor-devices-20-appendix-a-list-of-symbols
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-20-appendix-a-list-of-symbols
+kind: publication
 tags:
 - semiconductor
 - device-physics

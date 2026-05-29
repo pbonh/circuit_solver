@@ -1,7 +1,7 @@
 ---
 title: Prometheus
 type: entity
-id: entity-prometheus
+id: entities/prometheus
 tags:
 - observability
 - monitoring

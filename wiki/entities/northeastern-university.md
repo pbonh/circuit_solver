@@ -1,7 +1,7 @@
 ---
 title: Northeastern University
 type: entity
-id: entity-northeastern-university
+id: entities/northeastern-university
 tags:
 - academic
 - university

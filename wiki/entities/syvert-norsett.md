@@ -1,7 +1,7 @@
 ---
 title: Syvert P. Nørsett
 type: entity
-id: entity-syvert-norsett
+id: entities/syvert-norsett
 tags:
 - ode
 - numerical-integration

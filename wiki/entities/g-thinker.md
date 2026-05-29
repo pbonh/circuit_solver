@@ -1,7 +1,7 @@
 ---
 title: G-thinker
 type: entity
-id: entity-g-thinker
+id: entities/g-thinker
 tags:
 - graph
 - distributed-systems

@@ -1,7 +1,7 @@
 ---
 title: Semi-Normalized Sensitivity
 type: claim
-id: claim-semi-normalized-sensitivity
+id: concepts/semi-normalized-sensitivity
 tags:
 - sensitivity
 - foundational
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/08-chapter-5-sensitivities.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

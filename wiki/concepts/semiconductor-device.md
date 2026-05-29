@@ -1,7 +1,7 @@
 ---
 title: Semiconductor Device
 type: claim
-id: claim-semiconductor-device
+id: concepts/semiconductor-device
 tags:
 - semiconductor
 - device-physics
@@ -13,7 +13,11 @@ sources:
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/00-preface.txt
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 2
+  contradicted: false
+  effective: 0.988
+  inputs_hash: bb5f665aaf5cec77
 ---
 
 ## Definition

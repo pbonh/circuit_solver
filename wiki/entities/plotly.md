@@ -1,7 +1,7 @@
 ---
 title: Plotly
 type: entity
-id: entity-plotly
+id: entities/plotly
 tags:
 - python
 - visualization

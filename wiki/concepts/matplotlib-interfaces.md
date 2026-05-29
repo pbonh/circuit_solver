@@ -1,7 +1,7 @@
 ---
 title: Matplotlib Interfaces (Stateful vs. Object-Oriented)
 type: claim
-id: claim-matplotlib-interfaces
+id: concepts/matplotlib-interfaces
 tags:
 - python
 - visualization
@@ -11,7 +11,11 @@ updated: 2026-05-15
 sources:
 - raw/PythonDataAnalystsToolkit/_txt/11-chapter-7-data-visualization-with-python-libraries.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

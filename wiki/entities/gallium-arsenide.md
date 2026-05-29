@@ -1,7 +1,7 @@
 ---
 title: Gallium Arsenide (GaAs)
 type: entity
-id: entity-gallium-arsenide
+id: entities/gallium-arsenide
 tags:
 - semiconductor
 - material

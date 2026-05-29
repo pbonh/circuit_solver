@@ -1,7 +1,7 @@
 ---
 title: BTS T100 Domestic Segment Dataset
 type: entity
-id: entity-bts-t100-dataset
+id: entities/bts-t100-dataset
 tags:
 - aviation
 - dataset

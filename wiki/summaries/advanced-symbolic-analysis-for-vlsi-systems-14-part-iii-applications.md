@@ -1,8 +1,8 @@
 ---
 title: 'Advanced Symbolic Analysis for VLSI Systems — Part III: Applications'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-14-part-iii-applications
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-14-part-iii-applications
+kind: publication
 tags:
 - foundational
 - symbolic

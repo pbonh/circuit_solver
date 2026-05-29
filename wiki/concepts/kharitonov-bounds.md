@@ -1,7 +1,7 @@
 ---
 title: Kharitonov Bounds (Robust Stability)
 type: claim
-id: claim-kharitonov-bounds
+id: concepts/kharitonov-bounds
 tags:
 - control-theory
 - robust
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/16-11-performance-bound-analysis-of-analog-circuits-considering-process-variations.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 > Advanced Symbolic Analysis for VLSI Systems Chapter 11 ("Performance Bound Analysis of Analog Circuits Considering Process Variations") cites Kharitonov in the context of worst-case frequency-domain analysis: "Recently, worst-case analysis of linearized analog circuits in frequency domain has been proposed [158], where Kharitonov's functions [93] were applied to obtain the performance bounds in frequency domain, but no systematic method was proposed to obtain variational transfer functions. This was later improved by [78], where symbolic analysis approach was applied to derive exact transfer functions and affine interval method was used to compute variational transfer functions. However, the affine interval method can lead to over-conservative results."

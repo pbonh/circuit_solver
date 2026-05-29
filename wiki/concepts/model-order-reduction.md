@@ -1,7 +1,7 @@
 ---
 title: Model Order Reduction (MOR)
 type: claim
-id: claim-model-order-reduction
+id: concepts/model-order-reduction
 tags:
 - interconnect
 - foundational
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

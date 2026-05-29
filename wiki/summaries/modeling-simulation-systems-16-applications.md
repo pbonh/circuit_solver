@@ -1,8 +1,8 @@
 ---
 title: 'Modeling and Simulation of Systems — Part III: Applications'
 type: source
-id: source-modeling-simulation-systems-16-applications
-kind: derived-summary
+id: summaries/modeling-simulation-systems-16-applications
+kind: publication
 tags:
 - simulation
 - modeling

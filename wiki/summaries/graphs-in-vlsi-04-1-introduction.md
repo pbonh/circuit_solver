@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Chapter 1: Introduction'
 type: source
-id: source-graphs-in-vlsi-04-1-introduction
-kind: derived-summary
+id: summaries/graphs-in-vlsi-04-1-introduction
+kind: publication
 tags:
 - graph
 - vlsi

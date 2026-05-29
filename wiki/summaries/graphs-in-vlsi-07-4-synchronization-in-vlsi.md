@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Chapter 4: Synchronization in VLSI'
 type: source
-id: source-graphs-in-vlsi-07-4-synchronization-in-vlsi
-kind: derived-summary
+id: summaries/graphs-in-vlsi-07-4-synchronization-in-vlsi
+kind: publication
 tags:
 - vlsi
 - digital

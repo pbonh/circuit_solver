@@ -1,7 +1,7 @@
 ---
 title: GBASE
 type: entity
-id: entity-gbase
+id: entities/gbase
 tags:
 - graph
 - big-data

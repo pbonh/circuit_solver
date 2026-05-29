@@ -1,7 +1,7 @@
 ---
 title: MOSFET Small-Signal Model
 type: claim
-id: claim-mosfet-small-signal-model
+id: concepts/mosfet-small-signal-model
 tags:
 - mosfet
 - analog
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/13-9-symbolic-nodal-analysis-of-analog-circuits-using-nullors.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

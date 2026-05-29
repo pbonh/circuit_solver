@@ -1,7 +1,7 @@
 ---
 title: CAP Theorem
 type: claim
-id: claim-cap-theorem
+id: concepts/cap-theorem
 tags:
 - distributed-systems
 - consistency
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

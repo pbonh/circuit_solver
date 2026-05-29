@@ -1,8 +1,8 @@
 ---
 title: 'Graphs in VLSI — Chapter 2: Graph Fundamentals'
 type: source
-id: source-graphs-in-vlsi-05-2-graph-fundamentals
-kind: derived-summary
+id: summaries/graphs-in-vlsi-05-2-graph-fundamentals
+kind: publication
 tags:
 - graph
 - algorithm

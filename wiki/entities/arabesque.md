@@ -1,7 +1,7 @@
 ---
 title: Arabesque
 type: entity
-id: entity-arabesque
+id: entities/arabesque
 tags:
 - graph
 - distributed-systems

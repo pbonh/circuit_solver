@@ -1,8 +1,8 @@
 ---
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 5: Sensitivities'
 type: source
-id: source-computer-methods-circuit-analysis-design-08-chapter-5-sensitivities
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-08-chapter-5-sensitivities
+kind: publication
 tags:
 - foundational
 - analog

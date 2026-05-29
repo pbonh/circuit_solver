@@ -1,19 +1,32 @@
 ---
-title: "Hybrid Sparse Direct Solver Backend (russell + faer)"
+title: Hybrid Sparse Direct Solver Backend (russell + faer)
 type: claim
-id: claim-decision-0002-hybrid-sparse-direct-solver-backend-russell-faer
-tags: [decision, circuit-solver, sparse-matrix, lu-decomposition, russell, faer, rust, memory-safety, numeric-solver]
+id: decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer
+tags:
+- decision
+- circuit-solver
+- sparse-matrix
+- lu-decomposition
+- russell
+- faer
+- rust
+- memory-safety
+- numeric-solver
 created: 2026-05-17
 updated: 2026-05-18
 sources:
-  - "architecture/circuit-solver"
-  - "contexts/numeric-solver"
-  - "concepts/sparse-matrix"
-  - "concepts/lu-decomposition"
-  - "concepts/ffi"
-  - "concepts/memory-safety"
+- architecture/circuit-solver
+- contexts/numeric-solver
+- concepts/sparse-matrix
+- concepts/lu-decomposition
+- concepts/ffi
+- concepts/memory-safety
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 6
+  contradicted: false
+  effective: 1.045
+  inputs_hash: 01820d1373ce82bd
 ---
 
 ## Status

@@ -2,8 +2,8 @@
 title: 'Modeling and Simulation of Systems — Chapter 16: Model Development and Execution
   Process with Repositories, Validation, and Verification'
 type: source
-id: source-modeling-simulation-systems-20-16-model-development-and-execution-process-with-repositories-validation-and-verification
-kind: derived-summary
+id: summaries/modeling-simulation-systems-20-16-model-development-and-execution-process-with-repositories-validation-and-verification
+kind: publication
 tags:
 - simulation
 - modeling

@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 6: Computer Generation
   of Sensitivities'
 type: source
-id: source-computer-methods-circuit-analysis-design-09-chapter-6-computer-generation-of-sensitivities
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-09-chapter-6-computer-generation-of-sensitivities
+kind: publication
 tags:
 - foundational
 - analog

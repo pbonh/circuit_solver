@@ -1,11 +1,15 @@
 ---
-title: "Example Flashcards"
+title: Example Flashcards
 type: flashcards
-tags: [flashcards, meta]
+tags:
+- flashcards
+- meta
 created: 2026-04-08
 updated: 2026-04-08
-sources: ["index.md"]
+sources:
+- index.md
 confidence: high
+id: flashcards/example
 ---
 
 # Example Flashcards

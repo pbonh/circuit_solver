@@ -1,8 +1,8 @@
 ---
 title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 5: DDD Implementation'
 type: source
-id: source-advanced-symbolic-analysis-for-vlsi-systems-09-5-ddd-implementation
-kind: derived-summary
+id: summaries/advanced-symbolic-analysis-for-vlsi-systems-09-5-ddd-implementation
+kind: publication
 tags:
 - ddd
 - bdd

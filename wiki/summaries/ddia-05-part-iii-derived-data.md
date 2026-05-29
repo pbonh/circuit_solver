@@ -1,8 +1,8 @@
 ---
 title: 'Designing Data-Intensive Applications — Part III: Derived Data (Chapters 10–12)'
 type: source
-id: source-ddia-05-part-iii-derived-data
-kind: derived-summary
+id: summaries/ddia-05-part-iii-derived-data
+kind: publication
 tags:
 - batch
 - streaming

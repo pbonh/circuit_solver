@@ -1,7 +1,7 @@
 ---
 title: CLI Argument Parsing (Rust)
 type: claim
-id: claim-cli-argument-parsing
+id: concepts/cli-argument-parsing
 tags:
 - rust
 - cli
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/rust_book/_txt/13-chapter-12-an-i-o-project-building-a-command-line-program.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

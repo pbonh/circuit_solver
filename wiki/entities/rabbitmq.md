@@ -1,7 +1,7 @@
 ---
 title: RabbitMQ
 type: entity
-id: entity-rabbitmq
+id: entities/rabbitmq
 tags:
 - messaging
 - broker

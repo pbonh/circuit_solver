@@ -1,7 +1,7 @@
 ---
 title: LSODI
 type: entity
-id: entity-lsodi
+id: entities/lsodi
 tags:
 - ode
 - numerical-integration

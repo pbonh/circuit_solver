@@ -1,7 +1,7 @@
 ---
 title: Machine Learning
 type: claim
-id: claim-machine-learning
+id: concepts/machine-learning
 tags:
 - machine-learning
 - data-analysis
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/DataAnalysisAndVisualizationsPython/_txt/01-about-the-author.txt
 confidence:
-  base: 0.45
+  base: 0.7
+  source_count: 1
+  contradicted: false
+  effective: 0.7
+  inputs_hash: 86fb3e99d617ff2d
 ---
 
 > Cited source is a one-page author bio: "Recently, he received an interdisciplinary research grant of 199,000 to implement a machine learning system for mining students' knowledge and skills." No substantive treatment in the source. Content below is general knowledge.

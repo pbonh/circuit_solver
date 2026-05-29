@@ -1,8 +1,8 @@
 ---
 title: Simulation of Analog and Mixed-Signal Circuits — Kundert BCTM '98 Tutorial
 type: source
-id: source-kundert-bctm98-simulation-tutorial
-kind: derived-summary
+id: summaries/kundert-bctm98-simulation-tutorial
+kind: publication
 tags:
 - analog
 - mixed-signal

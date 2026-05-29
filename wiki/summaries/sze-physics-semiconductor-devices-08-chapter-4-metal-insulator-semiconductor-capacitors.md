@@ -2,8 +2,8 @@
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 4: Metal-Insulator-Semiconductor
   Capacitors'
 type: source
-id: source-sze-physics-semiconductor-devices-08-chapter-4-metal-insulator-semiconductor-capacitors
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-08-chapter-4-metal-insulator-semiconductor-capacitors
+kind: publication
 tags:
 - semiconductor
 - device-physics

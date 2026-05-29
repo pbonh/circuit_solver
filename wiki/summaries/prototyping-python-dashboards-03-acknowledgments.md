@@ -1,8 +1,8 @@
 ---
 title: Prototyping Python Dashboards — Acknowledgments
 type: source
-id: source-prototyping-python-dashboards-03-acknowledgments
-kind: derived-summary
+id: summaries/prototyping-python-dashboards-03-acknowledgments
+kind: publication
 tags:
 - python
 - dashboard

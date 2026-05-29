@@ -1,7 +1,7 @@
 ---
 title: Laplace Transform Simulator
 type: claim
-id: claim-laplace-transform-simulator
+id: concepts/laplace-transform-simulator
 tags:
 - vlsi
 - simulation
@@ -12,7 +12,11 @@ updated: 2026-05-15
 sources:
 - raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 1
+  contradicted: false
+  effective: 0.85
+  inputs_hash: 87cc4b0a8c906cba
 ---
 
 ## Definition

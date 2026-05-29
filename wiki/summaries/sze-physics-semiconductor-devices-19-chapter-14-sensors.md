@@ -1,8 +1,8 @@
 ---
 title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 14: Sensors'
 type: source
-id: source-sze-physics-semiconductor-devices-19-chapter-14-sensors
-kind: derived-summary
+id: summaries/sze-physics-semiconductor-devices-19-chapter-14-sensors
+kind: publication
 tags:
 - semiconductor
 - device-physics

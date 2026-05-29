@@ -1,8 +1,8 @@
 ---
 title: Modeling and Simulation of Systems — Preface
 type: source
-id: source-modeling-simulation-systems-00-preface
-kind: derived-summary
+id: summaries/modeling-simulation-systems-00-preface
+kind: publication
 tags:
 - simulation
 - modeling

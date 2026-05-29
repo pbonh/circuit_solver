@@ -2,8 +2,8 @@
 title: 'Modeling and Simulation of Systems — Chapter 1: Modeling and Simulation of
   Systems of Systems'
 type: source
-id: source-modeling-simulation-systems-03-1-modeling-and-simulation-of-systems-of-systems
-kind: derived-summary
+id: summaries/modeling-simulation-systems-03-1-modeling-and-simulation-of-systems-of-systems
+kind: publication
 tags:
 - simulation
 - modeling

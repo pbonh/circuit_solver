@@ -1,7 +1,7 @@
 ---
 title: Circuit Solver
 type: entity
-id: entity-vision-circuit-solver
+id: vision/circuit-solver
 tags:
 - circuit-solver
 - analog

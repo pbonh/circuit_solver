@@ -1,7 +1,7 @@
 ---
 title: Symbolic Cancellation
 type: claim
-id: claim-symbolic-cancellation
+id: concepts/symbolic-cancellation
 tags:
 - symbolic
 - analog
@@ -13,7 +13,11 @@ updated: 2026-05-15
 sources:
 - raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/08-4-determinant-decision-diagrams.txt
 confidence:
-  base: 0.85
+  base: 0.95
+  source_count: 1
+  contradicted: false
+  effective: 0.95
+  inputs_hash: 8331cbe4e16ebf56
 ---
 
 ## Definition

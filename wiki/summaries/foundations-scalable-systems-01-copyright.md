@@ -1,8 +1,8 @@
 ---
 title: Foundations of Scalable Systems — Copyright
 type: source
-id: source-foundations-scalable-systems-01-copyright
-kind: derived-summary
+id: summaries/foundations-scalable-systems-01-copyright
+kind: publication
 tags:
 - book-front-matter
 - foundational

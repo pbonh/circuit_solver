@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Chapter 10: Numerical Laplace
   Transform Inversion'
 type: source
-id: source-computer-methods-circuit-analysis-design-13-chapter-10-numerical-laplace-transform-inversion
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-13-chapter-10-numerical-laplace-transform-inversion
+kind: publication
 tags:
 - advanced
 - transient

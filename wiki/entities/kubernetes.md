@@ -1,7 +1,7 @@
 ---
 title: Kubernetes
 type: entity
-id: entity-kubernetes
+id: entities/kubernetes
 tags:
 - deployment
 - orchestration

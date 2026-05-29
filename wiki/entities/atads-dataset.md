@@ -1,7 +1,7 @@
 ---
 title: ATADS Dataset
 type: entity
-id: entity-atads-dataset
+id: entities/atads-dataset
 tags:
 - aviation
 - dataset

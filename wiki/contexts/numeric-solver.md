@@ -1,7 +1,7 @@
 ---
 title: Numeric Solver
 type: entity
-id: entity-context-numeric-solver
+id: contexts/numeric-solver
 tags:
 - solver
 - sparse-matrix

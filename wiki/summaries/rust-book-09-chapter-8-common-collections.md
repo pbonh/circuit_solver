@@ -1,8 +1,8 @@
 ---
 title: 'The Rust Programming Language — Chapter 8: Common Collections'
 type: source
-id: source-rust-book-09-chapter-8-common-collections
-kind: derived-summary
+id: summaries/rust-book-09-chapter-8-common-collections
+kind: publication
 tags:
 - rust
 - foundational

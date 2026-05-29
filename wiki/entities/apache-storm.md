@@ -1,7 +1,7 @@
 ---
 title: Apache Storm
 type: entity
-id: entity-apache-storm
+id: entities/apache-storm
 tags:
 - streaming
 - open-source

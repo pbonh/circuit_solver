@@ -2,8 +2,8 @@
 title: 'Computer Methods for Circuit Analysis and Design — Appendix D: Program for
   Network Analysis'
 type: source
-id: source-computer-methods-circuit-analysis-design-24-appendix-d-program-for-network-analysis
-kind: derived-summary
+id: summaries/computer-methods-circuit-analysis-design-24-appendix-d-program-for-network-analysis
+kind: publication
 tags:
 - software
 - foundational

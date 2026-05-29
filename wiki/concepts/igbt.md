@@ -1,7 +1,7 @@
 ---
 title: Insulated-Gate Bipolar Transistor (IGBT)
 type: claim
-id: claim-igbt
+id: concepts/igbt
 tags:
 - semiconductor
 - device-physics
@@ -15,7 +15,11 @@ sources:
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/00-preface.txt
 - raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/15-chapter-11-thyristors-and-power-devices.txt
 confidence:
-  base: 0.65
+  base: 0.85
+  source_count: 2
+  contradicted: false
+  effective: 0.884
+  inputs_hash: 48379ae317c01c10
 ---
 
 ## Definition

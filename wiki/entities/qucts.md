@@ -1,7 +1,7 @@
 ---
 title: QuCTS
 type: entity
-id: entity-qucts
+id: entities/qucts
 tags:
 - vlsi
 - clock

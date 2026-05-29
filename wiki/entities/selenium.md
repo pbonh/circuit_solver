@@ -1,7 +1,7 @@
 ---
 title: Selenium
 type: entity
-id: entity-selenium
+id: entities/selenium
 tags:
 - python
 - web

@@ -1,7 +1,7 @@
 ---
 title: Elasticsearch
 type: entity
-id: entity-elasticsearch
+id: entities/elasticsearch
 tags:
 - well-established
 - distributed-systems

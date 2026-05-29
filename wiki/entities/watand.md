@@ -1,7 +1,7 @@
 ---
 title: WATAND (Waterloo Analysis and Design)
 type: entity
-id: entity-watand
+id: entities/watand
 tags:
 - software
 - cad
