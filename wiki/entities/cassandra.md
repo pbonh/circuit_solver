@@ -1,11 +1,18 @@
 ---
-title: "Apache Cassandra"
+title: Apache Cassandra
 type: entity
-tags: [well-established, nosql, distributed-systems, lsm-tree, open-source]
+id: entity-cassandra
+tags:
+- well-established
+- nosql
+- distributed-systems
+- lsm-tree
+- open-source
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt"]
-confidence: medium
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt
 ---
 
 ## Overview

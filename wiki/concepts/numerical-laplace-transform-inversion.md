@@ -1,11 +1,19 @@
 ---
-title: "Numerical Laplace Transform Inversion"
-type: concept
-tags: [transient, analog, foundational, advanced, well-established]
+title: Numerical Laplace Transform Inversion
+type: claim
+id: claim-numerical-laplace-transform-inversion
+tags:
+- transient
+- analog
+- foundational
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,20 @@
 ---
-title: "Cargo"
-type: concept
-tags: [rust, cargo, foundational, tooling, well-established]
+title: Cargo
+type: claim
+id: claim-cargo
+tags:
+- rust
+- cargo
+- foundational
+- tooling
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/01-introduction.txt", "raw/rust_book/_txt/02-chapter-1-getting-started.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/01-introduction.txt
+- raw/rust_book/_txt/02-chapter-1-getting-started.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

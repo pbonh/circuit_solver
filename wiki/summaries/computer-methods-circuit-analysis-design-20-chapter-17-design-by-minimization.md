@@ -1,11 +1,18 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Chapter 17: Design by Minimization"
-type: summary
-tags: [optimization, analog, sensitivity, well-established, foundational]
+title: 'Computer Methods for Circuit Analysis and Design — Chapter 17: Design by Minimization'
+type: source
+id: source-computer-methods-circuit-analysis-design-20-chapter-17-design-by-minimization
+kind: derived-summary
+tags:
+- optimization
+- analog
+- sensitivity
+- well-established
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/20-chapter-17-design-by-minimization.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/20-chapter-17-design-by-minimization.txt
 ---
 
 ## Key Points

@@ -1,11 +1,18 @@
 ---
-title: "Frequency-Dependent Negative Resistance (FDNR)"
-type: concept
-tags: [analog, ac, device-model, well-established]
+title: Frequency-Dependent Negative Resistance (FDNR)
+type: claim
+id: claim-fdnr
+tags:
+- analog
+- ac
+- device-model
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

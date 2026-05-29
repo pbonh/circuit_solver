@@ -1,11 +1,18 @@
 ---
-title: "Rustup"
-type: concept
-tags: [rust, tooling, foundational, well-established]
+title: Rustup
+type: claim
+id: claim-rustup
+tags:
+- rust
+- tooling
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/02-chapter-1-getting-started.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/02-chapter-1-getting-started.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

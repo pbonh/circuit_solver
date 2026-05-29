@@ -1,11 +1,18 @@
 ---
-title: "Symbolic Function Generation (Interpolation-Based)"
-type: concept
-tags: [analog, ac, well-established, foundational]
+title: Symbolic Function Generation (Interpolation-Based)
+type: claim
+id: claim-symbolic-function-generation
+tags:
+- analog
+- ac
+- well-established
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/10-chapter-7-network-functions-in-the-frequency-domain.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/10-chapter-7-network-functions-in-the-frequency-domain.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

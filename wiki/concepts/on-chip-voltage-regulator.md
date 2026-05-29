@@ -1,11 +1,18 @@
 ---
-title: "On-Chip Voltage Regulator"
-type: concept
-tags: [vlsi, power-integrity, analog, well-established]
+title: On-Chip Voltage Regulator
+type: claim
+id: claim-on-chip-voltage-regulator
+tags:
+- vlsi
+- power-integrity
+- analog
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/11-8-placement-of-on-chip-distributed-voltage-regulators.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/11-8-placement-of-on-chip-distributed-voltage-regulators.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "Integer Overflow"
-type: concept
-tags: [rust, foundational, well-established]
+title: Integer Overflow
+type: claim
+id: claim-integer-overflow
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/04-chapter-3-common-programming-concepts.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/04-chapter-3-common-programming-concepts.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

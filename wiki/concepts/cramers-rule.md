@@ -1,11 +1,17 @@
 ---
-title: "Cramer's Rule"
-type: concept
-tags: [foundational, symbolic, linear-algebra]
+title: Cramer's Rule
+type: claim
+id: claim-cramers-rule
+tags:
+- foundational
+- symbolic
+- linear-algebra
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

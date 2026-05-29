@@ -1,11 +1,19 @@
 ---
-title: "Symbolic Cancellation"
-type: concept
-tags: [symbolic, analog, mna, pitfall, ddd]
+title: Symbolic Cancellation
+type: claim
+id: claim-symbolic-cancellation
+tags:
+- symbolic
+- analog
+- mna
+- pitfall
+- ddd
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/08-4-determinant-decision-diagrams.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/08-4-determinant-decision-diagrams.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

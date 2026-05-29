@@ -1,11 +1,17 @@
 ---
-title: "Mean Time to Failure (MTTF)"
-type: concept
-tags: [vlsi, reliability, well-established]
+title: Mean Time to Failure (MTTF)
+type: claim
+id: claim-mean-time-to-failure
+tags:
+- vlsi
+- reliability
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

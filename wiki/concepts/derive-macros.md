@@ -1,11 +1,19 @@
 ---
-title: "Derive Macros"
-type: concept
-tags: [rust, macros, foundational, well-established]
+title: Derive Macros
+type: claim
+id: claim-derive-macros
+tags:
+- rust
+- macros
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/06-chapter-5-using-structs-to-structure-related-data.txt", "raw/rust_book/_txt/24-appendix-c-derivable-traits.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/06-chapter-5-using-structs-to-structure-related-data.txt
+- raw/rust_book/_txt/24-appendix-c-derivable-traits.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

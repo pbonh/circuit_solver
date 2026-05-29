@@ -1,11 +1,19 @@
 ---
-title: "Dynamic Structure DEVS"
-type: concept
-tags: [simulation, modeling, devs, dynamic-structure, well-established]
+title: Dynamic Structure DEVS
+type: claim
+id: claim-dynamic-structure-devs
+tags:
+- simulation
+- modeling
+- devs
+- dynamic-structure
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/13-10-dynamic-structure-agent-modeling-and-publish-subscribe.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/13-10-dynamic-structure-agent-modeling-and-publish-subscribe.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,21 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 10: Dynamic Structure: Agent Modeling and Publish/Subscribe"
-type: summary
-tags: [simulation, modeling, devs, dynamic-structure, agent-based, publish-subscribe, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 10: Dynamic Structure: Agent
+  Modeling and Publish/Subscribe'
+type: source
+id: source-modeling-simulation-systems-13-10-dynamic-structure-agent-modeling-and-publish-subscribe
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- dynamic-structure
+- agent-based
+- publish-subscribe
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/13-10-dynamic-structure-agent-modeling-and-publish-subscribe.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/13-10-dynamic-structure-agent-modeling-and-publish-subscribe.txt
 ---
 
 ## Key Points

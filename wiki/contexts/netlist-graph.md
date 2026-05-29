@@ -1,14 +1,18 @@
 ---
-title: "Netlist Graph"
-type: context
-tags: [netlist, graph, circuit-solver, bounded-context]
+title: Netlist Graph
+type: entity
+id: entity-context-netlist-graph
+tags:
+- netlist
+- graph
+- circuit-solver
+- bounded-context
 created: 2026-05-17
 updated: 2026-05-17
 sources:
-  - "concepts/graph"
-  - "concepts/modified-nodal-analysis"
-  - "concepts/branch-stamping"
-confidence: high
+- concepts/graph
+- concepts/modified-nodal-analysis
+- concepts/branch-stamping
 ---
 
 ## Model

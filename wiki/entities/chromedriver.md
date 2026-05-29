@@ -1,11 +1,16 @@
 ---
-title: "ChromeDriver"
+title: ChromeDriver
 type: entity
-tags: [web, automation, browser, selenium]
+id: entity-chromedriver
+tags:
+- web
+- automation
+- browser
+- selenium
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/07-chapter-3-working-with-online-data.txt"]
-confidence: medium
+sources:
+- raw/PrototypingPythonDashboards/_txt/07-chapter-3-working-with-online-data.txt
 ---
 
 ## Overview

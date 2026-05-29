@@ -1,11 +1,18 @@
 ---
-title: "Method of Means and Medians (MMM)"
-type: concept
-tags: [vlsi, clock, algorithm, well-established]
+title: Method of Means and Medians (MMM)
+type: claim
+id: claim-method-of-means-and-medians
+tags:
+- vlsi
+- clock
+- algorithm
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

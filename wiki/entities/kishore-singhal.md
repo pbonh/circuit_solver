@@ -1,11 +1,15 @@
 ---
-title: "Kishore Singhal"
+title: Kishore Singhal
 type: entity
-tags: [author, foundational, well-established]
+id: entity-kishore-singhal
+tags:
+- author
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/00-cover-and-front-matter.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/00-cover-and-front-matter.txt
 ---
 
 ## Overview

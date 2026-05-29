@@ -1,11 +1,14 @@
 ---
-title: "Amazon Web Services (AWS)"
+title: Amazon Web Services (AWS)
 type: entity
-tags: [cloud, infrastructure]
+id: entity-aws
+tags:
+- cloud
+- infrastructure
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt
 ---
 
 ## Overview

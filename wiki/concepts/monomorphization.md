@@ -1,11 +1,18 @@
 ---
-title: "Monomorphization"
-type: concept
-tags: [rust, foundational, performance, well-established]
+title: Monomorphization
+type: claim
+id: claim-monomorphization
+tags:
+- rust
+- foundational
+- performance
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Charge-Coupled Device (CCD)"
-type: concept
-tags: [semiconductor, device-physics, photonic, mosfet, well-established]
+title: Charge-Coupled Device (CCD)
+type: claim
+id: claim-charge-coupled-device
+tags:
+- semiconductor
+- device-physics
+- photonic
+- mosfet
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/18-chapter-13-photodetectors-and-solar-cells.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/18-chapter-13-photodetectors-and-solar-cells.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

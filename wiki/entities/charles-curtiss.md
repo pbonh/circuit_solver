@@ -1,11 +1,18 @@
 ---
-title: "Charles F. Curtiss"
+title: Charles F. Curtiss
 type: entity
-tags: [ode, numerical-integration, foundational, stiff]
+id: entity-charles-curtiss
+tags:
+- ode
+- numerical-integration
+- foundational
+- stiff
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/03-chapter-iv-stiff-problems-one-step-methods.txt", "raw/solving_ordinary_differential_equations_ii/_txt/04-chapter-v-multistep-methods-for-stiff-problems.txt", "raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/03-chapter-iv-stiff-problems-one-step-methods.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/04-chapter-v-multistep-methods-for-stiff-problems.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt
 ---
 
 ## Overview

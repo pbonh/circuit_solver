@@ -1,11 +1,17 @@
 ---
-title: "Flask"
+title: Flask
 type: entity
-tags: [python, web, wsgi, dashboard, framework]
+id: entity-flask
+tags:
+- python
+- web
+- wsgi
+- dashboard
+- framework
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt
 ---
 
 ## Overview

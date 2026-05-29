@@ -1,11 +1,19 @@
 ---
-title: "Krylov Subspace Model Order Reduction"
-type: concept
-tags: [mor, interconnect, ac, foundational, vlsi]
+title: Krylov Subspace Model Order Reduction
+type: claim
+id: claim-krylov-subspace-mor
+tags:
+- mor
+- interconnect
+- ac
+- foundational
+- vlsi
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

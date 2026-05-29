@@ -1,11 +1,20 @@
 ---
-title: "Mutually Coupled Inductors"
-type: concept
-tags: [foundational, analog, ac, transient, well-established, device-model]
+title: Mutually Coupled Inductors
+type: claim
+id: claim-mutually-coupled-inductors
+tags:
+- foundational
+- analog
+- ac
+- transient
+- well-established
+- device-model
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

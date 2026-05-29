@@ -1,11 +1,19 @@
 ---
-title: "Semiconductor Device"
-type: concept
-tags: [semiconductor, device-physics, foundational, well-established]
+title: Semiconductor Device
+type: claim
+id: claim-semiconductor-device
+tags:
+- semiconductor
+- device-physics
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/00-preface.txt", "raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/00-preface.txt
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

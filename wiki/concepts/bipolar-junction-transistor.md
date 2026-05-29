@@ -1,11 +1,20 @@
 ---
-title: "Bipolar Junction Transistor (BJT)"
-type: concept
-tags: [semiconductor, device-physics, bjt, analog, foundational, well-established]
+title: Bipolar Junction Transistor (BJT)
+type: claim
+id: claim-bipolar-junction-transistor
+tags:
+- semiconductor
+- device-physics
+- bjt
+- analog
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

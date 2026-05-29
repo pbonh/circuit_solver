@@ -1,11 +1,18 @@
 ---
-title: "Singular Values"
-type: concept
-tags: [foundational, math, numerical, well-established]
+title: Singular Values
+type: claim
+id: claim-singular-values
+tags:
+- foundational
+- math
+- numerical
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/26-appendix-f-selected-mathematical-topics.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/26-appendix-f-selected-mathematical-topics.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

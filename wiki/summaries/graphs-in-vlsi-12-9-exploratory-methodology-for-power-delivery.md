@@ -1,11 +1,18 @@
 ---
-title: "Graphs in VLSI — Chapter 9: Exploratory Methodology for Power Delivery"
-type: summary
-tags: [vlsi, power-integrity, optimization, novel, simulation]
+title: 'Graphs in VLSI — Chapter 9: Exploratory Methodology for Power Delivery'
+type: source
+id: source-graphs-in-vlsi-12-9-exploratory-methodology-for-power-delivery
+kind: derived-summary
+tags:
+- vlsi
+- power-integrity
+- optimization
+- novel
+- simulation
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt
 ---
 
 ## Key Points

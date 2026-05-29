@@ -1,11 +1,18 @@
 ---
-title: "Task Batching"
-type: concept
-tags: [distributed-systems, scheduling, optimization, well-established]
+title: Task Batching
+type: claim
+id: claim-task-batching
+tags:
+- distributed-systems
+- scheduling
+- optimization
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt"]
-confidence: medium
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

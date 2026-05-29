@@ -1,11 +1,18 @@
 ---
-title: "Pandas"
+title: Pandas
 type: entity
-tags: [python, pandas, dataframe, data-analysis, foundational, well-established]
+id: entity-pandas
+tags:
+- python
+- pandas
+- dataframe
+- data-analysis
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt
 ---
 
 ## Overview

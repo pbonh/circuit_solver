@@ -1,11 +1,18 @@
 ---
-title: "C. W. Gear"
+title: C. W. Gear
 type: entity
-tags: [ode, numerical-integration, foundational, dae]
+id: entity-c-w-gear
+tags:
+- ode
+- numerical-integration
+- foundational
+- dae
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/04-chapter-v-multistep-methods-for-stiff-problems.txt", "raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt", "raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/04-chapter-v-multistep-methods-for-stiff-problems.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt
 ---
 
 ## Overview

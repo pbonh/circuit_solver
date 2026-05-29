@@ -1,11 +1,20 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 1: Modeling and Simulation of Systems of Systems"
-type: summary
-tags: [simulation, modeling, foundational, devs, systems-of-systems, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 1: Modeling and Simulation of
+  Systems of Systems'
+type: source
+id: source-modeling-simulation-systems-03-1-modeling-and-simulation-of-systems-of-systems
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- foundational
+- devs
+- systems-of-systems
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/03-1-modeling-and-simulation-of-systems-of-systems.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/03-1-modeling-and-simulation-of-systems-of-systems.txt
 ---
 
 ## Key Points

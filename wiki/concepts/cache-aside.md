@@ -1,11 +1,17 @@
 ---
-title: "Cache-Aside Pattern"
-type: concept
-tags: [caching, foundational, well-established]
+title: Cache-Aside Pattern
+type: claim
+id: claim-cache-aside
+tags:
+- caching
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

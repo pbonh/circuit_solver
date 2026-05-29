@@ -1,11 +1,18 @@
 ---
-title: "Adjoint Method (for Sensitivity Computation)"
-type: concept
-tags: [sensitivity, foundational, well-established, analog]
+title: Adjoint Method (for Sensitivity Computation)
+type: claim
+id: claim-adjoint-method
+tags:
+- sensitivity
+- foundational
+- well-established
+- analog
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

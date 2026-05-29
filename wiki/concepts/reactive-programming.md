@@ -1,11 +1,18 @@
 ---
-title: "Reactive Programming"
-type: concept
-tags: [python, dashboard, reactive-programming, foundational]
+title: Reactive Programming
+type: claim
+id: claim-reactive-programming
+tags:
+- python
+- dashboard
+- reactive-programming
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/06-chapter-2-reactive-programming-with-plotly-and-dash.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/06-chapter-2-reactive-programming-with-plotly-and-dash.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

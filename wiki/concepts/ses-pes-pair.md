@@ -1,11 +1,19 @@
 ---
-title: "SesPesPair"
-type: concept
-tags: [simulation, modeling, ses, xml, well-established]
+title: SesPesPair
+type: claim
+id: claim-ses-pes-pair
+tags:
+- simulation
+- modeling
+- ses
+- xml
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/14-11-interest-based-information-exchange-mappings-and-models.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/14-11-interest-based-information-exchange-mappings-and-models.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

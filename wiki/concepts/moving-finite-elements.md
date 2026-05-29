@@ -1,11 +1,19 @@
 ---
-title: "Moving Finite Elements"
-type: concept
-tags: [pde, dae, adaptive, foundational, well-established]
+title: Moving Finite Elements
+type: claim
+id: claim-moving-finite-elements
+tags:
+- pde
+- dae
+- adaptive
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.65
 ---
 
 ## Definition

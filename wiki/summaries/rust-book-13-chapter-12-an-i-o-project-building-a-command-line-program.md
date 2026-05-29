@@ -1,11 +1,18 @@
 ---
-title: "The Rust Programming Language — Chapter 12: An I/O Project: Building a Command-Line Program"
-type: summary
-tags: [rust, project, cli, error-handling]
+title: 'The Rust Programming Language — Chapter 12: An I/O Project: Building a Command-Line
+  Program'
+type: source
+id: source-rust-book-13-chapter-12-an-i-o-project-building-a-command-line-program
+kind: derived-summary
+tags:
+- rust
+- project
+- cli
+- error-handling
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/13-chapter-12-an-i-o-project-building-a-command-line-program.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/13-chapter-12-an-i-o-project-building-a-command-line-program.txt
 ---
 
 ## Key Points

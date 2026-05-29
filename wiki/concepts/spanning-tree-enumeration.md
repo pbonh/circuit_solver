@@ -1,11 +1,18 @@
 ---
-title: "Spanning-Tree Enumeration"
-type: concept
-tags: [graph, foundational, symbolic, enumeration]
+title: Spanning-Tree Enumeration
+type: claim
+id: claim-spanning-tree-enumeration
+tags:
+- graph
+- foundational
+- symbolic
+- enumeration
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

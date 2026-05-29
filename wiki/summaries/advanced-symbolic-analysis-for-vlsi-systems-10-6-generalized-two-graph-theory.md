@@ -1,11 +1,20 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Chapter 6: Generalized Two-Graph Theory"
-type: summary
-tags: [graph, symbolic, analog, foundational, advanced, two-graph]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 6: Generalized Two-Graph
+  Theory'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-10-6-generalized-two-graph-theory
+kind: derived-summary
+tags:
+- graph
+- symbolic
+- analog
+- foundational
+- advanced
+- two-graph
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/10-6-generalized-two-graph-theory.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/10-6-generalized-two-graph-theory.txt
 ---
 
 ## Key Points

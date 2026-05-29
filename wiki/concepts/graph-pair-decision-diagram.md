@@ -1,11 +1,20 @@
 ---
-title: "Graph-Pair Decision Diagram (GPDD)"
-type: concept
-tags: [gpdd, bdd, graph, symbolic, advanced, analog]
+title: Graph-Pair Decision Diagram (GPDD)
+type: claim
+id: claim-graph-pair-decision-diagram
+tags:
+- gpdd
+- bdd
+- graph
+- symbolic
+- advanced
+- analog
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "NP-Completeness"
-type: concept
-tags: [algorithm, foundational, well-established, np-hard]
+title: NP-Completeness
+type: claim
+id: claim-np-completeness
+tags:
+- algorithm
+- foundational
+- well-established
+- np-hard
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

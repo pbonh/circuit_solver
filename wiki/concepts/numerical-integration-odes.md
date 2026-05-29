@@ -1,11 +1,18 @@
 ---
-title: "Numerical Integration of ODEs"
-type: concept
-tags: [transient, numerical-integration, foundational, well-established]
+title: Numerical Integration of ODEs
+type: claim
+id: claim-numerical-integration-odes
+tags:
+- transient
+- numerical-integration
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/12-chapter-9-introduction-to-numerical-integration-of-differential-equations.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/12-chapter-9-introduction-to-numerical-integration-of-differential-equations.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

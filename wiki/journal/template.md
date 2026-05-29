@@ -1,11 +1,14 @@
 ---
-title: "Journal Entry — YYYY-MM-DD"
-type: journal
-tags: [journal]
+title: Journal Entry — YYYY-MM-DD
+type: source
+id: source-journal-template
+kind: journal
+tags:
+- journal
 date: YYYY-MM-DD
 updated: YYYY-MM-DD
 concepts_used: []
-result: ""
+result: ''
 ---
 
 # Journal Entry — YYYY-MM-DD

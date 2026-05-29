@@ -1,11 +1,20 @@
 ---
-title: "EMF-DEVS"
-type: concept
-tags: [simulation, modeling, devs, emf, eclipse, emerging]
+title: EMF-DEVS
+type: claim
+id: claim-emf-devs
+tags:
+- simulation
+- modeling
+- devs
+- emf
+- eclipse
+- emerging
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/15-12-languages-for-constructing-devs-models.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/15-12-languages-for-constructing-devs-models.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

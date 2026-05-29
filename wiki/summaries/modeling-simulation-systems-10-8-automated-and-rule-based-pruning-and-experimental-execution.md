@@ -1,11 +1,20 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 8: Automated and Rule-Based Pruning and Experimental Execution"
-type: summary
-tags: [simulation, modeling, ses, pruning, experimental-frames, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 8: Automated and Rule-Based Pruning
+  and Experimental Execution'
+type: source
+id: source-modeling-simulation-systems-10-8-automated-and-rule-based-pruning-and-experimental-execution
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- ses
+- pruning
+- experimental-frames
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/10-8-automated-and-rule-based-pruning-and-experimental-execution.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/10-8-automated-and-rule-based-pruning-and-experimental-execution.txt
 ---
 
 ## Key Points

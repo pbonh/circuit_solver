@@ -1,11 +1,18 @@
 ---
-title: "Data Science"
-type: concept
-tags: [data-analysis, foundational, well-established]
+title: Data Science
+type: claim
+id: claim-data-science
+tags:
+- data-analysis
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/02-about-the-technical-reviewer.txt", "raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt"]
-confidence: medium
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/02-about-the-technical-reviewer.txt
+- raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

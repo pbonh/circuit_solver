@@ -1,11 +1,18 @@
 ---
-title: "Stiff Systems"
-type: concept
-tags: [transient, numerical-integration, foundational, well-established]
+title: Stiff Systems
+type: claim
+id: claim-stiff-systems
+tags:
+- transient
+- numerical-integration
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/12-chapter-9-introduction-to-numerical-integration-of-differential-equations.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/12-chapter-9-introduction-to-numerical-integration-of-differential-equations.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

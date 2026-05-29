@@ -1,11 +1,18 @@
 ---
-title: "Hierarchical Matrix (H-Matrix)"
-type: concept
-tags: [algorithm, linear-algebra, sparse-matrix, well-established]
+title: Hierarchical Matrix (H-Matrix)
+type: claim
+id: claim-hierarchical-matrix
+tags:
+- algorithm
+- linear-algebra
+- sparse-matrix
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

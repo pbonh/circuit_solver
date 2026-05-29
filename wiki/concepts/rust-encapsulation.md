@@ -1,11 +1,17 @@
 ---
-title: "Rust Encapsulation"
-type: concept
-tags: [rust, foundational, well-established]
+title: Rust Encapsulation
+type: claim
+id: claim-rust-encapsulation
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/18-chapter-17-object-oriented-programming-features-of-rust.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/18-chapter-17-object-oriented-programming-features-of-rust.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

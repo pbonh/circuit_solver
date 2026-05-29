@@ -1,11 +1,17 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd Ed., 2006)"
+title: Physics of Semiconductor Devices (Sze & Ng, 3rd Ed., 2006)
 type: entity
-tags: [semiconductor, device-physics, textbook, foundational, well-established]
+id: entity-sze-physics-semiconductor-devices-book
+tags:
+- semiconductor
+- device-physics
+- textbook
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/00-preface.txt
 ---
 
 ## Overview

@@ -1,11 +1,18 @@
 ---
-title: "H-Tree"
-type: concept
-tags: [vlsi, clock, foundational, well-established]
+title: H-Tree
+type: claim
+id: claim-h-tree
+tags:
+- vlsi
+- clock
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

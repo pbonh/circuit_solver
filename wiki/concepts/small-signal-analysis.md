@@ -1,11 +1,19 @@
 ---
-title: "Small-Signal Analysis"
-type: concept
-tags: [analog, ac, noise, foundational, well-established]
+title: Small-Signal Analysis
+type: claim
+id: claim-small-signal-analysis
+tags:
+- analog
+- ac
+- noise
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

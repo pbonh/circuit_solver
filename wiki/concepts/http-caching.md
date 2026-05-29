@@ -1,11 +1,17 @@
 ---
-title: "HTTP Caching"
-type: concept
-tags: [caching, networking, well-established]
+title: HTTP Caching
+type: claim
+id: claim-http-caching
+tags:
+- caching
+- networking
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

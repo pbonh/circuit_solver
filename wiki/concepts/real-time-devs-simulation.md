@@ -1,11 +1,20 @@
 ---
-title: "Real-Time DEVS Simulation"
-type: concept
-tags: [simulation, modeling, devs, real-time, distributed, well-established]
+title: Real-Time DEVS Simulation
+type: claim
+id: claim-real-time-devs-simulation
+tags:
+- simulation
+- modeling
+- devs
+- real-time
+- distributed
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/12-9-devs-simulation-protocol.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/12-9-devs-simulation-protocol.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

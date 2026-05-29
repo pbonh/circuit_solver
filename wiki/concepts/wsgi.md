@@ -1,11 +1,17 @@
 ---
-title: "WSGI"
-type: concept
-tags: [python, web, deployment]
+title: WSGI
+type: claim
+id: claim-wsgi
+tags:
+- python
+- web
+- deployment
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

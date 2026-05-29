@@ -1,11 +1,18 @@
 ---
-title: "FET Model (JFET, MESFET, MOSFET)"
-type: concept
-tags: [device-model, analog, mosfet, well-established]
+title: FET Model (JFET, MESFET, MOSFET)
+type: claim
+id: claim-fet-model
+tags:
+- device-model
+- analog
+- mosfet
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

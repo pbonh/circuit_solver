@@ -1,11 +1,19 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 6: Aspects and Multi-aspects"
-type: summary
-tags: [simulation, modeling, ses, multi-aspect, foundational, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 6: Aspects and Multi-aspects'
+type: source
+id: source-modeling-simulation-systems-08-6-aspects-and-multi-aspects
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- ses
+- multi-aspect
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/08-6-aspects-and-multi-aspects.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/08-6-aspects-and-multi-aspects.txt
 ---
 
 ## Key Points

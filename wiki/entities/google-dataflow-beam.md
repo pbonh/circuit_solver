@@ -1,11 +1,17 @@
 ---
-title: "Google Cloud Dataflow / Apache Beam"
+title: Google Cloud Dataflow / Apache Beam
 type: entity
-tags: [well-established, distributed-systems, streaming, batch]
+id: entity-google-dataflow-beam
+tags:
+- well-established
+- distributed-systems
+- streaming
+- batch
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt"]
-confidence: medium
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt
 ---
 
 ## Overview

@@ -1,11 +1,19 @@
 ---
-title: "Symbolic Stamp"
-type: concept
-tags: [hierarchical, symbolic, analog, advanced, multi-port]
+title: Symbolic Stamp
+type: claim
+id: claim-symbolic-stamp
+tags:
+- hierarchical
+- symbolic
+- analog
+- advanced
+- multi-port
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/12-8-hierarchical-analysis-methods.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/12-8-hierarchical-analysis-methods.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,16 @@
 ---
-title: "Sliding Window"
-type: concept
-tags: [streaming, well-established]
+title: Sliding Window
+type: claim
+id: claim-sliding-window
+tags:
+- streaming
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

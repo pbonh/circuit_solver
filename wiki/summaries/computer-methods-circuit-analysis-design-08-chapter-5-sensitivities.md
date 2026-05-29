@@ -1,11 +1,18 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Chapter 5: Sensitivities"
-type: summary
-tags: [foundational, analog, sensitivity, ac, well-established]
+title: 'Computer Methods for Circuit Analysis and Design — Chapter 5: Sensitivities'
+type: source
+id: source-computer-methods-circuit-analysis-design-08-chapter-5-sensitivities
+kind: derived-summary
+tags:
+- foundational
+- analog
+- sensitivity
+- ac
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/08-chapter-5-sensitivities.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/08-chapter-5-sensitivities.txt
 ---
 
 ## Key Points

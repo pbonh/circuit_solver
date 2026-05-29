@@ -1,11 +1,18 @@
 ---
-title: "Laurent Jay"
+title: Laurent Jay
 type: entity
-tags: [ode, numerical-integration, foundational, dae, symplectic]
+id: entity-laurent-jay
+tags:
+- ode
+- numerical-integration
+- foundational
+- dae
+- symplectic
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt", "raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt
 ---
 
 ## Overview

@@ -1,11 +1,18 @@
 ---
-title: "Fourier Analysis"
-type: concept
-tags: [analog, transient, foundational, well-established]
+title: Fourier Analysis
+type: claim
+id: claim-fourier-analysis
+tags:
+- analog
+- transient
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

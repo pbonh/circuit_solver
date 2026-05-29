@@ -1,11 +1,19 @@
 ---
-title: "MODFET / HEMT (Modulation-Doped FET)"
-type: concept
-tags: [semiconductor, device-physics, rf, advanced, well-established]
+title: MODFET / HEMT (Modulation-Doped FET)
+type: claim
+id: claim-modfet
+tags:
+- semiconductor
+- device-physics
+- rf
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/10-chapter-7-jfets-mesfets-and-modfets.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/10-chapter-7-jfets-mesfets-and-modfets.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

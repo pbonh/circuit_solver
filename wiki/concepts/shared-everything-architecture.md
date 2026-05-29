@@ -1,11 +1,17 @@
 ---
-title: "Shared-Everything Architecture"
-type: concept
-tags: [distributed-systems, databases, well-established]
+title: Shared-Everything Architecture
+type: claim
+id: claim-shared-everything-architecture
+tags:
+- distributed-systems
+- databases
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

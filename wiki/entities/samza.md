@@ -1,11 +1,17 @@
 ---
-title: "Apache Samza"
+title: Apache Samza
 type: entity
-tags: [well-established, distributed-systems, streaming, open-source]
+id: entity-samza
+tags:
+- well-established
+- distributed-systems
+- streaming
+- open-source
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt"]
-confidence: medium
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt
 ---
 
 ## Overview

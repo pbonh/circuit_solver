@@ -1,11 +1,17 @@
 ---
-title: "Dead-Letter Queue"
-type: concept
-tags: [messaging, fault-tolerance, well-established]
+title: Dead-Letter Queue
+type: claim
+id: claim-dead-letter-queue
+tags:
+- messaging
+- fault-tolerance
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

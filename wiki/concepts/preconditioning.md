@@ -1,11 +1,18 @@
 ---
-title: "Preconditioning"
-type: concept
-tags: [algorithm, linear-algebra, sparse-matrix, well-established]
+title: Preconditioning
+type: claim
+id: claim-preconditioning
+tags:
+- algorithm
+- linear-algebra
+- sparse-matrix
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

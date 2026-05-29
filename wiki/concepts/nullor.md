@@ -1,11 +1,18 @@
 ---
-title: "Nullor"
-type: concept
-tags: [analog, pathological-element, foundational, behavioral]
+title: Nullor
+type: claim
+id: claim-nullor
+tags:
+- analog
+- pathological-element
+- foundational
+- behavioral
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

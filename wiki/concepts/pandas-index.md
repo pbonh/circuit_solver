@@ -1,11 +1,18 @@
 ---
-title: "Pandas Index"
-type: concept
-tags: [python, pandas, foundational, well-established]
+title: Pandas Index
+type: claim
+id: claim-pandas-index
+tags:
+- python
+- pandas
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

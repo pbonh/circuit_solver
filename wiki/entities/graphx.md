@@ -1,11 +1,18 @@
 ---
-title: "GraphX"
+title: GraphX
 type: entity
-tags: [graph, distributed-systems, big-data, graph-processing, spark, well-established]
+id: entity-graphx
+tags:
+- graph
+- distributed-systems
+- big-data
+- graph-processing
+- spark
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt"]
-confidence: medium
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt
 ---
 
 ## Overview

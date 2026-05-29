@@ -1,11 +1,17 @@
 ---
-title: "Equivalence Cover"
-type: concept
-tags: [graph, np-hard, advanced]
+title: Equivalence Cover
+type: claim
+id: claim-equivalence-cover
+tags:
+- graph
+- np-hard
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

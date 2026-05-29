@@ -1,11 +1,16 @@
 ---
-title: "T-Test"
-type: concept
-tags: [statistics, well-established]
+title: T-Test
+type: claim
+id: claim-t-test
+tags:
+- statistics
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

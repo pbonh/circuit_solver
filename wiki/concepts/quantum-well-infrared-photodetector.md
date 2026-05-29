@@ -1,11 +1,20 @@
 ---
-title: "Quantum-Well Infrared Photodetector (QWIP)"
-type: concept
-tags: [semiconductor, device-physics, photonic, heterojunction, advanced, well-established]
+title: Quantum-Well Infrared Photodetector (QWIP)
+type: claim
+id: claim-quantum-well-infrared-photodetector
+tags:
+- semiconductor
+- device-physics
+- photonic
+- heterojunction
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/18-chapter-13-photodetectors-and-solar-cells.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/18-chapter-13-photodetectors-and-solar-cells.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

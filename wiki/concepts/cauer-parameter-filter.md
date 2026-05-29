@@ -1,11 +1,18 @@
 ---
-title: "Cauer-Parameter (Elliptic) Filter"
-type: concept
-tags: [analog, ac, well-established, filter]
+title: Cauer-Parameter (Elliptic) Filter
+type: claim
+id: claim-cauer-parameter-filter
+tags:
+- analog
+- ac
+- well-established
+- filter
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

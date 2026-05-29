@@ -1,11 +1,20 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Chapter 16: Time-Domain Sensitivities and Steady State"
-type: summary
-tags: [advanced, transient, sensitivity, analog, well-established, optimization]
+title: 'Computer Methods for Circuit Analysis and Design — Chapter 16: Time-Domain
+  Sensitivities and Steady State'
+type: source
+id: source-computer-methods-circuit-analysis-design-19-chapter-16-time-domain-sensitivities-and-steady-state
+kind: derived-summary
+tags:
+- advanced
+- transient
+- sensitivity
+- analog
+- well-established
+- optimization
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/19-chapter-16-time-domain-sensitivities-and-steady-state.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/19-chapter-16-time-domain-sensitivities-and-steady-state.txt
 ---
 
 ## Key Points

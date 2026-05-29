@@ -1,11 +1,19 @@
 ---
-title: "Change Data Capture (CDC)"
-type: concept
-tags: [well-established, distributed-systems, streaming, integration]
+title: Change Data Capture (CDC)
+type: claim
+id: claim-change-data-capture
+tags:
+- well-established
+- distributed-systems
+- streaming
+- integration
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

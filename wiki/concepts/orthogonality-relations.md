@@ -1,11 +1,19 @@
 ---
-title: "Orthogonality Relations (B Q^T = 0)"
-type: concept
-tags: [foundational, graph, analog, well-established, math]
+title: Orthogonality Relations (B Q^T = 0)
+type: claim
+id: claim-orthogonality-relations
+tags:
+- foundational
+- graph
+- analog
+- well-established
+- math
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/06-chapter-3-graph-theoretic-formulation-of-network-equations.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/06-chapter-3-graph-theoretic-formulation-of-network-equations.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

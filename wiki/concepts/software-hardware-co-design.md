@@ -1,11 +1,20 @@
 ---
-title: "Software/Hardware Co-Design"
-type: concept
-tags: [simulation, modeling, co-design, hardware, software, well-established]
+title: Software/Hardware Co-Design
+type: claim
+id: claim-software-hardware-co-design
+tags:
+- simulation
+- modeling
+- co-design
+- hardware
+- software
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/19-15-cloud-system-simulation-modeling.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/19-15-cloud-system-simulation-modeling.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

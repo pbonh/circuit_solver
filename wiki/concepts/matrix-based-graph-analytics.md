@@ -1,11 +1,19 @@
 ---
-title: "Matrix-Based Graph Analytics"
-type: concept
-tags: [graph, sparse-matrix, big-data, analytics, well-established]
+title: Matrix-Based Graph Analytics
+type: claim
+id: claim-matrix-based-graph-analytics
+tags:
+- graph
+- sparse-matrix
+- big-data
+- analytics
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

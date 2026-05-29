@@ -1,11 +1,18 @@
 ---
-title: "Designing Data-Intensive Applications — Preface"
-type: summary
-tags: [foundational, well-established, distributed-systems, preface]
+title: Designing Data-Intensive Applications — Preface
+type: source
+id: source-ddia-02-preface
+kind: derived-summary
+tags:
+- foundational
+- well-established
+- distributed-systems
+- preface
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/02-preface.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/02-preface.txt
 ---
 
 ## Key Points

@@ -1,11 +1,17 @@
 ---
-title: "Guide to Graph Algorithms — Preface"
-type: summary
-tags: [graph, algorithm, foundational, well-established]
+title: Guide to Graph Algorithms — Preface
+type: source
+id: source-guide-to-graph-algorithms-01-preface
+kind: derived-summary
+tags:
+- graph
+- algorithm
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/01-preface.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/01-preface.txt
 ---
 
 ## Key Points

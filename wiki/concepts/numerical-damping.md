@@ -1,11 +1,17 @@
 ---
-title: "Numerical Damping"
-type: concept
-tags: [analog, transient, well-established]
+title: Numerical Damping
+type: claim
+id: claim-numerical-damping
+tags:
+- analog
+- transient
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

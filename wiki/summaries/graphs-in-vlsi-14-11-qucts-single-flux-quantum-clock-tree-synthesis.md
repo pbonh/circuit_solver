@@ -1,11 +1,20 @@
 ---
-title: "Graphs in VLSI — Chapter 11: QuCTS — single flux Quantum Clock Tree Synthesis"
-type: summary
-tags: [vlsi, superconductive, clock, synchronization, novel, sfq, tool]
+title: 'Graphs in VLSI — Chapter 11: QuCTS — single flux Quantum Clock Tree Synthesis'
+type: source
+id: source-graphs-in-vlsi-14-11-qucts-single-flux-quantum-clock-tree-synthesis
+kind: derived-summary
+tags:
+- vlsi
+- superconductive
+- clock
+- synchronization
+- novel
+- sfq
+- tool
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt
 ---
 
 ## Key Points

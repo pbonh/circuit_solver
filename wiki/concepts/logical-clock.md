@@ -1,11 +1,17 @@
 ---
-title: "Logical Clock"
-type: concept
-tags: [distributed-systems, foundational, well-established]
+title: Logical Clock
+type: claim
+id: claim-logical-clock
+tags:
+- distributed-systems
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

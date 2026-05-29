@@ -1,11 +1,18 @@
 ---
-title: "Conflict-Free Replicated Data Types (CRDT)"
-type: concept
-tags: [distributed-systems, consistency, advanced, emerging]
+title: Conflict-Free Replicated Data Types (CRDT)
+type: claim
+id: claim-crdt
+tags:
+- distributed-systems
+- consistency
+- advanced
+- emerging
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

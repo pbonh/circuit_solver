@@ -1,11 +1,18 @@
 ---
-title: "Incidence Matrix"
-type: concept
-tags: [graph, sparse-matrix, foundational, well-established]
+title: Incidence Matrix
+type: claim
+id: claim-incidence-matrix
+tags:
+- graph
+- sparse-matrix
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "IR Drop Analysis"
-type: concept
-tags: [vlsi, power-integrity, analysis, graph, well-established]
+title: IR Drop Analysis
+type: claim
+id: claim-ir-drop-analysis
+tags:
+- vlsi
+- power-integrity
+- analysis
+- graph
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/00-preface.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/00-preface.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Data Levels (Nominal / Ordinal / Interval / Ratio)"
-type: concept
-tags: [statistics, data-analysis, foundational, well-established]
+title: Data Levels (Nominal / Ordinal / Interval / Ratio)
+type: claim
+id: claim-data-levels
+tags:
+- statistics
+- data-analysis
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/08-chapter-4-descriptive-data-analysis-basics.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/08-chapter-4-descriptive-data-analysis-basics.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

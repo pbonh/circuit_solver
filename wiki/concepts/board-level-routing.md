@@ -1,11 +1,19 @@
 ---
-title: "Board-Level Routing"
-type: concept
-tags: [vlsi, power-integrity, routing, well-established, board]
+title: Board-Level Routing
+type: claim
+id: claim-board-level-routing
+tags:
+- vlsi
+- power-integrity
+- routing
+- well-established
+- board
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

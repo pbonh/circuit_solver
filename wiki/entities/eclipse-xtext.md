@@ -1,11 +1,16 @@
 ---
-title: "Eclipse / Xtext"
+title: Eclipse / Xtext
 type: entity
-tags: [tooling, ide, dsl, well-established]
+id: entity-eclipse-xtext
+tags:
+- tooling
+- ide
+- dsl
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/04-2-devs-integrated-development-environments.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/04-2-devs-integrated-development-environments.txt
 ---
 
 ## Overview

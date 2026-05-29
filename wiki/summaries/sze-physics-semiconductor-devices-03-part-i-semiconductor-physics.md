@@ -1,11 +1,19 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Part I: Semiconductor Physics"
-type: summary
-tags: [semiconductor, device-physics, foundational, well-established, overview]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Part I: Semiconductor
+  Physics'
+type: source
+id: source-sze-physics-semiconductor-devices-03-part-i-semiconductor-physics
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- foundational
+- well-established
+- overview
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/03-part-i-semiconductor-physics.txt"]
-confidence: low
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/03-part-i-semiconductor-physics.txt
 ---
 
 ## Key Points

@@ -1,11 +1,17 @@
 ---
-title: "Typestate Pattern"
-type: concept
-tags: [rust, advanced, well-established]
+title: Typestate Pattern
+type: claim
+id: claim-typestate-pattern
+tags:
+- rust
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/18-chapter-17-object-oriented-programming-features-of-rust.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/18-chapter-17-object-oriented-programming-features-of-rust.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

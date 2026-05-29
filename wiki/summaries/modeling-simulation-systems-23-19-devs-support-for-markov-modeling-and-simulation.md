@@ -1,11 +1,20 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 19: DEVS Support for Markov Modeling and Simulation"
-type: summary
-tags: [simulation, modeling, devs, markov, stochastic, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 19: DEVS Support for Markov Modeling
+  and Simulation'
+type: source
+id: source-modeling-simulation-systems-23-19-devs-support-for-markov-modeling-and-simulation
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- markov
+- stochastic
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/23-19-devs-support-for-markov-modeling-and-simulation.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/23-19-devs-support-for-markov-modeling-and-simulation.txt
 ---
 
 ## Key Points

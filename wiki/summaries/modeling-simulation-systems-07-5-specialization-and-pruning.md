@@ -1,11 +1,18 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 5: Specialization and Pruning"
-type: summary
-tags: [simulation, modeling, ses, foundational, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 5: Specialization and Pruning'
+type: source
+id: source-modeling-simulation-systems-07-5-specialization-and-pruning
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- ses
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/07-5-specialization-and-pruning.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/07-5-specialization-and-pruning.txt
 ---
 
 ## Key Points

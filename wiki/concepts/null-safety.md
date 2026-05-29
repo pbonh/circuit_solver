@@ -1,11 +1,18 @@
 ---
-title: "Null Safety"
-type: concept
-tags: [rust, foundational, memory-safety, well-established]
+title: Null Safety
+type: claim
+id: claim-null-safety
+tags:
+- rust
+- foundational
+- memory-safety
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/07-chapter-6-enums-and-pattern-matching.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/07-chapter-6-enums-and-pattern-matching.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,21 @@
 ---
-title: "Foundations of Scalable Systems — Part IV: Event and Stream Processing (Chapters 14–16)"
-type: summary
-tags: [distributed-systems, scalability, streaming, messaging, event-driven, observability, foundational]
+title: 'Foundations of Scalable Systems — Part IV: Event and Stream Processing (Chapters
+  14–16)'
+type: source
+id: source-foundations-scalable-systems-07-part-iv-event-and-stream-processing
+kind: derived-summary
+tags:
+- distributed-systems
+- scalability
+- streaming
+- messaging
+- event-driven
+- observability
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt
 ---
 
 ## Key Points

@@ -1,11 +1,20 @@
 ---
-title: "DEVS/DDS Architecture"
-type: concept
-tags: [simulation, modeling, devs, distributed, middleware, well-established]
+title: DEVS/DDS Architecture
+type: claim
+id: claim-devs-dds-architecture
+tags:
+- simulation
+- modeling
+- devs
+- distributed
+- middleware
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/13-10-dynamic-structure-agent-modeling-and-publish-subscribe.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/13-10-dynamic-structure-agent-modeling-and-publish-subscribe.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

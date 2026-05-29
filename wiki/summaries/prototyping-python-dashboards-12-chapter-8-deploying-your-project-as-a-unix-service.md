@@ -1,11 +1,24 @@
 ---
-title: "Prototyping Python Dashboards — Chapter 8: Deploying Your Project As a UNIX Service"
-type: summary
-tags: [python, deployment, systemd, nginx, gunicorn, flask, dash, web, unix, security]
+title: 'Prototyping Python Dashboards — Chapter 8: Deploying Your Project As a UNIX
+  Service'
+type: source
+id: source-prototyping-python-dashboards-12-chapter-8-deploying-your-project-as-a-unix-service
+kind: derived-summary
+tags:
+- python
+- deployment
+- systemd
+- nginx
+- gunicorn
+- flask
+- dash
+- web
+- unix
+- security
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/12-chapter-8-deploying-your-project-as-a-unix-service.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/12-chapter-8-deploying-your-project-as-a-unix-service.txt
 ---
 
 ## Key Points

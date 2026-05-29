@@ -1,11 +1,17 @@
 ---
-title: "Prototyping Python Dashboards — Chapter 1: Working with Python"
-type: summary
-tags: [python, dataframe, pandas, foundational]
+title: 'Prototyping Python Dashboards — Chapter 1: Working with Python'
+type: source
+id: source-prototyping-python-dashboards-05-chapter-1-working-with-python
+kind: derived-summary
+tags:
+- python
+- dataframe
+- pandas
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/05-chapter-1-working-with-python.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/05-chapter-1-working-with-python.txt
 ---
 
 ## Key Points

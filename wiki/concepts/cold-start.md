@@ -1,11 +1,17 @@
 ---
-title: "Cold Start"
-type: concept
-tags: [cloud, performance, well-established]
+title: Cold Start
+type: claim
+id: claim-cold-start
+tags:
+- cloud
+- performance
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

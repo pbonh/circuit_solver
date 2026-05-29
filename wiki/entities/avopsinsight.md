@@ -1,11 +1,16 @@
 ---
-title: "AVOPSinsight"
+title: AVOPSinsight
 type: entity
-tags: [web, dashboard, aviation, portal]
+id: entity-avopsinsight
+tags:
+- web
+- dashboard
+- aviation
+- portal
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt"]
-confidence: medium
+sources:
+- raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt
 ---
 
 ## Overview

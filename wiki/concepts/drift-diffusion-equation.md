@@ -1,11 +1,20 @@
 ---
-title: "Drift-Diffusion Equation"
-type: concept
-tags: [semiconductor, device-physics, transport, device-model, foundational, well-established]
+title: Drift-Diffusion Equation
+type: claim
+id: claim-drift-diffusion-equation
+tags:
+- semiconductor
+- device-physics
+- transport
+- device-model
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

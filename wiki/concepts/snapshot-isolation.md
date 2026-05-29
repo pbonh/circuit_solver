@@ -1,11 +1,19 @@
 ---
-title: "Snapshot Isolation"
-type: concept
-tags: [well-established, transactions, isolation, mvcc]
+title: Snapshot Isolation
+type: claim
+id: claim-snapshot-isolation
+tags:
+- well-established
+- transactions
+- isolation
+- mvcc
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

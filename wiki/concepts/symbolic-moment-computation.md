@@ -1,11 +1,19 @@
 ---
-title: "Symbolic Moment Computation"
-type: concept
-tags: [symbolic, interconnect, moment, bdd, advanced]
+title: Symbolic Moment Computation
+type: claim
+id: claim-symbolic-moment-computation
+tags:
+- symbolic
+- interconnect
+- moment
+- bdd
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

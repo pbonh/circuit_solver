@@ -1,11 +1,16 @@
 ---
-title: "Rust Project"
+title: Rust Project
 type: entity
-tags: [rust, organization, foundational]
+id: entity-rust-project
+tags:
+- rust
+- organization
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/28-appendix-g-how-rust-is-made-and-nightly-rust.txt", "raw/rust_book/_txt/27-appendix-f-translations-of-the-book.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/28-appendix-g-how-rust-is-made-and-nightly-rust.txt
+- raw/rust_book/_txt/27-appendix-f-translations-of-the-book.txt
 ---
 
 ## Overview

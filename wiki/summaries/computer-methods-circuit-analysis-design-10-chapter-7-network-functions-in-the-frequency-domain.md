@@ -1,11 +1,18 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Chapter 7: Network Functions in the Frequency Domain"
-type: summary
-tags: [foundational, analog, ac, well-established]
+title: 'Computer Methods for Circuit Analysis and Design — Chapter 7: Network Functions
+  in the Frequency Domain'
+type: source
+id: source-computer-methods-circuit-analysis-design-10-chapter-7-network-functions-in-the-frequency-domain
+kind: derived-summary
+tags:
+- foundational
+- analog
+- ac
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/10-chapter-7-network-functions-in-the-frequency-domain.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/10-chapter-7-network-functions-in-the-frequency-domain.txt
 ---
 
 ## Key Points

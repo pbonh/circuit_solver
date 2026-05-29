@@ -1,11 +1,18 @@
 ---
-title: "Machine Learning"
-type: concept
-tags: [machine-learning, data-analysis, foundational, well-established]
+title: Machine Learning
+type: claim
+id: claim-machine-learning
+tags:
+- machine-learning
+- data-analysis
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/01-about-the-author.txt"]
-confidence: low
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/01-about-the-author.txt
+confidence:
+  base: 0.45
 ---
 
 > Cited source is a one-page author bio: "Recently, he received an interdisciplinary research grant of 199,000 to implement a machine learning system for mining students' knowledge and skills." No substantive treatment in the source. Content below is general knowledge.

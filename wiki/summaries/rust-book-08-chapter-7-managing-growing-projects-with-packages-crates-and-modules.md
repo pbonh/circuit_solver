@@ -1,11 +1,18 @@
 ---
-title: "The Rust Programming Language — Chapter 7: Managing Growing Projects with Packages, Crates, and Modules"
-type: summary
-tags: [rust, foundational, cargo, modularity]
+title: 'The Rust Programming Language — Chapter 7: Managing Growing Projects with
+  Packages, Crates, and Modules'
+type: source
+id: source-rust-book-08-chapter-7-managing-growing-projects-with-packages-crates-and-modules
+kind: derived-summary
+tags:
+- rust
+- foundational
+- cargo
+- modularity
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/08-chapter-7-managing-growing-projects-with-packages-crates-and-modules.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/08-chapter-7-managing-growing-projects-with-packages-crates-and-modules.txt
 ---
 
 ## Key Points

@@ -1,11 +1,18 @@
 ---
-title: "Fault Analysis"
-type: concept
-tags: [analog, well-established, fault-analysis, sensitivity]
+title: Fault Analysis
+type: claim
+id: claim-fault-analysis
+tags:
+- analog
+- well-established
+- fault-analysis
+- sensitivity
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/11-chapter-8-large-change-sensitivity-and-related-topics.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/11-chapter-8-large-change-sensitivity-and-related-topics.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

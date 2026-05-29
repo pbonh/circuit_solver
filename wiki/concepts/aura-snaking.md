@@ -1,11 +1,18 @@
 ---
-title: "Aura Snaking"
-type: concept
-tags: [vlsi, routing, algorithm, novel]
+title: Aura Snaking
+type: claim
+id: claim-aura-snaking
+tags:
+- vlsi
+- routing
+- algorithm
+- novel
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "Probability"
-type: concept
-tags: [statistics, foundational, well-established]
+title: Probability
+type: claim
+id: claim-probability
+tags:
+- statistics
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt"]
-confidence: medium
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

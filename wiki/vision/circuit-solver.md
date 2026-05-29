@@ -1,15 +1,21 @@
 ---
-title: "Circuit Solver"
-type: vision
-tags: [circuit-solver, analog, mixed-signal, simulation, rust, python]
+title: Circuit Solver
+type: entity
+id: entity-vision-circuit-solver
+tags:
+- circuit-solver
+- analog
+- mixed-signal
+- simulation
+- rust
+- python
 created: 2026-05-17
 updated: 2026-05-17
 sources:
-  - "concepts/modified-nodal-analysis"
-  - "concepts/newton-raphson-method"
-  - "concepts/device-modeling"
-  - "concepts/spice"
-confidence: high
+- concepts/modified-nodal-analysis
+- concepts/newton-raphson-method
+- concepts/device-modeling
+- concepts/spice
 ---
 
 ## Value Proposition

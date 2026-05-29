@@ -1,11 +1,15 @@
 ---
-title: "UFW (Uncomplicated Firewall)"
+title: UFW (Uncomplicated Firewall)
 type: entity
-tags: [unix, security, networking]
+id: entity-ufw
+tags:
+- unix
+- security
+- networking
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt"]
-confidence: medium
+sources:
+- raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt
 ---
 
 ## Overview

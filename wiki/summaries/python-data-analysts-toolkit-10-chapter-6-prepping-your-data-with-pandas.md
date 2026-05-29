@@ -1,11 +1,18 @@
 ---
-title: "Python Data Analyst's Toolkit — Chapter 6: Prepping Your Data with Pandas"
-type: summary
-tags: [python, pandas, dataframe, data-analysis, well-established]
+title: 'Python Data Analyst''s Toolkit — Chapter 6: Prepping Your Data with Pandas'
+type: source
+id: source-python-data-analysts-toolkit-10-chapter-6-prepping-your-data-with-pandas
+kind: derived-summary
+tags:
+- python
+- pandas
+- dataframe
+- data-analysis
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt
 ---
 
 ## Key Points

@@ -1,11 +1,17 @@
 ---
-title: "Wide-Column Store"
-type: concept
-tags: [databases, nosql, well-established]
+title: Wide-Column Store
+type: claim
+id: claim-wide-column-store
+tags:
+- databases
+- nosql
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

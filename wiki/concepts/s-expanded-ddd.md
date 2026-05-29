@@ -1,11 +1,19 @@
 ---
-title: "s-Expanded DDD"
-type: concept
-tags: [ddd, symbolic, ac, advanced, frequency-domain]
+title: s-Expanded DDD
+type: claim
+id: claim-s-expanded-ddd
+tags:
+- ddd
+- symbolic
+- ac
+- advanced
+- frequency-domain
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/08-4-determinant-decision-diagrams.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/08-4-determinant-decision-diagrams.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Systems Programming"
-type: concept
-tags: [rust, foundational, systems-programming, well-established]
+title: Systems Programming
+type: claim
+id: claim-systems-programming
+tags:
+- rust
+- foundational
+- systems-programming
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/00-foreword.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/00-foreword.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

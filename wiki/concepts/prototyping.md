@@ -1,11 +1,17 @@
 ---
-title: "Prototyping"
-type: concept
-tags: [foundational, software-design, dashboard]
+title: Prototyping
+type: claim
+id: claim-prototyping
+tags:
+- foundational
+- software-design
+- dashboard
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/04-introduction.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/04-introduction.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

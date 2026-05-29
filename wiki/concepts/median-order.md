@@ -1,11 +1,17 @@
 ---
-title: "Median Order"
-type: concept
-tags: [graph, algorithm, well-established]
+title: Median Order
+type: claim
+id: claim-median-order
+tags:
+- graph
+- algorithm
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

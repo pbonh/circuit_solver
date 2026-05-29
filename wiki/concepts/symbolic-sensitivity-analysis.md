@@ -1,11 +1,19 @@
 ---
-title: "Symbolic Sensitivity Analysis"
-type: concept
-tags: [symbolic, analog, sensitivity, advanced, design-centering]
+title: Symbolic Sensitivity Analysis
+type: claim
+id: claim-symbolic-sensitivity-analysis
+tags:
+- symbolic
+- analog
+- sensitivity
+- advanced
+- design-centering
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/11-7-graph-pair-decision-diagram.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/11-7-graph-pair-decision-diagram.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "Zero Pivot Handling in Sparse Factorization"
-type: concept
-tags: [sparse-matrix, numerical, well-established]
+title: Zero Pivot Handling in Sparse Factorization
+type: claim
+id: claim-zero-pivot-handling
+tags:
+- sparse-matrix
+- numerical
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/11-chapter-8-large-change-sensitivity-and-related-topics.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/11-chapter-8-large-change-sensitivity-and-related-topics.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

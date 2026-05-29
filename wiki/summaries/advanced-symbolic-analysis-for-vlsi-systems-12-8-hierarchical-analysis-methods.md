@@ -1,11 +1,21 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Chapter 8: Hierarchical Analysis Methods"
-type: summary
-tags: [hierarchical, ddd, gpdd, symbolic, analog, advanced, scalability]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 8: Hierarchical Analysis
+  Methods'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-12-8-hierarchical-analysis-methods
+kind: derived-summary
+tags:
+- hierarchical
+- ddd
+- gpdd
+- symbolic
+- analog
+- advanced
+- scalability
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/12-8-hierarchical-analysis-methods.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/12-8-hierarchical-analysis-methods.txt
 ---
 
 ## Key Points

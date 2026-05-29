@@ -1,11 +1,17 @@
 ---
-title: "GraphChi"
+title: GraphChi
 type: entity
-tags: [graph, graph-processing, single-machine, out-of-core, well-established]
+id: entity-graphchi
+tags:
+- graph
+- graph-processing
+- single-machine
+- out-of-core
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt
 ---
 
 ## Overview

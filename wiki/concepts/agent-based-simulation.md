@@ -1,11 +1,19 @@
 ---
-title: "Agent-Based Simulation (ABS)"
-type: concept
-tags: [simulation, modeling, agent-based, devs, well-established]
+title: Agent-Based Simulation (ABS)
+type: claim
+id: claim-agent-based-simulation
+tags:
+- simulation
+- modeling
+- agent-based
+- devs
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

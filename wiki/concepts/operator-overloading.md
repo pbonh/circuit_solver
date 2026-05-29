@@ -1,11 +1,17 @@
 ---
-title: "Operator Overloading"
-type: concept
-tags: [rust, advanced, well-established]
+title: Operator Overloading
+type: claim
+id: claim-operator-overloading
+tags:
+- rust
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/20-chapter-19-advanced-features.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/20-chapter-19-advanced-features.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

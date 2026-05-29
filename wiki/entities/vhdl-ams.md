@@ -1,11 +1,16 @@
 ---
-title: "VHDL-AMS"
+title: VHDL-AMS
 type: entity
-tags: [mixed-signal, analog, digital, well-established]
+id: entity-vhdl-ams
+tags:
+- mixed-signal
+- analog
+- digital
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
 ---
 
 ## Overview

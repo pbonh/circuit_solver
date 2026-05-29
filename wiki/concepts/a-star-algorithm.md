@@ -1,11 +1,20 @@
 ---
-title: "A* (A-star) Algorithm"
-type: concept
-tags: [graph, algorithm, foundational, well-established, vlsi, routing]
+title: A* (A-star) Algorithm
+type: claim
+id: claim-a-star-algorithm
+tags:
+- graph
+- algorithm
+- foundational
+- well-established
+- vlsi
+- routing
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

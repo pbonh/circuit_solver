@@ -1,11 +1,18 @@
 ---
-title: "Voltage Domain"
-type: concept
-tags: [vlsi, power-integrity, architecture, well-established]
+title: Voltage Domain
+type: claim
+id: claim-voltage-domain
+tags:
+- vlsi
+- power-integrity
+- architecture
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

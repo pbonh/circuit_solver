@@ -1,11 +1,20 @@
 ---
-title: "DNL Elaboration"
-type: concept
-tags: [simulation, modeling, fddevs, java, devs, well-established]
+title: DNL Elaboration
+type: claim
+id: claim-dnl-elaboration
+tags:
+- simulation
+- modeling
+- fddevs
+- java
+- devs
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/06-4-devs-natural-language-models-and-elaborations.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/06-4-devs-natural-language-models-and-elaborations.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

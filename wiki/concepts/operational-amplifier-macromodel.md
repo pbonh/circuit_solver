@@ -1,11 +1,18 @@
 ---
-title: "Operational Amplifier Macromodel"
-type: concept
-tags: [device-model, analog, well-established, macromodel]
+title: Operational Amplifier Macromodel
+type: claim
+id: claim-operational-amplifier-macromodel
+tags:
+- device-model
+- analog
+- well-established
+- macromodel
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

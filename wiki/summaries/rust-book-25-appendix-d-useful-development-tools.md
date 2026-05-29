@@ -1,11 +1,17 @@
 ---
-title: "The Rust Programming Language — Appendix D: Useful Development Tools"
-type: summary
-tags: [rust, reference, tooling, well-established]
+title: 'The Rust Programming Language — Appendix D: Useful Development Tools'
+type: source
+id: source-rust-book-25-appendix-d-useful-development-tools
+kind: derived-summary
+tags:
+- rust
+- reference
+- tooling
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/25-appendix-d-useful-development-tools.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/25-appendix-d-useful-development-tools.txt
 ---
 
 ## Key Points

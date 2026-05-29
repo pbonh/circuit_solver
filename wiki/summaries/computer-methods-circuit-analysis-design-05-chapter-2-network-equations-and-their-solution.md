@@ -1,11 +1,22 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Chapter 2: Network Equations and Their Solution"
-type: summary
-tags: [foundational, analog, dc, ac, sparse-matrix, netlist, graph, well-established]
+title: 'Computer Methods for Circuit Analysis and Design — Chapter 2: Network Equations
+  and Their Solution'
+type: source
+id: source-computer-methods-circuit-analysis-design-05-chapter-2-network-equations-and-their-solution
+kind: derived-summary
+tags:
+- foundational
+- analog
+- dc
+- ac
+- sparse-matrix
+- netlist
+- graph
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/05-chapter-2-network-equations-and-their-solution.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/05-chapter-2-network-equations-and-their-solution.txt
 ---
 
 ## Key Points

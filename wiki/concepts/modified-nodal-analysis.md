@@ -1,11 +1,21 @@
 ---
-title: "Modified Nodal Analysis (MNA)"
-type: concept
-tags: [analog, sparse-matrix, foundational, netlist, dc, ac, transient]
+title: Modified Nodal Analysis (MNA)
+type: claim
+id: claim-modified-nodal-analysis
+tags:
+- analog
+- sparse-matrix
+- foundational
+- netlist
+- dc
+- ac
+- transient
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

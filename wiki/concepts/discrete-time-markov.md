@@ -1,11 +1,20 @@
 ---
-title: "Discrete-Time Markov (DTM)"
-type: concept
-tags: [simulation, modeling, markov, stochastic, devs, well-established]
+title: Discrete-Time Markov (DTM)
+type: claim
+id: claim-discrete-time-markov
+tags:
+- simulation
+- modeling
+- markov
+- stochastic
+- devs
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/23-19-devs-support-for-markov-modeling-and-simulation.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/23-19-devs-support-for-markov-modeling-and-simulation.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

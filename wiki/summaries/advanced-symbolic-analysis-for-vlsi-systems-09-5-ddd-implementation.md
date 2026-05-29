@@ -1,11 +1,19 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Chapter 5: DDD Implementation"
-type: summary
-tags: [ddd, bdd, implementation, complexity, advanced, sparse-matrix]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 5: DDD Implementation'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-09-5-ddd-implementation
+kind: derived-summary
+tags:
+- ddd
+- bdd
+- implementation
+- complexity
+- advanced
+- sparse-matrix
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/09-5-ddd-implementation.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/09-5-ddd-implementation.txt
 ---
 
 ## Key Points

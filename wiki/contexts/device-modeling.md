@@ -1,15 +1,18 @@
 ---
-title: "Device Modeling"
-type: context
-tags: [device-model, circuit-solver, bounded-context]
+title: Device Modeling
+type: entity
+id: entity-context-device-modeling
+tags:
+- device-model
+- circuit-solver
+- bounded-context
 created: 2026-05-17
 updated: 2026-05-17
 sources:
-  - "concepts/device-modeling"
-  - "concepts/diode-model"
-  - "concepts/bjt-model"
-  - "concepts/fet-model"
-confidence: high
+- concepts/device-modeling
+- concepts/diode-model
+- concepts/bjt-model
+- concepts/fet-model
 ---
 
 ## Model

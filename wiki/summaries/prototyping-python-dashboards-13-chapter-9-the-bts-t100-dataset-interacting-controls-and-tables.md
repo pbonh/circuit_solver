@@ -1,11 +1,21 @@
 ---
-title: "Prototyping Python Dashboards — Chapter 9: The BTS T100 Dataset — Interacting Controls and Tables"
-type: summary
-tags: [python, dashboard, dash, plotly, callback, dataframe, visualization]
+title: 'Prototyping Python Dashboards — Chapter 9: The BTS T100 Dataset — Interacting
+  Controls and Tables'
+type: source
+id: source-prototyping-python-dashboards-13-chapter-9-the-bts-t100-dataset-interacting-controls-and-tables
+kind: derived-summary
+tags:
+- python
+- dashboard
+- dash
+- plotly
+- callback
+- dataframe
+- visualization
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/13-chapter-9-the-bts-t100-dataset-interacting-controls-and-tables.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/13-chapter-9-the-bts-t100-dataset-interacting-controls-and-tables.txt
 ---
 
 ## Key Points

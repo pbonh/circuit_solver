@@ -1,11 +1,21 @@
 ---
-title: "Foundations of Scalable Systems — Part III: Scalable Distributed Databases (Chapters 10–13)"
-type: summary
-tags: [distributed-systems, replication, consistency, databases, nosql, newsql, foundational]
+title: 'Foundations of Scalable Systems — Part III: Scalable Distributed Databases
+  (Chapters 10–13)'
+type: source
+id: source-foundations-scalable-systems-06-part-iii-scalable-distributed-databases
+kind: derived-summary
+tags:
+- distributed-systems
+- replication
+- consistency
+- databases
+- nosql
+- newsql
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
 ---
 
 ## Key Points

@@ -1,11 +1,15 @@
 ---
-title: "SymPy"
+title: SymPy
 type: entity
-tags: [python, statistics, well-established]
+id: entity-sympy
+tags:
+- python
+- statistics
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/07-chapter-3-regular-expressions-and-math-with-python.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/07-chapter-3-regular-expressions-and-math-with-python.txt
 ---
 
 ## Overview

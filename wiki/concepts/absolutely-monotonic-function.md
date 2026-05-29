@@ -1,11 +1,19 @@
 ---
-title: "Absolutely Monotonic Function"
-type: concept
-tags: [ode, numerical-integration, mathematical-tool, foundational, well-established]
+title: Absolutely Monotonic Function
+type: claim
+id: claim-absolutely-monotonic-function
+tags:
+- ode
+- numerical-integration
+- mathematical-tool
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.65
 ---
 
 ## Definition

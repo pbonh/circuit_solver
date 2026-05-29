@@ -1,11 +1,22 @@
 ---
-title: "Data Analysis and Visualizations with Python — Chapter 5: Data Gathering and Cleaning"
-type: summary
-tags: [python, pandas, data-cleaning, data-gathering, json, html, xml, foundational]
+title: 'Data Analysis and Visualizations with Python — Chapter 5: Data Gathering and
+  Cleaning'
+type: source
+id: source-data-analysis-visualizations-python-08-chapter-5-data-gathering-and-cleaning
+kind: derived-summary
+tags:
+- python
+- pandas
+- data-cleaning
+- data-gathering
+- json
+- html
+- xml
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/08-chapter-5-data-gathering-and-cleaning.txt"]
-confidence: high
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/08-chapter-5-data-gathering-and-cleaning.txt
 ---
 
 ## Key Points

@@ -1,11 +1,18 @@
 ---
-title: "Laplace Transform Simulator"
-type: concept
-tags: [vlsi, simulation, analysis, novel]
+title: Laplace Transform Simulator
+type: claim
+id: claim-laplace-transform-simulator
+tags:
+- vlsi
+- simulation
+- analysis
+- novel
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

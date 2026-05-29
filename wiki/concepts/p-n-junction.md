@@ -1,11 +1,20 @@
 ---
-title: "p-n Junction"
-type: concept
-tags: [semiconductor, device-physics, p-n-junction, diode, foundational, well-established]
+title: p-n Junction
+type: claim
+id: claim-p-n-junction
+tags:
+- semiconductor
+- device-physics
+- p-n-junction
+- diode
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

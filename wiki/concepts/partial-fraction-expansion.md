@@ -1,11 +1,18 @@
 ---
-title: "Partial Fraction Expansion"
-type: concept
-tags: [foundational, math, well-established, transient]
+title: Partial Fraction Expansion
+type: claim
+id: claim-partial-fraction-expansion
+tags:
+- foundational
+- math
+- well-established
+- transient
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

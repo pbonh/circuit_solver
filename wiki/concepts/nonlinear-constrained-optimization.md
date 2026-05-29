@@ -1,11 +1,18 @@
 ---
-title: "Nonlinear Constrained Optimization"
-type: concept
-tags: [optimization, foundational, algorithm, statistical]
+title: Nonlinear Constrained Optimization
+type: claim
+id: claim-nonlinear-constrained-optimization
+tags:
+- optimization
+- foundational
+- algorithm
+- statistical
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/16-11-performance-bound-analysis-of-analog-circuits-considering-process-variations.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/16-11-performance-bound-analysis-of-analog-circuits-considering-process-variations.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

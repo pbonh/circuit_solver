@@ -1,11 +1,15 @@
 ---
-title: "Spectre"
+title: Spectre
 type: entity
-tags: [analog, mixed-signal, well-established]
+id: entity-spectre
+tags:
+- analog
+- mixed-signal
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
 ---
 
 ## Overview

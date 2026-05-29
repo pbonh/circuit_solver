@@ -1,11 +1,18 @@
 ---
-title: "The Rust Programming Language — Chapter 20: Final Project: Building a Multithreaded Web Server"
-type: summary
-tags: [rust, project, concurrency, networking]
+title: 'The Rust Programming Language — Chapter 20: Final Project: Building a Multithreaded
+  Web Server'
+type: source
+id: source-rust-book-21-chapter-20-final-project-building-a-multithreaded-web-server
+kind: derived-summary
+tags:
+- rust
+- project
+- concurrency
+- networking
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/21-chapter-20-final-project-building-a-multithreaded-web-server.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/21-chapter-20-final-project-building-a-multithreaded-web-server.txt
 ---
 
 ## Key Points

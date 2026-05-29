@@ -1,11 +1,20 @@
 ---
-title: "SES↔XML Mapping"
-type: concept
-tags: [simulation, modeling, ses, xml, data-engineering, well-established]
+title: SES↔XML Mapping
+type: claim
+id: claim-ses-xml-mapping
+tags:
+- simulation
+- modeling
+- ses
+- xml
+- data-engineering
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/14-11-interest-based-information-exchange-mappings-and-models.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/14-11-interest-based-information-exchange-mappings-and-models.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

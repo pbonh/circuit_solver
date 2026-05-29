@@ -1,11 +1,21 @@
 ---
-title: "Resonant-Tunneling Diode (RTD)"
-type: concept
-tags: [semiconductor, device-physics, heterojunction, tunneling, rf, advanced, well-established]
+title: Resonant-Tunneling Diode (RTD)
+type: claim
+id: claim-resonant-tunneling-diode
+tags:
+- semiconductor
+- device-physics
+- heterojunction
+- tunneling
+- rf
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/12-chapter-8-tunnel-devices.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/12-chapter-8-tunnel-devices.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

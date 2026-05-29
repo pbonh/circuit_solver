@@ -1,11 +1,20 @@
 ---
-title: "Simulation Interoperability"
-type: concept
-tags: [simulation, modeling, devs, distributed, interoperability, well-established]
+title: Simulation Interoperability
+type: claim
+id: claim-simulation-interoperability
+tags:
+- simulation
+- modeling
+- devs
+- distributed
+- interoperability
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/12-9-devs-simulation-protocol.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/12-9-devs-simulation-protocol.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

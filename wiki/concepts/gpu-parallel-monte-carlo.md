@@ -1,11 +1,19 @@
 ---
-title: "GPU-Parallel Monte Carlo"
-type: concept
-tags: [monte-carlo, gpu, parallel, statistical, advanced]
+title: GPU-Parallel Monte Carlo
+type: claim
+id: claim-gpu-parallel-monte-carlo
+tags:
+- monte-carlo
+- gpu
+- parallel
+- statistical
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,16 @@
 ---
-title: "Prototyping Python Dashboards — About the Author"
-type: summary
-tags: [python, dashboard, foundational]
+title: Prototyping Python Dashboards — About the Author
+type: source
+id: source-prototyping-python-dashboards-01-about-the-author
+kind: derived-summary
+tags:
+- python
+- dashboard
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/01-about-the-author.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/01-about-the-author.txt
 ---
 
 ## Key Points

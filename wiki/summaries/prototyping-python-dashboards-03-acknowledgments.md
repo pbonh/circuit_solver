@@ -1,11 +1,16 @@
 ---
-title: "Prototyping Python Dashboards — Acknowledgments"
-type: summary
-tags: [python, dashboard, foundational]
+title: Prototyping Python Dashboards — Acknowledgments
+type: source
+id: source-prototyping-python-dashboards-03-acknowledgments
+kind: derived-summary
+tags:
+- python
+- dashboard
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/03-acknowledgments.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/03-acknowledgments.txt
 ---
 
 ## Key Points

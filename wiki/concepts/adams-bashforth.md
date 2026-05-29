@@ -1,11 +1,17 @@
 ---
-title: "Adams-Bashforth Method"
-type: concept
-tags: [transient, numerical-integration, well-established]
+title: Adams-Bashforth Method
+type: claim
+id: claim-adams-bashforth
+tags:
+- transient
+- numerical-integration
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/16-chapter-13-numerical-integration-of-differential-and-algebraic-differential-equations.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/16-chapter-13-numerical-integration-of-differential-and-algebraic-differential-equations.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

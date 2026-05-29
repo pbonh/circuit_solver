@@ -1,11 +1,18 @@
 ---
-title: "Generalized Matrix-Vector Multiplication"
-type: concept
-tags: [graph, sparse-matrix, big-data, well-established]
+title: Generalized Matrix-Vector Multiplication
+type: claim
+id: claim-generalized-matrix-vector-multiplication
+tags:
+- graph
+- sparse-matrix
+- big-data
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

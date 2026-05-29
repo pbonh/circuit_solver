@@ -1,11 +1,18 @@
 ---
-title: "Missing Data Imputation"
-type: concept
-tags: [python, pandas, data-analysis, well-established]
+title: Missing Data Imputation
+type: claim
+id: claim-missing-data-imputation
+tags:
+- python
+- pandas
+- data-analysis
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

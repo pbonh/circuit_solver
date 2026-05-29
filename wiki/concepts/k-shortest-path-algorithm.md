@@ -1,11 +1,17 @@
 ---
-title: "k-Shortest Paths Algorithm"
-type: concept
-tags: [graph, algorithm, well-established]
+title: k-Shortest Paths Algorithm
+type: claim
+id: claim-k-shortest-path-algorithm
+tags:
+- graph
+- algorithm
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Data Distribution Middleware"
-type: concept
-tags: [simulation, distributed, middleware, well-established, foundational]
+title: Data Distribution Middleware
+type: claim
+id: claim-data-distribution-middleware
+tags:
+- simulation
+- distributed
+- middleware
+- well-established
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/03-1-modeling-and-simulation-of-systems-of-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/03-1-modeling-and-simulation-of-systems-of-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

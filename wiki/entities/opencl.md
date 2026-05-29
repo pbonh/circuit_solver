@@ -1,11 +1,17 @@
 ---
-title: "OpenCL"
+title: OpenCL
 type: entity
-tags: [gpu, parallel, khronos, well-established]
+id: entity-opencl
+tags:
+- gpu
+- parallel
+- khronos
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt", "raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/bibliography.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/bibliography.txt
 ---
 
 ## Overview

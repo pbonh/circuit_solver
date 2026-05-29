@@ -1,13 +1,19 @@
 ---
-title: "Topological Sort"
-type: concept
-tags: [graph, algorithm, foundational, well-established]
+title: Topological Sort
+type: claim
+id: claim-topological-sort
+tags:
+- graph
+- algorithm
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
 sources:
-  - "raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt"
-  - "raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt"
-confidence: high
+- raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
+- raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

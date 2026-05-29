@@ -1,11 +1,20 @@
 ---
-title: "RAII (Resource Acquisition Is Initialization)"
-type: concept
-tags: [rust, c-plus-plus, memory-management, idiom, foundational, well-established]
+title: RAII (Resource Acquisition Is Initialization)
+type: claim
+id: claim-raii
+tags:
+- rust
+- c-plus-plus
+- memory-management
+- idiom
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/16-chapter-15-smart-pointers.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/16-chapter-15-smart-pointers.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

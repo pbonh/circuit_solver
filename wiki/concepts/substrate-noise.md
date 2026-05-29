@@ -1,11 +1,19 @@
 ---
-title: "Substrate Noise"
-type: concept
-tags: [vlsi, mixed-signal, analog, signal-integrity, well-established]
+title: Substrate Noise
+type: claim
+id: claim-substrate-noise
+tags:
+- vlsi
+- mixed-signal
+- analog
+- signal-integrity
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/10-7-effective-resistance-of-finite-grids.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/10-7-effective-resistance-of-finite-grids.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

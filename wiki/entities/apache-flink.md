@@ -1,11 +1,15 @@
 ---
-title: "Apache Flink"
+title: Apache Flink
 type: entity
-tags: [streaming, dataflow, open-source]
+id: entity-apache-flink
+tags:
+- streaming
+- dataflow
+- open-source
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt
 ---
 
 ## Overview

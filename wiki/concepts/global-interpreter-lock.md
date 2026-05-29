@@ -1,11 +1,18 @@
 ---
-title: "Global Interpreter Lock (GIL)"
-type: concept
-tags: [python, concurrency, foundational, well-established]
+title: Global Interpreter Lock (GIL)
+type: claim
+id: claim-global-interpreter-lock
+tags:
+- python
+- concurrency
+- foundational
+- well-established
 created: 2026-05-18
 updated: 2026-05-18
-sources: ["wiki/specs/circuit-solver"]
-confidence: low
+sources:
+- wiki/specs/circuit-solver
+confidence:
+  base: 0.45
 ---
 
 ## Definition

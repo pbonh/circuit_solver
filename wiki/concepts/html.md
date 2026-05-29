@@ -1,11 +1,16 @@
 ---
-title: "HTML"
-type: concept
-tags: [web, foundational]
+title: HTML
+type: claim
+id: claim-html
+tags:
+- web
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

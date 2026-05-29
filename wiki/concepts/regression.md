@@ -1,11 +1,17 @@
 ---
-title: "Regression"
-type: concept
-tags: [statistics, modeling, foundational]
+title: Regression
+type: claim
+id: claim-regression
+tags:
+- statistics
+- modeling
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/08-chapter-4-planning-the-dashboard-prototype.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/08-chapter-4-planning-the-dashboard-prototype.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

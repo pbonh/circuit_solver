@@ -1,11 +1,16 @@
 ---
-title: "Prototyping Python Dashboards — About the Technical Reviewer"
-type: summary
-tags: [python, data-science, foundational]
+title: Prototyping Python Dashboards — About the Technical Reviewer
+type: source
+id: source-prototyping-python-dashboards-02-about-the-technical-reviewer
+kind: derived-summary
+tags:
+- python
+- data-science
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/02-about-the-technical-reviewer.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/02-about-the-technical-reviewer.txt
 ---
 
 ## Key Points

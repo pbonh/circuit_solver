@@ -1,11 +1,14 @@
 ---
-title: "Northeastern University"
+title: Northeastern University
 type: entity
-tags: [academic, university]
+id: entity-northeastern-university
+tags:
+- academic
+- university
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/09-about-the-author.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/09-about-the-author.txt
 ---
 
 ## Overview

@@ -1,11 +1,16 @@
 ---
-title: "Mean-Square Objective Function"
-type: concept
-tags: [optimization, well-established]
+title: Mean-Square Objective Function
+type: claim
+id: claim-mean-square-objective
+tags:
+- optimization
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/20-chapter-17-design-by-minimization.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/20-chapter-17-design-by-minimization.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

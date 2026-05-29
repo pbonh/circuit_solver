@@ -1,11 +1,19 @@
 ---
-title: "Levelized DDD (GPU-Friendly Layout)"
-type: concept
-tags: [ddd, gpu, parallel, data-structure, advanced]
+title: Levelized DDD (GPU-Friendly Layout)
+type: claim
+id: claim-levelized-ddd
+tags:
+- ddd
+- gpu
+- parallel
+- data-structure
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Stream Processing"
-type: concept
-tags: [streaming, distributed-systems, foundational, well-established]
+title: Stream Processing
+type: claim
+id: claim-stream-processing
+tags:
+- streaming
+- distributed-systems
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

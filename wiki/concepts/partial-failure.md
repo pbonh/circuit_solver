@@ -1,11 +1,17 @@
 ---
-title: "Partial Failure"
-type: concept
-tags: [distributed-systems, fault-tolerance, foundational]
+title: Partial Failure
+type: claim
+id: claim-partial-failure
+tags:
+- distributed-systems
+- fault-tolerance
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

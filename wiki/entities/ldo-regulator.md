@@ -1,11 +1,16 @@
 ---
-title: "LDO Regulator"
+title: LDO Regulator
 type: entity
-tags: [vlsi, power-integrity, analog, well-established]
+id: entity-ldo-regulator
+tags:
+- vlsi
+- power-integrity
+- analog
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/11-8-placement-of-on-chip-distributed-voltage-regulators.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/11-8-placement-of-on-chip-distributed-voltage-regulators.txt
 ---
 
 ## Overview

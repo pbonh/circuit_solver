@@ -1,11 +1,20 @@
 ---
-title: "Constrained Natural Language (for DEVS/SES)"
-type: concept
-tags: [simulation, modeling, dsl, devs, tooling, well-established]
+title: Constrained Natural Language (for DEVS/SES)
+type: claim
+id: claim-constrained-natural-language
+tags:
+- simulation
+- modeling
+- dsl
+- devs
+- tooling
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/04-2-devs-integrated-development-environments.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/04-2-devs-integrated-development-environments.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

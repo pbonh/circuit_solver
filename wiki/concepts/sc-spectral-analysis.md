@@ -1,11 +1,17 @@
 ---
-title: "Spectral Analysis of Switched-Capacitor Networks"
-type: concept
-tags: [switched-capacitor, ac, well-established]
+title: Spectral Analysis of Switched-Capacitor Networks
+type: claim
+id: claim-sc-spectral-analysis
+tags:
+- switched-capacitor
+- ac
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/17-chapter-14-digital-and-switched-capacitor-networks.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/17-chapter-14-digital-and-switched-capacitor-networks.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

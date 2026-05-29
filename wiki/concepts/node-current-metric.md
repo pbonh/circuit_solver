@@ -1,11 +1,18 @@
 ---
-title: "Node Current Metric"
-type: concept
-tags: [vlsi, routing, graph, novel]
+title: Node Current Metric
+type: claim
+id: claim-node-current-metric
+tags:
+- vlsi
+- routing
+- graph
+- novel
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

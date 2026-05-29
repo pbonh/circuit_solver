@@ -1,11 +1,19 @@
 ---
-title: "Interest-Based Data Distribution"
-type: concept
-tags: [simulation, modeling, data-engineering, distributed, well-established]
+title: Interest-Based Data Distribution
+type: claim
+id: claim-interest-based-data-distribution
+tags:
+- simulation
+- modeling
+- data-engineering
+- distributed
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/14-11-interest-based-information-exchange-mappings-and-models.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/14-11-interest-based-information-exchange-mappings-and-models.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

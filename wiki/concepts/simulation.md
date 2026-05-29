@@ -1,11 +1,18 @@
 ---
-title: "Simulation"
-type: concept
-tags: [simulation, modeling, foundational, well-established]
+title: Simulation
+type: claim
+id: claim-simulation
+tags:
+- simulation
+- modeling
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/02-about-the-technical-reviewers.txt"]
-confidence: low
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/02-about-the-technical-reviewers.txt
+confidence:
+  base: 0.45
 ---
 
 > Source is a one-page reviewer bio listing "data analytics, modeling, and simulation applied to semiconductor materials and devices" as the reviewer's research area. No substantive treatment of simulation appears in this source. The page below is general knowledge; for the deeper treatment in this knowledge base see [[concepts/devs-simulation-protocol]] and the Hairer-Wanner-derived [[entities/radau5]] etc.

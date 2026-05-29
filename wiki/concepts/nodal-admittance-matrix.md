@@ -1,11 +1,18 @@
 ---
-title: "Nodal Admittance Matrix (NAM)"
-type: concept
-tags: [analog, sparse-matrix, foundational, netlist]
+title: Nodal Admittance Matrix (NAM)
+type: claim
+id: claim-nodal-admittance-matrix
+tags:
+- analog
+- sparse-matrix
+- foundational
+- netlist
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/10-6-generalized-two-graph-theory.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/10-6-generalized-two-graph-theory.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

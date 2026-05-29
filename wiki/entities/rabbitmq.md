@@ -1,11 +1,15 @@
 ---
-title: "RabbitMQ"
+title: RabbitMQ
 type: entity
-tags: [messaging, broker, open-source]
+id: entity-rabbitmq
+tags:
+- messaging
+- broker
+- open-source
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
 ---
 
 ## Overview

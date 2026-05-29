@@ -1,11 +1,19 @@
 ---
-title: "State Variable Formulation"
-type: concept
-tags: [foundational, analog, transient, well-established, graph]
+title: State Variable Formulation
+type: claim
+id: claim-state-variable-formulation
+tags:
+- foundational
+- analog
+- transient
+- well-established
+- graph
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/06-chapter-3-graph-theoretic-formulation-of-network-equations.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/06-chapter-3-graph-theoretic-formulation-of-network-equations.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

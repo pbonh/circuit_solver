@@ -1,11 +1,18 @@
 ---
-title: "Sparse Matrix Methods"
-type: concept
-tags: [sparse-matrix, foundational, well-established, numerical-linear-algebra]
+title: Sparse Matrix Methods
+type: claim
+id: claim-sparse-matrix-methods
+tags:
+- sparse-matrix
+- foundational
+- well-established
+- numerical-linear-algebra
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

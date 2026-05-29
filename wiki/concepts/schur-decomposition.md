@@ -1,11 +1,18 @@
 ---
-title: "Schur Decomposition (Matrix Partitioning)"
-type: concept
-tags: [linear-algebra, hierarchical, sparse-matrix, foundational]
+title: Schur Decomposition (Matrix Partitioning)
+type: claim
+id: claim-schur-decomposition
+tags:
+- linear-algebra
+- hierarchical
+- sparse-matrix
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/12-8-hierarchical-analysis-methods.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/12-8-hierarchical-analysis-methods.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

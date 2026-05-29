@@ -1,11 +1,18 @@
 ---
-title: "Foundations of Scalable Systems — Preface"
-type: summary
-tags: [distributed-systems, scalability, concurrency, foundational, book-front-matter]
+title: Foundations of Scalable Systems — Preface
+type: source
+id: source-foundations-scalable-systems-03-preface
+kind: derived-summary
+tags:
+- distributed-systems
+- scalability
+- concurrency
+- foundational
+- book-front-matter
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/03-preface.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/03-preface.txt
 ---
 
 ## Key Points

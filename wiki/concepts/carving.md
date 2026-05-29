@@ -1,11 +1,17 @@
 ---
-title: "Carving"
-type: concept
-tags: [graph, advanced, well-established]
+title: Carving
+type: claim
+id: claim-carving
+tags:
+- graph
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

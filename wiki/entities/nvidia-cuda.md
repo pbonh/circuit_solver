@@ -1,11 +1,16 @@
 ---
-title: "NVIDIA CUDA"
+title: NVIDIA CUDA
 type: entity
-tags: [tool, gpu, parallel, runtime]
+id: entity-nvidia-cuda
+tags:
+- tool
+- gpu
+- parallel
+- runtime
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt
 ---
 
 ## Overview

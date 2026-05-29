@@ -1,11 +1,19 @@
 ---
-title: "Steady-State Analysis"
-type: concept
-tags: [transient, harmonic-balance, ac, advanced, well-established]
+title: Steady-State Analysis
+type: claim
+id: claim-steady-state-analysis
+tags:
+- transient
+- harmonic-balance
+- ac
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/19-chapter-16-time-domain-sensitivities-and-steady-state.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/19-chapter-16-time-domain-sensitivities-and-steady-state.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

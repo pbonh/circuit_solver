@@ -1,11 +1,17 @@
 ---
-title: "GBASE"
+title: GBASE
 type: entity
-tags: [graph, big-data, sparse-matrix, mapreduce, well-established]
+id: entity-gbase
+tags:
+- graph
+- big-data
+- sparse-matrix
+- mapreduce
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt"]
-confidence: medium
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
 ---
 
 ## Overview

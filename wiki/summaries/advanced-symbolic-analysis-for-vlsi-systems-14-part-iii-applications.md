@@ -1,11 +1,18 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Part III: Applications"
-type: summary
-tags: [foundational, symbolic, vlsi, overview, advanced]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Part III: Applications'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-14-part-iii-applications
+kind: derived-summary
+tags:
+- foundational
+- symbolic
+- vlsi
+- overview
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/14-part-iii-applications.txt"]
-confidence: low
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/14-part-iii-applications.txt
 ---
 
 ## Key Points

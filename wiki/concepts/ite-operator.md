@@ -1,11 +1,18 @@
 ---
-title: "ITE Operator (If-Then-Else)"
-type: concept
-tags: [bdd, foundational, logic, operator]
+title: ITE Operator (If-Then-Else)
+type: claim
+id: claim-ite-operator
+tags:
+- bdd
+- foundational
+- logic
+- operator
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

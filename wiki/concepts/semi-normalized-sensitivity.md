@@ -1,11 +1,17 @@
 ---
-title: "Semi-Normalized Sensitivity"
-type: concept
-tags: [sensitivity, foundational, well-established]
+title: Semi-Normalized Sensitivity
+type: claim
+id: claim-semi-normalized-sensitivity
+tags:
+- sensitivity
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/08-chapter-5-sensitivities.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/08-chapter-5-sensitivities.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

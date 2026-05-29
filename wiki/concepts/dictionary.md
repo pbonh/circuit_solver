@@ -1,11 +1,16 @@
 ---
-title: "Python Dictionary"
-type: concept
-tags: [python, foundational]
+title: Python Dictionary
+type: claim
+id: claim-dictionary
+tags:
+- python
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/05-chapter-1-working-with-python.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/05-chapter-1-working-with-python.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

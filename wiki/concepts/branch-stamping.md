@@ -1,11 +1,19 @@
 ---
-title: "Branch Stamping"
-type: concept
-tags: [foundational, netlist, analog, well-established, sparse-matrix]
+title: Branch Stamping
+type: claim
+id: claim-branch-stamping
+tags:
+- foundational
+- netlist
+- analog
+- well-established
+- sparse-matrix
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,15 @@
 ---
-title: "Jupyter Notebook"
+title: Jupyter Notebook
 type: entity
-tags: [python, foundational, well-established]
+id: entity-jupyter-notebook
+tags:
+- python
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt
 ---
 
 ## Overview

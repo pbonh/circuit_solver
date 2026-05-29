@@ -1,11 +1,20 @@
 ---
-title: "Graphs in VLSI — Chapter 6: Effective Resistance of Truncated Infinite Mesh Structures"
-type: summary
-tags: [vlsi, power-integrity, graph, analysis, novel, mesh]
+title: 'Graphs in VLSI — Chapter 6: Effective Resistance of Truncated Infinite Mesh
+  Structures'
+type: source
+id: source-graphs-in-vlsi-09-6-effective-resistance-of-truncated-infinite-mesh-structures
+kind: derived-summary
+tags:
+- vlsi
+- power-integrity
+- graph
+- analysis
+- novel
+- mesh
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/09-6-effective-resistance-of-truncated-infinite-mesh-structures.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/09-6-effective-resistance-of-truncated-infinite-mesh-structures.txt
 ---
 
 ## Key Points

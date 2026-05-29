@@ -1,11 +1,17 @@
 ---
-title: "k-Cograph"
-type: concept
-tags: [graph, advanced, well-established]
+title: k-Cograph
+type: claim
+id: claim-k-cograph
+tags:
+- graph
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

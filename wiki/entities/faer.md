@@ -1,11 +1,19 @@
 ---
-title: "faer"
+title: faer
 type: entity
-tags: [rust, sparse-matrix, lu-decomposition, complex-arithmetic, numeric-solver, well-established]
+id: entity-faer
+tags:
+- rust
+- sparse-matrix
+- lu-decomposition
+- complex-arithmetic
+- numeric-solver
+- well-established
 created: 2026-05-18
 updated: 2026-05-18
-sources: ["wiki/specs/circuit-solver", "wiki/decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer"]
-confidence: low
+sources:
+- wiki/specs/circuit-solver
+- wiki/decisions/0002-hybrid-sparse-direct-solver-backend-russell-faer
 ---
 
 ## Overview

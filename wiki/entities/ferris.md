@@ -1,11 +1,14 @@
 ---
-title: "Ferris"
+title: Ferris
 type: entity
-tags: [rust, mascot]
+id: entity-ferris
+tags:
+- rust
+- mascot
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/01-introduction.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/01-introduction.txt
 ---
 
 ## Overview

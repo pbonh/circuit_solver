@@ -1,16 +1,19 @@
 ---
-title: "Circuit Solver Context Map"
-type: context-map
-tags: [circuit-solver, context-map, domain-driven-design]
+title: Circuit Solver Context Map
+type: entity
+id: entity-context-map-circuit-solver
+tags:
+- circuit-solver
+- context-map
+- domain-driven-design
 created: 2026-05-17
 updated: 2026-05-17
 sources:
-  - "contexts/netlist-graph"
-  - "contexts/device-modeling"
-  - "contexts/numeric-solver"
-  - "contexts/analysis-orchestration"
-  - "contexts/application-frontend"
-confidence: high
+- contexts/netlist-graph
+- contexts/device-modeling
+- contexts/numeric-solver
+- contexts/analysis-orchestration
+- contexts/application-frontend
 ---
 
 ## Contexts

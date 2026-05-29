@@ -1,11 +1,19 @@
 ---
-title: "Time-Domain Sensitivity"
-type: concept
-tags: [sensitivity, transient, analog, advanced, well-established]
+title: Time-Domain Sensitivity
+type: claim
+id: claim-time-domain-sensitivity
+tags:
+- sensitivity
+- transient
+- analog
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/13-chapter-10-numerical-laplace-transform-inversion.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/13-chapter-10-numerical-laplace-transform-inversion.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

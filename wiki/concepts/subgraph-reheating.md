@@ -1,11 +1,19 @@
 ---
-title: "Subgraph Reheating"
-type: concept
-tags: [vlsi, routing, algorithm, novel, optimization]
+title: Subgraph Reheating
+type: claim
+id: claim-subgraph-reheating
+tags:
+- vlsi
+- routing
+- algorithm
+- novel
+- optimization
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

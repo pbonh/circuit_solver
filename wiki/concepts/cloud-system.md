@@ -1,11 +1,19 @@
 ---
-title: "Cloud System"
-type: concept
-tags: [simulation, modeling, cloud, distributed, well-established]
+title: Cloud System
+type: claim
+id: claim-cloud-system
+tags:
+- simulation
+- modeling
+- cloud
+- distributed
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/19-15-cloud-system-simulation-modeling.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/19-15-cloud-system-simulation-modeling.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

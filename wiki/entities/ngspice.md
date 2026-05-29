@@ -1,11 +1,17 @@
 ---
-title: "Ngspice"
+title: Ngspice
 type: entity
-tags: [eda, simulation, spice, open-source, well-established]
+id: entity-ngspice
+tags:
+- eda
+- simulation
+- spice
+- open-source
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/_reconciled"]
-confidence: low
+sources:
+- raw/_reconciled
 ---
 
 > No raw source in this knowledge base discusses ngspice substantively; this page exists because [[entities/spice]] and [[entities/hspice]] mention ngspice as a SPICE derivative. The content below is general-knowledge background consistent with those cross-references; treat the page as low-confidence until a raw source ingests ngspice-specific material.

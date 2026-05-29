@@ -1,11 +1,19 @@
 ---
-title: "Quantum-Cascade Laser"
-type: concept
-tags: [semiconductor, device-physics, photonic, advanced, well-established]
+title: Quantum-Cascade Laser
+type: claim
+id: claim-quantum-cascade-laser
+tags:
+- semiconductor
+- device-physics
+- photonic
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/17-chapter-12-leds-and-lasers.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/17-chapter-12-leds-and-lasers.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

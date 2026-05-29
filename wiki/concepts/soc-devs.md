@@ -1,11 +1,21 @@
 ---
-title: "SOC-DEVS"
-type: concept
-tags: [simulation, modeling, devs, soa, cloud, co-design, well-established]
+title: SOC-DEVS
+type: claim
+id: claim-soc-devs
+tags:
+- simulation
+- modeling
+- devs
+- soa
+- cloud
+- co-design
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/19-15-cloud-system-simulation-modeling.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/19-15-cloud-system-simulation-modeling.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

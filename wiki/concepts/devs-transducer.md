@@ -1,11 +1,19 @@
 ---
-title: "DEVS Transducer"
-type: concept
-tags: [simulation, modeling, devs, instrumentation, well-established]
+title: DEVS Transducer
+type: claim
+id: claim-devs-transducer
+tags:
+- simulation
+- modeling
+- devs
+- instrumentation
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/06-4-devs-natural-language-models-and-elaborations.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/06-4-devs-natural-language-models-and-elaborations.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

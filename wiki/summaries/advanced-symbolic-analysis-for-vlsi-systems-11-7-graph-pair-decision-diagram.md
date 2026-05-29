@@ -1,11 +1,21 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Chapter 7: Graph-Pair Decision Diagram"
-type: summary
-tags: [gpdd, bdd, graph, symbolic, analog, advanced, cancellation-free]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 7: Graph-Pair Decision
+  Diagram'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-11-7-graph-pair-decision-diagram
+kind: derived-summary
+tags:
+- gpdd
+- bdd
+- graph
+- symbolic
+- analog
+- advanced
+- cancellation-free
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/11-7-graph-pair-decision-diagram.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/11-7-graph-pair-decision-diagram.txt
 ---
 
 ## Key Points

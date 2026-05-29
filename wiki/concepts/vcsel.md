@@ -1,11 +1,18 @@
 ---
-title: "VCSEL (Vertical-Cavity Surface-Emitting Laser)"
-type: concept
-tags: [semiconductor, device-physics, photonic, well-established]
+title: VCSEL (Vertical-Cavity Surface-Emitting Laser)
+type: claim
+id: claim-vcsel
+tags:
+- semiconductor
+- device-physics
+- photonic
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/17-chapter-12-leds-and-lasers.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/17-chapter-12-leds-and-lasers.txt
+confidence:
+  base: 0.65
 ---
 
 > Sze & Ng (Sect. 12.6.2): "In a surface-emitting laser, the light output is orthogonal to the active layer (heterointerfaces) and the semiconductor surface ... the optical cavity is now defined by planes parallel to the heterointerfaces ... formed by two distributed-Bragg reflectors (DBRs) surrounding the active layer. These DBRs have high reflectivity larger than 90%. The high reflectivity is required since the optical gain per pass is small due to the small optical cavity compared to an edge-emitting laser." Active layer is "usually formed by multiple quantum wells." Advantages enumerated: low threshold current, single-mode lasing (wide mode separation per Eq. 43), 2-D laser array realisation, ease of fiber coupling, IC-process compatibility, high-volume / low-cost production, on-wafer testing.

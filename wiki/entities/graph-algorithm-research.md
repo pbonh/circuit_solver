@@ -1,11 +1,19 @@
 ---
-title: "Graph Algorithm Research"
+title: Graph Algorithm Research
 type: entity
-tags: [graph, algorithm, foundational, well-established]
+id: entity-graph-algorithm-research
+tags:
+- graph
+- algorithm
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/01-preface.txt", "raw/GuideToGraphAlgorithms/_txt/02-about-the-authors.txt", "raw/GuideToGraphAlgorithms/_txt/03-acknowledgments.txt", "raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/01-preface.txt
+- raw/GuideToGraphAlgorithms/_txt/02-about-the-authors.txt
+- raw/GuideToGraphAlgorithms/_txt/03-acknowledgments.txt
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
 ---
 
 ## Overview

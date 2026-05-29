@@ -1,11 +1,18 @@
 ---
-title: "Box Plot"
-type: concept
-tags: [python, visualization, statistics, well-established]
+title: Box Plot
+type: claim
+id: claim-box-plot
+tags:
+- python
+- visualization
+- statistics
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/11-chapter-7-data-visualization-with-python-libraries.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/11-chapter-7-data-visualization-with-python-libraries.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

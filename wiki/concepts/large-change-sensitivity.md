@@ -1,11 +1,18 @@
 ---
-title: "Large Change Sensitivity"
-type: concept
-tags: [sensitivity, foundational, advanced, well-established]
+title: Large Change Sensitivity
+type: claim
+id: claim-large-change-sensitivity
+tags:
+- sensitivity
+- foundational
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/11-chapter-8-large-change-sensitivity-and-related-topics.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/11-chapter-8-large-change-sensitivity-and-related-topics.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

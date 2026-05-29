@@ -1,11 +1,18 @@
 ---
-title: "Gaussian Elimination"
-type: concept
-tags: [foundational, numerical, well-established, math]
+title: Gaussian Elimination
+type: claim
+id: claim-gaussian-elimination
+tags:
+- foundational
+- numerical
+- well-established
+- math
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/05-chapter-2-network-equations-and-their-solution.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/05-chapter-2-network-equations-and-their-solution.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

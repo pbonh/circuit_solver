@@ -1,11 +1,20 @@
 ---
-title: "Hybrid-π Model (Small-Signal BJT/FET)"
-type: concept
-tags: [device-model, analog, ac, well-established, mosfet, bjt]
+title: Hybrid-π Model (Small-Signal BJT/FET)
+type: claim
+id: claim-hybrid-pi-model
+tags:
+- device-model
+- analog
+- ac
+- well-established
+- mosfet
+- bjt
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/05-chapter-2-network-equations-and-their-solution.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/05-chapter-2-network-equations-and-their-solution.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

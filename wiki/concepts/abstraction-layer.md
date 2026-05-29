@@ -1,11 +1,18 @@
 ---
-title: "Abstraction Layer"
-type: concept
-tags: [vlsi, foundational, well-established, methodology]
+title: Abstraction Layer
+type: claim
+id: claim-abstraction-layer
+tags:
+- vlsi
+- foundational
+- well-established
+- methodology
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

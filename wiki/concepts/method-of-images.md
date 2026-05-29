@@ -1,11 +1,18 @@
 ---
-title: "Method of Images"
-type: concept
-tags: [analysis, foundational, well-established, mathematics]
+title: Method of Images
+type: claim
+id: claim-method-of-images
+tags:
+- analysis
+- foundational
+- well-established
+- mathematics
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/09-6-effective-resistance-of-truncated-infinite-mesh-structures.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/09-6-effective-resistance-of-truncated-infinite-mesh-structures.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

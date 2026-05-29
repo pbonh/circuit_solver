@@ -1,11 +1,18 @@
 ---
-title: "Pseudo-Transient Analysis"
-type: concept
-tags: [analog, dc, transient, well-established]
+title: Pseudo-Transient Analysis
+type: claim
+id: claim-pseudo-transient-analysis
+tags:
+- analog
+- dc
+- transient
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,20 @@
 ---
-title: "GALS Design Pattern"
-type: concept
-tags: [simulation, modeling, hardware, fpga, low-power, well-established]
+title: GALS Design Pattern
+type: claim
+id: claim-gals-design-pattern
+tags:
+- simulation
+- modeling
+- hardware
+- fpga
+- low-power
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/22-18-activity-based-implementations-of-systems-of-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/22-18-activity-based-implementations-of-systems-of-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

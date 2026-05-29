@@ -1,11 +1,18 @@
 ---
-title: "Rapid Single Flux Quantum (RSFQ)"
-type: concept
-tags: [superconductive, digital, emerging, vlsi]
+title: Rapid Single Flux Quantum (RSFQ)
+type: claim
+id: claim-rsfq
+tags:
+- superconductive
+- digital
+- emerging
+- vlsi
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

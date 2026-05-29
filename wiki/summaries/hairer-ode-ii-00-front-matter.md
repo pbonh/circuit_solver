@@ -1,11 +1,19 @@
 ---
-title: "Solving Ordinary Differential Equations II — Front Matter"
-type: summary
-tags: [ode, dae, stiff, numerical-integration, foundational, well-established]
+title: Solving Ordinary Differential Equations II — Front Matter
+type: source
+id: source-hairer-ode-ii-00-front-matter
+kind: derived-summary
+tags:
+- ode
+- dae
+- stiff
+- numerical-integration
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/00-front-matter.txt"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/00-front-matter.txt
 ---
 
 ## Key Points

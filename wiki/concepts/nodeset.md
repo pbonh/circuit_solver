@@ -1,11 +1,17 @@
 ---
-title: "Nodeset"
-type: concept
-tags: [analog, dc, well-established]
+title: Nodeset
+type: claim
+id: claim-nodeset
+tags:
+- analog
+- dc
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

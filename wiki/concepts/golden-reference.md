@@ -1,11 +1,17 @@
 ---
-title: "Golden Reference"
-type: concept
-tags: [verification, testing, foundational]
+title: Golden Reference
+type: claim
+id: claim-golden-reference
+tags:
+- verification
+- testing
+- foundational
 created: 2026-05-18
 updated: 2026-05-18
-sources: ["wiki/specs/circuit-solver"]
-confidence: low
+sources:
+- wiki/specs/circuit-solver
+confidence:
+  base: 0.45
 ---
 
 ## Definition

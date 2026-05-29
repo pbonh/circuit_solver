@@ -1,11 +1,18 @@
 ---
-title: "Built-in Potential"
-type: concept
-tags: [semiconductor, device-physics, p-n-junction, well-established]
+title: Built-in Potential
+type: claim
+id: claim-built-in-potential
+tags:
+- semiconductor
+- device-physics
+- p-n-junction
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/06-chapter-2-p-n-junctions.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/06-chapter-2-p-n-junctions.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Zero-Cost Abstractions"
-type: concept
-tags: [rust, foundational, performance, well-established]
+title: Zero-Cost Abstractions
+type: claim
+id: claim-zero-cost-abstractions
+tags:
+- rust
+- foundational
+- performance
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/01-introduction.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/01-introduction.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

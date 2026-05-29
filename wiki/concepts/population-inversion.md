@@ -1,11 +1,18 @@
 ---
-title: "Population Inversion"
-type: concept
-tags: [semiconductor, device-physics, photonic, well-established]
+title: Population Inversion
+type: claim
+id: claim-population-inversion
+tags:
+- semiconductor
+- device-physics
+- photonic
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/17-chapter-12-leds-and-lasers.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/17-chapter-12-leds-and-lasers.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

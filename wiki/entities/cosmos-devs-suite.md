@@ -1,11 +1,17 @@
 ---
-title: "CoSMoS / DEVS-Suite"
+title: CoSMoS / DEVS-Suite
 type: entity
-tags: [simulation, devs, tool, academic, well-established]
+id: entity-cosmos-devs-suite
+tags:
+- simulation
+- devs
+- tool
+- academic
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt
 ---
 
 ## Overview

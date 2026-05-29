@@ -1,11 +1,19 @@
 ---
-title: "Ordered Binary Decision Diagram (OBDD)"
-type: concept
-tags: [graph, digital, boolean, eda, well-established]
+title: Ordered Binary Decision Diagram (OBDD)
+type: claim
+id: claim-ordered-binary-decision-diagram
+tags:
+- graph
+- digital
+- boolean
+- eda
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

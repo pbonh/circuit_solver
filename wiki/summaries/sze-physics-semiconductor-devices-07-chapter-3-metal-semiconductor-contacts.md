@@ -1,11 +1,20 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 3: Metal-Semiconductor Contacts"
-type: summary
-tags: [semiconductor, device-physics, schottky-barrier, ohmic-contact, foundational, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 3: Metal-Semiconductor
+  Contacts'
+type: source
+id: source-sze-physics-semiconductor-devices-07-chapter-3-metal-semiconductor-contacts
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- schottky-barrier
+- ohmic-contact
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/07-chapter-3-metal-semiconductor-contacts.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/07-chapter-3-metal-semiconductor-contacts.txt
 ---
 
 ## Key Points

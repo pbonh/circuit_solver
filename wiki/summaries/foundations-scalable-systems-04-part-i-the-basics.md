@@ -1,11 +1,19 @@
 ---
-title: "Foundations of Scalable Systems — Part I: The Basics (Chapters 1–4)"
-type: summary
-tags: [distributed-systems, scalability, concurrency, networking, replication, foundational]
+title: 'Foundations of Scalable Systems — Part I: The Basics (Chapters 1–4)'
+type: source
+id: source-foundations-scalable-systems-04-part-i-the-basics
+kind: derived-summary
+tags:
+- distributed-systems
+- scalability
+- concurrency
+- networking
+- replication
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt
 ---
 
 ## Key Points

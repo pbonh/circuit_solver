@@ -1,11 +1,19 @@
 ---
-title: "Switch Model (F-Coefficient)"
-type: concept
-tags: [analog, transient, device-model, well-established, switched-capacitor]
+title: Switch Model (F-Coefficient)
+type: claim
+id: claim-switch-model
+tags:
+- analog
+- transient
+- device-model
+- well-established
+- switched-capacitor
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

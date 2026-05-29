@@ -1,11 +1,21 @@
 ---
-title: "Radau IIA Method"
-type: concept
-tags: [ode, numerical-integration, runge-kutta, stiff, dae, foundational, well-established]
+title: Radau IIA Method
+type: claim
+id: claim-radau-iia-method
+tags:
+- ode
+- numerical-integration
+- runge-kutta
+- stiff
+- dae
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.85
 ---
 
 ## Definition

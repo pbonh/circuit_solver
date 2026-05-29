@@ -1,11 +1,18 @@
 ---
-title: "Task Scheduling"
-type: concept
-tags: [graph, algorithm, well-established, parallel]
+title: Task Scheduling
+type: claim
+id: claim-task-scheduling
+tags:
+- graph
+- algorithm
+- well-established
+- parallel
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

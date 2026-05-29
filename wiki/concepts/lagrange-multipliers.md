@@ -1,11 +1,18 @@
 ---
-title: "Lagrange Multipliers"
-type: concept
-tags: [optimization, foundational, well-established, math]
+title: Lagrange Multipliers
+type: claim
+id: claim-lagrange-multipliers
+tags:
+- optimization
+- foundational
+- well-established
+- math
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/18-chapter-15-introduction-to-optimization-theory.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/18-chapter-15-introduction-to-optimization-theory.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "Session State"
-type: concept
-tags: [distributed-systems, microservices, well-established]
+title: Session State
+type: claim
+id: claim-session-state
+tags:
+- distributed-systems
+- microservices
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

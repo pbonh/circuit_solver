@@ -1,11 +1,18 @@
 ---
-title: "Microbatching"
-type: concept
-tags: [streaming, well-established, fault-tolerance]
+title: Microbatching
+type: claim
+id: claim-microbatching
+tags:
+- streaming
+- well-established
+- fault-tolerance
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt"]
-confidence: medium
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

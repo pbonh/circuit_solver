@@ -1,11 +1,18 @@
 ---
-title: "Vec Type"
-type: concept
-tags: [rust, foundational, collections, well-established]
+title: Vec Type
+type: claim
+id: claim-vec-type
+tags:
+- rust
+- foundational
+- collections
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/09-chapter-8-common-collections.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/09-chapter-8-common-collections.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

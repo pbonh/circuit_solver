@@ -1,11 +1,20 @@
 ---
-title: "Foundations of Scalable Systems — Part II: Scalable Systems (Chapters 5–9)"
-type: summary
-tags: [distributed-systems, scalability, microservices, caching, messaging, serverless, foundational]
+title: 'Foundations of Scalable Systems — Part II: Scalable Systems (Chapters 5–9)'
+type: source
+id: source-foundations-scalable-systems-05-part-ii-scalable-systems
+kind: derived-summary
+tags:
+- distributed-systems
+- scalability
+- microservices
+- caching
+- messaging
+- serverless
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
 ---
 
 ## Key Points

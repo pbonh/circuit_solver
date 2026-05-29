@@ -1,11 +1,19 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Part IV: Negative-Resistance and Power Devices"
-type: summary
-tags: [semiconductor, device-physics, power-device, rf, overview]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Part IV: Negative-Resistance
+  and Power Devices'
+type: source
+id: source-sze-physics-semiconductor-devices-11-part-iv-negative-resistance-and-power-devices
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- power-device
+- rf
+- overview
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/11-part-iv-negative-resistance-and-power-devices.txt"]
-confidence: low
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/11-part-iv-negative-resistance-and-power-devices.txt
 ---
 
 ## Key Points

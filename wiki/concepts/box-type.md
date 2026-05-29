@@ -1,11 +1,18 @@
 ---
-title: "Box Type"
-type: concept
-tags: [rust, smart-pointers, foundational, well-established]
+title: Box Type
+type: claim
+id: claim-box-type
+tags:
+- rust
+- smart-pointers
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/16-chapter-15-smart-pointers.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/16-chapter-15-smart-pointers.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

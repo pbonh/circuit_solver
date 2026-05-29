@@ -1,11 +1,19 @@
 ---
-title: "Floating-Gate Memory"
-type: concept
-tags: [semiconductor, device-physics, mosfet, memory, well-established]
+title: Floating-Gate Memory
+type: claim
+id: claim-floating-gate-memory
+tags:
+- semiconductor
+- device-physics
+- mosfet
+- memory
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "Extrapolation Steady-State Method"
-type: concept
-tags: [transient, advanced, emerging]
+title: Extrapolation Steady-State Method
+type: claim
+id: claim-extrapolation-steady-state
+tags:
+- transient
+- advanced
+- emerging
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/19-chapter-16-time-domain-sensitivities-and-steady-state.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/19-chapter-16-time-domain-sensitivities-and-steady-state.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

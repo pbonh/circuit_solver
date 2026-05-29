@@ -1,11 +1,20 @@
 ---
-title: "Linearly Implicit Euler"
-type: concept
-tags: [ode, dae, stiff, runge-kutta, foundational, well-established]
+title: Linearly Implicit Euler
+type: claim
+id: claim-linearly-implicit-euler
+tags:
+- ode
+- dae
+- stiff
+- runge-kutta
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.85
 ---
 
 ## Definition

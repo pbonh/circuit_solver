@@ -1,11 +1,20 @@
 ---
-title: "Data Analysis and Visualizations with Python — Chapter 1: Introduction to Data Science with Python"
-type: summary
-tags: [python, data-science, pandas, numpy, data-analysis, foundational]
+title: 'Data Analysis and Visualizations with Python — Chapter 1: Introduction to
+  Data Science with Python'
+type: source
+id: source-data-analysis-visualizations-python-04-chapter-1-introduction-to-data-science-with-python
+kind: derived-summary
+tags:
+- python
+- data-science
+- pandas
+- numpy
+- data-analysis
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt"]
-confidence: high
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt
 ---
 
 ## Key Points

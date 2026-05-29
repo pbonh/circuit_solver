@@ -1,11 +1,19 @@
 ---
-title: "Determinant Decision Diagram (DDD)"
-type: concept
-tags: [ddd, bdd, symbolic, analog, advanced]
+title: Determinant Decision Diagram (DDD)
+type: claim
+id: claim-determinant-decision-diagram
+tags:
+- ddd
+- bdd
+- symbolic
+- analog
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

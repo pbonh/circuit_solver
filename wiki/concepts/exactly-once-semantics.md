@@ -1,11 +1,19 @@
 ---
-title: "Exactly-Once Semantics"
-type: concept
-tags: [streaming, distributed-systems, well-established, fault-tolerance]
+title: Exactly-Once Semantics
+type: claim
+id: claim-exactly-once-semantics
+tags:
+- streaming
+- distributed-systems
+- well-established
+- fault-tolerance
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

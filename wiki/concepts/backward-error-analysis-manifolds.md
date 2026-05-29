@@ -1,11 +1,19 @@
 ---
-title: "Backward Error Analysis on Manifolds"
-type: concept
-tags: [numerical-integration, dae, mechanical, foundational, well-established]
+title: Backward Error Analysis on Manifolds
+type: claim
+id: claim-backward-error-analysis-manifolds
+tags:
+- numerical-integration
+- dae
+- mechanical
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.65
 ---
 
 ## Definition

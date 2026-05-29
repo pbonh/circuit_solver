@@ -1,11 +1,19 @@
 ---
-title: "Kron's Branch Tearing"
-type: concept
-tags: [graph, decomposition, foundational, interconnect, advanced]
+title: Kron's Branch Tearing
+type: claim
+id: claim-branch-tearing
+tags:
+- graph
+- decomposition
+- foundational
+- interconnect
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/15-10-symbolic-moment-computation.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/15-10-symbolic-moment-computation.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

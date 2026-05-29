@@ -1,11 +1,19 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Chapter 10: Numerical Laplace Transform Inversion"
-type: summary
-tags: [advanced, transient, analog, well-established, numerical-integration]
+title: 'Computer Methods for Circuit Analysis and Design — Chapter 10: Numerical Laplace
+  Transform Inversion'
+type: source
+id: source-computer-methods-circuit-analysis-design-13-chapter-10-numerical-laplace-transform-inversion
+kind: derived-summary
+tags:
+- advanced
+- transient
+- analog
+- well-established
+- numerical-integration
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/13-chapter-10-numerical-laplace-transform-inversion.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/13-chapter-10-numerical-laplace-transform-inversion.txt
 ---
 
 ## Key Points

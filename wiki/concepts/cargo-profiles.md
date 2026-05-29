@@ -1,11 +1,18 @@
 ---
-title: "Cargo Profiles"
-type: concept
-tags: [rust, cargo, foundational, well-established]
+title: Cargo Profiles
+type: claim
+id: claim-cargo-profiles
+tags:
+- rust
+- cargo
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/15-chapter-14-more-about-cargo-and-crates-io.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/15-chapter-14-more-about-cargo-and-crates-io.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

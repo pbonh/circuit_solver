@@ -1,11 +1,17 @@
 ---
-title: "Byzantine Faults"
-type: concept
-tags: [distributed-systems, fault-tolerance, advanced]
+title: Byzantine Faults
+type: claim
+id: claim-byzantine-faults
+tags:
+- distributed-systems
+- fault-tolerance
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

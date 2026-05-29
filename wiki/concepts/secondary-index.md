@@ -1,11 +1,19 @@
 ---
-title: "Secondary Index"
-type: concept
-tags: [storage, well-established, indexing, query-performance]
+title: Secondary Index
+type: claim
+id: claim-secondary-index
+tags:
+- storage
+- well-established
+- indexing
+- query-performance
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

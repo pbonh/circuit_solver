@@ -1,11 +1,18 @@
 ---
-title: "Shadowing"
-type: concept
-tags: [rust, foundational, well-established]
+title: Shadowing
+type: claim
+id: claim-shadowing
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/03-chapter-2-programming-a-guessing-game.txt", "raw/rust_book/_txt/04-chapter-3-common-programming-concepts.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/03-chapter-2-programming-a-guessing-game.txt
+- raw/rust_book/_txt/04-chapter-3-common-programming-concepts.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

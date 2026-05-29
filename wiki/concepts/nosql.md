@@ -1,11 +1,18 @@
 ---
-title: "NoSQL"
-type: concept
-tags: [databases, distributed-systems, foundational, well-established]
+title: NoSQL
+type: claim
+id: claim-nosql
+tags:
+- databases
+- distributed-systems
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

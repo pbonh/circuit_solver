@@ -1,11 +1,19 @@
 ---
-title: "Adaptive Service-Based Software System (ASBS)"
-type: concept
-tags: [simulation, modeling, soa, adaptive, well-established]
+title: Adaptive Service-Based Software System (ASBS)
+type: claim
+id: claim-adaptive-service-based-software-system
+tags:
+- simulation
+- modeling
+- soa
+- adaptive
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

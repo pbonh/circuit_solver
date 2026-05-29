@@ -1,11 +1,19 @@
 ---
-title: "Dielectric Breakdown"
-type: concept
-tags: [semiconductor, device-physics, mosfet, reliability, well-established]
+title: Dielectric Breakdown
+type: claim
+id: claim-dielectric-breakdown
+tags:
+- semiconductor
+- device-physics
+- mosfet
+- reliability
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/08-chapter-4-metal-insulator-semiconductor-capacitors.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/08-chapter-4-metal-insulator-semiconductor-capacitors.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

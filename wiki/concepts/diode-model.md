@@ -1,11 +1,17 @@
 ---
-title: "Diode Model"
-type: concept
-tags: [device-model, analog, well-established]
+title: Diode Model
+type: claim
+id: claim-diode-model
+tags:
+- device-model
+- analog
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

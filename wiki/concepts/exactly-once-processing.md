@@ -1,11 +1,17 @@
 ---
-title: "Exactly-Once Processing"
-type: concept
-tags: [messaging, fault-tolerance, advanced]
+title: Exactly-Once Processing
+type: claim
+id: claim-exactly-once-processing
+tags:
+- messaging
+- fault-tolerance
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

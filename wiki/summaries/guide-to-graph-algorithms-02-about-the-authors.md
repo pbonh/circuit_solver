@@ -1,11 +1,16 @@
 ---
-title: "Guide to Graph Algorithms — About the Authors"
-type: summary
-tags: [graph, algorithm, foundational]
+title: Guide to Graph Algorithms — About the Authors
+type: source
+id: source-guide-to-graph-algorithms-02-about-the-authors
+kind: derived-summary
+tags:
+- graph
+- algorithm
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/02-about-the-authors.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/02-about-the-authors.txt
 ---
 
 ## Key Points

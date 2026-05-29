@@ -1,11 +1,18 @@
 ---
-title: "Graphs in VLSI — Preface"
-type: summary
-tags: [graph, vlsi, foundational, overview, well-established]
+title: Graphs in VLSI — Preface
+type: source
+id: source-graphs-in-vlsi-00-preface
+kind: derived-summary
+tags:
+- graph
+- vlsi
+- foundational
+- overview
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/00-preface.txt
 ---
 
 ## Key Points

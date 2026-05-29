@@ -1,11 +1,18 @@
 ---
-title: "Think Like a Graph"
-type: concept
-tags: [graph, distributed-systems, graph-processing, well-established]
+title: Think Like a Graph
+type: claim
+id: claim-think-like-a-graph
+tags:
+- graph
+- distributed-systems
+- graph-processing
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt"]
-confidence: medium
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

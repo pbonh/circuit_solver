@@ -1,11 +1,16 @@
 ---
-title: "Chrome Developer Tools"
+title: Chrome Developer Tools
 type: entity
-tags: [web, debugging, css, devtools]
+id: entity-chrome-developer-tools
+tags:
+- web
+- debugging
+- css
+- devtools
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/07-chapter-3-working-with-online-data.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/07-chapter-3-working-with-online-data.txt
 ---
 
 ## Overview

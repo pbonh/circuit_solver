@@ -1,11 +1,15 @@
 ---
-title: "ATADS Dataset"
+title: ATADS Dataset
 type: entity
-tags: [aviation, dataset, time-series]
+id: entity-atads-dataset
+tags:
+- aviation
+- dataset
+- time-series
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/04-introduction.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/04-introduction.txt
 ---
 
 ## Overview

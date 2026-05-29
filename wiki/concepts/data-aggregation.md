@@ -1,11 +1,19 @@
 ---
-title: "Data Aggregation"
-type: concept
-tags: [pandas, data-analysis, groupby, foundational, well-established]
+title: Data Aggregation
+type: claim
+id: claim-data-aggregation
+tags:
+- pandas
+- data-analysis
+- groupby
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/09-chapter-6-data-exploring-and-analysis.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/09-chapter-6-data-exploring-and-analysis.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

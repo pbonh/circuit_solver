@@ -1,12 +1,18 @@
 ---
-title: "Quality Attributes"
-type: concept
-tags: [architecture, requirements, foundational, well-established]
+title: Quality Attributes
+type: claim
+id: claim-quality-attributes
+tags:
+- architecture
+- requirements
+- foundational
+- well-established
 created: 2026-05-17
 updated: 2026-05-17
 sources:
-  - "decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph"
-confidence: high
+- decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph
+confidence:
+  base: 0.85
 ---
 
 ## Definition

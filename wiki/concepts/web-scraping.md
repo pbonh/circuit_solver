@@ -1,11 +1,17 @@
 ---
-title: "Web Scraping"
-type: concept
-tags: [python, data-analysis, well-established]
+title: Web Scraping
+type: claim
+id: claim-web-scraping
+tags:
+- python
+- data-analysis
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/12-chapter-8-data-analysis-case-studies.txt"]
-confidence: medium
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/12-chapter-8-data-analysis-case-studies.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "Bryant 1986 BDD Paper"
+title: Bryant 1986 BDD Paper
 type: entity
-tags: [paper, bdd, foundational, canonical, history]
+id: entity-bryant-bdd-paper
+tags:
+- paper
+- bdd
+- foundational
+- canonical
+- history
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt
 ---
 
 ## Overview

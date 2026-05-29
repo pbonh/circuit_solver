@@ -1,11 +1,18 @@
 ---
-title: "Pandas Series"
-type: concept
-tags: [python, pandas, dataframe, foundational]
+title: Pandas Series
+type: claim
+id: claim-series
+tags:
+- python
+- pandas
+- dataframe
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/05-chapter-1-working-with-python.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/05-chapter-1-working-with-python.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

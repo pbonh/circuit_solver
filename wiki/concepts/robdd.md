@@ -1,11 +1,18 @@
 ---
-title: "Reduced Ordered BDD (ROBDD)"
-type: concept
-tags: [bdd, foundational, canonical, data-structure]
+title: Reduced Ordered BDD (ROBDD)
+type: claim
+id: claim-robdd
+tags:
+- bdd
+- foundational
+- canonical
+- data-structure
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

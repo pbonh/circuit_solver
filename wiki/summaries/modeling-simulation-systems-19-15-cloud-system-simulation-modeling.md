@@ -1,11 +1,20 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 15: Cloud System Simulation Modeling"
-type: summary
-tags: [simulation, modeling, devs, soa, cloud, co-design, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 15: Cloud System Simulation Modeling'
+type: source
+id: source-modeling-simulation-systems-19-15-cloud-system-simulation-modeling
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- soa
+- cloud
+- co-design
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/19-15-cloud-system-simulation-modeling.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/19-15-cloud-system-simulation-modeling.txt
 ---
 
 ## Key Points

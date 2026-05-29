@@ -1,11 +1,18 @@
 ---
-title: "Network Scaling (Impedance and Frequency)"
-type: concept
-tags: [foundational, analog, well-established, numerical]
+title: Network Scaling (Impedance and Frequency)
+type: claim
+id: claim-network-scaling
+tags:
+- foundational
+- analog
+- well-established
+- numerical
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

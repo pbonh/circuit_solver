@@ -1,11 +1,17 @@
 ---
-title: "Slew Rate"
-type: concept
-tags: [device-model, analog, well-established]
+title: Slew Rate
+type: claim
+id: claim-slew-rate
+tags:
+- device-model
+- analog
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

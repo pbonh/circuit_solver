@@ -1,11 +1,17 @@
 ---
-title: "Beautiful Soup"
+title: Beautiful Soup
 type: entity
-tags: [python, html, parsing, library, well-established]
+id: entity-beautiful-soup
+tags:
+- python
+- html
+- parsing
+- library
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/08-chapter-5-data-gathering-and-cleaning.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/08-chapter-5-data-gathering-and-cleaning.txt
 ---
 
 ## Overview

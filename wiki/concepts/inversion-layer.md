@@ -1,11 +1,19 @@
 ---
-title: "Inversion Layer"
-type: concept
-tags: [semiconductor, device-physics, mosfet, surface-physics, well-established]
+title: Inversion Layer
+type: claim
+id: claim-inversion-layer
+tags:
+- semiconductor
+- device-physics
+- mosfet
+- surface-physics
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/08-chapter-4-metal-insulator-semiconductor-capacitors.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/08-chapter-4-metal-insulator-semiconductor-capacitors.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

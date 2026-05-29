@@ -1,11 +1,15 @@
 ---
-title: "NGINX"
+title: NGINX
 type: entity
-tags: [web, reverse-proxy, deployment]
+id: entity-nginx
+tags:
+- web
+- reverse-proxy
+- deployment
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt
 ---
 
 ## Overview

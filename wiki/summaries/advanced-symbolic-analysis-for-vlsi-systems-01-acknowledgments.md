@@ -1,11 +1,16 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Acknowledgments"
-type: summary
-tags: [foundational, vlsi, meta]
+title: Advanced Symbolic Analysis for VLSI Systems — Acknowledgments
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-01-acknowledgments
+kind: derived-summary
+tags:
+- foundational
+- vlsi
+- meta
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/01-acknowledgments.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/01-acknowledgments.txt
 ---
 
 ## Key Points

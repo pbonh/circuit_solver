@@ -1,11 +1,18 @@
 ---
-title: "Elmore Delay"
-type: concept
-tags: [vlsi, timing, interconnect, well-established]
+title: Elmore Delay
+type: claim
+id: claim-elmore-delay
+tags:
+- vlsi
+- timing
+- interconnect
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

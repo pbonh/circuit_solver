@@ -1,11 +1,15 @@
 ---
-title: "SciPy"
+title: SciPy
 type: entity
-tags: [python, statistics, well-established]
+id: entity-scipy
+tags:
+- python
+- statistics
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt
 ---
 
 ## Overview

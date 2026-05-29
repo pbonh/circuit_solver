@@ -1,11 +1,19 @@
 ---
-title: "Symbolic Noise Analysis"
-type: concept
-tags: [analog, noise, symbolic, mosfet, advanced]
+title: Symbolic Noise Analysis
+type: claim
+id: claim-symbolic-noise-analysis
+tags:
+- analog
+- noise
+- symbolic
+- mosfet
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/13-9-symbolic-nodal-analysis-of-analog-circuits-using-nullors.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/13-9-symbolic-nodal-analysis-of-analog-circuits-using-nullors.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "Cotree"
-type: concept
-tags: [graph, foundational, well-established]
+title: Cotree
+type: claim
+id: claim-cotree
+tags:
+- graph
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

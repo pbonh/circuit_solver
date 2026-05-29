@@ -1,11 +1,18 @@
 ---
-title: "Cellular Automaton Coupling"
-type: concept
-tags: [simulation, modeling, cellular-automata, well-established]
+title: Cellular Automaton Coupling
+type: claim
+id: claim-cellular-automaton-coupling
+tags:
+- simulation
+- modeling
+- cellular-automata
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/08-6-aspects-and-multi-aspects.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/08-6-aspects-and-multi-aspects.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

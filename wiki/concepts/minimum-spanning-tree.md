@@ -1,11 +1,18 @@
 ---
-title: "Minimum Spanning Tree (MST)"
-type: concept
-tags: [graph, algorithm, foundational, well-established]
+title: Minimum Spanning Tree (MST)
+type: claim
+id: claim-minimum-spanning-tree
+tags:
+- graph
+- algorithm
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

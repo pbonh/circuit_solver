@@ -1,11 +1,17 @@
 ---
-title: "Plotly"
+title: Plotly
 type: entity
-tags: [python, visualization, interactive, library, well-established]
+id: entity-plotly
+tags:
+- python
+- visualization
+- interactive
+- library
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/05-chapter-2-the-importance-of-data-visualization-in-business-intelligence.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/05-chapter-2-the-importance-of-data-visualization-in-business-intelligence.txt
 ---
 
 ## Overview

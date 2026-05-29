@@ -1,11 +1,18 @@
 ---
-title: "WATAND (Waterloo Analysis and Design)"
+title: WATAND (Waterloo Analysis and Design)
 type: entity
-tags: [software, cad, simulator, foundational, well-established]
+id: entity-watand
+tags:
+- software
+- cad
+- simulator
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/01-preface.txt", "raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/01-preface.txt
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt
 ---
 
 ## Overview

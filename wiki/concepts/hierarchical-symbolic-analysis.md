@@ -1,11 +1,19 @@
 ---
-title: "Hierarchical Symbolic Analysis"
-type: concept
-tags: [analog, symbolic, hierarchical, advanced, scalability]
+title: Hierarchical Symbolic Analysis
+type: claim
+id: claim-hierarchical-symbolic-analysis
+tags:
+- analog
+- symbolic
+- hierarchical
+- advanced
+- scalability
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

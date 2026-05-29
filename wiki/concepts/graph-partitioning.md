@@ -1,11 +1,19 @@
 ---
-title: "Graph Partitioning"
-type: concept
-tags: [graph, algorithm, vlsi, partitioning, well-established]
+title: Graph Partitioning
+type: claim
+id: claim-graph-partitioning
+tags:
+- graph
+- algorithm
+- vlsi
+- partitioning
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/00-preface.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/00-preface.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Interval (and Affine) Arithmetic"
-type: concept
-tags: [foundational, numerical, statistical, bounds]
+title: Interval (and Affine) Arithmetic
+type: claim
+id: claim-interval-arithmetic
+tags:
+- foundational
+- numerical
+- statistical
+- bounds
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/16-11-performance-bound-analysis-of-analog-circuits-considering-process-variations.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/16-11-performance-bound-analysis-of-analog-circuits-considering-process-variations.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

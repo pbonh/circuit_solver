@@ -1,11 +1,19 @@
 ---
-title: "Metal-Insulator-Semiconductor (MIS) Capacitor"
-type: concept
-tags: [semiconductor, device-physics, mosfet, foundational, well-established]
+title: Metal-Insulator-Semiconductor (MIS) Capacitor
+type: claim
+id: claim-mis-capacitor
+tags:
+- semiconductor
+- device-physics
+- mosfet
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

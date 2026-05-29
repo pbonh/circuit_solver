@@ -1,11 +1,19 @@
 ---
-title: "Differential-Algebraic Tree"
-type: concept
-tags: [dae, runge-kutta, order-conditions, foundational, well-established]
+title: Differential-Algebraic Tree
+type: claim
+id: claim-differential-algebraic-tree
+tags:
+- dae
+- runge-kutta
+- order-conditions
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.65
 ---
 
 ## Definition

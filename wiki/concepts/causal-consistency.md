@@ -1,11 +1,18 @@
 ---
-title: "Causal Consistency"
-type: concept
-tags: [distributed-systems, well-established, consistency]
+title: Causal Consistency
+type: claim
+id: claim-causal-consistency
+tags:
+- distributed-systems
+- well-established
+- consistency
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

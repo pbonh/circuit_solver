@@ -1,11 +1,20 @@
 ---
-title: "Data Analysis and Visualizations with Python — Chapter 2: The Importance of Data Visualization in Business Intelligence"
-type: summary
-tags: [python, data-visualization, business-intelligence, matplotlib, seaborn, foundational]
+title: 'Data Analysis and Visualizations with Python — Chapter 2: The Importance of
+  Data Visualization in Business Intelligence'
+type: source
+id: source-data-analysis-visualizations-python-05-chapter-2-the-importance-of-data-visualization-in-business-intelligence
+kind: derived-summary
+tags:
+- python
+- data-visualization
+- business-intelligence
+- matplotlib
+- seaborn
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/05-chapter-2-the-importance-of-data-visualization-in-business-intelligence.txt"]
-confidence: high
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/05-chapter-2-the-importance-of-data-visualization-in-business-intelligence.txt
 ---
 
 ## Key Points

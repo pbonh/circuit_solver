@@ -1,11 +1,18 @@
 ---
-title: "Distributed Element Analysis"
-type: concept
-tags: [analog, rf, ac, well-established]
+title: Distributed Element Analysis
+type: claim
+id: claim-distributed-element-analysis
+tags:
+- analog
+- rf
+- ac
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/13-chapter-10-numerical-laplace-transform-inversion.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/13-chapter-10-numerical-laplace-transform-inversion.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

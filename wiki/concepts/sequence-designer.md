@@ -1,11 +1,19 @@
 ---
-title: "Sequence Designer"
-type: concept
-tags: [simulation, modeling, devs, tooling, well-established]
+title: Sequence Designer
+type: claim
+id: claim-sequence-designer
+tags:
+- simulation
+- modeling
+- devs
+- tooling
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/06-4-devs-natural-language-models-and-elaborations.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/06-4-devs-natural-language-models-and-elaborations.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

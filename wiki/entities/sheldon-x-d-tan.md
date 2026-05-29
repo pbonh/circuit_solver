@@ -1,11 +1,17 @@
 ---
-title: "Sheldon X.-D. Tan"
+title: Sheldon X.-D. Tan
 type: entity
-tags: [person, author, researcher, symbolic, vlsi]
+id: entity-sheldon-x-d-tan
+tags:
+- person
+- author
+- researcher
+- symbolic
+- vlsi
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/01-acknowledgments.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/01-acknowledgments.txt
 ---
 
 ## Overview

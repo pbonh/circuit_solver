@@ -1,11 +1,18 @@
 ---
-title: "MOSFET Small-Signal Model"
-type: concept
-tags: [mosfet, analog, device-model, foundational]
+title: MOSFET Small-Signal Model
+type: claim
+id: claim-mosfet-small-signal-model
+tags:
+- mosfet
+- analog
+- device-model
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/13-9-symbolic-nodal-analysis-of-analog-circuits-using-nullors.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/13-9-symbolic-nodal-analysis-of-analog-circuits-using-nullors.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,21 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 16: Model Development and Execution Process with Repositories, Validation, and Verification"
-type: summary
-tags: [simulation, modeling, devs, cosmos, verification, validation, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 16: Model Development and Execution
+  Process with Repositories, Validation, and Verification'
+type: source
+id: source-modeling-simulation-systems-20-16-model-development-and-execution-process-with-repositories-validation-and-verification
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- cosmos
+- verification
+- validation
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/20-16-model-development-and-execution-process-with-repositories-validation-and-verification.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/20-16-model-development-and-execution-process-with-repositories-validation-and-verification.txt
 ---
 
 ## Key Points

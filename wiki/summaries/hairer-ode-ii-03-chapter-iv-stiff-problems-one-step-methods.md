@@ -1,11 +1,25 @@
 ---
-title: "Solving Ordinary Differential Equations II — Chapter IV: Stiff Problems – One-Step Methods"
-type: summary
-tags: [ode, stiff, runge-kutta, rosenbrock, numerical-integration, transient, a-stability, l-stability, b-stability, foundational, well-established]
+title: 'Solving Ordinary Differential Equations II — Chapter IV: Stiff Problems –
+  One-Step Methods'
+type: source
+id: source-hairer-ode-ii-03-chapter-iv-stiff-problems-one-step-methods
+kind: derived-summary
+tags:
+- ode
+- stiff
+- runge-kutta
+- rosenbrock
+- numerical-integration
+- transient
+- a-stability
+- l-stability
+- b-stability
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/03-chapter-iv-stiff-problems-one-step-methods.txt"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/03-chapter-iv-stiff-problems-one-step-methods.txt
 ---
 
 ## Key Points

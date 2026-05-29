@@ -1,11 +1,15 @@
 ---
-title: "University of Waterloo"
+title: University of Waterloo
 type: entity
-tags: [institution, foundational, well-established]
+id: entity-university-of-waterloo
+tags:
+- institution
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/00-cover-and-front-matter.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/00-cover-and-front-matter.txt
 ---
 
 ## Overview

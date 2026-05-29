@@ -1,11 +1,19 @@
 ---
-title: "Graphs in VLSI — Chapter 1: Introduction"
-type: summary
-tags: [graph, vlsi, foundational, well-established, history, eda]
+title: 'Graphs in VLSI — Chapter 1: Introduction'
+type: source
+id: source-graphs-in-vlsi-04-1-introduction
+kind: derived-summary
+tags:
+- graph
+- vlsi
+- foundational
+- well-established
+- history
+- eda
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/04-1-introduction.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/04-1-introduction.txt
 ---
 
 ## Key Points

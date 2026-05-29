@@ -1,11 +1,18 @@
 ---
-title: "Static Dispatch (Rust)"
-type: concept
-tags: [rust, traits, foundational, well-established]
+title: Static Dispatch (Rust)
+type: claim
+id: claim-static-dispatch
+tags:
+- rust
+- traits
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/18-chapter-17-object-oriented-programming-features-of-rust.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/18-chapter-17-object-oriented-programming-features-of-rust.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

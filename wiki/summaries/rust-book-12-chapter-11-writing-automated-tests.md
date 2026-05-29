@@ -1,11 +1,17 @@
 ---
-title: "The Rust Programming Language — Chapter 11: Writing Automated Tests"
-type: summary
-tags: [rust, foundational, testing, well-established]
+title: 'The Rust Programming Language — Chapter 11: Writing Automated Tests'
+type: source
+id: source-rust-book-12-chapter-11-writing-automated-tests
+kind: derived-summary
+tags:
+- rust
+- foundational
+- testing
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/12-chapter-11-writing-automated-tests.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/12-chapter-11-writing-automated-tests.txt
 ---
 
 ## Key Points

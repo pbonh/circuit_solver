@@ -1,11 +1,17 @@
 ---
-title: "Prototyping Python Dashboards — Chapter 12: Afterword"
-type: summary
-tags: [python, dashboard, deployment, foundational]
+title: 'Prototyping Python Dashboards — Chapter 12: Afterword'
+type: source
+id: source-prototyping-python-dashboards-16-chapter-12-afterword
+kind: derived-summary
+tags:
+- python
+- dashboard
+- deployment
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/16-chapter-12-afterword.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/16-chapter-12-afterword.txt
 ---
 
 ## Key Points

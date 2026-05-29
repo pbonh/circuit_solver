@@ -1,11 +1,18 @@
 ---
-title: "Rust Language Server"
-type: concept
-tags: [rust, tooling, foundational]
+title: Rust Language Server
+type: claim
+id: claim-rust-language-server
+tags:
+- rust
+- tooling
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/01-introduction.txt", "raw/rust_book/_txt/02-chapter-1-getting-started.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/01-introduction.txt
+- raw/rust_book/_txt/02-chapter-1-getting-started.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

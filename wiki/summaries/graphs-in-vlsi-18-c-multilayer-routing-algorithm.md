@@ -1,11 +1,18 @@
 ---
-title: "Graphs in VLSI — Appendix C: Multilayer Routing Algorithm"
-type: summary
-tags: [vlsi, routing, algorithm, novel, board]
+title: 'Graphs in VLSI — Appendix C: Multilayer Routing Algorithm'
+type: source
+id: source-graphs-in-vlsi-18-c-multilayer-routing-algorithm
+kind: derived-summary
+tags:
+- vlsi
+- routing
+- algorithm
+- novel
+- board
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/18-c-multilayer-routing-algorithm.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/18-c-multilayer-routing-algorithm.txt
 ---
 
 ## Key Points

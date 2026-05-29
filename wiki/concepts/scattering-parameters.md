@@ -1,11 +1,18 @@
 ---
-title: "Scattering Parameters (S Parameters)"
-type: concept
-tags: [analog, rf, well-established, characterization]
+title: Scattering Parameters (S Parameters)
+type: claim
+id: claim-scattering-parameters
+tags:
+- analog
+- rf
+- well-established
+- characterization
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

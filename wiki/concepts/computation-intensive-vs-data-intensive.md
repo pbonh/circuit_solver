@@ -1,11 +1,18 @@
 ---
-title: "Computation-Intensive vs. Data-Intensive Workloads"
-type: concept
-tags: [distributed-systems, big-data, foundational, well-established]
+title: Computation-Intensive vs. Data-Intensive Workloads
+type: claim
+id: claim-computation-intensive-vs-data-intensive
+tags:
+- distributed-systems
+- big-data
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

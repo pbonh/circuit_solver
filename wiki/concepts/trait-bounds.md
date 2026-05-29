@@ -1,11 +1,19 @@
 ---
-title: "Trait Bounds"
-type: concept
-tags: [rust, foundational, generics, traits, well-established]
+title: Trait Bounds
+type: claim
+id: claim-trait-bounds
+tags:
+- rust
+- foundational
+- generics
+- traits
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

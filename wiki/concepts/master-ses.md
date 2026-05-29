@@ -1,11 +1,19 @@
 ---
-title: "Master SES"
-type: concept
-tags: [simulation, modeling, ses, sos, well-established]
+title: Master SES
+type: claim
+id: claim-master-ses
+tags:
+- simulation
+- modeling
+- ses
+- sos
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/17-13-flexible-modeling-support-environments.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/17-13-flexible-modeling-support-environments.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

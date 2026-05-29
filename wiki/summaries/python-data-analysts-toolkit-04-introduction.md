@@ -1,11 +1,18 @@
 ---
-title: "Python Data Analyst's Toolkit — Introduction"
-type: summary
-tags: [python, data-analysis, statistics, visualization, foundational]
+title: Python Data Analyst's Toolkit — Introduction
+type: source
+id: source-python-data-analysts-toolkit-04-introduction
+kind: derived-summary
+tags:
+- python
+- data-analysis
+- statistics
+- visualization
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt
 ---
 
 ## Key Points

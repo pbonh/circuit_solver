@@ -1,11 +1,20 @@
 ---
-title: "Closure Under Coupling"
-type: concept
-tags: [simulation, modeling, devs, foundational, well-established, theory]
+title: Closure Under Coupling
+type: claim
+id: claim-closure-under-coupling
+tags:
+- simulation
+- modeling
+- devs
+- foundational
+- well-established
+- theory
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/04-2-devs-integrated-development-environments.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/04-2-devs-integrated-development-environments.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Single Flux Quantum (SFQ)"
-type: concept
-tags: [superconductive, digital, emerging, vlsi, clock]
+title: Single Flux Quantum (SFQ)
+type: claim
+id: claim-single-flux-quantum
+tags:
+- superconductive
+- digital
+- emerging
+- vlsi
+- clock
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

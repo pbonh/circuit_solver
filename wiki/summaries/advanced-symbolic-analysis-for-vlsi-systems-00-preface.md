@@ -1,11 +1,18 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Preface"
-type: summary
-tags: [analog, symbolic, foundational, vlsi, overview]
+title: Advanced Symbolic Analysis for VLSI Systems — Preface
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-00-preface
+kind: derived-summary
+tags:
+- analog
+- symbolic
+- foundational
+- vlsi
+- overview
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt
 ---
 
 ## Key Points

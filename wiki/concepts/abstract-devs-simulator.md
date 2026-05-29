@@ -1,11 +1,20 @@
 ---
-title: "Abstract DEVS Simulator"
-type: concept
-tags: [simulation, modeling, devs, foundational, theory, well-established]
+title: Abstract DEVS Simulator
+type: claim
+id: claim-abstract-devs-simulator
+tags:
+- simulation
+- modeling
+- devs
+- foundational
+- theory
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/12-9-devs-simulation-protocol.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/12-9-devs-simulation-protocol.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

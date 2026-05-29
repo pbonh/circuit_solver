@@ -1,11 +1,19 @@
 ---
-title: "DEVS Ports and Messages"
-type: concept
-tags: [simulation, modeling, devs, foundational, well-established]
+title: DEVS Ports and Messages
+type: claim
+id: claim-devs-port-and-message
+tags:
+- simulation
+- modeling
+- devs
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/06-4-devs-natural-language-models-and-elaborations.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/06-4-devs-natural-language-models-and-elaborations.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

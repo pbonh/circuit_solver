@@ -1,11 +1,18 @@
 ---
-title: "Leader Election"
-type: concept
-tags: [distributed-systems, well-established, consensus]
+title: Leader Election
+type: claim
+id: claim-leader-election
+tags:
+- distributed-systems
+- well-established
+- consensus
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

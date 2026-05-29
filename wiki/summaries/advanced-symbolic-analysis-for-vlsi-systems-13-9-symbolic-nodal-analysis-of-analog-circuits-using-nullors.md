@@ -1,11 +1,21 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Chapter 9: Symbolic Nodal Analysis Using Nullors"
-type: summary
-tags: [analog, symbolic, nullor, mosfet, sensitivity, noise, advanced]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 9: Symbolic Nodal Analysis
+  Using Nullors'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-13-9-symbolic-nodal-analysis-of-analog-circuits-using-nullors
+kind: derived-summary
+tags:
+- analog
+- symbolic
+- nullor
+- mosfet
+- sensitivity
+- noise
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/13-9-symbolic-nodal-analysis-of-analog-circuits-using-nullors.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/13-9-symbolic-nodal-analysis-of-analog-circuits-using-nullors.txt
 ---
 
 ## Key Points

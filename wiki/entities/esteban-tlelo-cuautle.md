@@ -1,11 +1,17 @@
 ---
-title: "Esteban Tlelo-Cuautle"
+title: Esteban Tlelo-Cuautle
 type: entity
-tags: [person, author, researcher, symbolic, analog]
+id: entity-esteban-tlelo-cuautle
+tags:
+- person
+- author
+- researcher
+- symbolic
+- analog
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/01-acknowledgments.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/01-acknowledgments.txt
 ---
 
 ## Overview

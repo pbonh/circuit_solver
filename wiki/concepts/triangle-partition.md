@@ -1,11 +1,17 @@
 ---
-title: "Triangle Partition"
-type: concept
-tags: [graph, algorithm, well-established]
+title: Triangle Partition
+type: claim
+id: claim-triangle-partition
+tags:
+- graph
+- algorithm
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

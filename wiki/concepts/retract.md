@@ -1,11 +1,17 @@
 ---
-title: "Retract"
-type: concept
-tags: [graph, advanced, well-established]
+title: Retract
+type: claim
+id: claim-retract
+tags:
+- graph
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

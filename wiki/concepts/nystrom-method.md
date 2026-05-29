@@ -1,11 +1,19 @@
 ---
-title: "Nyström Method"
-type: concept
-tags: [ode, numerical-integration, multistep, foundational, well-established]
+title: Nyström Method
+type: claim
+id: claim-nystrom-method
+tags:
+- ode
+- numerical-integration
+- multistep
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.65
 ---
 
 ## Definition

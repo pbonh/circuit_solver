@@ -1,11 +1,18 @@
 ---
-title: "Clock Gating"
-type: concept
-tags: [hardware, low-power, fpga, well-established]
+title: Clock Gating
+type: claim
+id: claim-clock-gating
+tags:
+- hardware
+- low-power
+- fpga
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/22-18-activity-based-implementations-of-systems-of-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/22-18-activity-based-implementations-of-systems-of-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "Calculus"
-type: concept
-tags: [statistics, foundational, well-established]
+title: Calculus
+type: claim
+id: claim-calculus
+tags:
+- statistics
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/07-chapter-3-regular-expressions-and-math-with-python.txt"]
-confidence: medium
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/07-chapter-3-regular-expressions-and-math-with-python.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

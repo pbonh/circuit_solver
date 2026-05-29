@@ -1,11 +1,18 @@
 ---
-title: "Constraint Graph"
-type: concept
-tags: [graph, vlsi, timing, well-established]
+title: Constraint Graph
+type: claim
+id: claim-constraint-graph
+tags:
+- graph
+- vlsi
+- timing
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

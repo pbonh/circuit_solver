@@ -1,11 +1,19 @@
 ---
-title: "The Rust Programming Language — Chapter 13: Functional Language Features: Iterators and Closures"
-type: summary
-tags: [rust, foundational, functional-programming, iterators, closures]
+title: 'The Rust Programming Language — Chapter 13: Functional Language Features:
+  Iterators and Closures'
+type: source
+id: source-rust-book-14-chapter-13-functional-language-features-iterators-and-closures
+kind: derived-summary
+tags:
+- rust
+- foundational
+- functional-programming
+- iterators
+- closures
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/14-chapter-13-functional-language-features-iterators-and-closures.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/14-chapter-13-functional-language-features-iterators-and-closures.txt
 ---
 
 ## Key Points

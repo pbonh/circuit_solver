@@ -1,11 +1,17 @@
 ---
-title: "Silicide"
+title: Silicide
 type: entity
-tags: [semiconductor, device-physics, materials, contact, well-established]
+id: entity-silicide
+tags:
+- semiconductor
+- device-physics
+- materials
+- contact
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/07-chapter-3-metal-semiconductor-contacts.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/07-chapter-3-metal-semiconductor-contacts.txt
 ---
 
 ## Overview

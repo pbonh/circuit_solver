@@ -1,11 +1,19 @@
 ---
-title: "Q and omega_0 Sensitivity"
-type: concept
-tags: [sensitivity, analog, ac, well-established, filter]
+title: Q and omega_0 Sensitivity
+type: claim
+id: claim-q-omega-sensitivity
+tags:
+- sensitivity
+- analog
+- ac
+- well-established
+- filter
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/08-chapter-5-sensitivities.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/08-chapter-5-sensitivities.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

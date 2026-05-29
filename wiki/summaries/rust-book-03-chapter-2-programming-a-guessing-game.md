@@ -1,11 +1,17 @@
 ---
-title: "The Rust Programming Language — Chapter 2: Programming a Guessing Game"
-type: summary
-tags: [rust, foundational, error-handling, project]
+title: 'The Rust Programming Language — Chapter 2: Programming a Guessing Game'
+type: source
+id: source-rust-book-03-chapter-2-programming-a-guessing-game
+kind: derived-summary
+tags:
+- rust
+- foundational
+- error-handling
+- project
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/03-chapter-2-programming-a-guessing-game.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/03-chapter-2-programming-a-guessing-game.txt
 ---
 
 ## Key Points

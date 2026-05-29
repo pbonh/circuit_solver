@@ -1,11 +1,16 @@
 ---
-title: "Bounded Context"
-type: concept
-tags: [foundational, domain-driven-design, well-established]
+title: Bounded Context
+type: claim
+id: claim-bounded-context
+tags:
+- foundational
+- domain-driven-design
+- well-established
 created: 2026-05-17
 updated: 2026-05-17
 sources: []
-confidence: low
+confidence:
+  base: 0.45
 ---
 
 ## Definition

@@ -1,11 +1,16 @@
 ---
-title: "ISAAC"
+title: ISAAC
 type: entity
-tags: [tool, symbolic, analog, historical]
+id: entity-isaac
+tags:
+- tool
+- symbolic
+- analog
+- historical
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt
 ---
 
 ## Overview

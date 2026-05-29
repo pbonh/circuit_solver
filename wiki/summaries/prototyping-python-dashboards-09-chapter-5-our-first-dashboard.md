@@ -1,11 +1,20 @@
 ---
-title: "Prototyping Python Dashboards — Chapter 5: Our First Dashboard"
-type: summary
-tags: [python, dashboard, plotly, dash, css, regression, visualization]
+title: 'Prototyping Python Dashboards — Chapter 5: Our First Dashboard'
+type: source
+id: source-prototyping-python-dashboards-09-chapter-5-our-first-dashboard
+kind: derived-summary
+tags:
+- python
+- dashboard
+- plotly
+- dash
+- css
+- regression
+- visualization
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/09-chapter-5-our-first-dashboard.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/09-chapter-5-our-first-dashboard.txt
 ---
 
 ## Key Points

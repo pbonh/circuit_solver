@@ -1,11 +1,18 @@
 ---
-title: "SES Variables"
-type: concept
-tags: [simulation, modeling, ses, well-established]
+title: SES Variables
+type: claim
+id: claim-ses-variables
+tags:
+- simulation
+- modeling
+- ses
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/07-5-specialization-and-pruning.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/07-5-specialization-and-pruning.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

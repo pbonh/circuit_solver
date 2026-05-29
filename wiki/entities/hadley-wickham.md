@@ -1,11 +1,15 @@
 ---
-title: "Hadley Wickham"
+title: Hadley Wickham
 type: entity
-tags: [data-analysis, statistics, well-established]
+id: entity-hadley-wickham
+tags:
+- data-analysis
+- statistics
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt
 ---
 
 ## Overview

@@ -1,11 +1,17 @@
 ---
-title: "Chaos"
+title: Chaos
 type: entity
-tags: [graph, distributed-systems, graph-processing, out-of-core, well-established]
+id: entity-chaos
+tags:
+- graph
+- distributed-systems
+- graph-processing
+- out-of-core
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt"]
-confidence: medium
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt
 ---
 
 > Source citations: Systems For Big Graph Analytics Chapter 2 names Chaos repeatedly. "Chaos [18] extends X-Stream to work in a distributed environment, but it is only efficient when network bandwidth far outstrips storage bandwidth (which is also an assumption in its system design)." Later (Sect. on Scaling-Out): "In Chaos, a master keeps track of the vertices and edges of every partition, and the generated updates towards every partition; while a computing thread sends requests to the master for the necessary data for processing a partition. ... Roy et al. [11] reported that Chaos only achieves good performance by using large-SSD machines connected by 40 Gigabit Ethernet, and the performance is undesirable when Gigabit Ethernet is used." "Chaos also supports work stealing for load balancing." Reference: A. Roy, L. Bindschaedler, J. Malicevic, and W. Zwaenepoel. Chaos: scale-out graph processing from secondary storage. In SOSP, pages 410–424, 2015.

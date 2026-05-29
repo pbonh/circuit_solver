@@ -1,11 +1,18 @@
 ---
-title: "Flatband Voltage"
-type: concept
-tags: [semiconductor, device-physics, mosfet, well-established]
+title: Flatband Voltage
+type: claim
+id: claim-flatband-voltage
+tags:
+- semiconductor
+- device-physics
+- mosfet
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/08-chapter-4-metal-insulator-semiconductor-capacitors.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/08-chapter-4-metal-insulator-semiconductor-capacitors.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Gallium Arsenide (GaAs)"
+title: Gallium Arsenide (GaAs)
 type: entity
-tags: [semiconductor, material, iii-v, photonic, rf, well-established]
+id: entity-gallium-arsenide
+tags:
+- semiconductor
+- material
+- iii-v
+- photonic
+- rf
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt
 ---
 
 ## Overview

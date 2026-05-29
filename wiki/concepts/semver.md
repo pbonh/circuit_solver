@@ -1,11 +1,17 @@
 ---
-title: "SemVer"
-type: concept
-tags: [rust, foundational, well-established]
+title: SemVer
+type: claim
+id: claim-semver
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/15-chapter-14-more-about-cargo-and-crates-io.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/15-chapter-14-more-about-cargo-and-crates-io.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

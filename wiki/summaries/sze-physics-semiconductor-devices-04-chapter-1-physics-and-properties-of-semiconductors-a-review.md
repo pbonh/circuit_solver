@@ -1,11 +1,20 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 1: Physics and Properties of Semiconductors (A Review)"
-type: summary
-tags: [semiconductor, device-physics, foundational, well-established, carrier-transport, band-structure]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 1: Physics
+  and Properties of Semiconductors (A Review)'
+type: source
+id: source-sze-physics-semiconductor-devices-04-chapter-1-physics-and-properties-of-semiconductors-a-review
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- foundational
+- well-established
+- carrier-transport
+- band-structure
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt
 ---
 
 ## Key Points

@@ -1,11 +1,21 @@
 ---
-title: "Ebers-Moll Model"
-type: concept
-tags: [device-model, bjt, analog, dc, transient, foundational, well-established]
+title: Ebers-Moll Model
+type: claim
+id: claim-ebers-moll-model
+tags:
+- device-model
+- bjt
+- analog
+- dc
+- transient
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

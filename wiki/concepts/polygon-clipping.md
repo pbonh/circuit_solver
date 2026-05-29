@@ -1,11 +1,18 @@
 ---
-title: "Polygon Clipping"
-type: concept
-tags: [algorithm, computational-geometry, well-established, routing]
+title: Polygon Clipping
+type: claim
+id: claim-polygon-clipping
+tags:
+- algorithm
+- computational-geometry
+- well-established
+- routing
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt
+confidence:
+  base: 0.65
 ---
 
 > GraphsInVLSI Sect. 10.1: "Polygon removal is achieved by utilizing efficient polygon clipping algorithms [573, 574] that require negligible time, as discussed in Subsection 10.1.8. After removal, the available space on each layer may become disjoint, leaving no valid path between terminals on the same layer ... In this case, routing is accomplished using multiple layers." Sect. 10.1's available-space computation in SPROUT is the chapter's primary use of polygon clipping.

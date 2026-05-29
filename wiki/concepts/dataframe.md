@@ -1,11 +1,20 @@
 ---
-title: "DataFrame"
-type: concept
-tags: [pandas, dataframe, data-analysis, python, foundational, well-established]
+title: DataFrame
+type: claim
+id: claim-dataframe
+tags:
+- pandas
+- dataframe
+- data-analysis
+- python
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/06-chapter-3-data-collection-structures.txt"]
-confidence: high
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/06-chapter-3-data-collection-structures.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

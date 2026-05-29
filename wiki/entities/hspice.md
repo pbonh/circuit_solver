@@ -1,11 +1,16 @@
 ---
-title: "HSPICE"
+title: HSPICE
 type: entity
-tags: [tool, analog, simulator, industrial]
+id: entity-hspice
+tags:
+- tool
+- analog
+- simulator
+- industrial
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/13-9-symbolic-nodal-analysis-of-analog-circuits-using-nullors.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/13-9-symbolic-nodal-analysis-of-analog-circuits-using-nullors.txt
 ---
 
 ## Overview

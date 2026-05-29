@@ -1,11 +1,17 @@
 ---
-title: "Impl Block"
-type: concept
-tags: [rust, foundational, well-established]
+title: Impl Block
+type: claim
+id: claim-impl-block
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/06-chapter-5-using-structs-to-structure-related-data.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/06-chapter-5-using-structs-to-structure-related-data.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

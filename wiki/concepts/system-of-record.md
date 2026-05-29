@@ -1,11 +1,19 @@
 ---
-title: "System of Record"
-type: concept
-tags: [foundational, well-established, distributed-systems, derived-data]
+title: System of Record
+type: claim
+id: claim-system-of-record
+tags:
+- foundational
+- well-established
+- distributed-systems
+- derived-data
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

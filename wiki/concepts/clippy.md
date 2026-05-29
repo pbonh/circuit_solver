@@ -1,11 +1,18 @@
 ---
-title: "Clippy"
-type: concept
-tags: [rust, tooling, foundational, well-established]
+title: Clippy
+type: claim
+id: claim-clippy
+tags:
+- rust
+- tooling
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/25-appendix-d-useful-development-tools.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/25-appendix-d-useful-development-tools.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

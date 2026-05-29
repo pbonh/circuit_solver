@@ -1,11 +1,20 @@
 ---
-title: "Data Distribution Service (DDS)"
-type: concept
-tags: [simulation, modeling, middleware, distributed, omg, well-established]
+title: Data Distribution Service (DDS)
+type: claim
+id: claim-data-distribution-service
+tags:
+- simulation
+- modeling
+- middleware
+- distributed
+- omg
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/13-10-dynamic-structure-agent-modeling-and-publish-subscribe.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/13-10-dynamic-structure-agent-modeling-and-publish-subscribe.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

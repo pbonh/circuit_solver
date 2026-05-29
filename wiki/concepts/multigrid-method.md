@@ -1,11 +1,18 @@
 ---
-title: "Multigrid Method"
-type: concept
-tags: [algorithm, linear-algebra, well-established, parallel]
+title: Multigrid Method
+type: claim
+id: claim-multigrid-method
+tags:
+- algorithm
+- linear-algebra
+- well-established
+- parallel
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,20 @@
 ---
-title: "Tunnel Diode"
-type: concept
-tags: [semiconductor, device-physics, p-n-junction, tunneling, rf, well-established]
+title: Tunnel Diode
+type: claim
+id: claim-tunnel-diode
+tags:
+- semiconductor
+- device-physics
+- p-n-junction
+- tunneling
+- rf
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/12-chapter-8-tunnel-devices.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/12-chapter-8-tunnel-devices.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

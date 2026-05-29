@@ -1,11 +1,19 @@
 ---
-title: "Statistical Timing Analysis (SSTA)"
-type: concept
-tags: [statistical, timing, process-variation, vlsi, advanced]
+title: Statistical Timing Analysis (SSTA)
+type: claim
+id: claim-statistical-timing-analysis
+tags:
+- statistical
+- timing
+- process-variation
+- vlsi
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/15-10-symbolic-moment-computation.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/15-10-symbolic-moment-computation.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

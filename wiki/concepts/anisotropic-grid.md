@@ -1,11 +1,18 @@
 ---
-title: "Anisotropic Resistive Grid"
-type: concept
-tags: [vlsi, power-integrity, graph, analysis]
+title: Anisotropic Resistive Grid
+type: claim
+id: claim-anisotropic-grid
+tags:
+- vlsi
+- power-integrity
+- graph
+- analysis
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/09-6-effective-resistance-of-truncated-infinite-mesh-structures.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/09-6-effective-resistance-of-truncated-infinite-mesh-structures.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

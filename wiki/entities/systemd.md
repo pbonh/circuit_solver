@@ -1,11 +1,15 @@
 ---
-title: "systemd"
+title: systemd
 type: entity
-tags: [unix, deployment, init-system]
+id: entity-systemd
+tags:
+- unix
+- deployment
+- init-system
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/12-chapter-8-deploying-your-project-as-a-unix-service.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/12-chapter-8-deploying-your-project-as-a-unix-service.txt
 ---
 
 ## Overview

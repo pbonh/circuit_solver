@@ -1,11 +1,24 @@
 ---
-title: "Solving Ordinary Differential Equations II — Chapter VI: Singular Perturbation Problems and Index 1 Problems"
-type: summary
-tags: [ode, dae, stiff, singular-perturbation, numerical-integration, rosenbrock, runge-kutta, transient, foundational, well-established]
+title: 'Solving Ordinary Differential Equations II — Chapter VI: Singular Perturbation
+  Problems and Index 1 Problems'
+type: source
+id: source-hairer-ode-ii-05-chapter-vi-singular-perturbation-problems
+kind: derived-summary
+tags:
+- ode
+- dae
+- stiff
+- singular-perturbation
+- numerical-integration
+- rosenbrock
+- runge-kutta
+- transient
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/05-chapter-vi-singular-perturbation-problems.txt"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/05-chapter-vi-singular-perturbation-problems.txt
 ---
 
 ## Key Points

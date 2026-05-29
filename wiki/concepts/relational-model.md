@@ -1,11 +1,19 @@
 ---
-title: "Relational Model"
-type: concept
-tags: [foundational, well-established, data-modeling, sql]
+title: Relational Model
+type: claim
+id: claim-relational-model
+tags:
+- foundational
+- well-established
+- data-modeling
+- sql
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

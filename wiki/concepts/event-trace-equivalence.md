@@ -1,11 +1,17 @@
 ---
-title: "Event-Trace Equivalence"
-type: concept
-tags: [digital, verification, foundational]
+title: Event-Trace Equivalence
+type: claim
+id: claim-event-trace-equivalence
+tags:
+- digital
+- verification
+- foundational
 created: 2026-05-18
 updated: 2026-05-18
-sources: ["wiki/specs/circuit-solver"]
-confidence: low
+sources:
+- wiki/specs/circuit-solver
+confidence:
+  base: 0.45
 ---
 
 ## Definition

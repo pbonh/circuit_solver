@@ -1,11 +1,19 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Chapter 12: DC Solution of Networks"
-type: summary
-tags: [foundational, dc, analog, sensitivity, well-established]
+title: 'Computer Methods for Circuit Analysis and Design — Chapter 12: DC Solution
+  of Networks'
+type: source
+id: source-computer-methods-circuit-analysis-design-15-chapter-12-dc-solution-of-networks
+kind: derived-summary
+tags:
+- foundational
+- dc
+- analog
+- sensitivity
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/15-chapter-12-dc-solution-of-networks.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/15-chapter-12-dc-solution-of-networks.txt
 ---
 
 ## Key Points

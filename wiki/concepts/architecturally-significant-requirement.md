@@ -1,12 +1,18 @@
 ---
-title: "Architecturally Significant Requirement"
-type: concept
-tags: [requirements, architecture, foundational, well-established]
+title: Architecturally Significant Requirement
+type: claim
+id: claim-architecturally-significant-requirement
+tags:
+- requirements
+- architecture
+- foundational
+- well-established
 created: 2026-05-17
 updated: 2026-05-17
 sources:
-  - "decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph"
-confidence: high
+- decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "Spectrum"
-type: concept
-tags: [signal-processing, time-series, advanced]
+title: Spectrum
+type: claim
+id: claim-spectrum
+tags:
+- signal-processing
+- time-series
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/10-chapter-6-dashboard-enhancements.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/10-chapter-6-dashboard-enhancements.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

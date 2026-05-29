@@ -1,11 +1,18 @@
 ---
-title: "Rustfmt"
-type: concept
-tags: [rust, tooling, foundational, well-established]
+title: Rustfmt
+type: claim
+id: claim-rustfmt
+tags:
+- rust
+- tooling
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/01-introduction.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/01-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

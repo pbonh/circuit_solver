@@ -1,12 +1,17 @@
 ---
-title: "Architectural Decision Record"
-type: concept
-tags: [architecture, documentation, well-established]
+title: Architectural Decision Record
+type: claim
+id: claim-architectural-decision-record
+tags:
+- architecture
+- documentation
+- well-established
 created: 2026-05-17
 updated: 2026-05-17
 sources:
-  - "decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph"
-confidence: high
+- decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 10: Transferred-Electron and Real-Space-Transfer Devices"
-type: summary
-tags: [semiconductor, device-physics, rf, mm-wave, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 10: Transferred-Electron
+  and Real-Space-Transfer Devices'
+type: source
+id: source-sze-physics-semiconductor-devices-14-chapter-10-transferred-electron-and-real-space-transfer-devices
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- rf
+- mm-wave
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/14-chapter-10-transferred-electron-and-real-space-transfer-devices.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/14-chapter-10-transferred-electron-and-real-space-transfer-devices.txt
 ---
 
 ## Key Points

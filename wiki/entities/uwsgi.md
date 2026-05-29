@@ -1,11 +1,16 @@
 ---
-title: "uWSGI"
+title: uWSGI
 type: entity
-tags: [python, web, wsgi, deployment]
+id: entity-uwsgi
+tags:
+- python
+- web
+- wsgi
+- deployment
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt"]
-confidence: medium
+sources:
+- raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt
 ---
 
 ## Overview

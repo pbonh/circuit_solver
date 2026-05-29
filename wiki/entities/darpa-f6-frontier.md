@@ -1,11 +1,18 @@
 ---
-title: "DARPA F6 Frontier MSE"
+title: DARPA F6 Frontier MSE
 type: entity
-tags: [simulation, modeling, satellites, darpa, program, well-established]
+id: entity-darpa-f6-frontier
+tags:
+- simulation
+- modeling
+- satellites
+- darpa
+- program
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/17-13-flexible-modeling-support-environments.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/17-13-flexible-modeling-support-environments.txt
 ---
 
 ## Overview

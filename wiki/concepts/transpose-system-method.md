@@ -1,11 +1,18 @@
 ---
-title: "Transpose System (Adjoint) Sensitivity Method"
-type: concept
-tags: [sensitivity, foundational, well-established, sparse-matrix]
+title: Transpose System (Adjoint) Sensitivity Method
+type: claim
+id: claim-transpose-system-method
+tags:
+- sensitivity
+- foundational
+- well-established
+- sparse-matrix
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

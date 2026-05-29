@@ -1,11 +1,19 @@
 ---
-title: "Service-Oriented Architecture (for M&S)"
-type: concept
-tags: [simulation, modeling, soa, distributed, well-established]
+title: Service-Oriented Architecture (for M&S)
+type: claim
+id: claim-service-oriented-architecture
+tags:
+- simulation
+- modeling
+- soa
+- distributed
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/17-13-flexible-modeling-support-environments.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/17-13-flexible-modeling-support-environments.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

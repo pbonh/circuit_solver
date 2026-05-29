@@ -1,11 +1,18 @@
 ---
-title: "Arc Type"
-type: concept
-tags: [rust, concurrency, smart-pointers, well-established]
+title: Arc Type
+type: claim
+id: claim-arc-type
+tags:
+- rust
+- concurrency
+- smart-pointers
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/17-chapter-16-fearless-concurrency.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/17-chapter-16-fearless-concurrency.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

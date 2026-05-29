@@ -1,11 +1,17 @@
 ---
-title: "Sampling Methods"
-type: concept
-tags: [statistics, foundational, well-established]
+title: Sampling Methods
+type: claim
+id: claim-sampling-methods
+tags:
+- statistics
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt"]
-confidence: medium
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

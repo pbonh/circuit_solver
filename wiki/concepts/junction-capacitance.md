@@ -1,11 +1,19 @@
 ---
-title: "Junction Capacitance"
-type: concept
-tags: [semiconductor, device-physics, p-n-junction, ac, well-established]
+title: Junction Capacitance
+type: claim
+id: claim-junction-capacitance
+tags:
+- semiconductor
+- device-physics
+- p-n-junction
+- ac
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/06-chapter-2-p-n-junctions.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/06-chapter-2-p-n-junctions.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

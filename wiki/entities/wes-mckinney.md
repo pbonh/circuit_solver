@@ -1,11 +1,15 @@
 ---
-title: "Wes McKinney"
+title: Wes McKinney
 type: entity
-tags: [python, pandas, well-established]
+id: entity-wes-mckinney
+tags:
+- python
+- pandas
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt
 ---
 
 ## Overview

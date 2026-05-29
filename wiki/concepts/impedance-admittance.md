@@ -1,11 +1,18 @@
 ---
-title: "Impedance and Admittance"
-type: concept
-tags: [foundational, analog, ac, well-established]
+title: Impedance and Admittance
+type: claim
+id: claim-impedance-admittance
+tags:
+- foundational
+- analog
+- ac
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

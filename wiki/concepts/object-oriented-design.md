@@ -1,11 +1,16 @@
 ---
-title: "Object-Oriented Design"
-type: concept
-tags: [foundational, software-design]
+title: Object-Oriented Design
+type: claim
+id: claim-object-oriented-design
+tags:
+- foundational
+- software-design
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/05-chapter-1-working-with-python.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/05-chapter-1-working-with-python.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

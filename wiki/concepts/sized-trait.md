@@ -1,11 +1,17 @@
 ---
-title: "Sized Trait"
-type: concept
-tags: [rust, foundational, well-established]
+title: Sized Trait
+type: claim
+id: claim-sized-trait
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/20-chapter-19-advanced-features.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/20-chapter-19-advanced-features.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

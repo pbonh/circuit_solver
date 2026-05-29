@@ -1,11 +1,19 @@
 ---
-title: "Exploratory Data Analysis"
-type: concept
-tags: [data-analysis, exploratory-data-analysis, visualization, foundational, well-established]
+title: Exploratory Data Analysis
+type: claim
+id: claim-exploratory-data-analysis
+tags:
+- data-analysis
+- exploratory-data-analysis
+- visualization
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/05-chapter-2-the-importance-of-data-visualization-in-business-intelligence.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/05-chapter-2-the-importance-of-data-visualization-in-business-intelligence.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

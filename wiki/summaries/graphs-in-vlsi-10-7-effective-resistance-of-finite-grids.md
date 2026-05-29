@@ -1,11 +1,19 @@
 ---
-title: "Graphs in VLSI — Chapter 7: Effective Resistance of Finite Grids"
-type: summary
-tags: [vlsi, power-integrity, graph, analysis, novel, mesh]
+title: 'Graphs in VLSI — Chapter 7: Effective Resistance of Finite Grids'
+type: source
+id: source-graphs-in-vlsi-10-7-effective-resistance-of-finite-grids
+kind: derived-summary
+tags:
+- vlsi
+- power-integrity
+- graph
+- analysis
+- novel
+- mesh
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/10-7-effective-resistance-of-finite-grids.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/10-7-effective-resistance-of-finite-grids.txt
 ---
 
 ## Key Points

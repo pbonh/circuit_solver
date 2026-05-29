@@ -1,11 +1,17 @@
 ---
-title: "Heatmap Visualization"
-type: concept
-tags: [python, visualization, well-established]
+title: Heatmap Visualization
+type: claim
+id: claim-heatmap-visualization
+tags:
+- python
+- visualization
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/11-chapter-7-data-visualization-with-python-libraries.txt"]
-confidence: medium
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/11-chapter-7-data-visualization-with-python-libraries.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

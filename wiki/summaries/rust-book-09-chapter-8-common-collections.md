@@ -1,11 +1,17 @@
 ---
-title: "The Rust Programming Language — Chapter 8: Common Collections"
-type: summary
-tags: [rust, foundational, collections, well-established]
+title: 'The Rust Programming Language — Chapter 8: Common Collections'
+type: source
+id: source-rust-book-09-chapter-8-common-collections
+kind: derived-summary
+tags:
+- rust
+- foundational
+- collections
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/09-chapter-8-common-collections.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/09-chapter-8-common-collections.txt
 ---
 
 ## Key Points

@@ -1,11 +1,25 @@
 ---
-title: "Solving Ordinary Differential Equations II — Chapter VII: Differential-Algebraic Equations of Higher Index"
-type: summary
-tags: [ode, dae, stiff, index-reduction, multibody, hamiltonian, symplectic, runge-kutta, bdf, foundational, well-established]
+title: 'Solving Ordinary Differential Equations II — Chapter VII: Differential-Algebraic
+  Equations of Higher Index'
+type: source
+id: source-hairer-ode-ii-06-chapter-vii-differential-algebraic-equations
+kind: derived-summary
+tags:
+- ode
+- dae
+- stiff
+- index-reduction
+- multibody
+- hamiltonian
+- symplectic
+- runge-kutta
+- bdf
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt
 ---
 
 ## Key Points

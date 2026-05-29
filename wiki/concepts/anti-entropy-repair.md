@@ -1,11 +1,17 @@
 ---
-title: "Anti-Entropy Repair"
-type: concept
-tags: [distributed-systems, replication, well-established]
+title: Anti-Entropy Repair
+type: claim
+id: claim-anti-entropy-repair
+tags:
+- distributed-systems
+- replication
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

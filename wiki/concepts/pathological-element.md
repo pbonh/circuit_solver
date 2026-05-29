@@ -1,11 +1,18 @@
 ---
-title: "Pathological Element"
-type: concept
-tags: [analog, foundational, behavioral, two-graph]
+title: Pathological Element
+type: claim
+id: claim-pathological-element
+tags:
+- analog
+- foundational
+- behavioral
+- two-graph
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/10-6-generalized-two-graph-theory.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/10-6-generalized-two-graph-theory.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Thermistor"
-type: concept
-tags: [semiconductor, device-physics, sensor, well-established]
+title: Thermistor
+type: claim
+id: claim-thermistor
+tags:
+- semiconductor
+- device-physics
+- sensor
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/19-chapter-14-sensors.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/19-chapter-14-sensors.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

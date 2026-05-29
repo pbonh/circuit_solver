@@ -1,11 +1,19 @@
 ---
-title: "Drop Trait"
-type: concept
-tags: [rust, ownership, foundational, well-established]
+title: Drop Trait
+type: claim
+id: claim-drop-trait
+tags:
+- rust
+- ownership
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/05-chapter-4-understanding-ownership.txt", "raw/rust_book/_txt/16-chapter-15-smart-pointers.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/05-chapter-4-understanding-ownership.txt
+- raw/rust_book/_txt/16-chapter-15-smart-pointers.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

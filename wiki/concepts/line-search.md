@@ -1,11 +1,17 @@
 ---
-title: "Line Search"
-type: concept
-tags: [optimization, foundational, well-established]
+title: Line Search
+type: claim
+id: claim-line-search
+tags:
+- optimization
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/18-chapter-15-introduction-to-optimization-theory.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/18-chapter-15-introduction-to-optimization-theory.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

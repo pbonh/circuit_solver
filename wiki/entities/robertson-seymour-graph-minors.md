@@ -1,11 +1,15 @@
 ---
-title: "Robertson-Seymour Graph Minors Series"
+title: Robertson-Seymour Graph Minors Series
 type: entity
-tags: [graph, foundational, well-established]
+id: entity-robertson-seymour-graph-minors
+tags:
+- graph
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
 ---
 
 ## Overview

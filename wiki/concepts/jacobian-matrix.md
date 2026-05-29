@@ -1,11 +1,19 @@
 ---
-title: "Jacobian Matrix (in Nonlinear DC Analysis)"
-type: concept
-tags: [foundational, dc, numerical, well-established, math]
+title: Jacobian Matrix (in Nonlinear DC Analysis)
+type: claim
+id: claim-jacobian-matrix
+tags:
+- foundational
+- dc
+- numerical
+- well-established
+- math
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/15-chapter-12-dc-solution-of-networks.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/15-chapter-12-dc-solution-of-networks.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

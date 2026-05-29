@@ -1,11 +1,18 @@
 ---
-title: "Pole and Zero Sensitivity"
-type: concept
-tags: [sensitivity, analog, ac, well-established]
+title: Pole and Zero Sensitivity
+type: claim
+id: claim-pole-zero-sensitivity
+tags:
+- sensitivity
+- analog
+- ac
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/08-chapter-5-sensitivities.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/08-chapter-5-sensitivities.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

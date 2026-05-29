@@ -1,11 +1,18 @@
 ---
-title: "Amazon DynamoDB"
+title: Amazon DynamoDB
 type: entity
-tags: [well-established, distributed-systems, nosql, managed, key-value]
+id: entity-dynamodb
+tags:
+- well-established
+- distributed-systems
+- nosql
+- managed
+- key-value
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt"]
-confidence: medium
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt
 ---
 
 ## Overview

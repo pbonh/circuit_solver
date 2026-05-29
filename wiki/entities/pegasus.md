@@ -1,11 +1,17 @@
 ---
-title: "PEGASUS"
+title: PEGASUS
 type: entity
-tags: [graph, big-data, sparse-matrix, mapreduce, well-established]
+id: entity-pegasus
+tags:
+- graph
+- big-data
+- sparse-matrix
+- mapreduce
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
 ---
 
 ## Overview

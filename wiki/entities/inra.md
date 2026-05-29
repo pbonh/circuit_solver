@@ -1,11 +1,16 @@
 ---
-title: "INRA (French National Institute for Agricultural Research)"
+title: INRA (French National Institute for Agricultural Research)
 type: entity
-tags: [simulation, agriculture, institute, well-established]
+id: entity-inra
+tags:
+- simulation
+- agriculture
+- institute
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/03-1-modeling-and-simulation-of-systems-of-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/03-1-modeling-and-simulation-of-systems-of-systems.txt
 ---
 
 ## Overview

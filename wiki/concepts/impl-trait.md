@@ -1,11 +1,18 @@
 ---
-title: "impl Trait"
-type: concept
-tags: [rust, foundational, traits, well-established]
+title: impl Trait
+type: claim
+id: claim-impl-trait
+tags:
+- rust
+- foundational
+- traits
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

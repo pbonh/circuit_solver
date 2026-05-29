@@ -1,11 +1,19 @@
 ---
-title: "Light-Emitting Diode (LED)"
-type: concept
-tags: [semiconductor, device-physics, photonic, p-n-junction, well-established]
+title: Light-Emitting Diode (LED)
+type: claim
+id: claim-light-emitting-diode
+tags:
+- semiconductor
+- device-physics
+- photonic
+- p-n-junction
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/17-chapter-12-leds-and-lasers.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/17-chapter-12-leds-and-lasers.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

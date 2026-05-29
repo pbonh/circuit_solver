@@ -1,11 +1,17 @@
 ---
-title: "SystemML (Apache)"
+title: SystemML (Apache)
 type: entity
-tags: [machine-learning, big-data, sparse-matrix, declarative, well-established]
+id: entity-systemml
+tags:
+- machine-learning
+- big-data
+- sparse-matrix
+- declarative
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
 ---
 
 ## Overview

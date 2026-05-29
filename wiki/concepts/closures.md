@@ -1,11 +1,18 @@
 ---
-title: "Closures"
-type: concept
-tags: [rust, foundational, functional-programming, well-established]
+title: Closures
+type: claim
+id: claim-closures
+tags:
+- rust
+- foundational
+- functional-programming
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/14-chapter-13-functional-language-features-iterators-and-closures.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/14-chapter-13-functional-language-features-iterators-and-closures.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

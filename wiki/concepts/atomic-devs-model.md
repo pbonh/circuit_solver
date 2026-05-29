@@ -1,11 +1,19 @@
 ---
-title: "Atomic DEVS Model"
-type: concept
-tags: [simulation, modeling, devs, foundational, well-established]
+title: Atomic DEVS Model
+type: claim
+id: claim-atomic-devs-model
+tags:
+- simulation
+- modeling
+- devs
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/04-2-devs-integrated-development-environments.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/04-2-devs-integrated-development-environments.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

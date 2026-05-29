@@ -1,11 +1,20 @@
 ---
-title: "Tellegen's Theorem"
-type: concept
-tags: [foundational, graph, analog, sensitivity, well-established, math]
+title: Tellegen's Theorem
+type: claim
+id: claim-tellegen-theorem
+tags:
+- foundational
+- graph
+- analog
+- sensitivity
+- well-established
+- math
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

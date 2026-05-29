@@ -1,11 +1,17 @@
 ---
-title: "Stack and Heap"
-type: concept
-tags: [rust, foundational, well-established]
+title: Stack and Heap
+type: claim
+id: claim-stack-and-heap
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/05-chapter-4-understanding-ownership.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/05-chapter-4-understanding-ownership.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

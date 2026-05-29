@@ -1,11 +1,19 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Part II: Device Building Blocks"
-type: summary
-tags: [semiconductor, device-physics, foundational, well-established, overview]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Part II: Device Building
+  Blocks'
+type: source
+id: source-sze-physics-semiconductor-devices-05-part-ii-device-building-blocks
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- foundational
+- well-established
+- overview
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/05-part-ii-device-building-blocks.txt"]
-confidence: low
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/05-part-ii-device-building-blocks.txt
 ---
 
 ## Key Points

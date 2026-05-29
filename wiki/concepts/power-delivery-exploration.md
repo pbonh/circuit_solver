@@ -1,11 +1,18 @@
 ---
-title: "Power Delivery Exploration"
-type: concept
-tags: [vlsi, power-integrity, optimization, novel]
+title: Power Delivery Exploration
+type: claim
+id: claim-power-delivery-exploration
+tags:
+- vlsi
+- power-integrity
+- optimization
+- novel
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

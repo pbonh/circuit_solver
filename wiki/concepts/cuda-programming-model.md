@@ -1,11 +1,18 @@
 ---
-title: "CUDA Programming Model"
-type: concept
-tags: [gpu, cuda, parallel, foundational]
+title: CUDA Programming Model
+type: claim
+id: claim-cuda-programming-model
+tags:
+- gpu
+- cuda
+- parallel
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

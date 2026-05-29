@@ -1,11 +1,16 @@
 ---
-title: "The Rust Programming Language — Chapter 3: Common Programming Concepts"
-type: summary
-tags: [rust, foundational, well-established]
+title: 'The Rust Programming Language — Chapter 3: Common Programming Concepts'
+type: source
+id: source-rust-book-04-chapter-3-common-programming-concepts
+kind: derived-summary
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/04-chapter-3-common-programming-concepts.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/04-chapter-3-common-programming-concepts.txt
 ---
 
 ## Key Points

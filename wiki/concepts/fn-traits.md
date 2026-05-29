@@ -1,11 +1,18 @@
 ---
-title: "Fn Traits"
-type: concept
-tags: [rust, foundational, traits, well-established]
+title: Fn Traits
+type: claim
+id: claim-fn-traits
+tags:
+- rust
+- foundational
+- traits
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/14-chapter-13-functional-language-features-iterators-and-closures.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/14-chapter-13-functional-language-features-iterators-and-closures.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

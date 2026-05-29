@@ -1,11 +1,18 @@
 ---
-title: "PyO3"
+title: PyO3
 type: entity
-tags: [rust, python, binding, ffi, well-established]
+id: entity-pyo3
+tags:
+- rust
+- python
+- binding
+- ffi
+- well-established
 created: 2026-05-18
 updated: 2026-05-18
-sources: ["wiki/specs/circuit-solver", "wiki/decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph"]
-confidence: low
+sources:
+- wiki/specs/circuit-solver
+- wiki/decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph
 ---
 
 ## Overview

@@ -1,11 +1,18 @@
 ---
-title: "Space-Charge-Limited Current"
-type: concept
-tags: [semiconductor, device-physics, transport, well-established]
+title: Space-Charge-Limited Current
+type: claim
+id: claim-space-charge-limited-current
+tags:
+- semiconductor
+- device-physics
+- transport
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

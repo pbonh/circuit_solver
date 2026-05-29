@@ -1,11 +1,17 @@
 ---
-title: "Long-Tail Latency"
-type: concept
-tags: [distributed-systems, performance, well-established]
+title: Long-Tail Latency
+type: claim
+id: claim-long-tail-latency
+tags:
+- distributed-systems
+- performance
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

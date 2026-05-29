@@ -1,11 +1,23 @@
 ---
-title: "Graphs in VLSI — Chapter 3: Graphs in VLSI Circuits and Systems"
-type: summary
-tags: [graph, vlsi, digital, foundational, well-established, eda, partitioning, routing, placement, floorplanning]
+title: 'Graphs in VLSI — Chapter 3: Graphs in VLSI Circuits and Systems'
+type: source
+id: source-graphs-in-vlsi-06-3-graphs-in-vlsi-circuits-and-systems
+kind: derived-summary
+tags:
+- graph
+- vlsi
+- digital
+- foundational
+- well-established
+- eda
+- partitioning
+- routing
+- placement
+- floorplanning
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt
 ---
 
 ## Key Points

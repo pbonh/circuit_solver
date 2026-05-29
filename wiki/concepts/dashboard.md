@@ -1,11 +1,18 @@
 ---
-title: "Dashboard"
-type: concept
-tags: [dashboard, visualization, web, foundational]
+title: Dashboard
+type: claim
+id: claim-dashboard
+tags:
+- dashboard
+- visualization
+- web
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/04-introduction.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/04-introduction.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

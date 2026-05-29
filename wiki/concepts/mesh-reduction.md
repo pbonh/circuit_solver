@@ -1,11 +1,18 @@
 ---
-title: "Mesh Reduction"
-type: concept
-tags: [graph, algorithm, vlsi, well-established]
+title: Mesh Reduction
+type: claim
+id: claim-mesh-reduction
+tags:
+- graph
+- algorithm
+- vlsi
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/10-7-effective-resistance-of-finite-grids.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/10-7-effective-resistance-of-finite-grids.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

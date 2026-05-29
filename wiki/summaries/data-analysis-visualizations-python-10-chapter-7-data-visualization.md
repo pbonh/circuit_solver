@@ -1,11 +1,19 @@
 ---
-title: "Data Analysis and Visualizations with Python — Chapter 7: Data Visualization"
-type: summary
-tags: [python, data-visualization, matplotlib, seaborn, pandas, foundational]
+title: 'Data Analysis and Visualizations with Python — Chapter 7: Data Visualization'
+type: source
+id: source-data-analysis-visualizations-python-10-chapter-7-data-visualization
+kind: derived-summary
+tags:
+- python
+- data-visualization
+- matplotlib
+- seaborn
+- pandas
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/10-chapter-7-data-visualization.txt"]
-confidence: high
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/10-chapter-7-data-visualization.txt
 ---
 
 ## Key Points

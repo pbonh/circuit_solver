@@ -1,11 +1,19 @@
 ---
-title: "Two-Dimensional Electron Gas (2DEG)"
-type: concept
-tags: [semiconductor, device-physics, heterojunction, quantum, well-established]
+title: Two-Dimensional Electron Gas (2DEG)
+type: claim
+id: claim-two-dimensional-electron-gas
+tags:
+- semiconductor
+- device-physics
+- heterojunction
+- quantum
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/10-chapter-7-jfets-mesfets-and-modfets.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/10-chapter-7-jfets-mesfets-and-modfets.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "VoltDB"
+title: VoltDB
 type: entity
-tags: [well-established, distributed-systems, oltp, in-memory, sql]
+id: entity-voltdb
+tags:
+- well-established
+- distributed-systems
+- oltp
+- in-memory
+- sql
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt"]
-confidence: medium
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt
 ---
 
 ## Overview

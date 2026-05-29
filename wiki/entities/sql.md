@@ -1,11 +1,17 @@
 ---
-title: "SQL"
+title: SQL
 type: entity
-tags: [well-established, relational, query-language, foundational]
+id: entity-sql
+tags:
+- well-established
+- relational
+- query-language
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt
 ---
 
 ## Overview

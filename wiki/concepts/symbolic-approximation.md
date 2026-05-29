@@ -1,11 +1,18 @@
 ---
-title: "Symbolic Approximation (SBG/SDG/SAG)"
-type: concept
-tags: [symbolic, approximation, analog, advanced]
+title: Symbolic Approximation (SBG/SDG/SAG)
+type: claim
+id: claim-symbolic-approximation
+tags:
+- symbolic
+- approximation
+- analog
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

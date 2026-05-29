@@ -1,11 +1,18 @@
 ---
-title: "Value Change Dump (VCD)"
-type: concept
-tags: [digital, verification, foundational, well-established]
+title: Value Change Dump (VCD)
+type: claim
+id: claim-value-change-dump
+tags:
+- digital
+- verification
+- foundational
+- well-established
 created: 2026-05-18
 updated: 2026-05-18
-sources: ["wiki/specs/circuit-solver"]
-confidence: low
+sources:
+- wiki/specs/circuit-solver
+confidence:
+  base: 0.45
 ---
 
 ## Definition

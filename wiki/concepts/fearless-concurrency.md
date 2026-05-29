@@ -1,11 +1,18 @@
 ---
-title: "Fearless Concurrency"
-type: concept
-tags: [rust, foundational, concurrency, well-established]
+title: Fearless Concurrency
+type: claim
+id: claim-fearless-concurrency
+tags:
+- rust
+- foundational
+- concurrency
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/00-foreword.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/00-foreword.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

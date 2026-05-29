@@ -1,11 +1,16 @@
 ---
-title: "Silicon (Si)"
+title: Silicon (Si)
 type: entity
-tags: [semiconductor, material, foundational, well-established]
+id: entity-silicon
+tags:
+- semiconductor
+- material
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt
 ---
 
 ## Overview

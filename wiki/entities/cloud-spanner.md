@@ -1,11 +1,16 @@
 ---
-title: "Google Cloud Spanner"
+title: Google Cloud Spanner
 type: entity
-tags: [database, newsql, relational, cloud]
+id: entity-cloud-spanner
+tags:
+- database
+- newsql
+- relational
+- cloud
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
 ---
 
 ## Overview

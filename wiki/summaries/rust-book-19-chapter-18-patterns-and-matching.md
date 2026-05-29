@@ -1,11 +1,16 @@
 ---
-title: "The Rust Programming Language — Chapter 18: Patterns and Matching"
-type: summary
-tags: [rust, foundational, well-established]
+title: 'The Rust Programming Language — Chapter 18: Patterns and Matching'
+type: source
+id: source-rust-book-19-chapter-18-patterns-and-matching
+kind: derived-summary
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/19-chapter-18-patterns-and-matching.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/19-chapter-18-patterns-and-matching.txt
 ---
 
 ## Key Points

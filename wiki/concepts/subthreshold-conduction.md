@@ -1,11 +1,19 @@
 ---
-title: "Subthreshold Conduction"
-type: concept
-tags: [semiconductor, device-physics, mosfet, leakage, well-established]
+title: Subthreshold Conduction
+type: claim
+id: claim-subthreshold-conduction
+tags:
+- semiconductor
+- device-physics
+- mosfet
+- leakage
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

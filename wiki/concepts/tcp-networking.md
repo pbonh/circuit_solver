@@ -1,11 +1,18 @@
 ---
-title: "TCP Networking (Rust)"
-type: concept
-tags: [rust, networking, foundational, well-established]
+title: TCP Networking (Rust)
+type: claim
+id: claim-tcp-networking
+tags:
+- rust
+- networking
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/21-chapter-20-final-project-building-a-multithreaded-web-server.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/21-chapter-20-final-project-building-a-multithreaded-web-server.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Local Truncation Error"
-type: concept
-tags: [analog, transient, foundational, well-established]
+title: Local Truncation Error
+type: claim
+id: claim-local-truncation-error
+tags:
+- analog
+- transient
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

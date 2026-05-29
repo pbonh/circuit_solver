@@ -1,11 +1,19 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 7: JFETs, MESFETs, and MODFETs"
-type: summary
-tags: [semiconductor, device-physics, rf, analog, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 7: JFETs, MESFETs,
+  and MODFETs'
+type: source
+id: source-sze-physics-semiconductor-devices-10-chapter-7-jfets-mesfets-and-modfets
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- rf
+- analog
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/10-chapter-7-jfets-mesfets-and-modfets.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/10-chapter-7-jfets-mesfets-and-modfets.txt
 ---
 
 ## Key Points

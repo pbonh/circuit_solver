@@ -1,11 +1,17 @@
 ---
-title: "Python Data Analyst's Toolkit — Chapter 2: Exploring Containers, Classes, and Objects"
-type: summary
-tags: [python, foundational, well-established]
+title: 'Python Data Analyst''s Toolkit — Chapter 2: Exploring Containers, Classes,
+  and Objects'
+type: source
+id: source-python-data-analysts-toolkit-06-chapter-2-exploring-containers-classes-and-objects
+kind: derived-summary
+tags:
+- python
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/06-chapter-2-exploring-containers-classes-and-objects.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/06-chapter-2-exploring-containers-classes-and-objects.txt
 ---
 
 ## Key Points

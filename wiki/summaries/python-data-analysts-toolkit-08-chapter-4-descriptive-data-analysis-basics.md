@@ -1,11 +1,18 @@
 ---
-title: "Python Data Analyst's Toolkit — Chapter 4: Descriptive Data Analysis Basics"
-type: summary
-tags: [python, data-analysis, statistics, foundational, well-established]
+title: 'Python Data Analyst''s Toolkit — Chapter 4: Descriptive Data Analysis Basics'
+type: source
+id: source-python-data-analysts-toolkit-08-chapter-4-descriptive-data-analysis-basics
+kind: derived-summary
+tags:
+- python
+- data-analysis
+- statistics
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/08-chapter-4-descriptive-data-analysis-basics.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/08-chapter-4-descriptive-data-analysis-basics.txt
 ---
 
 ## Key Points

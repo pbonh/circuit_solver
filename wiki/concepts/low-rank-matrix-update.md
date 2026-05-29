@@ -1,11 +1,18 @@
 ---
-title: "Low-Rank Matrix Update (Sherman-Morrison-Woodbury)"
-type: concept
-tags: [foundational, numerical, well-established, math]
+title: Low-Rank Matrix Update (Sherman-Morrison-Woodbury)
+type: claim
+id: claim-low-rank-matrix-update
+tags:
+- foundational
+- numerical
+- well-established
+- math
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/11-chapter-8-large-change-sensitivity-and-related-topics.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/11-chapter-8-large-change-sensitivity-and-related-topics.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

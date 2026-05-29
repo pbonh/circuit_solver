@@ -1,11 +1,19 @@
 ---
-title: "Laplacian Matrix"
-type: concept
-tags: [graph, sparse-matrix, foundational, well-established, linear-algebra]
+title: Laplacian Matrix
+type: claim
+id: claim-laplacian-matrix
+tags:
+- graph
+- sparse-matrix
+- foundational
+- well-established
+- linear-algebra
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/04-1-introduction.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/04-1-introduction.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

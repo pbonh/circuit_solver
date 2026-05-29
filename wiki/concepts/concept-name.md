@@ -1,11 +1,16 @@
 ---
-title: "Concept Name (Template Placeholder)"
-type: concept
-tags: [speculative, foundational]
+title: Concept Name (Template Placeholder)
+type: claim
+id: claim-concept-name
+tags:
+- speculative
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/_reconciled"]
-confidence: low
+sources:
+- raw/_reconciled
+confidence:
+  base: 0.45
 ---
 
 > This page exists because the journal entry template ([[journal/template]]) contains a placeholder wiki-link `[[concepts/concept-name]]` to illustrate how journal entries should cite concept pages. It is not a real concept; do not link to it from real wiki content. The reconciliation pass created this stub so that the placeholder link in the template does not register as a dangling link in lint runs.

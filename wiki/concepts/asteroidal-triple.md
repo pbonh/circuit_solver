@@ -1,11 +1,17 @@
 ---
-title: "Asteroidal Triple"
-type: concept
-tags: [graph, foundational, well-established]
+title: Asteroidal Triple
+type: claim
+id: claim-asteroidal-triple
+tags:
+- graph
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

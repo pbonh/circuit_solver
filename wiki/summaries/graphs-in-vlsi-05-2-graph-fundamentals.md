@@ -1,11 +1,17 @@
 ---
-title: "Graphs in VLSI — Chapter 2: Graph Fundamentals"
-type: summary
-tags: [graph, algorithm, foundational, well-established]
+title: 'Graphs in VLSI — Chapter 2: Graph Fundamentals'
+type: source
+id: source-graphs-in-vlsi-05-2-graph-fundamentals
+kind: derived-summary
+tags:
+- graph
+- algorithm
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt
 ---
 
 ## Key Points

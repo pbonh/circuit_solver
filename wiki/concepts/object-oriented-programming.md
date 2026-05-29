@@ -1,11 +1,17 @@
 ---
-title: "Object-Oriented Programming"
-type: concept
-tags: [python, foundational, well-established]
+title: Object-Oriented Programming
+type: claim
+id: claim-object-oriented-programming
+tags:
+- python
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/06-chapter-2-exploring-containers-classes-and-objects.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/06-chapter-2-exploring-containers-classes-and-objects.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

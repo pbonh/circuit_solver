@@ -1,11 +1,19 @@
 ---
-title: "Systems of Systems (SoS)"
-type: concept
-tags: [simulation, modeling, systems-of-systems, foundational, well-established]
+title: Systems of Systems (SoS)
+type: claim
+id: claim-systems-of-systems
+tags:
+- simulation
+- modeling
+- systems-of-systems
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

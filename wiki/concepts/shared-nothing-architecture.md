@@ -1,11 +1,17 @@
 ---
-title: "Shared-Nothing Architecture"
-type: concept
-tags: [distributed-systems, scalability, well-established]
+title: Shared-Nothing Architecture
+type: claim
+id: claim-shared-nothing-architecture
+tags:
+- distributed-systems
+- scalability
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

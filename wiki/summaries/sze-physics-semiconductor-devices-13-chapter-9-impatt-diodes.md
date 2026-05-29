@@ -1,11 +1,18 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 9: IMPATT Diodes"
-type: summary
-tags: [semiconductor, device-physics, rf, mm-wave, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 9: IMPATT Diodes'
+type: source
+id: source-sze-physics-semiconductor-devices-13-chapter-9-impatt-diodes
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- rf
+- mm-wave
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/13-chapter-9-impatt-diodes.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/13-chapter-9-impatt-diodes.txt
 ---
 
 ## Key Points

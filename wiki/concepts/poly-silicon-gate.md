@@ -1,11 +1,19 @@
 ---
-title: "Polysilicon Gate"
-type: concept
-tags: [semiconductor, device-physics, mosfet, process, well-established]
+title: Polysilicon Gate
+type: claim
+id: claim-poly-silicon-gate
+tags:
+- semiconductor
+- device-physics
+- mosfet
+- process
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

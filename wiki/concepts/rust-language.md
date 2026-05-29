@@ -1,11 +1,19 @@
 ---
-title: "Rust Language"
-type: concept
-tags: [rust, foundational, systems-programming, well-established]
+title: Rust Language
+type: claim
+id: claim-rust-language
+tags:
+- rust
+- foundational
+- systems-programming
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/00-foreword.txt", "raw/rust_book/_txt/01-introduction.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/00-foreword.txt
+- raw/rust_book/_txt/01-introduction.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

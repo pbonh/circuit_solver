@@ -1,11 +1,17 @@
 ---
-title: "Hinted Handoff"
-type: concept
-tags: [distributed-systems, replication, advanced]
+title: Hinted Handoff
+type: claim
+id: claim-hinted-handoff
+tags:
+- distributed-systems
+- replication
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

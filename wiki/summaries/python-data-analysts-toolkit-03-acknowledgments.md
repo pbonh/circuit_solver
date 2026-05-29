@@ -1,11 +1,14 @@
 ---
-title: "Python Data Analyst's Toolkit — Acknowledgments"
-type: summary
-tags: [foundational]
+title: Python Data Analyst's Toolkit — Acknowledgments
+type: source
+id: source-python-data-analysts-toolkit-03-acknowledgments
+kind: derived-summary
+tags:
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/03-acknowledgments.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/03-acknowledgments.txt
 ---
 
 ## Key Points

@@ -1,11 +1,18 @@
 ---
-title: "Python Data Analyst's Toolkit — Chapter 7: Data Visualization with Python Libraries"
-type: summary
-tags: [python, visualization, data-analysis, well-established]
+title: 'Python Data Analyst''s Toolkit — Chapter 7: Data Visualization with Python
+  Libraries'
+type: source
+id: source-python-data-analysts-toolkit-11-chapter-7-data-visualization-with-python-libraries
+kind: derived-summary
+tags:
+- python
+- visualization
+- data-analysis
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/11-chapter-7-data-visualization-with-python-libraries.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/11-chapter-7-data-visualization-with-python-libraries.txt
 ---
 
 ## Key Points

@@ -1,11 +1,18 @@
 ---
-title: "NumPy ndarray"
-type: concept
-tags: [python, numpy, foundational, well-established]
+title: NumPy ndarray
+type: claim
+id: claim-ndarray
+tags:
+- python
+- numpy
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/09-chapter-5-working-with-numpy-arrays.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/09-chapter-5-working-with-numpy-arrays.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Christian Lubich"
+title: Christian Lubich
 type: entity
-tags: [ode, numerical-integration, foundational, dae]
+id: entity-christian-lubich
+tags:
+- ode
+- numerical-integration
+- foundational
+- dae
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/01-preface.txt", "raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt", "raw/solving_ordinary_differential_equations_ii/_txt/05-chapter-vi-singular-perturbation-problems.txt", "raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/01-preface.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/05-chapter-vi-singular-perturbation-problems.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt
 ---
 
 ## Overview

@@ -1,11 +1,17 @@
 ---
-title: "Masked Array (NumPy)"
-type: concept
-tags: [python, numpy, well-established]
+title: Masked Array (NumPy)
+type: claim
+id: claim-masked-array
+tags:
+- python
+- numpy
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/09-chapter-5-working-with-numpy-arrays.txt"]
-confidence: medium
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/09-chapter-5-working-with-numpy-arrays.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

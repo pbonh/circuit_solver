@@ -1,11 +1,21 @@
 ---
-title: "Systems for Big Graph Analytics — Part II: Think Like a Graph (Block-Centric and Subgraph-Centric)"
-type: summary
-tags: [graph, distributed-systems, big-data, graph-processing, graph-mining, parallel, well-established]
+title: 'Systems for Big Graph Analytics — Part II: Think Like a Graph (Block-Centric
+  and Subgraph-Centric)'
+type: source
+id: source-systems-big-graph-analytics-03-part-ii-think-like-a-graph
+kind: derived-summary
+tags:
+- graph
+- distributed-systems
+- big-data
+- graph-processing
+- graph-mining
+- parallel
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt
 ---
 
 ## Key Points

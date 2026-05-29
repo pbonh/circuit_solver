@@ -1,11 +1,21 @@
 ---
-title: "Prototyping Python Dashboards — Chapter 6: Dashboard Enhancements"
-type: summary
-tags: [python, dashboard, plotly, dash, fft, spectrum, smoothing, visualization]
+title: 'Prototyping Python Dashboards — Chapter 6: Dashboard Enhancements'
+type: source
+id: source-prototyping-python-dashboards-10-chapter-6-dashboard-enhancements
+kind: derived-summary
+tags:
+- python
+- dashboard
+- plotly
+- dash
+- fft
+- spectrum
+- smoothing
+- visualization
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/10-chapter-6-dashboard-enhancements.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/10-chapter-6-dashboard-enhancements.txt
 ---
 
 ## Key Points

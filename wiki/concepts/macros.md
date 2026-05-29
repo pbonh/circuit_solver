@@ -1,11 +1,19 @@
 ---
-title: "Macros"
-type: concept
-tags: [rust, macros, advanced, well-established]
+title: Macros
+type: claim
+id: claim-macros
+tags:
+- rust
+- macros
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/02-chapter-1-getting-started.txt", "raw/rust_book/_txt/20-chapter-19-advanced-features.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/02-chapter-1-getting-started.txt
+- raw/rust_book/_txt/20-chapter-19-advanced-features.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

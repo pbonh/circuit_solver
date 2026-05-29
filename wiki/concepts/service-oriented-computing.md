@@ -1,11 +1,19 @@
 ---
-title: "Service-Oriented Computing (SOC)"
-type: concept
-tags: [simulation, modeling, soa, distributed, well-established]
+title: Service-Oriented Computing (SOC)
+type: claim
+id: claim-service-oriented-computing
+tags:
+- simulation
+- modeling
+- soa
+- distributed
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

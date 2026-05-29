@@ -1,11 +1,19 @@
 ---
-title: "Donor and Acceptor Doping"
-type: concept
-tags: [semiconductor, device-physics, doping, foundational, well-established]
+title: Donor and Acceptor Doping
+type: claim
+id: claim-donor-acceptor-doping
+tags:
+- semiconductor
+- device-physics
+- doping
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/04-chapter-1-physics-and-properties-of-semiconductors-a-review.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

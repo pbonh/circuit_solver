@@ -1,11 +1,19 @@
 ---
-title: "Sparse Tableau Approach (Hachtel-Brayton-Gustavson)"
-type: concept
-tags: [foundational, sparse-matrix, netlist, analog, well-established]
+title: Sparse Tableau Approach (Hachtel-Brayton-Gustavson)
+type: claim
+id: claim-sparse-tableau-approach
+tags:
+- foundational
+- sparse-matrix
+- netlist
+- analog
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

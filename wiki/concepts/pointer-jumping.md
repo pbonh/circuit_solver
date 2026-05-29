@@ -1,11 +1,19 @@
 ---
-title: "Pointer Jumping (Path Doubling)"
-type: concept
-tags: [graph, parallel, algorithm, foundational, well-established]
+title: Pointer Jumping (Path Doubling)
+type: claim
+id: claim-pointer-jumping
+tags:
+- graph
+- parallel
+- algorithm
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

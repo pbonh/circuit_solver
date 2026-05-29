@@ -1,11 +1,18 @@
 ---
-title: "Modeling and Simulation of Systems — Part II: Advanced Concepts"
-type: summary
-tags: [simulation, modeling, devs, foundational, overview]
+title: 'Modeling and Simulation of Systems — Part II: Advanced Concepts'
+type: source
+id: source-modeling-simulation-systems-11-advanced-concepts
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- foundational
+- overview
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/11-advanced-concepts.txt"]
-confidence: low
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/11-advanced-concepts.txt
 ---
 
 ## Key Points

@@ -1,11 +1,17 @@
 ---
-title: "Time Series"
-type: concept
-tags: [data, foundational, modeling]
+title: Time Series
+type: claim
+id: claim-time-series
+tags:
+- data
+- foundational
+- modeling
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/08-chapter-4-planning-the-dashboard-prototype.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/08-chapter-4-planning-the-dashboard-prototype.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

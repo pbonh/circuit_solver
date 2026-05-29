@@ -1,11 +1,18 @@
 ---
-title: "Switched-Capacitor (SC) Network"
-type: concept
-tags: [switched-capacitor, analog, mixed-signal, well-established]
+title: Switched-Capacitor (SC) Network
+type: claim
+id: claim-switched-capacitor-network
+tags:
+- switched-capacitor
+- analog
+- mixed-signal
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/17-chapter-14-digital-and-switched-capacitor-networks.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/17-chapter-14-digital-and-switched-capacitor-networks.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

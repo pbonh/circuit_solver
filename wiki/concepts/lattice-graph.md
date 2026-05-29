@@ -1,11 +1,19 @@
 ---
-title: "Lattice Graph"
-type: concept
-tags: [graph, vlsi, foundational, well-established, power-integrity]
+title: Lattice Graph
+type: claim
+id: claim-lattice-graph
+tags:
+- graph
+- vlsi
+- foundational
+- well-established
+- power-integrity
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

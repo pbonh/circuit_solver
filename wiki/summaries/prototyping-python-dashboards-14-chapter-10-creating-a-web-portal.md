@@ -1,11 +1,19 @@
 ---
-title: "Prototyping Python Dashboards — Chapter 10: Creating a Web Portal"
-type: summary
-tags: [web, wordpress, html, css, dashboard, deployment]
+title: 'Prototyping Python Dashboards — Chapter 10: Creating a Web Portal'
+type: source
+id: source-prototyping-python-dashboards-14-chapter-10-creating-a-web-portal
+kind: derived-summary
+tags:
+- web
+- wordpress
+- html
+- css
+- dashboard
+- deployment
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt
 ---
 
 ## Key Points

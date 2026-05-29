@@ -1,11 +1,18 @@
 ---
-title: "Charge-Flux Formulation (Nonlinear Reactive Elements)"
-type: concept
-tags: [transient, analog, well-established, foundational]
+title: Charge-Flux Formulation (Nonlinear Reactive Elements)
+type: claim
+id: claim-charge-flux-formulation
+tags:
+- transient
+- analog
+- well-established
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/16-chapter-13-numerical-integration-of-differential-and-algebraic-differential-equations.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/16-chapter-13-numerical-integration-of-differential-and-algebraic-differential-equations.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

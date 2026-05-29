@@ -1,11 +1,17 @@
 ---
-title: "Predictive Modeling"
-type: concept
-tags: [data-analysis, advanced, well-established]
+title: Predictive Modeling
+type: claim
+id: claim-predictive-modeling
+tags:
+- data-analysis
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/02-about-the-technical-reviewer.txt"]
-confidence: low
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/02-about-the-technical-reviewer.txt
+confidence:
+  base: 0.45
 ---
 
 > The cited source is a one-page technical-reviewer bio listing predictive modeling only as one of his career activities: "He's had a career covering the life cycle of data ... data warehousing, Business Intelligence (BI), analytical tool development, ad hoc analysis, predictive modeling, data science product development...". No substantive treatment of predictive modeling appears in the source.

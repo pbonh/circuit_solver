@@ -1,11 +1,20 @@
 ---
-title: "Data Analysis and Visualizations with Python — Chapter 6: Data Exploring and Analysis"
-type: summary
-tags: [python, pandas, data-analysis, descriptive-statistics, groupby, foundational]
+title: 'Data Analysis and Visualizations with Python — Chapter 6: Data Exploring and
+  Analysis'
+type: source
+id: source-data-analysis-visualizations-python-09-chapter-6-data-exploring-and-analysis
+kind: derived-summary
+tags:
+- python
+- pandas
+- data-analysis
+- descriptive-statistics
+- groupby
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/09-chapter-6-data-exploring-and-analysis.txt"]
-confidence: high
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/09-chapter-6-data-exploring-and-analysis.txt
 ---
 
 ## Key Points

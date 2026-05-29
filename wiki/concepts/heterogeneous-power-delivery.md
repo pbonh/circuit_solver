@@ -1,11 +1,17 @@
 ---
-title: "Heterogeneous Power Delivery"
-type: concept
-tags: [vlsi, power-integrity, architecture]
+title: Heterogeneous Power Delivery
+type: claim
+id: claim-heterogeneous-power-delivery
+tags:
+- vlsi
+- power-integrity
+- architecture
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/11-8-placement-of-on-chip-distributed-voltage-regulators.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/11-8-placement-of-on-chip-distributed-voltage-regulators.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

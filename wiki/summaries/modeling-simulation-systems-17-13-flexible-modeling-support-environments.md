@@ -1,11 +1,21 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 13: Flexible Modeling Support Environments"
-type: summary
-tags: [simulation, modeling, devs, soa, applications, fractionated-satellites, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 13: Flexible Modeling Support
+  Environments'
+type: source
+id: source-modeling-simulation-systems-17-13-flexible-modeling-support-environments
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- soa
+- applications
+- fractionated-satellites
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/17-13-flexible-modeling-support-environments.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/17-13-flexible-modeling-support-environments.txt
 ---
 
 ## Key Points

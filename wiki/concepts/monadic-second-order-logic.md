@@ -1,11 +1,17 @@
 ---
-title: "Monadic Second-Order Logic"
-type: concept
-tags: [algorithm, foundational, well-established]
+title: Monadic Second-Order Logic
+type: claim
+id: claim-monadic-second-order-logic
+tags:
+- algorithm
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/06-problem-formulations.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/06-problem-formulations.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

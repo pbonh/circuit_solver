@@ -1,11 +1,19 @@
 ---
-title: "Edge Dominating Set"
-type: concept
-tags: [graph, algorithm, well-established, np-hard, matching]
+title: Edge Dominating Set
+type: claim
+id: claim-edge-dominating-set
+tags:
+- graph
+- algorithm
+- well-established
+- np-hard
+- matching
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

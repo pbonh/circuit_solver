@@ -1,11 +1,18 @@
 ---
-title: "Multilinear (Bilinear) Network Function"
-type: concept
-tags: [analog, well-established, foundational, math]
+title: Multilinear (Bilinear) Network Function
+type: claim
+id: claim-multilinear-function
+tags:
+- analog
+- well-established
+- foundational
+- math
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/11-chapter-8-large-change-sensitivity-and-related-topics.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/11-chapter-8-large-change-sensitivity-and-related-topics.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

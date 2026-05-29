@@ -1,11 +1,19 @@
 ---
-title: "Phase-Locked Loop (PLL)"
-type: concept
-tags: [vlsi, analog, mixed-signal, clock, well-established]
+title: Phase-Locked Loop (PLL)
+type: claim
+id: claim-phase-locked-loop
+tags:
+- vlsi
+- analog
+- mixed-signal
+- clock
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

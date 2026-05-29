@@ -1,11 +1,18 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 11: Thyristors and Power Devices"
-type: summary
-tags: [semiconductor, device-physics, power-device, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 11: Thyristors
+  and Power Devices'
+type: source
+id: source-sze-physics-semiconductor-devices-15-chapter-11-thyristors-and-power-devices
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- power-device
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/15-chapter-11-thyristors-and-power-devices.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/15-chapter-11-thyristors-and-power-devices.txt
 ---
 
 ## Key Points

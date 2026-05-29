@@ -1,11 +1,17 @@
 ---
-title: "The Rust Programming Language — Chapter 1: Getting Started"
-type: summary
-tags: [rust, foundational, cargo, tooling]
+title: 'The Rust Programming Language — Chapter 1: Getting Started'
+type: source
+id: source-rust-book-02-chapter-1-getting-started
+kind: derived-summary
+tags:
+- rust
+- foundational
+- cargo
+- tooling
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/02-chapter-1-getting-started.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/02-chapter-1-getting-started.txt
 ---
 
 ## Key Points

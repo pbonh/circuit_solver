@@ -1,11 +1,17 @@
 ---
-title: "The Rust Programming Language — Chapter 4: Understanding Ownership"
-type: summary
-tags: [rust, ownership, foundational, memory-safety]
+title: 'The Rust Programming Language — Chapter 4: Understanding Ownership'
+type: source
+id: source-rust-book-05-chapter-4-understanding-ownership
+kind: derived-summary
+tags:
+- rust
+- ownership
+- foundational
+- memory-safety
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/05-chapter-4-understanding-ownership.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/05-chapter-4-understanding-ownership.txt
 ---
 
 ## Key Points

@@ -1,11 +1,18 @@
 ---
-title: "Doc Comments"
-type: concept
-tags: [rust, foundational, documentation, well-established]
+title: Doc Comments
+type: claim
+id: claim-doc-comments
+tags:
+- rust
+- foundational
+- documentation
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/15-chapter-14-more-about-cargo-and-crates-io.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/15-chapter-14-more-about-cargo-and-crates-io.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Peano Kernel"
-type: concept
-tags: [ode, numerical-integration, error-analysis, foundational, well-established]
+title: Peano Kernel
+type: claim
+id: claim-peano-kernel
+tags:
+- ode
+- numerical-integration
+- error-analysis
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.65
 ---
 
 ## Definition

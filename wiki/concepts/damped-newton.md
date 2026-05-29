@@ -1,11 +1,17 @@
 ---
-title: "Damped Newton Method"
-type: concept
-tags: [dc, numerical, well-established]
+title: Damped Newton Method
+type: claim
+id: claim-damped-newton
+tags:
+- dc
+- numerical
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/15-chapter-12-dc-solution-of-networks.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/15-chapter-12-dc-solution-of-networks.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

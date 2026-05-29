@@ -1,11 +1,19 @@
 ---
-title: "Quality of Service (QoS)"
-type: concept
-tags: [simulation, modeling, soa, performance, well-established]
+title: Quality of Service (QoS)
+type: claim
+id: claim-quality-of-service
+tags:
+- simulation
+- modeling
+- soa
+- performance
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

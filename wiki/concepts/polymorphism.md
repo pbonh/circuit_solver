@@ -1,11 +1,17 @@
 ---
-title: "Polymorphism"
-type: concept
-tags: [python, foundational, well-established]
+title: Polymorphism
+type: claim
+id: claim-polymorphism
+tags:
+- python
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/06-chapter-2-exploring-containers-classes-and-objects.txt"]
-confidence: medium
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/06-chapter-2-exploring-containers-classes-and-objects.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

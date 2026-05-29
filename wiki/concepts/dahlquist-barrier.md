@@ -1,11 +1,20 @@
 ---
-title: "Dahlquist Barrier"
-type: concept
-tags: [ode, numerical-integration, multistep, stability, foundational, well-established]
+title: Dahlquist Barrier
+type: claim
+id: claim-dahlquist-barrier
+tags:
+- ode
+- numerical-integration
+- multistep
+- stability
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.85
 ---
 
 ## Definition

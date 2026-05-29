@@ -1,11 +1,18 @@
 ---
-title: "Multilayer Routing"
-type: concept
-tags: [vlsi, routing, algorithm, well-established]
+title: Multilayer Routing
+type: claim
+id: claim-multilayer-routing
+tags:
+- vlsi
+- routing
+- algorithm
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/13-10-sprout-smart-power-routing-tool-for-board-level-exploration-and-prototyping.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

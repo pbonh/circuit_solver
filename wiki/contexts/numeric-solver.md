@@ -1,16 +1,20 @@
 ---
-title: "Numeric Solver"
-type: context
-tags: [solver, sparse-matrix, circuit-solver, bounded-context]
+title: Numeric Solver
+type: entity
+id: entity-context-numeric-solver
+tags:
+- solver
+- sparse-matrix
+- circuit-solver
+- bounded-context
 created: 2026-05-17
 updated: 2026-05-17
 sources:
-  - "concepts/modified-nodal-analysis"
-  - "concepts/newton-raphson-method"
-  - "concepts/sparse-matrix"
-  - "concepts/lu-decomposition"
-  - "concepts/integration-method"
-confidence: high
+- concepts/modified-nodal-analysis
+- concepts/newton-raphson-method
+- concepts/sparse-matrix
+- concepts/lu-decomposition
+- concepts/integration-method
 ---
 
 ## Model

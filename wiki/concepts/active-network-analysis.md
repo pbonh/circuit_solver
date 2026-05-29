@@ -1,11 +1,17 @@
 ---
-title: "Active Network Analysis (Hand Method)"
-type: concept
-tags: [analog, well-established, pedagogy]
+title: Active Network Analysis (Hand Method)
+type: claim
+id: claim-active-network-analysis
+tags:
+- analog
+- well-established
+- pedagogy
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

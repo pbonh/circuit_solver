@@ -1,11 +1,17 @@
 ---
-title: "Separator"
-type: concept
-tags: [graph, foundational, well-established]
+title: Separator
+type: claim
+id: claim-separator
+tags:
+- graph
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/04-graphs.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/04-graphs.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

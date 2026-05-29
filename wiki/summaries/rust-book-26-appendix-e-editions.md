@@ -1,11 +1,16 @@
 ---
-title: "The Rust Programming Language — Appendix E: Editions"
-type: summary
-tags: [rust, reference, foundational]
+title: 'The Rust Programming Language — Appendix E: Editions'
+type: source
+id: source-rust-book-26-appendix-e-editions
+kind: derived-summary
+tags:
+- rust
+- reference
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/26-appendix-e-editions.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/26-appendix-e-editions.txt
 ---
 
 ## Key Points

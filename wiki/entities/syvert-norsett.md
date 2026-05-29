@@ -1,11 +1,17 @@
 ---
-title: "Syvert P. Nørsett"
+title: Syvert P. Nørsett
 type: entity
-tags: [ode, numerical-integration, foundational]
+id: entity-syvert-norsett
+tags:
+- ode
+- numerical-integration
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/01-preface.txt", "raw/solving_ordinary_differential_equations_ii/_txt/03-chapter-iv-stiff-problems-one-step-methods.txt", "raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/01-preface.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/03-chapter-iv-stiff-problems-one-step-methods.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt
 ---
 
 ## Overview

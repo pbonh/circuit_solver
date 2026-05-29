@@ -1,11 +1,17 @@
 ---
-title: "Quorum"
-type: concept
-tags: [distributed-systems, consistency, well-established]
+title: Quorum
+type: claim
+id: claim-quorum
+tags:
+- distributed-systems
+- consistency
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

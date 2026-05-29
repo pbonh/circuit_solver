@@ -1,11 +1,17 @@
 ---
-title: "Environment Variables (Rust)"
-type: concept
-tags: [rust, foundational, well-established]
+title: Environment Variables (Rust)
+type: claim
+id: claim-environment-variables
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/13-chapter-12-an-i-o-project-building-a-command-line-program.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/13-chapter-12-an-i-o-project-building-a-command-line-program.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Hanan Grid"
-type: concept
-tags: [graph, vlsi, routing, well-established, algorithm]
+title: Hanan Grid
+type: claim
+id: claim-hanan-grid
+tags:
+- graph
+- vlsi
+- routing
+- well-established
+- algorithm
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

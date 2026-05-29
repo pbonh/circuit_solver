@@ -1,11 +1,19 @@
 ---
-title: "Context-Sensitive Pruning"
-type: concept
-tags: [simulation, modeling, ses, pruning, well-established]
+title: Context-Sensitive Pruning
+type: claim
+id: claim-context-sensitive-pruning
+tags:
+- simulation
+- modeling
+- ses
+- pruning
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/10-8-automated-and-rule-based-pruning-and-experimental-execution.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/10-8-automated-and-rule-based-pruning-and-experimental-execution.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,14 @@
 ---
-title: "Van Nostrand Reinhold"
+title: Van Nostrand Reinhold
 type: entity
-tags: [publisher, foundational]
+id: entity-van-nostrand-reinhold
+tags:
+- publisher
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/00-cover-and-front-matter.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/00-cover-and-front-matter.txt
 ---
 
 ## Overview

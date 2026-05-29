@@ -1,11 +1,19 @@
 ---
-title: "Lifetimes"
-type: concept
-tags: [rust, lifetimes, foundational, well-established]
+title: Lifetimes
+type: claim
+id: claim-lifetimes
+tags:
+- rust
+- lifetimes
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/05-chapter-4-understanding-ownership.txt", "raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/05-chapter-4-understanding-ownership.txt
+- raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

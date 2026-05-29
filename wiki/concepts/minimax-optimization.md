@@ -1,11 +1,16 @@
 ---
-title: "Minimax Optimization"
-type: concept
-tags: [optimization, well-established]
+title: Minimax Optimization
+type: claim
+id: claim-minimax-optimization
+tags:
+- optimization
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/20-chapter-17-design-by-minimization.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/20-chapter-17-design-by-minimization.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

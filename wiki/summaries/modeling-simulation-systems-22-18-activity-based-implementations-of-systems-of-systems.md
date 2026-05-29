@@ -1,11 +1,21 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 18: Activity-Based Implementations of Systems of Systems"
-type: summary
-tags: [simulation, modeling, devs, activity, energy, hardware, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 18: Activity-Based Implementations
+  of Systems of Systems'
+type: source
+id: source-modeling-simulation-systems-22-18-activity-based-implementations-of-systems-of-systems
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- activity
+- energy
+- hardware
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/22-18-activity-based-implementations-of-systems-of-systems.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/22-18-activity-based-implementations-of-systems-of-systems.txt
 ---
 
 ## Key Points

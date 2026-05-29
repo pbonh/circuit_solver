@@ -1,11 +1,15 @@
 ---
-title: "Foundations of Scalable Systems — About the Author"
-type: summary
-tags: [foundational, book-back-matter]
+title: Foundations of Scalable Systems — About the Author
+type: source
+id: source-foundations-scalable-systems-09-about-the-author
+kind: derived-summary
+tags:
+- foundational
+- book-back-matter
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/09-about-the-author.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/09-about-the-author.txt
 ---
 
 ## Key Points

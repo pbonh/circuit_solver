@@ -1,23 +1,29 @@
 ---
-title: "Bounded Contexts in Circuit Simulation"
-type: synthesis
-tags: [ddd, circuit-simulation, architecture, bounded-context]
+title: Bounded Contexts in Circuit Simulation
+type: claim
+id: claim-synthesis-bounded-contexts-in-circuit-simulation
+tags:
+- ddd
+- circuit-simulation
+- architecture
+- bounded-context
 created: 2026-05-17
 updated: 2026-05-17
 sources:
-  - "concepts/graph"
-  - "concepts/modified-nodal-analysis"
-  - "concepts/device-modeling"
-  - "concepts/dc-analysis"
-  - "concepts/ac-analysis"
-  - "concepts/transient-analysis"
-  - "concepts/boolean-satisfiability"
-  - "concepts/mixed-level-simulation"
-  - "concepts/symbolic-analysis"
-  - "concepts/model-order-reduction"
-  - "concepts/floorplanning"
-  - "concepts/discrete-event-system-specification"
-confidence: medium
+- concepts/graph
+- concepts/modified-nodal-analysis
+- concepts/device-modeling
+- concepts/dc-analysis
+- concepts/ac-analysis
+- concepts/transient-analysis
+- concepts/boolean-satisfiability
+- concepts/mixed-level-simulation
+- concepts/symbolic-analysis
+- concepts/model-order-reduction
+- concepts/floorplanning
+- concepts/discrete-event-system-specification
+confidence:
+  base: 0.65
 ---
 
 ## Comparison

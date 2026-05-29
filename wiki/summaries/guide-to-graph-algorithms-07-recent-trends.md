@@ -1,11 +1,18 @@
 ---
-title: "Guide to Graph Algorithms — Recent Trends (Chapter 4)"
-type: summary
-tags: [graph, algorithm, advanced, emerging, np-hard]
+title: Guide to Graph Algorithms — Recent Trends (Chapter 4)
+type: source
+id: source-guide-to-graph-algorithms-07-recent-trends
+kind: derived-summary
+tags:
+- graph
+- algorithm
+- advanced
+- emerging
+- np-hard
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
 ---
 
 ## Key Points

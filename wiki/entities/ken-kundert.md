@@ -1,11 +1,16 @@
 ---
-title: "Ken Kundert"
+title: Ken Kundert
 type: entity
-tags: [analog, mixed-signal, rf, well-established]
+id: entity-ken-kundert
+tags:
+- analog
+- mixed-signal
+- rf
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
 ---
 
 ## Overview

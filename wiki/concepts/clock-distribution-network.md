@@ -1,11 +1,19 @@
 ---
-title: "Clock Distribution Network"
-type: concept
-tags: [vlsi, digital, synchronization, clock, well-established]
+title: Clock Distribution Network
+type: claim
+id: claim-clock-distribution-network
+tags:
+- vlsi
+- digital
+- synchronization
+- clock
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/03-about-the-authors.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/03-about-the-authors.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,20 @@
 ---
-title: "Multi-formalism Modeling"
-type: concept
-tags: [simulation, modeling, devs, foundational, multi-formalism, well-established]
+title: Multi-formalism Modeling
+type: claim
+id: claim-multi-formalism-modeling
+tags:
+- simulation
+- modeling
+- devs
+- foundational
+- multi-formalism
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/03-1-modeling-and-simulation-of-systems-of-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/03-1-modeling-and-simulation-of-systems-of-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

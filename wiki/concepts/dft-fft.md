@@ -1,11 +1,18 @@
 ---
-title: "Discrete and Fast Fourier Transform (DFT/FFT)"
-type: concept
-tags: [foundational, math, well-established, numerical]
+title: Discrete and Fast Fourier Transform (DFT/FFT)
+type: claim
+id: claim-dft-fft
+tags:
+- foundational
+- math
+- well-established
+- numerical
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/10-chapter-7-network-functions-in-the-frequency-domain.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/10-chapter-7-network-functions-in-the-frequency-domain.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

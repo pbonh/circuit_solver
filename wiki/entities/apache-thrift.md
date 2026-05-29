@@ -1,11 +1,18 @@
 ---
-title: "Apache Thrift"
+title: Apache Thrift
 type: entity
-tags: [well-established, encoding, schema-evolution, rpc, open-source]
+id: entity-apache-thrift
+tags:
+- well-established
+- encoding
+- schema-evolution
+- rpc
+- open-source
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt
 ---
 
 ## Overview

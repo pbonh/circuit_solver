@@ -1,11 +1,17 @@
 ---
-title: "Systemd Service"
-type: concept
-tags: [unix, deployment, systemd]
+title: Systemd Service
+type: claim
+id: claim-systemd-service
+tags:
+- unix
+- deployment
+- systemd
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/12-chapter-8-deploying-your-project-as-a-unix-service.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/12-chapter-8-deploying-your-project-as-a-unix-service.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

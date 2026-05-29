@@ -1,11 +1,16 @@
 ---
-title: "Python Data Analyst's Toolkit — About the Author"
-type: summary
-tags: [python, data-analysis, foundational]
+title: Python Data Analyst's Toolkit — About the Author
+type: source
+id: source-python-data-analysts-toolkit-01-about-the-author
+kind: derived-summary
+tags:
+- python
+- data-analysis
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/01-about-the-author.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/01-about-the-author.txt
 ---
 
 ## Key Points

@@ -1,11 +1,17 @@
 ---
-title: "Graphs in VLSI — Chapter 12: Conclusions"
-type: summary
-tags: [vlsi, graph, foundational, overview]
+title: 'Graphs in VLSI — Chapter 12: Conclusions'
+type: source
+id: source-graphs-in-vlsi-15-12-conclusions
+kind: derived-summary
+tags:
+- vlsi
+- graph
+- foundational
+- overview
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/15-12-conclusions.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/15-12-conclusions.txt
 ---
 
 ## Key Points

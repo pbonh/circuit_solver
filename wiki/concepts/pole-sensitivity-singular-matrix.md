@@ -1,11 +1,19 @@
 ---
-title: "Pole Sensitivity via Singular-Matrix LU"
-type: concept
-tags: [sensitivity, analog, ac, well-established, advanced]
+title: Pole Sensitivity via Singular-Matrix LU
+type: claim
+id: claim-pole-sensitivity-singular-matrix
+tags:
+- sensitivity
+- analog
+- ac
+- well-established
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

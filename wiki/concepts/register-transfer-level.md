@@ -1,11 +1,19 @@
 ---
-title: "Register Transfer Level (RTL)"
-type: concept
-tags: [vlsi, digital, foundational, well-established, abstraction]
+title: Register Transfer Level (RTL)
+type: claim
+id: claim-register-transfer-level
+tags:
+- vlsi
+- digital
+- foundational
+- well-established
+- abstraction
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

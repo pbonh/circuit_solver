@@ -1,11 +1,18 @@
 ---
-title: "Interior Mutability"
-type: concept
-tags: [rust, ownership, advanced, well-established]
+title: Interior Mutability
+type: claim
+id: claim-interior-mutability
+tags:
+- rust
+- ownership
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/16-chapter-15-smart-pointers.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/16-chapter-15-smart-pointers.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

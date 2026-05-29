@@ -1,6 +1,7 @@
 ---
 title: "PyO3 In-Process Binding with Immutable Circuit Graph"
-type: decision
+type: claim
+id: claim-decision-0001-pyo3-in-process-binding-with-immutable-circuit-graph
 tags: [decision, circuit-solver, pyo3, rust, python, binding, memory-safety]
 created: 2026-05-17
 updated: 2026-05-18
@@ -9,7 +10,8 @@ sources:
   - "grills/circuit-solver"
   - "contexts/application-frontend"
   - "vision/circuit-solver"
-confidence: high
+confidence:
+  base: 0.85
 ---
 
 "In the context of providing a Python API for the circuit-solver Rust core, facing the need for ergonomic interactive circuit construction without sacrificing Rust's ownership guarantees, we decided for an in-process PyO3 extension module with an immutable `CircuitGraph` built via a Rust-backed builder API exposed to Python, and per-request mutable analysis state passed from Python, to achieve zero-copy NumPy-compatible results with full Rust ownership discipline, accepting that the Python runtime must be compiled with a compatible ABI and that debugging across the language boundary is harder than pure Rust or pure Python."

@@ -1,11 +1,19 @@
 ---
-title: "Guide to Graph Algorithms — Algorithms (Chapter 2)"
-type: summary
-tags: [graph, algorithm, foundational, well-established, np-hard, matching]
+title: Guide to Graph Algorithms — Algorithms (Chapter 2)
+type: source
+id: source-guide-to-graph-algorithms-05-algorithms
+kind: derived-summary
+tags:
+- graph
+- algorithm
+- foundational
+- well-established
+- np-hard
+- matching
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
 ---
 
 ## Key Points

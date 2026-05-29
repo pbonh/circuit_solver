@@ -1,11 +1,15 @@
 ---
-title: "Fail2ban"
+title: Fail2ban
 type: entity
-tags: [unix, security, intrusion-prevention]
+id: entity-fail2ban
+tags:
+- unix
+- security
+- intrusion-prevention
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/12-chapter-8-deploying-your-project-as-a-unix-service.txt"]
-confidence: medium
+sources:
+- raw/PrototypingPythonDashboards/_txt/12-chapter-8-deploying-your-project-as-a-unix-service.txt
 ---
 
 ## Overview

@@ -1,11 +1,14 @@
 ---
-title: "Python `requests` Library"
+title: Python `requests` Library
 type: entity
-tags: [python, well-established]
+id: entity-requests-library
+tags:
+- python
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/12-chapter-8-data-analysis-case-studies.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/12-chapter-8-data-analysis-case-studies.txt
 ---
 
 ## Overview

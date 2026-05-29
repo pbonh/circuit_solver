@@ -1,11 +1,16 @@
 ---
-title: "The Rust Programming Language — Foreword"
-type: summary
-tags: [rust, foundational, systems-programming]
+title: The Rust Programming Language — Foreword
+type: source
+id: source-rust-book-00-foreword
+kind: derived-summary
+tags:
+- rust
+- foundational
+- systems-programming
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/00-foreword.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/00-foreword.txt
 ---
 
 ## Key Points

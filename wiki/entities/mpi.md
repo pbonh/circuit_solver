@@ -1,11 +1,17 @@
 ---
-title: "MPI (Message Passing Interface)"
+title: MPI (Message Passing Interface)
 type: entity
-tags: [distributed-systems, parallel, communication, foundational, well-established]
+id: entity-mpi
+tags:
+- distributed-systems
+- parallel
+- communication
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt
 ---
 
 ## Overview

@@ -1,11 +1,20 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Chapter 14: Digital and Switched-Capacitor Networks"
-type: summary
-tags: [digital, switched-capacitor, ac, sensitivity, sparse-matrix, well-established]
+title: 'Computer Methods for Circuit Analysis and Design — Chapter 14: Digital and
+  Switched-Capacitor Networks'
+type: source
+id: source-computer-methods-circuit-analysis-design-17-chapter-14-digital-and-switched-capacitor-networks
+kind: derived-summary
+tags:
+- digital
+- switched-capacitor
+- ac
+- sensitivity
+- sparse-matrix
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/17-chapter-14-digital-and-switched-capacitor-networks.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/17-chapter-14-digital-and-switched-capacitor-networks.txt
 ---
 
 ## Key Points

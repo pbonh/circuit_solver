@@ -1,11 +1,16 @@
 ---
-title: "NumPy"
+title: NumPy
 type: entity
-tags: [python, numpy, foundational, well-established]
+id: entity-numpy
+tags:
+- python
+- numpy
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt
 ---
 
 ## Overview

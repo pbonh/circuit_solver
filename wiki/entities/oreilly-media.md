@@ -1,11 +1,14 @@
 ---
-title: "O'Reilly Media"
+title: O'Reilly Media
 type: entity
-tags: [publisher, technical-publishing]
+id: entity-oreilly-media
+tags:
+- publisher
+- technical-publishing
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/01-copyright.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/01-copyright.txt
 ---
 
 ## Overview

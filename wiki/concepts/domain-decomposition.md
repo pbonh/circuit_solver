@@ -1,11 +1,19 @@
 ---
-title: "Domain Decomposition"
-type: concept
-tags: [algorithm, linear-algebra, vlsi, well-established, parallel]
+title: Domain Decomposition
+type: claim
+id: claim-domain-decomposition
+tags:
+- algorithm
+- linear-algebra
+- vlsi
+- well-established
+- parallel
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

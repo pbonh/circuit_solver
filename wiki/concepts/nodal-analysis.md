@@ -1,11 +1,21 @@
 ---
-title: "Nodal Analysis"
-type: concept
-tags: [foundational, analog, dc, ac, netlist, sparse-matrix, well-established]
+title: Nodal Analysis
+type: claim
+id: claim-nodal-analysis
+tags:
+- foundational
+- analog
+- dc
+- ac
+- netlist
+- sparse-matrix
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/05-chapter-2-network-equations-and-their-solution.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/05-chapter-2-network-equations-and-their-solution.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

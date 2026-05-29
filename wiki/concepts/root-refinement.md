@@ -1,11 +1,18 @@
 ---
-title: "Root Refinement (System-Matrix-Based)"
-type: concept
-tags: [foundational, ac, well-established, numerical]
+title: Root Refinement (System-Matrix-Based)
+type: claim
+id: claim-root-refinement
+tags:
+- foundational
+- ac
+- well-established
+- numerical
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/10-chapter-7-network-functions-in-the-frequency-domain.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/10-chapter-7-network-functions-in-the-frequency-domain.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

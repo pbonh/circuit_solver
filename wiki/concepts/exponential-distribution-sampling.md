@@ -1,11 +1,19 @@
 ---
-title: "Exponential Distribution Sampling"
-type: concept
-tags: [simulation, modeling, stochastic, well-established, foundational]
+title: Exponential Distribution Sampling
+type: claim
+id: claim-exponential-distribution-sampling
+tags:
+- simulation
+- modeling
+- stochastic
+- well-established
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/23-19-devs-support-for-markov-modeling-and-simulation.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/23-19-devs-support-for-markov-modeling-and-simulation.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

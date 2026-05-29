@@ -1,11 +1,20 @@
 ---
-title: "Activity-Based Modeling"
-type: concept
-tags: [simulation, modeling, devs, energy, information, emerging]
+title: Activity-Based Modeling
+type: claim
+id: claim-activity-based-modeling
+tags:
+- simulation
+- modeling
+- devs
+- energy
+- information
+- emerging
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Topological Nodal Formulation"
-type: concept
-tags: [foundational, graph, analog, sparse-matrix, well-established]
+title: Topological Nodal Formulation
+type: claim
+id: claim-topological-nodal-formulation
+tags:
+- foundational
+- graph
+- analog
+- sparse-matrix
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/06-chapter-3-graph-theoretic-formulation-of-network-equations.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/06-chapter-3-graph-theoretic-formulation-of-network-equations.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

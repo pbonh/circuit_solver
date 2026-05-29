@@ -1,11 +1,17 @@
 ---
-title: "CURAND"
+title: CURAND
 type: entity
-tags: [tool, gpu, rng, statistical, cuda]
+id: entity-curand
+tags:
+- tool
+- gpu
+- rng
+- statistical
+- cuda
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt
 ---
 
 ## Overview

@@ -1,11 +1,20 @@
 ---
-title: "Clock Skew Scheduling"
-type: concept
-tags: [vlsi, digital, synchronization, graph, timing, well-established]
+title: Clock Skew Scheduling
+type: claim
+id: claim-clock-skew-scheduling
+tags:
+- vlsi
+- digital
+- synchronization
+- graph
+- timing
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/00-preface.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/00-preface.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

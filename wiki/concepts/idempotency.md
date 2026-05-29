@@ -1,11 +1,18 @@
 ---
-title: "Idempotency"
-type: concept
-tags: [distributed-systems, fault-tolerance, foundational, well-established]
+title: Idempotency
+type: claim
+id: claim-idempotency
+tags:
+- distributed-systems
+- fault-tolerance
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

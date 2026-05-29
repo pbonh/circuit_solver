@@ -1,11 +1,19 @@
 ---
-title: "Graphs in VLSI — Chapter 8: Placement of On-Chip Distributed Voltage Regulators"
-type: summary
-tags: [vlsi, power-integrity, optimization, placement, novel, regulator]
+title: 'Graphs in VLSI — Chapter 8: Placement of On-Chip Distributed Voltage Regulators'
+type: source
+id: source-graphs-in-vlsi-11-8-placement-of-on-chip-distributed-voltage-regulators
+kind: derived-summary
+tags:
+- vlsi
+- power-integrity
+- optimization
+- placement
+- novel
+- regulator
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/11-8-placement-of-on-chip-distributed-voltage-regulators.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/11-8-placement-of-on-chip-distributed-voltage-regulators.txt
 ---
 
 ## Key Points

@@ -1,11 +1,21 @@
 ---
-title: "Prototyping Python Dashboards — Chapter 11: Using Our Dashboard for Data Visualization and Analysis"
-type: summary
-tags: [python, visualization, spectrum, fft, time-series, analysis, modeling]
+title: 'Prototyping Python Dashboards — Chapter 11: Using Our Dashboard for Data Visualization
+  and Analysis'
+type: source
+id: source-prototyping-python-dashboards-15-chapter-11-using-our-dashboard-for-data-visualization-and-analysis
+kind: derived-summary
+tags:
+- python
+- visualization
+- spectrum
+- fft
+- time-series
+- analysis
+- modeling
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/15-chapter-11-using-our-dashboard-for-data-visualization-and-analysis.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/15-chapter-11-using-our-dashboard-for-data-visualization-and-analysis.txt
 ---
 
 ## Key Points

@@ -1,11 +1,17 @@
 ---
-title: "Confidence Interval"
-type: concept
-tags: [statistics, foundational, well-established]
+title: Confidence Interval
+type: claim
+id: claim-confidence-interval
+tags:
+- statistics
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

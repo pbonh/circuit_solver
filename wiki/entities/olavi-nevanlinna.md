@@ -1,11 +1,18 @@
 ---
-title: "Olavi Nevanlinna"
+title: Olavi Nevanlinna
 type: entity
-tags: [ode, numerical-integration, foundational, stability]
+id: entity-olavi-nevanlinna
+tags:
+- ode
+- numerical-integration
+- foundational
+- stability
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/04-chapter-v-multistep-methods-for-stiff-problems.txt", "raw/solving_ordinary_differential_equations_ii/_txt/01-preface.txt", "raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/04-chapter-v-multistep-methods-for-stiff-problems.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/01-preface.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt
 ---
 
 ## Overview

@@ -1,11 +1,17 @@
 ---
-title: "Sensitivity Network Method"
-type: concept
-tags: [sensitivity, foundational, well-established]
+title: Sensitivity Network Method
+type: claim
+id: claim-sensitivity-network-method
+tags:
+- sensitivity
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

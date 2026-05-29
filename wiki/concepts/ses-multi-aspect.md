@@ -1,11 +1,19 @@
 ---
-title: "SES Multi-aspect"
-type: concept
-tags: [simulation, modeling, ses, foundational, well-established]
+title: SES Multi-aspect
+type: claim
+id: claim-ses-multi-aspect
+tags:
+- simulation
+- modeling
+- ses
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/08-6-aspects-and-multi-aspects.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/08-6-aspects-and-multi-aspects.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Lightweight Checkpointing"
-type: concept
-tags: [distributed-systems, fault-tolerance, graph-processing, optimization, well-established]
+title: Lightweight Checkpointing
+type: claim
+id: claim-lightweight-checkpointing
+tags:
+- distributed-systems
+- fault-tolerance
+- graph-processing
+- optimization
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

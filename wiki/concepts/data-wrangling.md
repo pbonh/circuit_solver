@@ -1,11 +1,18 @@
 ---
-title: "Data Wrangling"
-type: concept
-tags: [data-analysis, pandas, foundational, well-established]
+title: Data Wrangling
+type: claim
+id: claim-data-wrangling
+tags:
+- data-analysis
+- pandas
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/08-chapter-4-descriptive-data-analysis-basics.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/08-chapter-4-descriptive-data-analysis-basics.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

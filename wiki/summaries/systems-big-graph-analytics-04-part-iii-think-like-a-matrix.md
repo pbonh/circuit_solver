@@ -1,11 +1,21 @@
 ---
-title: "Systems for Big Graph Analytics — Part III: Think Like a Matrix (PEGASUS, GBASE, SystemML) and Conclusions"
-type: summary
-tags: [graph, distributed-systems, big-data, sparse-matrix, analytics, mapreduce, well-established]
+title: 'Systems for Big Graph Analytics — Part III: Think Like a Matrix (PEGASUS,
+  GBASE, SystemML) and Conclusions'
+type: source
+id: source-systems-big-graph-analytics-04-part-iii-think-like-a-matrix
+kind: derived-summary
+tags:
+- graph
+- distributed-systems
+- big-data
+- sparse-matrix
+- analytics
+- mapreduce
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
 ---
 
 ## Key Points

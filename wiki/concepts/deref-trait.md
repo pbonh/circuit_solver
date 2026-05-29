@@ -1,11 +1,18 @@
 ---
-title: "Deref Trait"
-type: concept
-tags: [rust, smart-pointers, foundational, well-established]
+title: Deref Trait
+type: claim
+id: claim-deref-trait
+tags:
+- rust
+- smart-pointers
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/16-chapter-15-smart-pointers.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/16-chapter-15-smart-pointers.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

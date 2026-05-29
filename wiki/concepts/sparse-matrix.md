@@ -1,11 +1,18 @@
 ---
-title: "Sparse Matrix"
-type: concept
-tags: [sparse-matrix, well-established, linear-algebra, vlsi]
+title: Sparse Matrix
+type: claim
+id: claim-sparse-matrix
+tags:
+- sparse-matrix
+- well-established
+- linear-algebra
+- vlsi
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

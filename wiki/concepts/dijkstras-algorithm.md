@@ -1,11 +1,18 @@
 ---
-title: "Dijkstra's Algorithm"
-type: concept
-tags: [graph, algorithm, foundational, well-established]
+title: Dijkstra's Algorithm
+type: claim
+id: claim-dijkstras-algorithm
+tags:
+- graph
+- algorithm
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

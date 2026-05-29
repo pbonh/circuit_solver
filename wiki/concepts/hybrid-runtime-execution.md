@@ -1,11 +1,18 @@
 ---
-title: "Hybrid Runtime Execution"
-type: concept
-tags: [distributed-systems, big-data, optimization, well-established]
+title: Hybrid Runtime Execution
+type: claim
+id: claim-hybrid-runtime-execution
+tags:
+- distributed-systems
+- big-data
+- optimization
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt"]
-confidence: medium
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "SES Coupling Specification"
-type: concept
-tags: [simulation, modeling, ses, multi-aspect, well-established]
+title: SES Coupling Specification
+type: claim
+id: claim-ses-coupling-specification
+tags:
+- simulation
+- modeling
+- ses
+- multi-aspect
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/08-6-aspects-and-multi-aspects.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/08-6-aspects-and-multi-aspects.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

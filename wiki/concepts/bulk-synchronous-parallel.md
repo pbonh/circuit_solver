@@ -1,11 +1,18 @@
 ---
-title: "Bulk Synchronous Parallel (BSP)"
-type: concept
-tags: [parallel, distributed-systems, foundational, well-established]
+title: Bulk Synchronous Parallel (BSP)
+type: claim
+id: claim-bulk-synchronous-parallel
+tags:
+- parallel
+- distributed-systems
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

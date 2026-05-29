@@ -1,11 +1,19 @@
 ---
-title: "Finite State Machine"
-type: concept
-tags: [graph, digital, foundational, well-established, synchronization]
+title: Finite State Machine
+type: claim
+id: claim-finite-state-machine
+tags:
+- graph
+- digital
+- foundational
+- well-established
+- synchronization
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/04-1-introduction.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/04-1-introduction.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

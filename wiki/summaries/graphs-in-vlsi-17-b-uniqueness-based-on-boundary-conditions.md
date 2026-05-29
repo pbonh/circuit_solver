@@ -1,11 +1,17 @@
 ---
-title: "Graphs in VLSI — Appendix B: Uniqueness Based on Boundary Conditions"
-type: summary
-tags: [vlsi, mathematics, well-established, foundational]
+title: 'Graphs in VLSI — Appendix B: Uniqueness Based on Boundary Conditions'
+type: source
+id: source-graphs-in-vlsi-17-b-uniqueness-based-on-boundary-conditions
+kind: derived-summary
+tags:
+- vlsi
+- mathematics
+- well-established
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/17-b-uniqueness-based-on-boundary-conditions.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/17-b-uniqueness-based-on-boundary-conditions.txt
 ---
 
 ## Key Points

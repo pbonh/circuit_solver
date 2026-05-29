@@ -1,11 +1,18 @@
 ---
-title: "Object Safety"
-type: concept
-tags: [rust, traits, advanced, well-established]
+title: Object Safety
+type: claim
+id: claim-object-safety
+tags:
+- rust
+- traits
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/18-chapter-17-object-oriented-programming-features-of-rust.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/18-chapter-17-object-oriented-programming-features-of-rust.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

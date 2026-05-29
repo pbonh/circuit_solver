@@ -1,11 +1,18 @@
 ---
-title: "Piecewise-Linear Analysis (Katzenelson)"
-type: concept
-tags: [dc, analog, well-established, device-model]
+title: Piecewise-Linear Analysis (Katzenelson)
+type: claim
+id: claim-piecewise-linear-analysis
+tags:
+- dc
+- analog
+- well-established
+- device-model
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/15-chapter-12-dc-solution-of-networks.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/15-chapter-12-dc-solution-of-networks.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

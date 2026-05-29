@@ -1,11 +1,22 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Motivation"
-type: summary
-tags: [foundational, analog, dc, ac, transient, sparse-matrix, sensitivity, optimization, well-established]
+title: Computer Methods for Circuit Analysis and Design — Motivation
+type: source
+id: source-computer-methods-circuit-analysis-design-02-motivation
+kind: derived-summary
+tags:
+- foundational
+- analog
+- dc
+- ac
+- transient
+- sparse-matrix
+- sensitivity
+- optimization
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt
 ---
 
 ## Key Points

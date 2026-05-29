@@ -1,11 +1,16 @@
 ---
-title: "Selenium"
+title: Selenium
 type: entity
-tags: [python, web, automation, testing]
+id: entity-selenium
+tags:
+- python
+- web
+- automation
+- testing
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/07-chapter-3-working-with-online-data.txt"]
-confidence: medium
+sources:
+- raw/PrototypingPythonDashboards/_txt/07-chapter-3-working-with-online-data.txt
 ---
 
 ## Overview

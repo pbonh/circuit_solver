@@ -1,11 +1,20 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Appendix D: Program for Network Analysis"
-type: summary
-tags: [software, foundational, analog, sensitivity, well-established, simulator]
+title: 'Computer Methods for Circuit Analysis and Design — Appendix D: Program for
+  Network Analysis'
+type: source
+id: source-computer-methods-circuit-analysis-design-24-appendix-d-program-for-network-analysis
+kind: derived-summary
+tags:
+- software
+- foundational
+- analog
+- sensitivity
+- well-established
+- simulator
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/24-appendix-d-program-for-network-analysis.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/24-appendix-d-program-for-network-analysis.txt
 ---
 
 ## Key Points

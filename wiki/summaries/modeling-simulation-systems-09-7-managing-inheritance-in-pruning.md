@@ -1,11 +1,19 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 7: Managing Inheritance in Pruning"
-type: summary
-tags: [simulation, modeling, ses, inheritance, java, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 7: Managing Inheritance in Pruning'
+type: source
+id: source-modeling-simulation-systems-09-7-managing-inheritance-in-pruning
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- ses
+- inheritance
+- java
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/09-7-managing-inheritance-in-pruning.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/09-7-managing-inheritance-in-pruning.txt
 ---
 
 ## Key Points

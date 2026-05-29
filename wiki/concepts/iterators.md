@@ -1,11 +1,18 @@
 ---
-title: "Iterators"
-type: concept
-tags: [rust, foundational, well-established]
+title: Iterators
+type: claim
+id: claim-iterators
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/14-chapter-13-functional-language-features-iterators-and-closures.txt", "raw/rust_book/_txt/09-chapter-8-common-collections.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/14-chapter-13-functional-language-features-iterators-and-closures.txt
+- raw/rust_book/_txt/09-chapter-8-common-collections.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

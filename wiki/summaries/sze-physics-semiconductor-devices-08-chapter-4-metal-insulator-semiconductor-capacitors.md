@@ -1,11 +1,19 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 4: Metal-Insulator-Semiconductor Capacitors"
-type: summary
-tags: [semiconductor, device-physics, mosfet, foundational, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 4: Metal-Insulator-Semiconductor
+  Capacitors'
+type: source
+id: source-sze-physics-semiconductor-devices-08-chapter-4-metal-insulator-semiconductor-capacitors
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- mosfet
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/08-chapter-4-metal-insulator-semiconductor-capacitors.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/08-chapter-4-metal-insulator-semiconductor-capacitors.txt
 ---
 
 ## Key Points

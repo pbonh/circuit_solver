@@ -1,11 +1,20 @@
 ---
-title: "Graphs in VLSI — Chapter 4: Synchronization in VLSI"
-type: summary
-tags: [vlsi, digital, synchronization, graph, clock, timing, well-established]
+title: 'Graphs in VLSI — Chapter 4: Synchronization in VLSI'
+type: source
+id: source-graphs-in-vlsi-07-4-synchronization-in-vlsi
+kind: derived-summary
+tags:
+- vlsi
+- digital
+- synchronization
+- graph
+- clock
+- timing
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt
 ---
 
 ## Key Points

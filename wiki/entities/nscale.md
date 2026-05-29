@@ -1,11 +1,17 @@
 ---
-title: "NScale"
+title: NScale
 type: entity
-tags: [graph, distributed-systems, graph-mining, mapreduce, well-established]
+id: entity-nscale
+tags:
+- graph
+- distributed-systems
+- graph-mining
+- mapreduce
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt"]
-confidence: medium
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt
 ---
 
 ## Overview

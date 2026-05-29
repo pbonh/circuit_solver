@@ -1,11 +1,16 @@
 ---
-title: "Guide to Graph Algorithms — Acknowledgments"
-type: summary
-tags: [graph, algorithm, foundational]
+title: Guide to Graph Algorithms — Acknowledgments
+type: source
+id: source-guide-to-graph-algorithms-03-acknowledgments
+kind: derived-summary
+tags:
+- graph
+- algorithm
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/03-acknowledgments.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/03-acknowledgments.txt
 ---
 
 ## Key Points

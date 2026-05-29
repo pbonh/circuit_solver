@@ -1,11 +1,18 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 8: Tunnel Devices"
-type: summary
-tags: [semiconductor, device-physics, tunneling, rf, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 8: Tunnel Devices'
+type: source
+id: source-sze-physics-semiconductor-devices-12-chapter-8-tunnel-devices
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- tunneling
+- rf
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/12-chapter-8-tunnel-devices.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/12-chapter-8-tunnel-devices.txt
 ---
 
 ## Key Points

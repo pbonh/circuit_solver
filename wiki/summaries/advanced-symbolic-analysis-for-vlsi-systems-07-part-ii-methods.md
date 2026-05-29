@@ -1,11 +1,18 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Part II: Methods"
-type: summary
-tags: [foundational, symbolic, vlsi, overview, advanced]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Part II: Methods'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-07-part-ii-methods
+kind: derived-summary
+tags:
+- foundational
+- symbolic
+- vlsi
+- overview
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/07-part-ii-methods.txt"]
-confidence: low
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/07-part-ii-methods.txt
 ---
 
 ## Key Points

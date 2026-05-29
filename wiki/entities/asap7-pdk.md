@@ -1,11 +1,18 @@
 ---
-title: "ASAP7 PDK"
+title: ASAP7 PDK
 type: entity
-tags: [pdk, predictive, open-source, asap7, finfet, digital]
+id: entity-asap7-pdk
+tags:
+- pdk
+- predictive
+- open-source
+- asap7
+- finfet
+- digital
 created: 2026-05-18
 updated: 2026-05-18
-sources: ["wiki/specs/circuit-solver"]
-confidence: low
+sources:
+- wiki/specs/circuit-solver
 ---
 
 ## Overview

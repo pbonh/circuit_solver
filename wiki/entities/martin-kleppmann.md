@@ -1,11 +1,17 @@
 ---
-title: "Martin Kleppmann"
+title: Martin Kleppmann
 type: entity
-tags: [well-established, biography, distributed-systems, foundational]
+id: entity-martin-kleppmann
+tags:
+- well-established
+- biography
+- distributed-systems
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/08-about-the-author.txt"]
-confidence: medium
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/08-about-the-author.txt
 ---
 
 ## Overview

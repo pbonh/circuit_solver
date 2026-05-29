@@ -1,11 +1,19 @@
 ---
-title: "Regular Expressions"
-type: concept
-tags: [python, regular-expressions, text-processing, foundational, well-established]
+title: Regular Expressions
+type: claim
+id: claim-regular-expressions
+tags:
+- python
+- regular-expressions
+- text-processing
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/03-introduction.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/03-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

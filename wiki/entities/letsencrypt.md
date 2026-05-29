@@ -1,11 +1,15 @@
 ---
-title: "Let's Encrypt"
+title: Let's Encrypt
 type: entity
-tags: [web, security, https]
+id: entity-letsencrypt
+tags:
+- web
+- security
+- https
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/12-chapter-8-deploying-your-project-as-a-unix-service.txt"]
-confidence: medium
+sources:
+- raw/PrototypingPythonDashboards/_txt/12-chapter-8-deploying-your-project-as-a-unix-service.txt
 ---
 
 ## Overview

@@ -1,11 +1,18 @@
 ---
-title: "Charge Conservation"
-type: concept
-tags: [analog, transient, device-model, well-established]
+title: Charge Conservation
+type: claim
+id: claim-charge-conservation
+tags:
+- analog
+- transient
+- device-model
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

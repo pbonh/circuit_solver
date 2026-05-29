@@ -1,11 +1,19 @@
 ---
-title: "Virtual Build and Test"
-type: concept
-tags: [simulation, modeling, methodology, foundational, well-established]
+title: Virtual Build and Test
+type: claim
+id: claim-virtual-build-and-test
+tags:
+- simulation
+- modeling
+- methodology
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

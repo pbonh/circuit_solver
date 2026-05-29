@@ -1,11 +1,16 @@
 ---
-title: "Icarus Verilog"
+title: Icarus Verilog
 type: entity
-tags: [digital, simulator, verilog, open-source]
+id: entity-icarus-verilog
+tags:
+- digital
+- simulator
+- verilog
+- open-source
 created: 2026-05-18
 updated: 2026-05-18
-sources: ["wiki/specs/circuit-solver"]
-confidence: low
+sources:
+- wiki/specs/circuit-solver
 ---
 
 ## Overview

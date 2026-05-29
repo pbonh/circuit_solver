@@ -1,11 +1,15 @@
 ---
-title: "Google App Engine"
+title: Google App Engine
 type: entity
-tags: [cloud, paas, faas]
+id: entity-google-app-engine
+tags:
+- cloud
+- paas
+- faas
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
 ---
 
 ## Overview

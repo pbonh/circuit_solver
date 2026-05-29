@@ -1,11 +1,17 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 14: Sensors"
-type: summary
-tags: [semiconductor, device-physics, sensor, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 14: Sensors'
+type: source
+id: source-sze-physics-semiconductor-devices-19-chapter-14-sensors
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- sensor
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/19-chapter-14-sensors.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/19-chapter-14-sensors.txt
 ---
 
 ## Key Points

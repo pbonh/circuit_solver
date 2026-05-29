@@ -1,11 +1,17 @@
 ---
-title: "Python List"
-type: concept
-tags: [python, dataframe, foundational]
+title: Python List
+type: claim
+id: claim-list
+tags:
+- python
+- dataframe
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/05-chapter-1-working-with-python.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/05-chapter-1-working-with-python.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

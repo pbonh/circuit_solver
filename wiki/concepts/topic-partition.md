@@ -1,11 +1,17 @@
 ---
-title: "Topic Partition"
-type: concept
-tags: [streaming, scalability, well-established]
+title: Topic Partition
+type: claim
+id: claim-topic-partition
+tags:
+- streaming
+- scalability
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

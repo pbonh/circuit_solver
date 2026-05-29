@@ -1,11 +1,18 @@
 ---
-title: "DEVS-Suite"
+title: DEVS-Suite
 type: entity
-tags: [simulation, devs, tool, java, academic, well-established]
+id: entity-devs-suite
+tags:
+- simulation
+- devs
+- tool
+- java
+- academic
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt
 ---
 
 ## Overview

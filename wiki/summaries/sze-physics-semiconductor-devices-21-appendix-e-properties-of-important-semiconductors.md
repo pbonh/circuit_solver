@@ -1,11 +1,18 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Appendix E (and G): Properties of Important Semiconductors"
-type: summary
-tags: [semiconductor, device-physics, reference, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Appendix E (and G):
+  Properties of Important Semiconductors'
+type: source
+id: source-sze-physics-semiconductor-devices-21-appendix-e-properties-of-important-semiconductors
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- reference
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/21-appendix-e-properties-of-important-semiconductors.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/21-appendix-e-properties-of-important-semiconductors.txt
 ---
 
 ## Key Points

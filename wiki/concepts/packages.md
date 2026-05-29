@@ -1,11 +1,18 @@
 ---
-title: "Packages"
-type: concept
-tags: [rust, cargo, foundational, well-established]
+title: Packages
+type: claim
+id: claim-packages
+tags:
+- rust
+- cargo
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/08-chapter-7-managing-growing-projects-with-packages-crates-and-modules.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/08-chapter-7-managing-growing-projects-with-packages-crates-and-modules.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

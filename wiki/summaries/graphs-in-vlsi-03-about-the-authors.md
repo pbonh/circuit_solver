@@ -1,11 +1,16 @@
 ---
-title: "Graphs in VLSI — About the Authors"
-type: summary
-tags: [vlsi, foundational, overview]
+title: Graphs in VLSI — About the Authors
+type: source
+id: source-graphs-in-vlsi-03-about-the-authors
+kind: derived-summary
+tags:
+- vlsi
+- foundational
+- overview
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/03-about-the-authors.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/03-about-the-authors.txt
 ---
 
 ## Key Points

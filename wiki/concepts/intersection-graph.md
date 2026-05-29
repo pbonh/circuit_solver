@@ -1,11 +1,17 @@
 ---
-title: "Intersection Graph"
-type: concept
-tags: [graph, foundational, well-established]
+title: Intersection Graph
+type: claim
+id: claim-intersection-graph
+tags:
+- graph
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: medium
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

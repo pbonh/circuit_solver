@@ -1,11 +1,18 @@
 ---
-title: "Image-Force Lowering"
-type: concept
-tags: [semiconductor, device-physics, schottky-barrier, well-established]
+title: Image-Force Lowering
+type: claim
+id: claim-image-force-lowering
+tags:
+- semiconductor
+- device-physics
+- schottky-barrier
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/07-chapter-3-metal-semiconductor-contacts.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/07-chapter-3-metal-semiconductor-contacts.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

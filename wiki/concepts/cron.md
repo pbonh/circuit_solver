@@ -1,11 +1,17 @@
 ---
-title: "Cron"
-type: concept
-tags: [unix, automation, scheduling]
+title: Cron
+type: claim
+id: claim-cron
+tags:
+- unix
+- automation
+- scheduling
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/17-appendix-a-utilities-for-managing-atads-data.txt"]
-confidence: low
+sources:
+- raw/PrototypingPythonDashboards/_txt/17-appendix-a-utilities-for-managing-atads-data.txt
+confidence:
+  base: 0.45
 ---
 
 > The source mentions cron only as an automation suggestion: "This data management scheme could be easily modified for greater efficiency and automated to run monthly using a Unix cron job if desired." (Appendix A of Prototyping Python Dashboards). The book does not teach cron syntax; the content below is general knowledge.

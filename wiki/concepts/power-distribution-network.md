@@ -1,11 +1,19 @@
 ---
-title: "Power Distribution Network"
-type: concept
-tags: [vlsi, power-integrity, analog, mixed-signal, well-established]
+title: Power Distribution Network
+type: claim
+id: claim-power-distribution-network
+tags:
+- vlsi
+- power-integrity
+- analog
+- mixed-signal
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/03-about-the-authors.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/03-about-the-authors.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

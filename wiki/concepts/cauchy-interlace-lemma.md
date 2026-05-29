@@ -1,11 +1,17 @@
 ---
-title: "Cauchy's Interlace Lemma"
-type: concept
-tags: [algorithm, foundational, well-established]
+title: Cauchy's Interlace Lemma
+type: claim
+id: claim-cauchy-interlace-lemma
+tags:
+- algorithm
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

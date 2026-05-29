@@ -1,11 +1,16 @@
 ---
-title: "SPICE"
+title: SPICE
 type: entity
-tags: [tool, analog, simulator, foundational]
+id: entity-spice
+tags:
+- tool
+- analog
+- simulator
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt
 ---
 
 ## Overview

@@ -1,11 +1,18 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Chapter 1: Introduction"
-type: summary
-tags: [foundational, symbolic, vlsi, overview, analog]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 1: Introduction'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-04-1-introduction
+kind: derived-summary
+tags:
+- foundational
+- symbolic
+- vlsi
+- overview
+- analog
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt
 ---
 
 ## Key Points

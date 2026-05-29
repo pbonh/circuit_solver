@@ -1,11 +1,17 @@
 ---
-title: "R Language"
+title: R Language
 type: entity
-tags: [r, statistics, data-analysis, language, well-established]
+id: entity-r-language
+tags:
+- r
+- statistics
+- data-analysis
+- language
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/05-chapter-2-the-importance-of-data-visualization-in-business-intelligence.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/05-chapter-2-the-importance-of-data-visualization-in-business-intelligence.txt
 ---
 
 ## Overview

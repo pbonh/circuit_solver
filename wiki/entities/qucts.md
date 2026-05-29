@@ -1,11 +1,18 @@
 ---
-title: "QuCTS"
+title: QuCTS
 type: entity
-tags: [vlsi, clock, synchronization, superconductive, tool, novel]
+id: entity-qucts
+tags:
+- vlsi
+- clock
+- synchronization
+- superconductive
+- tool
+- novel
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/00-preface.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/00-preface.txt
 ---
 
 ## Overview

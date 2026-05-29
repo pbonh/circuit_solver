@@ -1,11 +1,21 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Chapter 8: Large Change Sensitivity and Related Topics"
-type: summary
-tags: [foundational, analog, sensitivity, sparse-matrix, fault-analysis, well-established, advanced]
+title: 'Computer Methods for Circuit Analysis and Design — Chapter 8: Large Change
+  Sensitivity and Related Topics'
+type: source
+id: source-computer-methods-circuit-analysis-design-11-chapter-8-large-change-sensitivity-and-related-topics
+kind: derived-summary
+tags:
+- foundational
+- analog
+- sensitivity
+- sparse-matrix
+- fault-analysis
+- well-established
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/11-chapter-8-large-change-sensitivity-and-related-topics.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/11-chapter-8-large-change-sensitivity-and-related-topics.txt
 ---
 
 ## Key Points

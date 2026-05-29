@@ -1,11 +1,18 @@
 ---
-title: "Aggregator (Pregel)"
-type: concept
-tags: [graph, distributed-systems, pregel, well-established]
+title: Aggregator (Pregel)
+type: claim
+id: claim-aggregator
+tags:
+- graph
+- distributed-systems
+- pregel
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

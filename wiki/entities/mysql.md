@@ -1,11 +1,15 @@
 ---
-title: "MySQL"
+title: MySQL
 type: entity
-tags: [database, sql, web]
+id: entity-mysql
+tags:
+- database
+- sql
+- web
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt"]
-confidence: medium
+sources:
+- raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt
 ---
 
 ## Overview

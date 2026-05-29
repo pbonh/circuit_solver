@@ -1,11 +1,19 @@
 ---
-title: "Steiner Minimal Tree"
-type: concept
-tags: [graph, algorithm, routing, vlsi, well-established]
+title: Steiner Minimal Tree
+type: claim
+id: claim-steiner-minimal-tree
+tags:
+- graph
+- algorithm
+- routing
+- vlsi
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/00-preface.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/00-preface.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "Foundations of Scalable Systems — Cover"
-type: summary
-tags: [distributed-systems, scalability, foundational, book-front-matter]
+title: Foundations of Scalable Systems — Cover
+type: source
+id: source-foundations-scalable-systems-00-cover
+kind: derived-summary
+tags:
+- distributed-systems
+- scalability
+- foundational
+- book-front-matter
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/00-cover.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/00-cover.txt
 ---
 
 ## Key Points

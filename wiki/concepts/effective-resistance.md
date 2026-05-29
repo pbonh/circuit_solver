@@ -1,11 +1,19 @@
 ---
-title: "Effective Resistance"
-type: concept
-tags: [graph, vlsi, analysis, power-integrity, well-established]
+title: Effective Resistance
+type: claim
+id: claim-effective-resistance
+tags:
+- graph
+- vlsi
+- analysis
+- power-integrity
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

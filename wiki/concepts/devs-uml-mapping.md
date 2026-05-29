@@ -1,11 +1,19 @@
 ---
-title: "DEVS↔UML Mapping"
-type: concept
-tags: [simulation, modeling, devs, uml, well-established]
+title: DEVS↔UML Mapping
+type: claim
+id: claim-devs-uml-mapping
+tags:
+- simulation
+- modeling
+- devs
+- uml
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/15-12-languages-for-constructing-devs-models.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/15-12-languages-for-constructing-devs-models.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,16 @@
 ---
-title: "pip"
+title: pip
 type: entity
-tags: [python, package-manager, tool, well-established]
+id: entity-pip
+tags:
+- python
+- package-manager
+- tool
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/05-chapter-2-the-importance-of-data-visualization-in-business-intelligence.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/05-chapter-2-the-importance-of-data-visualization-in-business-intelligence.txt
 ---
 
 ## Overview

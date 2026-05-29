@@ -1,11 +1,18 @@
 ---
-title: "Backward Error Analysis"
-type: concept
-tags: [numerical-integration, mathematical-tool, foundational, well-established]
+title: Backward Error Analysis
+type: claim
+id: claim-backward-error-analysis
+tags:
+- numerical-integration
+- mathematical-tool
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.85
 ---
 
 ## Definition

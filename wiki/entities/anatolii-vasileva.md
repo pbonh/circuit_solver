@@ -1,11 +1,17 @@
 ---
-title: "Anatolii B. Vasil'eva"
+title: Anatolii B. Vasil'eva
 type: entity
-tags: [ode, numerical-integration, foundational, singular-perturbation]
+id: entity-anatolii-vasileva
+tags:
+- ode
+- numerical-integration
+- foundational
+- singular-perturbation
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/05-chapter-vi-singular-perturbation-problems.txt", "raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/05-chapter-vi-singular-perturbation-problems.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt
 ---
 
 ## Overview

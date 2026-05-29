@@ -1,11 +1,19 @@
 ---
-title: "SES Pruning"
-type: concept
-tags: [simulation, modeling, ses, foundational, well-established]
+title: SES Pruning
+type: claim
+id: claim-ses-pruning
+tags:
+- simulation
+- modeling
+- ses
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/04-2-devs-integrated-development-environments.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/04-2-devs-integrated-development-environments.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

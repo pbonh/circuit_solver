@@ -1,11 +1,17 @@
 ---
-title: "Web Portal"
-type: concept
-tags: [web, dashboard, documentation]
+title: Web Portal
+type: claim
+id: claim-web-portal
+tags:
+- web
+- dashboard
+- documentation
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Data Mining"
-type: concept
-tags: [data-mining, data-analysis, foundational, well-established]
+title: Data Mining
+type: claim
+id: claim-data-mining
+tags:
+- data-mining
+- data-analysis
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/01-about-the-author.txt"]
-confidence: low
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/01-about-the-author.txt
+confidence:
+  base: 0.45
 ---
 
 > The cited source is the one-page author bio of "Data Analysis and Visualizations with Python", listing "data mining" only as one of the author's research and editorial areas: "He is editor for journals in the fields of computer and information science including artificial intelligence, data mining, machine learning, mobile and web technologies. He supervised a large number of graduation projects, as well as he has published numerous papers about data mining, users online privacy, semantic web structure and knowledge discovery." No substantive treatment in the source — content below is general knowledge.

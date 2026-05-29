@@ -1,11 +1,16 @@
 ---
-title: "Spyder IDE"
+title: Spyder IDE
 type: entity
-tags: [python, ide, tool, well-established]
+id: entity-spyder-ide
+tags:
+- python
+- ide
+- tool
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/03-introduction.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/03-introduction.txt
 ---
 
 ## Overview

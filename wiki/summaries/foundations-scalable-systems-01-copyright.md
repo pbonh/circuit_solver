@@ -1,11 +1,15 @@
 ---
-title: "Foundations of Scalable Systems — Copyright"
-type: summary
-tags: [book-front-matter, foundational]
+title: Foundations of Scalable Systems — Copyright
+type: source
+id: source-foundations-scalable-systems-01-copyright
+kind: derived-summary
+tags:
+- book-front-matter
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/01-copyright.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/01-copyright.txt
 ---
 
 ## Key Points

@@ -1,11 +1,16 @@
 ---
-title: "WordPress"
+title: WordPress
 type: entity
-tags: [web, cms, dashboard, blogging]
+id: entity-wordpress
+tags:
+- web
+- cms
+- dashboard
+- blogging
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/14-chapter-10-creating-a-web-portal.txt
 ---
 
 ## Overview

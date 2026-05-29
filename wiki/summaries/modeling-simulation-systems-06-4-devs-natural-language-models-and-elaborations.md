@@ -1,11 +1,20 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 4: DEVS Natural Language Models and Elaborations"
-type: summary
-tags: [simulation, modeling, devs, fddevs, java, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 4: DEVS Natural Language Models
+  and Elaborations'
+type: source
+id: source-modeling-simulation-systems-06-4-devs-natural-language-models-and-elaborations
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- fddevs
+- java
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/06-4-devs-natural-language-models-and-elaborations.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/06-4-devs-natural-language-models-and-elaborations.txt
 ---
 
 ## Key Points

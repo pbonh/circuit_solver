@@ -1,11 +1,21 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 17: Modeling and Simulation of Living Systems as Systems of Systems"
-type: summary
-tags: [simulation, modeling, devs, living-systems, agriculture, epidemiology, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 17: Modeling and Simulation of
+  Living Systems as Systems of Systems'
+type: source
+id: source-modeling-simulation-systems-21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- living-systems
+- agriculture
+- epidemiology
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems.txt
 ---
 
 ## Key Points

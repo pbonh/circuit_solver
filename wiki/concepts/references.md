@@ -1,11 +1,19 @@
 ---
-title: "References"
-type: concept
-tags: [rust, foundational, ownership, well-established]
+title: References
+type: claim
+id: claim-references
+tags:
+- rust
+- foundational
+- ownership
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/03-chapter-2-programming-a-guessing-game.txt", "raw/rust_book/_txt/05-chapter-4-understanding-ownership.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/03-chapter-2-programming-a-guessing-game.txt
+- raw/rust_book/_txt/05-chapter-4-understanding-ownership.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

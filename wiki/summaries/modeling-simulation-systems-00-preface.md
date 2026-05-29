@@ -1,11 +1,18 @@
 ---
-title: "Modeling and Simulation of Systems — Preface"
-type: summary
-tags: [simulation, modeling, foundational, devs, systems-of-systems]
+title: Modeling and Simulation of Systems — Preface
+type: source
+id: source-modeling-simulation-systems-00-preface
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- foundational
+- devs
+- systems-of-systems
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt
 ---
 
 ## Key Points

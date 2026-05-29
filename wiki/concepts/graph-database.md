@@ -1,11 +1,17 @@
 ---
-title: "Graph Database"
-type: concept
-tags: [databases, nosql, well-established]
+title: Graph Database
+type: claim
+id: claim-graph-database
+tags:
+- databases
+- nosql
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

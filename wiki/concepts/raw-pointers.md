@@ -1,11 +1,19 @@
 ---
-title: "Raw Pointers"
-type: concept
-tags: [rust, unsafe, pointers, foundational, well-established]
+title: Raw Pointers
+type: claim
+id: claim-raw-pointers
+tags:
+- rust
+- unsafe
+- pointers
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/20-chapter-19-advanced-features.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/20-chapter-19-advanced-features.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

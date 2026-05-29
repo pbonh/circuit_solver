@@ -1,11 +1,18 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Appendix A: List of Symbols"
-type: summary
-tags: [semiconductor, device-physics, reference, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Appendix A: List of
+  Symbols'
+type: source
+id: source-sze-physics-semiconductor-devices-20-appendix-a-list-of-symbols
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- reference
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/20-appendix-a-list-of-symbols.txt"]
-confidence: low
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/20-appendix-a-list-of-symbols.txt
 ---
 
 ## Key Points

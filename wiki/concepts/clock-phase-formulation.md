@@ -1,11 +1,17 @@
 ---
-title: "Clock Phase Formulation (SC Networks)"
-type: concept
-tags: [switched-capacitor, analog, well-established]
+title: Clock Phase Formulation (SC Networks)
+type: claim
+id: claim-clock-phase-formulation
+tags:
+- switched-capacitor
+- analog
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/17-chapter-14-digital-and-switched-capacitor-networks.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/17-chapter-14-digital-and-switched-capacitor-networks.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

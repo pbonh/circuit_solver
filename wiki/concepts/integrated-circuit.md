@@ -1,11 +1,18 @@
 ---
-title: "Integrated Circuit"
-type: concept
-tags: [vlsi, foundational, well-established, semiconductor]
+title: Integrated Circuit
+type: claim
+id: claim-integrated-circuit
+tags:
+- vlsi
+- foundational
+- well-established
+- semiconductor
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/04-1-introduction.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/04-1-introduction.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

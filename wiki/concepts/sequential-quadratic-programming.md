@@ -1,11 +1,17 @@
 ---
-title: "Sequential Quadratic Programming (SQP)"
-type: concept
-tags: [optimization, foundational, well-established]
+title: Sequential Quadratic Programming (SQP)
+type: claim
+id: claim-sequential-quadratic-programming
+tags:
+- optimization
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "The Rust Programming Language — Chapter 5: Using Structs to Structure Related Data"
-type: summary
-tags: [rust, foundational, well-established]
+title: 'The Rust Programming Language — Chapter 5: Using Structs to Structure Related
+  Data'
+type: source
+id: source-rust-book-06-chapter-5-using-structs-to-structure-related-data
+kind: derived-summary
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/06-chapter-5-using-structs-to-structure-related-data.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/06-chapter-5-using-structs-to-structure-related-data.txt
 ---
 
 ## Key Points

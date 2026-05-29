@@ -1,11 +1,20 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 2: DEVS Integrated Development Environments"
-type: summary
-tags: [simulation, modeling, devs, tooling, foundational, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 2: DEVS Integrated Development
+  Environments'
+type: source
+id: source-modeling-simulation-systems-04-2-devs-integrated-development-environments
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- tooling
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/04-2-devs-integrated-development-environments.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/04-2-devs-integrated-development-environments.txt
 ---
 
 ## Key Points

@@ -1,11 +1,18 @@
 ---
-title: "Passive Transmission Line (PTL)"
-type: concept
-tags: [superconductive, vlsi, interconnect, well-established]
+title: Passive Transmission Line (PTL)
+type: claim
+id: claim-passive-transmission-line
+tags:
+- superconductive
+- vlsi
+- interconnect
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/14-11-qucts-single-flux-quantum-clock-tree-synthesis.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "The Rust Programming Language — Chapter 15: Smart Pointers"
-type: summary
-tags: [rust, smart-pointers, advanced, ownership]
+title: 'The Rust Programming Language — Chapter 15: Smart Pointers'
+type: source
+id: source-rust-book-16-chapter-15-smart-pointers
+kind: derived-summary
+tags:
+- rust
+- smart-pointers
+- advanced
+- ownership
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/16-chapter-15-smart-pointers.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/16-chapter-15-smart-pointers.txt
 ---
 
 ## Key Points

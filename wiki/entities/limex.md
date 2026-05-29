@@ -1,11 +1,16 @@
 ---
-title: "LIMEX"
+title: LIMEX
 type: entity
-tags: [ode, numerical-integration, foundational, dae]
+id: entity-limex
+tags:
+- ode
+- numerical-integration
+- foundational
+- dae
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/05-chapter-vi-singular-perturbation-problems.txt"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/05-chapter-vi-singular-perturbation-problems.txt
 ---
 
 ## Overview

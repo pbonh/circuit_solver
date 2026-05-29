@@ -1,11 +1,19 @@
 ---
-title: "Computer-Aided Design (CAD)"
-type: concept
-tags: [foundational, well-established, analog, methodology]
+title: Computer-Aided Design (CAD)
+type: claim
+id: claim-computer-aided-design
+tags:
+- foundational
+- well-established
+- analog
+- methodology
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/01-preface.txt", "raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/01-preface.txt
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

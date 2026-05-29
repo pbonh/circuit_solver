@@ -1,11 +1,18 @@
 ---
-title: "Template / Instance Template / Instance Model Hierarchy (CoSMoS)"
-type: concept
-tags: [simulation, modeling, cosmos, well-established]
+title: Template / Instance Template / Instance Model Hierarchy (CoSMoS)
+type: claim
+id: claim-template-instance-template-instance
+tags:
+- simulation
+- modeling
+- cosmos
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/20-16-model-development-and-execution-process-with-repositories-validation-and-verification.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/20-16-model-development-and-execution-process-with-repositories-validation-and-verification.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

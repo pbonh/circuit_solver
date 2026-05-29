@@ -1,11 +1,19 @@
 ---
-title: "Holomorphic Semigroup"
-type: concept
-tags: [ode, pde, functional-analysis, foundational, well-established]
+title: Holomorphic Semigroup
+type: claim
+id: claim-holomorphic-semigroup
+tags:
+- ode
+- pde
+- functional-analysis
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.65
 ---
 
 ## Definition

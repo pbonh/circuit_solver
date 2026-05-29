@@ -1,11 +1,16 @@
 ---
-title: "CSV"
-type: concept
-tags: [data-format, foundational]
+title: CSV
+type: claim
+id: claim-csv
+tags:
+- data-format
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/07-chapter-3-working-with-online-data.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/07-chapter-3-working-with-online-data.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

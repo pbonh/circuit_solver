@@ -1,11 +1,19 @@
 ---
-title: "Graphs in VLSI — Chapter 5: Circuit Analysis"
-type: summary
-tags: [vlsi, circuit, analysis, graph, sparse-matrix, well-established]
+title: 'Graphs in VLSI — Chapter 5: Circuit Analysis'
+type: source
+id: source-graphs-in-vlsi-08-5-circuit-analysis
+kind: derived-summary
+tags:
+- vlsi
+- circuit
+- analysis
+- graph
+- sparse-matrix
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt
 ---
 
 ## Key Points

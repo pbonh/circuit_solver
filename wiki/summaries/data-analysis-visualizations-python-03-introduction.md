@@ -1,11 +1,18 @@
 ---
-title: "Data Analysis and Visualizations with Python — Introduction"
-type: summary
-tags: [python, data-analysis, visualization, statistics, foundational]
+title: Data Analysis and Visualizations with Python — Introduction
+type: source
+id: source-data-analysis-visualizations-python-03-introduction
+kind: derived-summary
+tags:
+- python
+- data-analysis
+- visualization
+- statistics
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/03-introduction.txt"]
-confidence: high
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/03-introduction.txt
 ---
 
 ## Key Points

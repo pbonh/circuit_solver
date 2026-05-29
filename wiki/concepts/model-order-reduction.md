@@ -1,11 +1,19 @@
 ---
-title: "Model Order Reduction (MOR)"
-type: concept
-tags: [interconnect, foundational, ac, numerical, vlsi]
+title: Model Order Reduction (MOR)
+type: claim
+id: claim-model-order-reduction
+tags:
+- interconnect
+- foundational
+- ac
+- numerical
+- vlsi
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

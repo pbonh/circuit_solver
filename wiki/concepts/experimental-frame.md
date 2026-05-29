@@ -1,11 +1,20 @@
 ---
-title: "Experimental Frame"
-type: concept
-tags: [simulation, modeling, devs, experimentation, foundational, well-established]
+title: Experimental Frame
+type: claim
+id: claim-experimental-frame
+tags:
+- simulation
+- modeling
+- devs
+- experimentation
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/10-8-automated-and-rule-based-pruning-and-experimental-execution.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/10-8-automated-and-rule-based-pruning-and-experimental-execution.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

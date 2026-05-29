@@ -1,11 +1,16 @@
 ---
-title: "YugabyteDB"
+title: YugabyteDB
 type: entity
-tags: [database, newsql, relational, open-source]
+id: entity-yugabytedb
+tags:
+- database
+- newsql
+- relational
+- open-source
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
 ---
 
 ## Overview

@@ -1,11 +1,21 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Chapter 11: Performance Bound Analysis under Process Variations"
-type: summary
-tags: [analog, process-variation, statistical, symbolic, advanced, ddd, optimization]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 11: Performance Bound
+  Analysis under Process Variations'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-16-11-performance-bound-analysis-of-analog-circuits-considering-process-variations
+kind: derived-summary
+tags:
+- analog
+- process-variation
+- statistical
+- symbolic
+- advanced
+- ddd
+- optimization
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/16-11-performance-bound-analysis-of-analog-circuits-considering-process-variations.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/16-11-performance-bound-analysis-of-analog-circuits-considering-process-variations.txt
 ---
 
 ## Key Points

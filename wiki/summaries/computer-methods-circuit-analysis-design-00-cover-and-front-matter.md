@@ -1,11 +1,17 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Cover and Front Matter"
-type: summary
-tags: [foundational, analog, well-established, bibliographic]
+title: Computer Methods for Circuit Analysis and Design — Cover and Front Matter
+type: source
+id: source-computer-methods-circuit-analysis-design-00-cover-and-front-matter
+kind: derived-summary
+tags:
+- foundational
+- analog
+- well-established
+- bibliographic
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/00-cover-and-front-matter.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/00-cover-and-front-matter.txt
 ---
 
 ## Key Points

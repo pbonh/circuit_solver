@@ -1,11 +1,18 @@
 ---
-title: "Designing Data-Intensive Applications — About the Author and Colophon"
-type: summary
-tags: [foundational, well-established, biography, front-matter]
+title: Designing Data-Intensive Applications — About the Author and Colophon
+type: source
+id: source-ddia-08-about-the-author
+kind: derived-summary
+tags:
+- foundational
+- well-established
+- biography
+- front-matter
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/08-about-the-author.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/08-about-the-author.txt
 ---
 
 ## Key Points

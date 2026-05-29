@@ -1,11 +1,16 @@
 ---
-title: "OpenAlea"
+title: OpenAlea
 type: entity
-tags: [simulation, plant-modeling, software, well-established]
+id: entity-openalea
+tags:
+- simulation
+- plant-modeling
+- software
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems.txt"]
-confidence: low
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems.txt
 ---
 
 > Chapter 17 cites OpenAlea only via a single bibliography entry: a 2010 workshop paper titled "and morphogenesis in fluctuating environment: analysis for rice using Ecomeristem model coupled with 3D plant and energy balance computation tools in OpenAlea platform" (Proc. 6th Int. Workshop on Functional-Structural Plant Models, Davis CA). The book itself does not describe OpenAlea's architecture; the rest of this page summarizes public information consistent with the cited paper.

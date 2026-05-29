@@ -1,11 +1,19 @@
 ---
-title: "Ohmic Contact"
-type: concept
-tags: [semiconductor, device-physics, contact, foundational, well-established]
+title: Ohmic Contact
+type: claim
+id: claim-ohmic-contact
+tags:
+- semiconductor
+- device-physics
+- contact
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/07-chapter-3-metal-semiconductor-contacts.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/07-chapter-3-metal-semiconductor-contacts.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

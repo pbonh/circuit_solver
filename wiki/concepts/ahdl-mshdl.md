@@ -1,11 +1,19 @@
 ---
-title: "AHDL and Mixed-Signal HDL"
-type: concept
-tags: [mixed-signal, analog, digital, foundational, well-established]
+title: AHDL and Mixed-Signal HDL
+type: claim
+id: claim-ahdl-mshdl
+tags:
+- mixed-signal
+- analog
+- digital
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

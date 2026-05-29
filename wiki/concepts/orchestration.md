@@ -1,11 +1,16 @@
 ---
-title: "Orchestration"
-type: concept
-tags: [microservices, well-established]
+title: Orchestration
+type: claim
+id: claim-orchestration
+tags:
+- microservices
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

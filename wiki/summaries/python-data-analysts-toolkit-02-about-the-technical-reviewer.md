@@ -1,11 +1,16 @@
 ---
-title: "Python Data Analyst's Toolkit — About the Technical Reviewer"
-type: summary
-tags: [python, data-analysis, foundational]
+title: Python Data Analyst's Toolkit — About the Technical Reviewer
+type: source
+id: source-python-data-analysts-toolkit-02-about-the-technical-reviewer
+kind: derived-summary
+tags:
+- python
+- data-analysis
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/02-about-the-technical-reviewer.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/02-about-the-technical-reviewer.txt
 ---
 
 ## Key Points

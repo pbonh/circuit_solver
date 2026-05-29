@@ -1,11 +1,19 @@
 ---
-title: "Out-of-Core Graph Processing"
-type: concept
-tags: [graph, distributed-systems, big-data, graph-processing, well-established]
+title: Out-of-Core Graph Processing
+type: claim
+id: claim-out-of-core-graph-processing
+tags:
+- graph
+- distributed-systems
+- big-data
+- graph-processing
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

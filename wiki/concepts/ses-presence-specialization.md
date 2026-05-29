@@ -1,11 +1,18 @@
 ---
-title: "SES Presence Specialization"
-type: concept
-tags: [simulation, modeling, ses, well-established]
+title: SES Presence Specialization
+type: claim
+id: claim-ses-presence-specialization
+tags:
+- simulation
+- modeling
+- ses
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/07-5-specialization-and-pruning.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/07-5-specialization-and-pruning.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

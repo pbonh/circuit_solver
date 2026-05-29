@@ -1,11 +1,17 @@
 ---
-title: "Normal Distribution"
-type: concept
-tags: [statistics, foundational, well-established]
+title: Normal Distribution
+type: claim
+id: claim-normal-distribution
+tags:
+- statistics
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

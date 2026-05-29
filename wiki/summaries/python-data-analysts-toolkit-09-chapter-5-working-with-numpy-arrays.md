@@ -1,11 +1,17 @@
 ---
-title: "Python Data Analyst's Toolkit — Chapter 5: Working with NumPy Arrays"
-type: summary
-tags: [python, numpy, foundational, well-established]
+title: 'Python Data Analyst''s Toolkit — Chapter 5: Working with NumPy Arrays'
+type: source
+id: source-python-data-analysts-toolkit-09-chapter-5-working-with-numpy-arrays
+kind: derived-summary
+tags:
+- python
+- numpy
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/09-chapter-5-working-with-numpy-arrays.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/09-chapter-5-working-with-numpy-arrays.txt
 ---
 
 ## Key Points

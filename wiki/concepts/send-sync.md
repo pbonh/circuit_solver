@@ -1,11 +1,18 @@
 ---
-title: "Send and Sync"
-type: concept
-tags: [rust, concurrency, foundational, well-established]
+title: Send and Sync
+type: claim
+id: claim-send-sync
+tags:
+- rust
+- concurrency
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/17-chapter-16-fearless-concurrency.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/17-chapter-16-fearless-concurrency.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

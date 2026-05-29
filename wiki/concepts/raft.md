@@ -1,13 +1,20 @@
 ---
-title: "Raft"
-type: concept
-tags: [distributed-systems, consensus, algorithm, well-established]
+title: Raft
+type: claim
+id: claim-raft
+tags:
+- distributed-systems
+- consensus
+- algorithm
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
 sources:
-  - "raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"
-  - "raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt"
-confidence: high
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

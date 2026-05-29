@@ -1,11 +1,19 @@
 ---
-title: "Systems for Big Graph Analytics — Introduction"
-type: summary
-tags: [graph, big-data, graph-processing, analytics, foundational, well-established]
+title: Systems for Big Graph Analytics — Introduction
+type: source
+id: source-systems-big-graph-analytics-01-1-introduction
+kind: derived-summary
+tags:
+- graph
+- big-data
+- graph-processing
+- analytics
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/01-1-introduction.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/01-1-introduction.txt
 ---
 
 ## Key Points

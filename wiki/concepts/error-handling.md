@@ -1,11 +1,19 @@
 ---
-title: "Error Handling"
-type: concept
-tags: [rust, foundational, error-handling, well-established]
+title: Error Handling
+type: claim
+id: claim-error-handling
+tags:
+- rust
+- foundational
+- error-handling
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/10-chapter-9-error-handling.txt", "raw/rust_book/_txt/03-chapter-2-programming-a-guessing-game.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/10-chapter-9-error-handling.txt
+- raw/rust_book/_txt/03-chapter-2-programming-a-guessing-game.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

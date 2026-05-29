@@ -1,11 +1,20 @@
 ---
-title: "Predictive Step-Size Control"
-type: concept
-tags: [ode, numerical-integration, adaptive-control, stiff, foundational, well-established]
+title: Predictive Step-Size Control
+type: claim
+id: claim-predictive-step-size-control
+tags:
+- ode
+- numerical-integration
+- adaptive-control
+- stiff
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.85
 ---
 
 ## Definition

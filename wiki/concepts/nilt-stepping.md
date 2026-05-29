@@ -1,11 +1,18 @@
 ---
-title: "NILT Stepping (Time-Origin Reset)"
-type: concept
-tags: [transient, analog, advanced, well-established]
+title: NILT Stepping (Time-Origin Reset)
+type: claim
+id: claim-nilt-stepping
+tags:
+- transient
+- analog
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/13-chapter-10-numerical-laplace-transform-inversion.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/13-chapter-10-numerical-laplace-transform-inversion.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

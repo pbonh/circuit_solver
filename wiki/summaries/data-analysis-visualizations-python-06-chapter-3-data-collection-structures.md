@@ -1,11 +1,20 @@
 ---
-title: "Data Analysis and Visualizations with Python — Chapter 3: Data Collection Structures"
-type: summary
-tags: [python, pandas, data-structures, dataframe, series, foundational]
+title: 'Data Analysis and Visualizations with Python — Chapter 3: Data Collection
+  Structures'
+type: source
+id: source-data-analysis-visualizations-python-06-chapter-3-data-collection-structures
+kind: derived-summary
+tags:
+- python
+- pandas
+- data-structures
+- dataframe
+- series
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/06-chapter-3-data-collection-structures.txt"]
-confidence: high
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/06-chapter-3-data-collection-structures.txt
 ---
 
 ## Key Points

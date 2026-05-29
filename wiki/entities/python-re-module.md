@@ -1,11 +1,15 @@
 ---
-title: "Python `re` Module"
+title: Python `re` Module
 type: entity
-tags: [python, foundational, well-established]
+id: entity-python-re-module
+tags:
+- python
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/07-chapter-3-regular-expressions-and-math-with-python.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/07-chapter-3-regular-expressions-and-math-with-python.txt
 ---
 
 ## Overview

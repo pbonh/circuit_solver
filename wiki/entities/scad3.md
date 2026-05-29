@@ -1,11 +1,16 @@
 ---
-title: "SCAD3"
+title: SCAD3
 type: entity
-tags: [tool, symbolic, analog, graph]
+id: entity-scad3
+tags:
+- tool
+- symbolic
+- analog
+- graph
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt
 ---
 
 ## Overview

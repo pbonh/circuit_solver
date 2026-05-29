@@ -1,11 +1,20 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Chapter 1: Fundamental Concepts"
-type: summary
-tags: [foundational, analog, dc, ac, transient, well-established]
+title: 'Computer Methods for Circuit Analysis and Design — Chapter 1: Fundamental
+  Concepts'
+type: source
+id: source-computer-methods-circuit-analysis-design-04-chapter-1-fundamental-concepts
+kind: derived-summary
+tags:
+- foundational
+- analog
+- dc
+- ac
+- transient
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt
 ---
 
 ## Key Points

@@ -1,11 +1,18 @@
 ---
-title: "Directed Acyclic Graph (DAG)"
-type: concept
-tags: [graph, foundational, well-established, algorithm]
+title: Directed Acyclic Graph (DAG)
+type: claim
+id: claim-directed-acyclic-graph
+tags:
+- graph
+- foundational
+- well-established
+- algorithm
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

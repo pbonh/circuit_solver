@@ -1,11 +1,19 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 13: Photodetectors and Solar Cells"
-type: summary
-tags: [semiconductor, device-physics, photonic, p-n-junction, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 13: Photodetectors
+  and Solar Cells'
+type: source
+id: source-sze-physics-semiconductor-devices-18-chapter-13-photodetectors-and-solar-cells
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- photonic
+- p-n-junction
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/18-chapter-13-photodetectors-and-solar-cells.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/18-chapter-13-photodetectors-and-solar-cells.txt
 ---
 
 ## Key Points

@@ -1,11 +1,17 @@
 ---
-title: "Guide to Graph Algorithms — Graphs (Chapter 1)"
-type: summary
-tags: [graph, foundational, well-established, netlist]
+title: Guide to Graph Algorithms — Graphs (Chapter 1)
+type: source
+id: source-guide-to-graph-algorithms-04-graphs
+kind: derived-summary
+tags:
+- graph
+- foundational
+- well-established
+- netlist
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/04-graphs.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/04-graphs.txt
 ---
 
 ## Key Points

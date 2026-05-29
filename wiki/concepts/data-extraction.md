@@ -1,11 +1,19 @@
 ---
-title: "Data Extraction"
-type: concept
-tags: [data-analysis, data-extraction, text-processing, foundational, well-established]
+title: Data Extraction
+type: claim
+id: claim-data-extraction
+tags:
+- data-analysis
+- data-extraction
+- text-processing
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/07-chapter-4-file-i-o-processing-and-regular-expressions.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/07-chapter-4-file-i-o-processing-and-regular-expressions.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

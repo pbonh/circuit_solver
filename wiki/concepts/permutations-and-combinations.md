@@ -1,11 +1,17 @@
 ---
-title: "Permutations and Combinations"
-type: concept
-tags: [statistics, foundational, well-established]
+title: Permutations and Combinations
+type: claim
+id: claim-permutations-and-combinations
+tags:
+- statistics
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

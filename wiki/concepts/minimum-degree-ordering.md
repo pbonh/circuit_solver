@@ -1,11 +1,18 @@
 ---
-title: "Minimum Degree Ordering"
-type: concept
-tags: [sparse-matrix, foundational, well-established, graph]
+title: Minimum Degree Ordering
+type: claim
+id: claim-minimum-degree-ordering
+tags:
+- sparse-matrix
+- foundational
+- well-established
+- graph
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/05-chapter-2-network-equations-and-their-solution.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/05-chapter-2-network-equations-and-their-solution.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

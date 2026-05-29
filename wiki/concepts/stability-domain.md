@@ -1,11 +1,19 @@
 ---
-title: "Stability Domain"
-type: concept
-tags: [ode, numerical-integration, stability, foundational, well-established]
+title: Stability Domain
+type: claim
+id: claim-stability-domain
+tags:
+- ode
+- numerical-integration
+- stability
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.85
 ---
 
 ## Definition

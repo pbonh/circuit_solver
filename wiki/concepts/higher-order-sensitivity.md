@@ -1,11 +1,17 @@
 ---
-title: "Higher-Order Sensitivity (Second Derivatives)"
-type: concept
-tags: [sensitivity, advanced, well-established]
+title: Higher-Order Sensitivity (Second Derivatives)
+type: claim
+id: claim-higher-order-sensitivity
+tags:
+- sensitivity
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

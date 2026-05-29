@@ -1,11 +1,22 @@
 ---
-title: "Prototyping Python Dashboards — Chapter 7: Hosting an Application on a UNIX Server"
-type: summary
-tags: [python, deployment, flask, gunicorn, nginx, wsgi, web, unix]
+title: 'Prototyping Python Dashboards — Chapter 7: Hosting an Application on a UNIX
+  Server'
+type: source
+id: source-prototyping-python-dashboards-11-chapter-7-hosting-an-application-on-a-unix-server
+kind: derived-summary
+tags:
+- python
+- deployment
+- flask
+- gunicorn
+- nginx
+- wsgi
+- web
+- unix
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt
 ---
 
 ## Key Points

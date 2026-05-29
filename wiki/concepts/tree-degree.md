@@ -1,11 +1,16 @@
 ---
-title: "Tree-Degree"
-type: concept
-tags: [graph, well-established]
+title: Tree-Degree
+type: claim
+id: claim-tree-degree
+tags:
+- graph
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

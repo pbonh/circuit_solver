@@ -1,11 +1,18 @@
 ---
-title: "Stiff Circuit"
-type: concept
-tags: [analog, transient, foundational, well-established]
+title: Stiff Circuit
+type: claim
+id: claim-stiff-circuit
+tags:
+- analog
+- transient
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

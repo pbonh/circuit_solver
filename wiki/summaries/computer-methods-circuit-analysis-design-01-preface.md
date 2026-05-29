@@ -1,11 +1,17 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Preface"
-type: summary
-tags: [foundational, analog, well-established, pedagogy]
+title: Computer Methods for Circuit Analysis and Design — Preface
+type: source
+id: source-computer-methods-circuit-analysis-design-01-preface
+kind: derived-summary
+tags:
+- foundational
+- analog
+- well-established
+- pedagogy
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/01-preface.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/01-preface.txt
 ---
 
 ## Key Points

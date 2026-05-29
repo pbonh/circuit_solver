@@ -1,11 +1,18 @@
 ---
-title: "Sky130 PDK"
+title: Sky130 PDK
 type: entity
-tags: [pdk, foundry, open-source, sky130, analog, digital]
+id: entity-sky130-pdk
+tags:
+- pdk
+- foundry
+- open-source
+- sky130
+- analog
+- digital
 created: 2026-05-18
 updated: 2026-05-18
-sources: ["wiki/specs/circuit-solver"]
-confidence: low
+sources:
+- wiki/specs/circuit-solver
 ---
 
 ## Overview

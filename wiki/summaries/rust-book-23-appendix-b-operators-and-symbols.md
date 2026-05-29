@@ -1,11 +1,16 @@
 ---
-title: "The Rust Programming Language — Appendix B: Operators and Symbols"
-type: summary
-tags: [rust, reference, foundational]
+title: 'The Rust Programming Language — Appendix B: Operators and Symbols'
+type: source
+id: source-rust-book-23-appendix-b-operators-and-symbols
+kind: derived-summary
+tags:
+- rust
+- reference
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/23-appendix-b-operators-and-symbols.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/23-appendix-b-operators-and-symbols.txt
 ---
 
 ## Key Points

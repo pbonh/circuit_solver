@@ -1,11 +1,18 @@
 ---
-title: "Discrete-Time Signal"
-type: concept
-tags: [digital, foundational, well-established, math]
+title: Discrete-Time Signal
+type: claim
+id: claim-discrete-time-signal
+tags:
+- digital
+- foundational
+- well-established
+- math
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/17-chapter-14-digital-and-switched-capacitor-networks.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/17-chapter-14-digital-and-switched-capacitor-networks.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

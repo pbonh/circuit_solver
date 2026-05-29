@@ -1,11 +1,17 @@
 ---
-title: "Tree (Graph)"
-type: concept
-tags: [graph, foundational, well-established]
+title: Tree (Graph)
+type: claim
+id: claim-tree-graph
+tags:
+- graph
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/05-2-graph-fundamentals.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

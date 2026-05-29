@@ -1,11 +1,19 @@
 ---
-title: "Data Analysis and Visualizations with Python — Chapter 4: File I/O Processing and Regular Expressions"
-type: summary
-tags: [python, file-io, regular-expressions, data-extraction, foundational]
+title: 'Data Analysis and Visualizations with Python — Chapter 4: File I/O Processing
+  and Regular Expressions'
+type: source
+id: source-data-analysis-visualizations-python-07-chapter-4-file-i-o-processing-and-regular-expressions
+kind: derived-summary
+tags:
+- python
+- file-io
+- regular-expressions
+- data-extraction
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/07-chapter-4-file-i-o-processing-and-regular-expressions.txt"]
-confidence: high
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/07-chapter-4-file-i-o-processing-and-regular-expressions.txt
 ---
 
 ## Key Points

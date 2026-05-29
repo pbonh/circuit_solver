@@ -1,11 +1,21 @@
 ---
-title: "Lobatto IIIC Method"
-type: concept
-tags: [ode, numerical-integration, runge-kutta, stiff, dae, foundational, well-established]
+title: Lobatto IIIC Method
+type: claim
+id: claim-lobatto-iiic-method
+tags:
+- ode
+- numerical-integration
+- runge-kutta
+- stiff
+- dae
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.85
 ---
 
 ## Definition

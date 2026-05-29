@@ -1,11 +1,18 @@
 ---
-title: "k-Shortest Path on DAGs"
-type: concept
-tags: [algorithm, graph, foundational, optimization]
+title: k-Shortest Path on DAGs
+type: claim
+id: claim-k-shortest-path
+tags:
+- algorithm
+- graph
+- foundational
+- optimization
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/08-4-determinant-decision-diagrams.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/08-4-determinant-decision-diagrams.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

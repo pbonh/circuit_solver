@@ -1,11 +1,18 @@
 ---
-title: "The Rust Programming Language — Chapter 10: Generic Types, Traits, and Lifetimes"
-type: summary
-tags: [rust, foundational, traits, lifetimes, generics]
+title: 'The Rust Programming Language — Chapter 10: Generic Types, Traits, and Lifetimes'
+type: source
+id: source-rust-book-11-chapter-10-generic-types-traits-and-lifetimes
+kind: derived-summary
+tags:
+- rust
+- foundational
+- traits
+- lifetimes
+- generics
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt
 ---
 
 ## Key Points

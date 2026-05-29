@@ -1,11 +1,18 @@
 ---
-title: "Modeling and Simulation of Systems — Part I: Basic Concepts"
-type: summary
-tags: [simulation, modeling, foundational, devs, overview]
+title: 'Modeling and Simulation of Systems — Part I: Basic Concepts'
+type: source
+id: source-modeling-simulation-systems-02-basic-concepts
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- foundational
+- devs
+- overview
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/02-basic-concepts.txt"]
-confidence: low
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/02-basic-concepts.txt
 ---
 
 ## Key Points

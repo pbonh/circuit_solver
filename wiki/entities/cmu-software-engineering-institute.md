@@ -1,11 +1,14 @@
 ---
-title: "Carnegie Mellon Software Engineering Institute"
+title: Carnegie Mellon Software Engineering Institute
 type: entity
-tags: [academic, research]
+id: entity-cmu-software-engineering-institute
+tags:
+- academic
+- research
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/09-about-the-author.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/09-about-the-author.txt
 ---
 
 ## Overview

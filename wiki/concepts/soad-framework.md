@@ -1,11 +1,19 @@
 ---
-title: "SOAD Framework (SOA-Compliant DEVS)"
-type: concept
-tags: [simulation, modeling, devs, soa, well-established]
+title: SOAD Framework (SOA-Compliant DEVS)
+type: claim
+id: claim-soad-framework
+tags:
+- simulation
+- modeling
+- devs
+- soa
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

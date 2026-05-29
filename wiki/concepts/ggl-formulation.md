@@ -1,11 +1,18 @@
 ---
-title: "GGL Formulation"
-type: concept
-tags: [dae, mechanical, foundational, well-established]
+title: GGL Formulation
+type: claim
+id: claim-ggl-formulation
+tags:
+- dae
+- mechanical
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.85
 ---
 
 ## Definition

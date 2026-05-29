@@ -1,11 +1,18 @@
 ---
-title: "Matrix Blocking"
-type: concept
-tags: [sparse-matrix, big-data, optimization, well-established]
+title: Matrix Blocking
+type: claim
+id: claim-matrix-blocking
+tags:
+- sparse-matrix
+- big-data
+- optimization
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

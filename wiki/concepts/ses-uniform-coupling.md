@@ -1,11 +1,19 @@
 ---
-title: "SES Uniform Coupling"
-type: concept
-tags: [simulation, modeling, ses, multi-aspect, well-established]
+title: SES Uniform Coupling
+type: claim
+id: claim-ses-uniform-coupling
+tags:
+- simulation
+- modeling
+- ses
+- multi-aspect
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/08-6-aspects-and-multi-aspects.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/08-6-aspects-and-multi-aspects.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

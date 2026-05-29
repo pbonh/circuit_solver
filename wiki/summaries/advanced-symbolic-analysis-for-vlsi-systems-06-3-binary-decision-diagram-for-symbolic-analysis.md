@@ -1,11 +1,19 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Chapter 3: Binary Decision Diagram for Symbolic Analysis"
-type: summary
-tags: [foundational, bdd, symbolic, graph, data-structure]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 3: Binary Decision Diagram
+  for Symbolic Analysis'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-06-3-binary-decision-diagram-for-symbolic-analysis
+kind: derived-summary
+tags:
+- foundational
+- bdd
+- symbolic
+- graph
+- data-structure
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt
 ---
 
 ## Key Points

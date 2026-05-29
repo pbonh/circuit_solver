@@ -1,11 +1,17 @@
 ---
-title: "Python Virtual Environment"
-type: concept
-tags: [python, deployment, foundational]
+title: Python Virtual Environment
+type: claim
+id: claim-virtual-environment
+tags:
+- python
+- deployment
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/11-chapter-7-hosting-an-application-on-a-unix-server.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

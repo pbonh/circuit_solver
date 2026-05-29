@@ -1,11 +1,18 @@
 ---
-title: "Permissible Range (Clock Skew)"
-type: concept
-tags: [vlsi, timing, synchronization, well-established]
+title: Permissible Range (Clock Skew)
+type: claim
+id: claim-permissible-range
+tags:
+- vlsi
+- timing
+- synchronization
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

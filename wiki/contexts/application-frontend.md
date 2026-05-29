@@ -1,13 +1,18 @@
 ---
-title: "Application Frontend"
-type: context
-tags: [frontend, python, cli, circuit-solver, bounded-context]
+title: Application Frontend
+type: entity
+id: entity-context-application-frontend
+tags:
+- frontend
+- python
+- cli
+- circuit-solver
+- bounded-context
 created: 2026-05-17
 updated: 2026-05-17
 sources:
-  - "concepts/python"
-  - "concepts/rust-language"
-confidence: high
+- concepts/python
+- concepts/rust-language
 ---
 
 ## Model

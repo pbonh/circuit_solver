@@ -1,13 +1,20 @@
 ---
-title: "Forward Euler"
-type: concept
-tags: [analog, transient, numerical-integration, foundational, well-established]
+title: Forward Euler
+type: claim
+id: claim-forward-euler
+tags:
+- analog
+- transient
+- numerical-integration
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
 sources:
-  - "raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"
-  - "raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/12-chapter-9-introduction-to-numerical-integration-of-differential-equations.txt"
-confidence: high
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/12-chapter-9-introduction-to-numerical-integration-of-differential-equations.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

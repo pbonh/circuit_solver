@@ -1,11 +1,19 @@
 ---
-title: "Indium Phosphide (InP)"
+title: Indium Phosphide (InP)
 type: entity
-tags: [semiconductor, material, iii-v, photonic, rf, well-established]
+id: entity-indium-phosphide
+tags:
+- semiconductor
+- material
+- iii-v
+- photonic
+- rf
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/17-chapter-12-leds-and-lasers.txt", "raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/21-appendix-e-properties-of-important-semiconductors.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/17-chapter-12-leds-and-lasers.txt
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/21-appendix-e-properties-of-important-semiconductors.txt
 ---
 
 ## Overview

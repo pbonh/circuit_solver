@@ -1,11 +1,20 @@
 ---
-title: "Designing Data-Intensive Applications — Part I: Foundations of Data Systems (Chapters 1–4)"
-type: summary
-tags: [distributed-systems, storage, foundational, well-established, data-modeling]
+title: 'Designing Data-Intensive Applications — Part I: Foundations of Data Systems
+  (Chapters 1–4)'
+type: source
+id: source-ddia-03-part-i-foundations-of-data-systems
+kind: derived-summary
+tags:
+- distributed-systems
+- storage
+- foundational
+- well-established
+- data-modeling
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt
 ---
 
 ## Key Points

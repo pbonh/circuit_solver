@@ -1,11 +1,19 @@
 ---
-title: "Silicon-on-Insulator (SOI)"
-type: concept
-tags: [semiconductor, device-physics, mosfet, substrate, well-established]
+title: Silicon-on-Insulator (SOI)
+type: claim
+id: claim-silicon-on-insulator
+tags:
+- semiconductor
+- device-physics
+- mosfet
+- substrate
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

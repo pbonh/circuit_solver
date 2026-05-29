@@ -1,11 +1,18 @@
 ---
-title: "Lambda Function"
-type: concept
-tags: [python, functional-programming, foundational, well-established]
+title: Lambda Function
+type: claim
+id: claim-lambda-function
+tags:
+- python
+- functional-programming
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

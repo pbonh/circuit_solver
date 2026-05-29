@@ -1,11 +1,17 @@
 ---
-title: "The Rust Programming Language — Chapter 16: Fearless Concurrency"
-type: summary
-tags: [rust, concurrency, advanced, well-established]
+title: 'The Rust Programming Language — Chapter 16: Fearless Concurrency'
+type: source
+id: source-rust-book-17-chapter-16-fearless-concurrency
+kind: derived-summary
+tags:
+- rust
+- concurrency
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/17-chapter-16-fearless-concurrency.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/17-chapter-16-fearless-concurrency.txt
 ---
 
 ## Key Points

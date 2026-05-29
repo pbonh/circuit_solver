@@ -1,11 +1,17 @@
 ---
-title: "Version Vector"
-type: concept
-tags: [distributed-systems, consistency, advanced]
+title: Version Vector
+type: claim
+id: claim-version-vector
+tags:
+- distributed-systems
+- consistency
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/06-part-iii-scalable-distributed-databases.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

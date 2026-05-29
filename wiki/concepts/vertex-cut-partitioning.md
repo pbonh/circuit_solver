@@ -1,11 +1,18 @@
 ---
-title: "Vertex-Cut (Edge) Partitioning"
-type: concept
-tags: [graph, distributed-systems, graph-processing, well-established]
+title: Vertex-Cut (Edge) Partitioning
+type: claim
+id: claim-vertex-cut-partitioning
+tags:
+- graph
+- distributed-systems
+- graph-processing
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

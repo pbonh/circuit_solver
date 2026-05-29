@@ -1,11 +1,15 @@
 ---
-title: "AWS Lambda"
+title: AWS Lambda
 type: entity
-tags: [cloud, serverless, faas]
+id: entity-aws-lambda
+tags:
+- cloud
+- serverless
+- faas
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
 ---
 
 ## Overview

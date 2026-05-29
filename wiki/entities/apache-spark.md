@@ -1,11 +1,17 @@
 ---
-title: "Apache Spark"
+title: Apache Spark
 type: entity
-tags: [distributed-systems, big-data, in-memory, dataflow, well-established]
+id: entity-apache-spark
+tags:
+- distributed-systems
+- big-data
+- in-memory
+- dataflow
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
 ---
 
 ## Overview

@@ -1,11 +1,18 @@
 ---
-title: "Concurrency"
-type: concept
-tags: [distributed-systems, concurrency, foundational, well-established]
+title: Concurrency
+type: claim
+id: claim-concurrency
+tags:
+- distributed-systems
+- concurrency
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "CSS"
-type: concept
-tags: [web, css, layout, foundational]
+title: CSS
+type: claim
+id: claim-css
+tags:
+- web
+- css
+- layout
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/09-chapter-5-our-first-dashboard.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/09-chapter-5-our-first-dashboard.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

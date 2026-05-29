@@ -1,11 +1,19 @@
 ---
-title: "Sparse Matrix Package (Vlach & Singhal Appendix E)"
-type: concept
-tags: [sparse-matrix, foundational, software, well-established]
+title: Sparse Matrix Package (Vlach & Singhal Appendix E)
+type: claim
+id: claim-sparse-matrix-package
+tags:
+- sparse-matrix
+- foundational
+- software
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/01-preface.txt", "raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/01-preface.txt
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

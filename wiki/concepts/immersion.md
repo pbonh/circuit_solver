@@ -1,11 +1,17 @@
 ---
-title: "Immersion"
-type: concept
-tags: [graph, advanced, well-established]
+title: Immersion
+type: claim
+id: claim-immersion
+tags:
+- graph
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

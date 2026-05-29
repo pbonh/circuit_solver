@@ -1,11 +1,19 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 3: System Entity Structure Basics"
-type: summary
-tags: [simulation, modeling, ses, devs, foundational, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 3: System Entity Structure Basics'
+type: source
+id: source-modeling-simulation-systems-05-3-system-entity-structure-basics
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- ses
+- devs
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/05-3-system-entity-structure-basics.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/05-3-system-entity-structure-basics.txt
 ---
 
 ## Key Points

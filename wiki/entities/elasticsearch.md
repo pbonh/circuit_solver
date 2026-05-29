@@ -1,11 +1,18 @@
 ---
-title: "Elasticsearch"
+title: Elasticsearch
 type: entity
-tags: [well-established, distributed-systems, search, open-source, derived-data]
+id: entity-elasticsearch
+tags:
+- well-established
+- distributed-systems
+- search
+- open-source
+- derived-data
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt"]
-confidence: medium
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt
 ---
 
 ## Overview

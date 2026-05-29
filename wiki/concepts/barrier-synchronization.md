@@ -1,11 +1,16 @@
 ---
-title: "Barrier Synchronization"
-type: concept
-tags: [concurrency, well-established]
+title: Barrier Synchronization
+type: claim
+id: claim-barrier-synchronization
+tags:
+- concurrency
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt"]
-confidence: medium
+sources:
+- raw/Foundations of Scalable Systems/_txt/04-part-i-the-basics.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Blanket Impls"
-type: concept
-tags: [rust, foundational, traits, well-established]
+title: Blanket Impls
+type: claim
+id: claim-blanket-impls
+tags:
+- rust
+- foundational
+- traits
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/11-chapter-10-generic-types-traits-and-lifetimes.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

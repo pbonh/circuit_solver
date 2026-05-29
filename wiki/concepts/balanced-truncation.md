@@ -1,11 +1,18 @@
 ---
-title: "Balanced Truncation (TBR / PMTBR)"
-type: concept
-tags: [mor, interconnect, ac, foundational]
+title: Balanced Truncation (TBR / PMTBR)
+type: claim
+id: claim-balanced-truncation
+tags:
+- mor
+- interconnect
+- ac
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

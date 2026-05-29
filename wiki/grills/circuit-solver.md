@@ -1,11 +1,15 @@
 ---
-title: "Grill: Circuit Solver"
-type: grill
-tags: [grill, design, circuit-solver]
+title: 'Grill: Circuit Solver'
+type: question
+id: question-grill-circuit-solver
+tags:
+- grill
+- design
+- circuit-solver
 sources:
-  - "wiki/vision/circuit-solver"
-  - "contexts/application-frontend"
-  - "contexts/analysis-orchestration"
+- wiki/vision/circuit-solver
+- contexts/application-frontend
+- contexts/analysis-orchestration
 updated: 2026-05-17
 ---
 

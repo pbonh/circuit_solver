@@ -1,11 +1,16 @@
 ---
-title: "Graphs in VLSI — Acknowledgments"
-type: summary
-tags: [vlsi, foundational, overview]
+title: Graphs in VLSI — Acknowledgments
+type: source
+id: source-graphs-in-vlsi-01-acknowledgments
+kind: derived-summary
+tags:
+- vlsi
+- foundational
+- overview
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/01-acknowledgments.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/01-acknowledgments.txt
 ---
 
 ## Key Points

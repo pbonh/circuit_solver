@@ -1,11 +1,18 @@
 ---
-title: "Python Data Analyst's Toolkit — Chapter 9: Statistics and Probability with Python"
-type: summary
-tags: [python, statistics, foundational, well-established]
+title: 'Python Data Analyst''s Toolkit — Chapter 9: Statistics and Probability with
+  Python'
+type: source
+id: source-python-data-analysts-toolkit-13-chapter-9-statistics-and-probability-with-python
+kind: derived-summary
+tags:
+- python
+- statistics
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt
 ---
 
 ## Key Points

@@ -1,11 +1,21 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Chapter 10: Symbolic Moment Computation"
-type: summary
-tags: [interconnect, symbolic, moment, bdd, advanced, statistical, vlsi]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 10: Symbolic Moment
+  Computation'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-15-10-symbolic-moment-computation
+kind: derived-summary
+tags:
+- interconnect
+- symbolic
+- moment
+- bdd
+- advanced
+- statistical
+- vlsi
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/15-10-symbolic-moment-computation.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/15-10-symbolic-moment-computation.txt
 ---
 
 ## Key Points

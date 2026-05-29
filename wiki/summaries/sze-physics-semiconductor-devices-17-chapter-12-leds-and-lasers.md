@@ -1,11 +1,20 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 12: LEDs and Lasers"
-type: summary
-tags: [semiconductor, device-physics, photonic, p-n-junction, heterojunction, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 12: LEDs and
+  Lasers'
+type: source
+id: source-sze-physics-semiconductor-devices-17-chapter-12-leds-and-lasers
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- photonic
+- p-n-junction
+- heterojunction
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/17-chapter-12-leds-and-lasers.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/17-chapter-12-leds-and-lasers.txt
 ---
 
 ## Key Points

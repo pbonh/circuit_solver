@@ -1,11 +1,16 @@
 ---
-title: "The Rust Programming Language — Chapter 19: Advanced Features"
-type: summary
-tags: [rust, advanced, well-established]
+title: 'The Rust Programming Language — Chapter 19: Advanced Features'
+type: source
+id: source-rust-book-20-chapter-19-advanced-features
+kind: derived-summary
+tags:
+- rust
+- advanced
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/20-chapter-19-advanced-features.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/20-chapter-19-advanced-features.txt
 ---
 
 ## Key Points

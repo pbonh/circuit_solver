@@ -1,11 +1,23 @@
 ---
-title: "MOSFET (Metal-Oxide-Semiconductor Field-Effect Transistor)"
-type: concept
-tags: [semiconductor, device-physics, mosfet, device-model, digital, analog, foundational, well-established]
+title: MOSFET (Metal-Oxide-Semiconductor Field-Effect Transistor)
+type: claim
+id: claim-mosfet
+tags:
+- semiconductor
+- device-physics
+- mosfet
+- device-model
+- digital
+- analog
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/00-preface.txt", "raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/00-preface.txt
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

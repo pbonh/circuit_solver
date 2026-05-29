@@ -1,11 +1,18 @@
 ---
-title: "CLI Argument Parsing (Rust)"
-type: concept
-tags: [rust, cli, foundational, well-established]
+title: CLI Argument Parsing (Rust)
+type: claim
+id: claim-cli-argument-parsing
+tags:
+- rust
+- cli
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/13-chapter-12-an-i-o-project-building-a-command-line-program.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/13-chapter-12-an-i-o-project-building-a-command-line-program.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

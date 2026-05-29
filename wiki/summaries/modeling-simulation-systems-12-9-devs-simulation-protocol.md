@@ -1,11 +1,19 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 9: DEVS Simulation Protocol"
-type: summary
-tags: [simulation, modeling, devs, distributed, foundational, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 9: DEVS Simulation Protocol'
+type: source
+id: source-modeling-simulation-systems-12-9-devs-simulation-protocol
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- distributed
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/12-9-devs-simulation-protocol.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/12-9-devs-simulation-protocol.txt
 ---
 
 ## Key Points

@@ -1,11 +1,17 @@
 ---
-title: "Bron-Kerbosch Algorithm"
-type: concept
-tags: [graph, algorithm, well-established]
+title: Bron-Kerbosch Algorithm
+type: claim
+id: claim-bron-kerbosch-algorithm
+tags:
+- graph
+- algorithm
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Symbolic Analysis"
-type: concept
-tags: [analog, symbolic, foundational, vlsi]
+title: Symbolic Analysis
+type: claim
+id: claim-symbolic-analysis
+tags:
+- analog
+- symbolic
+- foundational
+- vlsi
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

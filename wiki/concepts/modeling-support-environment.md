@@ -1,11 +1,20 @@
 ---
-title: "Modeling Support Environment (MSE)"
-type: concept
-tags: [simulation, modeling, devs, applications, soa, well-established]
+title: Modeling Support Environment (MSE)
+type: claim
+id: claim-modeling-support-environment
+tags:
+- simulation
+- modeling
+- devs
+- applications
+- soa
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/17-13-flexible-modeling-support-environments.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/17-13-flexible-modeling-support-environments.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

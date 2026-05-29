@@ -1,11 +1,18 @@
 ---
-title: "Declarative Machine-Learning Language (DML)"
-type: concept
-tags: [machine-learning, big-data, language, well-established]
+title: Declarative Machine-Learning Language (DML)
+type: claim
+id: claim-declarative-machine-learning-language
+tags:
+- machine-learning
+- big-data
+- language
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt"]
-confidence: medium
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/04-part-iii-think-like-a-matrix.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

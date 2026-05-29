@@ -1,11 +1,19 @@
 ---
-title: "Static Timing Analysis (STA)"
-type: concept
-tags: [vlsi, digital, timing, graph, well-established]
+title: Static Timing Analysis (STA)
+type: claim
+id: claim-static-timing-analysis
+tags:
+- vlsi
+- digital
+- timing
+- graph
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

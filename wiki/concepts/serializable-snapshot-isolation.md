@@ -1,11 +1,20 @@
 ---
-title: "Serializable Snapshot Isolation (SSI)"
-type: concept
-tags: [emerging, well-established, transactions, isolation, concurrency]
+title: Serializable Snapshot Isolation (SSI)
+type: claim
+id: claim-serializable-snapshot-isolation
+tags:
+- emerging
+- well-established
+- transactions
+- isolation
+- concurrency
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

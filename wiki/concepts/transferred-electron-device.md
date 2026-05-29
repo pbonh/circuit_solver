@@ -1,11 +1,19 @@
 ---
-title: "Transferred-Electron Device (Gunn Diode)"
-type: concept
-tags: [semiconductor, device-physics, rf, mm-wave, well-established]
+title: Transferred-Electron Device (Gunn Diode)
+type: claim
+id: claim-transferred-electron-device
+tags:
+- semiconductor
+- device-physics
+- rf
+- mm-wave
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/14-chapter-10-transferred-electron-and-real-space-transfer-devices.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/14-chapter-10-transferred-electron-and-real-space-transfer-devices.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

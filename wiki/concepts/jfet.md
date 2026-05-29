@@ -1,11 +1,18 @@
 ---
-title: "Junction Field-Effect Transistor (JFET)"
-type: concept
-tags: [semiconductor, device-physics, analog, well-established]
+title: Junction Field-Effect Transistor (JFET)
+type: claim
+id: claim-jfet
+tags:
+- semiconductor
+- device-physics
+- analog
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/10-chapter-7-jfets-mesfets-and-modfets.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/10-chapter-7-jfets-mesfets-and-modfets.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

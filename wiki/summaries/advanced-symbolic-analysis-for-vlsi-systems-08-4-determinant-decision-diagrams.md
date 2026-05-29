@@ -1,11 +1,21 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Chapter 4: Determinant Decision Diagrams"
-type: summary
-tags: [ddd, bdd, symbolic, analog, advanced, ac, sparse-matrix]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 4: Determinant Decision
+  Diagrams'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-08-4-determinant-decision-diagrams
+kind: derived-summary
+tags:
+- ddd
+- bdd
+- symbolic
+- analog
+- advanced
+- ac
+- sparse-matrix
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/08-4-determinant-decision-diagrams.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/08-4-determinant-decision-diagrams.txt
 ---
 
 ## Key Points

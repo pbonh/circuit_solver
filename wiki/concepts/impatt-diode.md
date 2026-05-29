@@ -1,11 +1,19 @@
 ---
-title: "IMPATT Diode"
-type: concept
-tags: [semiconductor, device-physics, rf, mm-wave, well-established]
+title: IMPATT Diode
+type: claim
+id: claim-impatt-diode
+tags:
+- semiconductor
+- device-physics
+- rf
+- mm-wave
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/13-chapter-9-impatt-diodes.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/13-chapter-9-impatt-diodes.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

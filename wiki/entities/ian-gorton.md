@@ -1,11 +1,15 @@
 ---
-title: "Ian Gorton"
+title: Ian Gorton
 type: entity
-tags: [author, academic, distributed-systems]
+id: entity-ian-gorton
+tags:
+- author
+- academic
+- distributed-systems
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/09-about-the-author.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/09-about-the-author.txt
 ---
 
 ## Overview

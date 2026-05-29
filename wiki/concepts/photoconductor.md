@@ -1,11 +1,18 @@
 ---
-title: "Photoconductor"
-type: concept
-tags: [semiconductor, device-physics, photonic, well-established]
+title: Photoconductor
+type: claim
+id: claim-photoconductor
+tags:
+- semiconductor
+- device-physics
+- photonic
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/18-chapter-13-photodetectors-and-solar-cells.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/18-chapter-13-photodetectors-and-solar-cells.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

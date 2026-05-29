@@ -1,11 +1,18 @@
 ---
-title: "Adjacency Matrix"
-type: concept
-tags: [graph, foundational, well-established, sparse-matrix]
+title: Adjacency Matrix
+type: claim
+id: claim-adjacency-matrix
+tags:
+- graph
+- foundational
+- well-established
+- sparse-matrix
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/04-graphs.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/04-graphs.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

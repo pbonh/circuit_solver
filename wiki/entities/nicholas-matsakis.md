@@ -1,11 +1,15 @@
 ---
-title: "Nicholas Matsakis"
+title: Nicholas Matsakis
 type: entity
-tags: [rust, person, foundational]
+id: entity-nicholas-matsakis
+tags:
+- rust
+- person
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/00-foreword.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/00-foreword.txt
 ---
 
 ## Overview

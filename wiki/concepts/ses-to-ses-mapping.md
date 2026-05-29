@@ -1,11 +1,19 @@
 ---
-title: "SES-to-SES Mapping"
-type: concept
-tags: [simulation, modeling, ses, data-engineering, well-established]
+title: SES-to-SES Mapping
+type: claim
+id: claim-ses-to-ses-mapping
+tags:
+- simulation
+- modeling
+- ses
+- data-engineering
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/14-11-interest-based-information-exchange-mappings-and-models.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/14-11-interest-based-information-exchange-mappings-and-models.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

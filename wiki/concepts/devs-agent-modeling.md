@@ -1,11 +1,20 @@
 ---
-title: "DEVS Agent Modeling"
-type: concept
-tags: [simulation, modeling, devs, agent-based, dynamic-structure, well-established]
+title: DEVS Agent Modeling
+type: claim
+id: claim-devs-agent-modeling
+tags:
+- simulation
+- modeling
+- devs
+- agent-based
+- dynamic-structure
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/13-10-dynamic-structure-agent-modeling-and-publish-subscribe.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/13-10-dynamic-structure-agent-modeling-and-publish-subscribe.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Mutex (Rust)"
-type: concept
-tags: [rust, concurrency, foundational, well-established]
+title: Mutex (Rust)
+type: claim
+id: claim-mutex
+tags:
+- rust
+- concurrency
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/17-chapter-16-fearless-concurrency.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/17-chapter-16-fearless-concurrency.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

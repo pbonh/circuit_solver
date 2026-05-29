@@ -1,11 +1,17 @@
 ---
-title: "Clustered Coloring"
-type: concept
-tags: [graph, algorithm, advanced]
+title: Clustered Coloring
+type: claim
+id: claim-clustered-coloring
+tags:
+- graph
+- algorithm
+- advanced
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

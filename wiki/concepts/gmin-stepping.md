@@ -1,11 +1,17 @@
 ---
-title: "Gmin Stepping"
-type: concept
-tags: [analog, dc, well-established]
+title: Gmin Stepping
+type: claim
+id: claim-gmin-stepping
+tags:
+- analog
+- dc
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

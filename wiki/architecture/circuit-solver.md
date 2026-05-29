@@ -1,19 +1,22 @@
 ---
-title: "Architecture: Circuit Solver"
-type: architecture
-tags: [architecture, c4, circuit-solver]
+title: 'Architecture: Circuit Solver'
+type: entity
+id: entity-arch-circuit-solver
+tags:
+- architecture
+- c4
+- circuit-solver
 created: 2026-05-17
 updated: 2026-05-17
 sources:
-  - "vision/circuit-solver"
-  - "grills/circuit-solver"
-  - "contexts/netlist-graph"
-  - "contexts/device-modeling"
-  - "contexts/numeric-solver"
-  - "contexts/analysis-orchestration"
-  - "contexts/application-frontend"
-  - "context-maps/circuit-solver"
-confidence: high
+- vision/circuit-solver
+- grills/circuit-solver
+- contexts/netlist-graph
+- contexts/device-modeling
+- contexts/numeric-solver
+- contexts/analysis-orchestration
+- contexts/application-frontend
+- context-maps/circuit-solver
 ---
 
 ## Purpose

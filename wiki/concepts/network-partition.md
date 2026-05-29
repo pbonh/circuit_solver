@@ -1,11 +1,19 @@
 ---
-title: "Network Partition"
-type: concept
-tags: [distributed-systems, well-established, fault-tolerance, networking]
+title: Network Partition
+type: claim
+id: claim-network-partition
+tags:
+- distributed-systems
+- well-established
+- fault-tolerance
+- networking
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/04-part-ii-distributed-data.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

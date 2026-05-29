@@ -1,11 +1,18 @@
 ---
-title: "Multiparameter Sensitivity (Worst-Case, Tracking, Statistical)"
-type: concept
-tags: [sensitivity, analog, well-established, statistics]
+title: Multiparameter Sensitivity (Worst-Case, Tracking, Statistical)
+type: claim
+id: claim-multiparameter-sensitivity
+tags:
+- sensitivity
+- analog
+- well-established
+- statistics
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/08-chapter-5-sensitivities.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/08-chapter-5-sensitivities.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

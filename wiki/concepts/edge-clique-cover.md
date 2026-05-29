@@ -1,11 +1,18 @@
 ---
-title: "Edge Clique Cover"
-type: concept
-tags: [graph, foundational, well-established, np-hard]
+title: Edge Clique Cover
+type: claim
+id: claim-edge-clique-cover
+tags:
+- graph
+- foundational
+- well-established
+- np-hard
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/07-recent-trends.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

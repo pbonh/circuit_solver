@@ -1,11 +1,19 @@
 ---
-title: "Dataflow Engine"
-type: concept
-tags: [batch, well-established, distributed-systems, performance]
+title: Dataflow Engine
+type: claim
+id: claim-dataflow-engine
+tags:
+- batch
+- well-established
+- distributed-systems
+- performance
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt"]
-confidence: high
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

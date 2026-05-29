@@ -1,11 +1,16 @@
 ---
-title: "The Rust Programming Language — Introduction"
-type: summary
-tags: [rust, foundational, cargo]
+title: The Rust Programming Language — Introduction
+type: source
+id: source-rust-book-01-introduction
+kind: derived-summary
+tags:
+- rust
+- foundational
+- cargo
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/01-introduction.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/01-introduction.txt
 ---
 
 ## Key Points

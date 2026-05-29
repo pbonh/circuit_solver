@@ -1,11 +1,18 @@
 ---
-title: "Random Walk"
-type: concept
-tags: [algorithm, stochastic, graph, well-established]
+title: Random Walk
+type: claim
+id: claim-random-walk
+tags:
+- algorithm
+- stochastic
+- graph
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

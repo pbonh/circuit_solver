@@ -1,11 +1,19 @@
 ---
-title: "Reverse Recovery"
-type: concept
-tags: [semiconductor, device-physics, p-n-junction, transient, well-established]
+title: Reverse Recovery
+type: claim
+id: claim-reverse-recovery
+tags:
+- semiconductor
+- device-physics
+- p-n-junction
+- transient
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/06-chapter-2-p-n-junctions.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/06-chapter-2-p-n-junctions.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

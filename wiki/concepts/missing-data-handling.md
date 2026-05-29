@@ -1,11 +1,19 @@
 ---
-title: "Missing Data Handling"
-type: concept
-tags: [data-analysis, pandas, data-cleaning, foundational, well-established]
+title: Missing Data Handling
+type: claim
+id: claim-missing-data-handling
+tags:
+- data-analysis
+- pandas
+- data-cleaning
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

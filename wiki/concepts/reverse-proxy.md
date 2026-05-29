@@ -1,11 +1,17 @@
 ---
-title: "Reverse Proxy"
-type: concept
-tags: [web, deployment, networking]
+title: Reverse Proxy
+type: claim
+id: claim-reverse-proxy
+tags:
+- web
+- deployment
+- networking
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/12-chapter-8-deploying-your-project-as-a-unix-service.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/12-chapter-8-deploying-your-project-as-a-unix-service.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

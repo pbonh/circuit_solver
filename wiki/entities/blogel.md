@@ -1,11 +1,17 @@
 ---
-title: "Blogel"
+title: Blogel
 type: entity
-tags: [graph, distributed-systems, graph-processing, block-centric, well-established]
+id: entity-blogel
+tags:
+- graph
+- distributed-systems
+- graph-processing
+- block-centric
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt
 ---
 
 ## Overview

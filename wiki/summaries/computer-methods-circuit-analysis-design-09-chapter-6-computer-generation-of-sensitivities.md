@@ -1,11 +1,20 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Chapter 6: Computer Generation of Sensitivities"
-type: summary
-tags: [foundational, analog, sensitivity, ac, sparse-matrix, well-established]
+title: 'Computer Methods for Circuit Analysis and Design — Chapter 6: Computer Generation
+  of Sensitivities'
+type: source
+id: source-computer-methods-circuit-analysis-design-09-chapter-6-computer-generation-of-sensitivities
+kind: derived-summary
+tags:
+- foundational
+- analog
+- sensitivity
+- ac
+- sparse-matrix
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/09-chapter-6-computer-generation-of-sensitivities.txt
 ---
 
 ## Key Points

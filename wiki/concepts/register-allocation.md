@@ -1,11 +1,19 @@
 ---
-title: "Register Allocation"
-type: concept
-tags: [vlsi, digital, graph, compiler, well-established]
+title: Register Allocation
+type: claim
+id: claim-register-allocation
+tags:
+- vlsi
+- digital
+- graph
+- compiler
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/06-3-graphs-in-vlsi-circuits-and-systems.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

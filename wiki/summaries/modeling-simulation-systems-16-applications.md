@@ -1,11 +1,18 @@
 ---
-title: "Modeling and Simulation of Systems — Part III: Applications"
-type: summary
-tags: [simulation, modeling, devs, applications, overview]
+title: 'Modeling and Simulation of Systems — Part III: Applications'
+type: source
+id: source-modeling-simulation-systems-16-applications
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- applications
+- overview
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/16-applications.txt"]
-confidence: low
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/16-applications.txt
 ---
 
 ## Key Points

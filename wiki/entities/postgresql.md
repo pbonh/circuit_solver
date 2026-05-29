@@ -1,11 +1,17 @@
 ---
-title: "PostgreSQL"
+title: PostgreSQL
 type: entity
-tags: [well-established, relational, open-source, database]
+id: entity-postgresql
+tags:
+- well-established
+- relational
+- open-source
+- database
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt"]
-confidence: medium
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/03-part-i-foundations-of-data-systems.txt
 ---
 
 ## Overview

@@ -1,11 +1,17 @@
 ---
-title: "Silicon Dioxide (SiO2)"
+title: Silicon Dioxide (SiO2)
 type: entity
-tags: [semiconductor, device-physics, materials, dielectric, well-established]
+id: entity-silicon-dioxide
+tags:
+- semiconductor
+- device-physics
+- materials
+- dielectric
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/08-chapter-4-metal-insulator-semiconductor-capacitors.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/08-chapter-4-metal-insulator-semiconductor-capacitors.txt
 ---
 
 ## Overview

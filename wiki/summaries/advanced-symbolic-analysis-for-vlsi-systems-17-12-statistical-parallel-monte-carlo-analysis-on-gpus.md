@@ -1,11 +1,22 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Chapter 12: Statistical Parallel Monte-Carlo Analysis on GPUs"
-type: summary
-tags: [gpu, monte-carlo, ddd, statistical, parallel, advanced, vlsi, cuda]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 12: Statistical Parallel
+  Monte-Carlo Analysis on GPUs'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-17-12-statistical-parallel-monte-carlo-analysis-on-gpus
+kind: derived-summary
+tags:
+- gpu
+- monte-carlo
+- ddd
+- statistical
+- parallel
+- advanced
+- vlsi
+- cuda
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/17-12-statistical-parallel-monte-carlo-analysis-on-gpus.txt
 ---
 
 ## Key Points

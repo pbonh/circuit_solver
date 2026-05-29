@@ -1,11 +1,17 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Part I: Fundamentals"
-type: summary
-tags: [foundational, symbolic, vlsi, overview]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Part I: Fundamentals'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-03-part-i-fundamentals
+kind: derived-summary
+tags:
+- foundational
+- symbolic
+- vlsi
+- overview
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/03-part-i-fundamentals.txt"]
-confidence: low
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/03-part-i-fundamentals.txt
 ---
 
 ## Key Points

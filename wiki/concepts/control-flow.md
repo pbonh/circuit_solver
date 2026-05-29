@@ -1,11 +1,17 @@
 ---
-title: "Control Flow (Python)"
-type: concept
-tags: [python, foundational, well-established]
+title: Control Flow (Python)
+type: claim
+id: claim-control-flow
+tags:
+- python
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/05-chapter-1-getting-familiar-with-python.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/05-chapter-1-getting-familiar-with-python.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "SES Perspective"
-type: concept
-tags: [simulation, modeling, ses, foundational, well-established]
+title: SES Perspective
+type: claim
+id: claim-ses-perspective
+tags:
+- simulation
+- modeling
+- ses
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/05-3-system-entity-structure-basics.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/05-3-system-entity-structure-basics.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Markov Matrix Model"
-type: concept
-tags: [simulation, modeling, markov, well-established]
+title: Markov Matrix Model
+type: claim
+id: claim-markov-matrix-model
+tags:
+- simulation
+- modeling
+- markov
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/23-19-devs-support-for-markov-modeling-and-simulation.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/23-19-devs-support-for-markov-modeling-and-simulation.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

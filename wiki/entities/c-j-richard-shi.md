@@ -1,11 +1,16 @@
 ---
-title: "C.-J. Richard Shi"
+title: C.-J. Richard Shi
 type: entity
-tags: [person, researcher, symbolic, vlsi]
+id: entity-c-j-richard-shi
+tags:
+- person
+- researcher
+- symbolic
+- vlsi
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/01-acknowledgments.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/01-acknowledgments.txt
 ---
 
 ## Overview

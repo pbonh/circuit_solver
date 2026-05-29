@@ -1,11 +1,18 @@
 ---
-title: "DC Analysis"
-type: concept
-tags: [analog, dc, foundational, well-established]
+title: DC Analysis
+type: claim
+id: claim-dc-analysis
+tags:
+- analog
+- dc
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/simulation_whitepaper_v1/simulation_whitepaper1.txt"]
-confidence: high
+sources:
+- raw/simulation_whitepaper_v1/simulation_whitepaper1.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

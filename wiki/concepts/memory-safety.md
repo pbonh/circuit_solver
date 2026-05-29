@@ -1,11 +1,18 @@
 ---
-title: "Memory Safety"
-type: concept
-tags: [rust, foundational, memory-safety, well-established]
+title: Memory Safety
+type: claim
+id: claim-memory-safety
+tags:
+- rust
+- foundational
+- memory-safety
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/00-foreword.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/00-foreword.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

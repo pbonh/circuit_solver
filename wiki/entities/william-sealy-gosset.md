@@ -1,11 +1,14 @@
 ---
-title: "William Sealy Gosset"
+title: William Sealy Gosset
 type: entity
-tags: [statistics, well-established]
+id: entity-william-sealy-gosset
+tags:
+- statistics
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt"]
-confidence: medium
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/13-chapter-9-statistics-and-probability-with-python.txt
 ---
 
 ## Overview

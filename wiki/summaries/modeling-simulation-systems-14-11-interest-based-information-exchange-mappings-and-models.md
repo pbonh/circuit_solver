@@ -1,11 +1,20 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 11: Interest-Based Information Exchange: Mappings and Models"
-type: summary
-tags: [simulation, modeling, ses, xml, data-engineering, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 11: Interest-Based Information
+  Exchange: Mappings and Models'
+type: source
+id: source-modeling-simulation-systems-14-11-interest-based-information-exchange-mappings-and-models
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- ses
+- xml
+- data-engineering
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/14-11-interest-based-information-exchange-mappings-and-models.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/14-11-interest-based-information-exchange-mappings-and-models.txt
 ---
 
 ## Key Points

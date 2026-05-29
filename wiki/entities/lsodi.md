@@ -1,11 +1,15 @@
 ---
-title: "LSODI"
+title: LSODI
 type: entity
-tags: [ode, numerical-integration, foundational]
+id: entity-lsodi
+tags:
+- ode
+- numerical-integration
+- foundational
 created: 2026-05-21
 updated: 2026-05-21
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt"]
-confidence: low
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt
 ---
 
 ## Overview

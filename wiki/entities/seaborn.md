@@ -1,11 +1,16 @@
 ---
-title: "Seaborn"
+title: Seaborn
 type: entity
-tags: [python, visualization, statistics, well-established]
+id: entity-seaborn
+tags:
+- python
+- visualization
+- statistics
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt"]
-confidence: medium
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt
 ---
 
 ## Overview

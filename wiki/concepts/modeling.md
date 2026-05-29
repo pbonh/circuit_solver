@@ -1,11 +1,17 @@
 ---
-title: "Modeling"
-type: concept
-tags: [analysis, modeling, time-series]
+title: Modeling
+type: claim
+id: claim-modeling
+tags:
+- analysis
+- modeling
+- time-series
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/15-chapter-11-using-our-dashboard-for-data-visualization-and-analysis.txt"]
-confidence: medium
+sources:
+- raw/PrototypingPythonDashboards/_txt/15-chapter-11-using-our-dashboard-for-data-visualization-and-analysis.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

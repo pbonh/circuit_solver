@@ -1,11 +1,16 @@
 ---
-title: "Initial Corpus Ingest — 2026-05-15"
-type: journal
-tags: [meta, ingest, foundational]
+title: Initial Corpus Ingest — 2026-05-15
+type: source
+id: source-journal-2026-05-15-initial-corpus-ingest
+kind: journal
+tags:
+- meta
+- ingest
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/"]
-confidence: high
+sources:
+- raw/
 ---
 
 ## Purpose

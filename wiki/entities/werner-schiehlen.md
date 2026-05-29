@@ -1,11 +1,17 @@
 ---
-title: "Werner Schiehlen"
+title: Werner Schiehlen
 type: entity
-tags: [ode, numerical-integration, foundational, multibody]
+id: entity-werner-schiehlen
+tags:
+- ode
+- numerical-integration
+- foundational
+- multibody
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt", "raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt
 ---
 
 ## Overview

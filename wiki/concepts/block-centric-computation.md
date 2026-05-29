@@ -1,11 +1,19 @@
 ---
-title: "Block-Centric Computation"
-type: concept
-tags: [graph, distributed-systems, big-data, graph-processing, well-established]
+title: Block-Centric Computation
+type: claim
+id: claim-block-centric-computation
+tags:
+- graph
+- distributed-systems
+- big-data
+- graph-processing
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,20 @@
 ---
-title: "Property C"
-type: concept
-tags: [ode, numerical-integration, stability, mathematical-tool, foundational, well-established]
+title: Property C
+type: claim
+id: claim-property-c
+tags:
+- ode
+- numerical-integration
+- stability
+- mathematical-tool
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.65
 ---
 
 ## Definition

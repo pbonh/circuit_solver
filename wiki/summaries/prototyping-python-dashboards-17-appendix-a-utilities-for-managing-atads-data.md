@@ -1,11 +1,19 @@
 ---
-title: "Prototyping Python Dashboards — Appendix A: Utilities for Managing ATADS Data"
-type: summary
-tags: [python, screen-scraping, data-cleaning, csv, pandas, automation]
+title: 'Prototyping Python Dashboards — Appendix A: Utilities for Managing ATADS Data'
+type: source
+id: source-prototyping-python-dashboards-17-appendix-a-utilities-for-managing-atads-data
+kind: derived-summary
+tags:
+- python
+- screen-scraping
+- data-cleaning
+- csv
+- pandas
+- automation
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/17-appendix-a-utilities-for-managing-atads-data.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/17-appendix-a-utilities-for-managing-atads-data.txt
 ---
 
 ## Key Points

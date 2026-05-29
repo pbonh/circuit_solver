@@ -1,11 +1,20 @@
 ---
-title: "Clock Tree Synthesis"
-type: concept
-tags: [vlsi, digital, clock, synchronization, graph, well-established]
+title: Clock Tree Synthesis
+type: claim
+id: claim-clock-tree-synthesis
+tags:
+- vlsi
+- digital
+- clock
+- synchronization
+- graph
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "cfg Attribute"
-type: concept
-tags: [rust, foundational, well-established]
+title: cfg Attribute
+type: claim
+id: claim-cfg-attribute
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/12-chapter-11-writing-automated-tests.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/12-chapter-11-writing-automated-tests.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

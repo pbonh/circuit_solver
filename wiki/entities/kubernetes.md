@@ -1,11 +1,16 @@
 ---
-title: "Kubernetes"
+title: Kubernetes
 type: entity
-tags: [deployment, orchestration, cloud]
+id: entity-kubernetes
+tags:
+- deployment
+- orchestration
+- cloud
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/16-chapter-12-afterword.txt", "raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt"]
-confidence: medium
+sources:
+- raw/PrototypingPythonDashboards/_txt/16-chapter-12-afterword.txt
+- raw/Foundations of Scalable Systems/_txt/07-part-iv-event-and-stream-processing.txt
 ---
 
 ## Overview

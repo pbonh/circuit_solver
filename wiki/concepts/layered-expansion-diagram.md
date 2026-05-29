@@ -1,11 +1,19 @@
 ---
-title: "Layered Expansion Diagram (LED)"
-type: concept
-tags: [ddd, bdd, symbolic, advanced, implementation]
+title: Layered Expansion Diagram (LED)
+type: claim
+id: claim-layered-expansion-diagram
+tags:
+- ddd
+- bdd
+- symbolic
+- advanced
+- implementation
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/04-1-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

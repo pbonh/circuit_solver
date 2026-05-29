@@ -1,11 +1,17 @@
 ---
-title: "J. R. (Jeff) Cash"
+title: J. R. (Jeff) Cash
 type: entity
-tags: [ode, numerical-integration, foundational, bdf]
+id: entity-jeff-cash
+tags:
+- ode
+- numerical-integration
+- foundational
+- bdf
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/04-chapter-v-multistep-methods-for-stiff-problems.txt", "raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/04-chapter-v-multistep-methods-for-stiff-problems.txt
+- raw/solving_ordinary_differential_equations_ii/_txt/bibliography.txt
 ---
 
 ## Overview

@@ -1,11 +1,17 @@
 ---
-title: "SPROUT"
+title: SPROUT
 type: entity
-tags: [vlsi, power-integrity, routing, tool, novel]
+id: entity-sprout
+tags:
+- vlsi
+- power-integrity
+- routing
+- tool
+- novel
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/00-preface.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/00-preface.txt
 ---
 
 ## Overview

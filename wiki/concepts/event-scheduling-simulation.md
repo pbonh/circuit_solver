@@ -1,11 +1,19 @@
 ---
-title: "Event-Scheduling Simulation"
-type: concept
-tags: [simulation, modeling, discrete-event, well-established, foundational]
+title: Event-Scheduling Simulation
+type: claim
+id: claim-event-scheduling-simulation
+tags:
+- simulation
+- modeling
+- discrete-event
+- well-established
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/12-9-devs-simulation-protocol.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/12-9-devs-simulation-protocol.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Matrix Norm"
-type: concept
-tags: [foundational, math, numerical, well-established]
+title: Matrix Norm
+type: claim
+id: claim-matrix-norm
+tags:
+- foundational
+- math
+- numerical
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/26-appendix-f-selected-mathematical-topics.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/26-appendix-f-selected-mathematical-topics.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

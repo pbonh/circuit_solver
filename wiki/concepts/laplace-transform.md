@@ -1,11 +1,20 @@
 ---
-title: "Laplace Transform"
-type: concept
-tags: [foundational, analog, transient, ac, well-established, math]
+title: Laplace Transform
+type: claim
+id: claim-laplace-transform
+tags:
+- foundational
+- analog
+- transient
+- ac
+- well-established
+- math
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/04-chapter-1-fundamental-concepts.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

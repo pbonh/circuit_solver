@@ -1,11 +1,19 @@
 ---
-title: "Companion Model"
-type: concept
-tags: [vlsi, circuit, analysis, transient, well-established]
+title: Companion Model
+type: claim
+id: claim-companion-model
+tags:
+- vlsi
+- circuit
+- analysis
+- transient
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/08-5-circuit-analysis.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

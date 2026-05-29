@@ -1,11 +1,18 @@
 ---
-title: "Variable Ordering (BDD)"
-type: concept
-tags: [bdd, foundational, np-complete, optimization]
+title: Variable Ordering (BDD)
+type: claim
+id: claim-variable-ordering
+tags:
+- bdd
+- foundational
+- np-complete
+- optimization
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

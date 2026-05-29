@@ -1,11 +1,17 @@
 ---
-title: "Smoothing"
-type: concept
-tags: [data, time-series, foundational]
+title: Smoothing
+type: claim
+id: claim-smoothing
+tags:
+- data
+- time-series
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/09-chapter-5-our-first-dashboard.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/09-chapter-5-our-first-dashboard.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Globally Asynchronous, Locally Synchronous (GALS)"
-type: concept
-tags: [vlsi, digital, synchronization, well-established, architecture]
+title: Globally Asynchronous, Locally Synchronous (GALS)
+type: claim
+id: claim-galvanically-asynchronous-locally-synchronous
+tags:
+- vlsi
+- digital
+- synchronization
+- well-established
+- architecture
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

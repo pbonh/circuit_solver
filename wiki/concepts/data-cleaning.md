@@ -1,11 +1,19 @@
 ---
-title: "Data Cleaning"
-type: concept
-tags: [data-cleaning, data-analysis, pandas, foundational, well-established]
+title: Data Cleaning
+type: claim
+id: claim-data-cleaning
+tags:
+- data-cleaning
+- data-analysis
+- pandas
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/08-chapter-5-data-gathering-and-cleaning.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/08-chapter-5-data-gathering-and-cleaning.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

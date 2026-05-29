@@ -1,11 +1,20 @@
 ---
-title: "System Entity Structure (SES)"
-type: concept
-tags: [simulation, modeling, ontology, foundational, well-established, ses]
+title: System Entity Structure (SES)
+type: claim
+id: claim-system-entity-structure
+tags:
+- simulation
+- modeling
+- ontology
+- foundational
+- well-established
+- ses
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

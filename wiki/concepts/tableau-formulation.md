@@ -1,11 +1,23 @@
 ---
-title: "Tableau Formulation"
-type: concept
-tags: [foundational, analog, dc, ac, transient, sparse-matrix, graph, netlist, well-established]
+title: Tableau Formulation
+type: claim
+id: claim-tableau-formulation
+tags:
+- foundational
+- analog
+- dc
+- ac
+- transient
+- sparse-matrix
+- graph
+- netlist
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/02-motivation.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

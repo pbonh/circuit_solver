@@ -1,15 +1,18 @@
 ---
-title: "Analysis Orchestration"
-type: context
-tags: [analysis, circuit-solver, bounded-context]
+title: Analysis Orchestration
+type: entity
+id: entity-context-analysis-orchestration
+tags:
+- analysis
+- circuit-solver
+- bounded-context
 created: 2026-05-17
 updated: 2026-05-17
 sources:
-  - "concepts/dc-analysis"
-  - "concepts/ac-analysis"
-  - "concepts/transient-analysis"
-  - "concepts/noise-analysis"
-confidence: high
+- concepts/dc-analysis
+- concepts/ac-analysis
+- concepts/transient-analysis
+- concepts/noise-analysis
 ---
 
 ## Model

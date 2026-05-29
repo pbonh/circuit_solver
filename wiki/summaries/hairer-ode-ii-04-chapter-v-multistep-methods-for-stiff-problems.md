@@ -1,11 +1,24 @@
 ---
-title: "Solving Ordinary Differential Equations II — Chapter V: Multistep Methods for Stiff Problems"
-type: summary
-tags: [ode, stiff, bdf, multistep, numerical-integration, transient, a-stability, g-stability, foundational, well-established]
+title: 'Solving Ordinary Differential Equations II — Chapter V: Multistep Methods
+  for Stiff Problems'
+type: source
+id: source-hairer-ode-ii-04-chapter-v-multistep-methods-for-stiff-problems
+kind: derived-summary
+tags:
+- ode
+- stiff
+- bdf
+- multistep
+- numerical-integration
+- transient
+- a-stability
+- g-stability
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/04-chapter-v-multistep-methods-for-stiff-problems.txt"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/04-chapter-v-multistep-methods-for-stiff-problems.txt
 ---
 
 ## Key Points

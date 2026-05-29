@@ -1,11 +1,19 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 14: Service-Based Software Systems"
-type: summary
-tags: [simulation, modeling, devs, soa, qos, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 14: Service-Based Software Systems'
+type: source
+id: source-modeling-simulation-systems-18-14-service-based-software-systems
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- soa
+- qos
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/18-14-service-based-software-systems.txt
 ---
 
 ## Key Points

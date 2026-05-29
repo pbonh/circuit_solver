@@ -1,11 +1,19 @@
 ---
-title: "SES Decomposition"
-type: concept
-tags: [simulation, modeling, ses, foundational, well-established]
+title: SES Decomposition
+type: claim
+id: claim-ses-decomposition
+tags:
+- simulation
+- modeling
+- ses
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/05-3-system-entity-structure-basics.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/05-3-system-entity-structure-basics.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Modeling and Simulation of Systems — Chapter 12: Languages for Constructing DEVS Models"
-type: summary
-tags: [simulation, modeling, devs, dsl, well-established]
+title: 'Modeling and Simulation of Systems — Chapter 12: Languages for Constructing
+  DEVS Models'
+type: source
+id: source-modeling-simulation-systems-15-12-languages-for-constructing-devs-models
+kind: derived-summary
+tags:
+- simulation
+- modeling
+- devs
+- dsl
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/15-12-languages-for-constructing-devs-models.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/15-12-languages-for-constructing-devs-models.txt
 ---
 
 ## Key Points

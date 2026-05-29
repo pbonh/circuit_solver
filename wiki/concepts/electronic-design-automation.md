@@ -1,11 +1,18 @@
 ---
-title: "Electronic Design Automation (EDA)"
-type: concept
-tags: [vlsi, eda, foundational, well-established]
+title: Electronic Design Automation (EDA)
+type: claim
+id: claim-electronic-design-automation
+tags:
+- vlsi
+- eda
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/04-1-introduction.txt"]
-confidence: high
+sources:
+- raw/GraphsInVLSI/_txt/04-1-introduction.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

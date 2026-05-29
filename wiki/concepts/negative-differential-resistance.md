@@ -1,11 +1,19 @@
 ---
-title: "Negative Differential Resistance"
-type: concept
-tags: [semiconductor, device-physics, rf, well-established]
+title: Negative Differential Resistance
+type: claim
+id: claim-negative-differential-resistance
+tags:
+- semiconductor
+- device-physics
+- rf
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/12-chapter-8-tunnel-devices.txt", "raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/14-chapter-10-transferred-electron-and-real-space-transfer-devices.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/12-chapter-8-tunnel-devices.txt
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/14-chapter-10-transferred-electron-and-real-space-transfer-devices.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

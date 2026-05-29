@@ -1,11 +1,20 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 2: p-n Junctions"
-type: summary
-tags: [semiconductor, device-physics, p-n-junction, diode, foundational, well-established, analog]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 2: p-n Junctions'
+type: source
+id: source-sze-physics-semiconductor-devices-06-chapter-2-p-n-junctions
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- p-n-junction
+- diode
+- foundational
+- well-established
+- analog
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/06-chapter-2-p-n-junctions.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/06-chapter-2-p-n-junctions.txt
 ---
 
 ## Key Points

@@ -1,6 +1,7 @@
 ---
 title: "Two-Pass Graph Flattening with Per-Analysis Sub-Views"
-type: decision
+type: claim
+id: claim-decision-0003-two-pass-graph-flattening-with-per-analysis-sub-views
 tags: [decision, circuit-solver, netlist, graph, flattening, mna, sparse-matrix, analysis]
 created: 2026-05-17
 updated: 2026-05-18
@@ -11,7 +12,8 @@ sources:
   - "contexts/numeric-solver"
   - "contexts/analysis-orchestration"
   - "vision/circuit-solver"
-confidence: high
+confidence:
+  base: 0.85
 ---
 
 "In the context of circuit graph flattening for multi-analysis simulation, facing ground-reference and constraint-mask differences between operating-point and small-signal analyses, we decided for a two-pass flattening approach with per-analysis sub-views to achieve zero re-flattening overhead when switching analysis types, accepting that the full matrix (including ground) is built once and that sub-view extraction adds a small per-solve masking cost."

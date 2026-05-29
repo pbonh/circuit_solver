@@ -1,11 +1,20 @@
 ---
-title: "Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 6: MOSFETs"
-type: summary
-tags: [semiconductor, device-physics, mosfet, digital, analog, foundational, well-established]
+title: 'Physics of Semiconductor Devices (Sze & Ng, 3rd ed.) — Chapter 6: MOSFETs'
+type: source
+id: source-sze-physics-semiconductor-devices-09-chapter-6-mosfets
+kind: derived-summary
+tags:
+- semiconductor
+- device-physics
+- mosfet
+- digital
+- analog
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt"]
-confidence: high
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt
 ---
 
 ## Key Points

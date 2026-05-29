@@ -1,11 +1,18 @@
 ---
-title: "Lovász Local Lemma"
-type: concept
-tags: [algorithm, advanced, well-established, probability]
+title: Lovász Local Lemma
+type: claim
+id: claim-lovasz-local-lemma
+tags:
+- algorithm
+- advanced
+- well-established
+- probability
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

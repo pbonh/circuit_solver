@@ -1,11 +1,19 @@
 ---
-title: "Data Analysis and Visualizations with Python — Chapter 8: Case Studies"
-type: summary
-tags: [python, pandas, case-study, data-analysis, data-visualization, foundational]
+title: 'Data Analysis and Visualizations with Python — Chapter 8: Case Studies'
+type: source
+id: source-data-analysis-visualizations-python-11-chapter-8-case-studies
+kind: derived-summary
+tags:
+- python
+- pandas
+- case-study
+- data-analysis
+- data-visualization
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/11-chapter-8-case-studies.txt"]
-confidence: high
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/11-chapter-8-case-studies.txt
 ---
 
 ## Key Points

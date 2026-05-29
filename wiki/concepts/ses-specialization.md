@@ -1,11 +1,19 @@
 ---
-title: "SES Specialization"
-type: concept
-tags: [simulation, modeling, ses, foundational, well-established]
+title: SES Specialization
+type: claim
+id: claim-ses-specialization
+tags:
+- simulation
+- modeling
+- ses
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/07-5-specialization-and-pruning.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/07-5-specialization-and-pruning.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,17 @@
 ---
-title: "The Rust Programming Language — Chapter 14: More about Cargo and Crates.io"
-type: summary
-tags: [rust, foundational, cargo, tooling]
+title: 'The Rust Programming Language — Chapter 14: More about Cargo and Crates.io'
+type: source
+id: source-rust-book-15-chapter-14-more-about-cargo-and-crates-io
+kind: derived-summary
+tags:
+- rust
+- foundational
+- cargo
+- tooling
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/15-chapter-14-more-about-cargo-and-crates-io.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/15-chapter-14-more-about-cargo-and-crates-io.txt
 ---
 
 ## Key Points

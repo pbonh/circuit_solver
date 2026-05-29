@@ -1,11 +1,20 @@
 ---
-title: "Advanced Symbolic Analysis for VLSI Systems — Chapter 2: Symbolic Analysis Techniques in a Nutshell"
-type: summary
-tags: [foundational, symbolic, analog, vlsi, history, overview]
+title: 'Advanced Symbolic Analysis for VLSI Systems — Chapter 2: Symbolic Analysis
+  Techniques in a Nutshell'
+type: source
+id: source-advanced-symbolic-analysis-for-vlsi-systems-05-2-symbolic-analysis-techniques-in-a-nutshell
+kind: derived-summary
+tags:
+- foundational
+- symbolic
+- analog
+- vlsi
+- history
+- overview
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/05-2-symbolic-analysis-techniques-in-a-nutshell.txt
 ---
 
 ## Key Points

@@ -1,11 +1,16 @@
 ---
-title: "Springer Series in Computational Mathematics"
+title: Springer Series in Computational Mathematics
 type: entity
-tags: [ode, numerical-integration, foundational, publishing]
+id: entity-springer-series-in-computational-mathematics
+tags:
+- ode
+- numerical-integration
+- foundational
+- publishing
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/00-front-matter.txt"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/00-front-matter.txt
 ---
 
 ## Overview

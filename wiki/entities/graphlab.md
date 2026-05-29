@@ -1,11 +1,18 @@
 ---
-title: "GraphLab"
+title: GraphLab
 type: entity
-tags: [graph, distributed-systems, big-data, graph-processing, shared-memory, well-established]
+id: entity-graphlab
+tags:
+- graph
+- distributed-systems
+- big-data
+- graph-processing
+- shared-memory
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/02-part-i-think-like-a-vertex.txt
 ---
 
 ## Overview

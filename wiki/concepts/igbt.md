@@ -1,11 +1,21 @@
 ---
-title: "Insulated-Gate Bipolar Transistor (IGBT)"
-type: concept
-tags: [semiconductor, device-physics, power-device, mosfet, bjt, well-established]
+title: Insulated-Gate Bipolar Transistor (IGBT)
+type: claim
+id: claim-igbt
+tags:
+- semiconductor
+- device-physics
+- power-device
+- mosfet
+- bjt
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/00-preface.txt", "raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/15-chapter-11-thyristors-and-power-devices.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/00-preface.txt
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/15-chapter-11-thyristors-and-power-devices.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

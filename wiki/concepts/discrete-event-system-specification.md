@@ -1,11 +1,20 @@
 ---
-title: "Discrete-Event System Specification (DEVS)"
-type: concept
-tags: [simulation, modeling, devs, foundational, well-established, discrete-event]
+title: Discrete-Event System Specification (DEVS)
+type: claim
+id: claim-discrete-event-system-specification
+tags:
+- simulation
+- modeling
+- devs
+- foundational
+- well-established
+- discrete-event
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/00-preface.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "BJT Model (Ebers-Moll, Hybrid-pi)"
-type: concept
-tags: [device-model, bjt, analog, well-established]
+title: BJT Model (Ebers-Moll, Hybrid-pi)
+type: claim
+id: claim-bjt-model
+tags:
+- device-model
+- bjt
+- analog
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Coordination-Avoiding Data Systems"
-type: concept
-tags: [distributed-systems, emerging, performance, consistency]
+title: Coordination-Avoiding Data Systems
+type: claim
+id: claim-coordination-avoiding-data-systems
+tags:
+- distributed-systems
+- emerging
+- performance
+- consistency
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable, and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt"]
-confidence: medium
+sources:
+- raw/Designing Data-Intensive Applications The Big Ideas Behind Reliable, Scalable,
+  and Maintainable Systems by Martin Kleppmann/_txt/05-part-iii-derived-data.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

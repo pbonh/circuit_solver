@@ -1,11 +1,17 @@
 ---
-title: "Python"
-type: concept
-tags: [python, foundational, well-established]
+title: Python
+type: claim
+id: claim-python
+tags:
+- python
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/04-introduction.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Two-Graph Formulation (I-Graph and V-Graph)"
-type: concept
-tags: [foundational, graph, analog, sparse-matrix, well-established]
+title: Two-Graph Formulation (I-Graph and V-Graph)
+type: claim
+id: claim-two-graph-formulation
+tags:
+- foundational
+- graph
+- analog
+- sparse-matrix
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/07-chapter-4-general-formulation-methods.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

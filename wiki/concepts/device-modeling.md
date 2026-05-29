@@ -1,11 +1,18 @@
 ---
-title: "Device Modeling"
-type: concept
-tags: [device-model, analog, well-established, foundational]
+title: Device Modeling
+type: claim
+id: claim-device-modeling
+tags:
+- device-model
+- analog
+- well-established
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Correlation"
-type: concept
-tags: [statistics, data-analysis, foundational, well-established]
+title: Correlation
+type: claim
+id: claim-correlation
+tags:
+- statistics
+- data-analysis
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt"]
-confidence: medium
+sources:
+- raw/DataAnalysisAndVisualizationsPython/_txt/04-chapter-1-introduction-to-data-science-with-python.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

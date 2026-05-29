@@ -1,11 +1,19 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Chapter 11: Modeling"
-type: summary
-tags: [foundational, device-model, analog, well-established, mosfet, bjt]
+title: 'Computer Methods for Circuit Analysis and Design — Chapter 11: Modeling'
+type: source
+id: source-computer-methods-circuit-analysis-design-14-chapter-11-modeling
+kind: derived-summary
+tags:
+- foundational
+- device-model
+- analog
+- well-established
+- mosfet
+- bjt
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/14-chapter-11-modeling.txt
 ---
 
 ## Key Points

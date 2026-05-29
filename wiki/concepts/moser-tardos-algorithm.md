@@ -1,11 +1,18 @@
 ---
-title: "Moser-Tardos Algorithm"
-type: concept
-tags: [algorithm, advanced, well-established, probability]
+title: Moser-Tardos Algorithm
+type: claim
+id: claim-moser-tardos-algorithm
+tags:
+- algorithm
+- advanced
+- well-established
+- probability
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt"]
-confidence: high
+sources:
+- raw/GuideToGraphAlgorithms/_txt/05-algorithms.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

@@ -1,11 +1,21 @@
 ---
-title: "Living Systems Modeling"
-type: concept
-tags: [simulation, modeling, devs, living-systems, biology, ecology, well-established]
+title: Living Systems Modeling
+type: claim
+id: claim-living-systems-modeling
+tags:
+- simulation
+- modeling
+- devs
+- living-systems
+- biology
+- ecology
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

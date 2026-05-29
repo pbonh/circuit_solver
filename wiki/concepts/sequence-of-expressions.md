@@ -1,11 +1,19 @@
 ---
-title: "Sequence of Expressions (SOE)"
-type: concept
-tags: [symbolic, hierarchical, analog, foundational, soe]
+title: Sequence of Expressions (SOE)
+type: claim
+id: claim-sequence-of-expressions
+tags:
+- symbolic
+- hierarchical
+- analog
+- foundational
+- soe
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/12-8-hierarchical-analysis-methods.txt"]
-confidence: medium
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/12-8-hierarchical-analysis-methods.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Zero-Suppressed BDD (ZBDD)"
-type: concept
-tags: [bdd, zbdd, foundational, data-structure, sparse]
+title: Zero-Suppressed BDD (ZBDD)
+type: claim
+id: claim-zero-suppressed-bdd
+tags:
+- bdd
+- zbdd
+- foundational
+- data-structure
+- sparse
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/06-3-binary-decision-diagram-for-symbolic-analysis.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

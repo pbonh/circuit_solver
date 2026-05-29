@@ -1,11 +1,18 @@
 ---
-title: "Algebraic-Differential Equations (DAEs)"
-type: concept
-tags: [foundational, transient, numerical-integration, well-established]
+title: Algebraic-Differential Equations (DAEs)
+type: claim
+id: claim-algebraic-differential-equations
+tags:
+- foundational
+- transient
+- numerical-integration
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/16-chapter-13-numerical-integration-of-differential-and-algebraic-differential-equations.txt"]
-confidence: high
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/16-chapter-13-numerical-integration-of-differential-and-algebraic-differential-equations.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

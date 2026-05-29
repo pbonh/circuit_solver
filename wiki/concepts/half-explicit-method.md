@@ -1,11 +1,19 @@
 ---
-title: "Half-Explicit Method"
-type: concept
-tags: [dae, mechanical, runge-kutta, foundational, well-established]
+title: Half-Explicit Method
+type: claim
+id: claim-half-explicit-method
+tags:
+- dae
+- mechanical
+- runge-kutta
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.85
 ---
 
 ## Definition

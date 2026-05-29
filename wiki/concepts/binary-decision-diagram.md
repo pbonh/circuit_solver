@@ -1,11 +1,19 @@
 ---
-title: "Binary Decision Diagram (BDD)"
-type: concept
-tags: [bdd, foundational, graph, symbolic, data-structure]
+title: Binary Decision Diagram (BDD)
+type: claim
+id: claim-binary-decision-diagram
+tags:
+- bdd
+- foundational
+- graph
+- symbolic
+- data-structure
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/00-preface.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

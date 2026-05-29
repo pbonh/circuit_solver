@@ -1,11 +1,21 @@
 ---
-title: "Solving Ordinary Differential Equations II — Preface"
-type: summary
-tags: [ode, dae, stiff, numerical-integration, runge-kutta, bdf, foundational, well-established]
+title: Solving Ordinary Differential Equations II — Preface
+type: source
+id: source-hairer-ode-ii-01-preface
+kind: derived-summary
+tags:
+- ode
+- dae
+- stiff
+- numerical-integration
+- runge-kutta
+- bdf
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/01-preface.txt"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/01-preface.txt
 ---
 
 ## Key Points

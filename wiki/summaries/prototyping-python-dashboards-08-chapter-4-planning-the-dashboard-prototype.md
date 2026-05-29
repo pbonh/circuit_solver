@@ -1,11 +1,19 @@
 ---
-title: "Prototyping Python Dashboards — Chapter 4: Planning the Dashboard Prototype"
-type: summary
-tags: [python, dashboard, prototyping, regression, design, architecture]
+title: 'Prototyping Python Dashboards — Chapter 4: Planning the Dashboard Prototype'
+type: source
+id: source-prototyping-python-dashboards-08-chapter-4-planning-the-dashboard-prototype
+kind: derived-summary
+tags:
+- python
+- dashboard
+- prototyping
+- regression
+- design
+- architecture
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/08-chapter-4-planning-the-dashboard-prototype.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/08-chapter-4-planning-the-dashboard-prototype.txt
 ---
 
 ## Key Points

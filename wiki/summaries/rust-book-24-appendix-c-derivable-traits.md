@@ -1,11 +1,17 @@
 ---
-title: "The Rust Programming Language — Appendix C: Derivable Traits"
-type: summary
-tags: [rust, reference, traits, well-established]
+title: 'The Rust Programming Language — Appendix C: Derivable Traits'
+type: source
+id: source-rust-book-24-appendix-c-derivable-traits
+kind: derived-summary
+tags:
+- rust
+- reference
+- traits
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/24-appendix-c-derivable-traits.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/24-appendix-c-derivable-traits.txt
 ---
 
 ## Key Points

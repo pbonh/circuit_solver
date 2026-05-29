@@ -1,11 +1,17 @@
 ---
-title: "Computer Methods for Circuit Analysis and Design — Appendix C: Special Complex Integration of a Rational Function"
-type: summary
-tags: [foundational, math, well-established]
+title: 'Computer Methods for Circuit Analysis and Design — Appendix C: Special Complex
+  Integration of a Rational Function'
+type: source
+id: source-computer-methods-circuit-analysis-design-23-appendix-c-special-complex-integration-of-a-rational-function
+kind: derived-summary
+tags:
+- foundational
+- math
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/23-appendix-c-special-complex-integration-of-a-rational-function.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/23-appendix-c-special-complex-integration-of-a-rational-function.txt
 ---
 
 ## Key Points

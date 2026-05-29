@@ -1,11 +1,18 @@
 ---
-title: "Wave Pipelining"
-type: concept
-tags: [vlsi, digital, timing, well-established]
+title: Wave Pipelining
+type: claim
+id: claim-wave-pipelining
+tags:
+- vlsi
+- digital
+- timing
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/07-4-synchronization-in-vlsi.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

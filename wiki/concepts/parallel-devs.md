@@ -1,11 +1,20 @@
 ---
-title: "Parallel DEVS"
-type: concept
-tags: [simulation, modeling, devs, foundational, well-established, parallel]
+title: Parallel DEVS
+type: claim
+id: claim-parallel-devs
+tags:
+- simulation
+- modeling
+- devs
+- foundational
+- well-established
+- parallel
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/03-1-modeling-and-simulation-of-systems-of-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/03-1-modeling-and-simulation-of-systems-of-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

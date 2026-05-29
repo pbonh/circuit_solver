@@ -1,11 +1,15 @@
 ---
-title: "ODEX"
+title: ODEX
 type: entity
-tags: [ode, numerical-integration, foundational]
+id: entity-odex
+tags:
+- ode
+- numerical-integration
+- foundational
 created: 2026-05-21
 updated: 2026-05-21
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/05-chapter-iv-stiff-problems-one-step-methods.txt"]
-confidence: low
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/05-chapter-iv-stiff-problems-one-step-methods.txt
 ---
 
 ## Overview

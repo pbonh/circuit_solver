@@ -1,11 +1,17 @@
 ---
-title: "Crout Algorithm (LU Variant)"
-type: concept
-tags: [foundational, numerical, well-established]
+title: Crout Algorithm (LU Variant)
+type: claim
+id: claim-crout-algorithm
+tags:
+- foundational
+- numerical
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/05-chapter-2-network-equations-and-their-solution.txt"]
-confidence: medium
+sources:
+- raw/Computer-Methods-for-Circuit-Analysis-and-Design/_txt/05-chapter-2-network-equations-and-their-solution.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

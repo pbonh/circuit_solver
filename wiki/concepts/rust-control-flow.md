@@ -1,11 +1,17 @@
 ---
-title: "Rust Control Flow"
-type: concept
-tags: [rust, foundational, well-established]
+title: Rust Control Flow
+type: claim
+id: claim-rust-control-flow
+tags:
+- rust
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/04-chapter-3-common-programming-concepts.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/04-chapter-3-common-programming-concepts.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

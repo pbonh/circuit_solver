@@ -1,11 +1,19 @@
 ---
-title: "Network-on-Chip (NoC) Model"
-type: concept
-tags: [simulation, modeling, network-on-chip, verification, well-established]
+title: Network-on-Chip (NoC) Model
+type: claim
+id: claim-network-on-chip-model
+tags:
+- simulation
+- modeling
+- network-on-chip
+- verification
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/20-16-model-development-and-execution-process-with-repositories-validation-and-verification.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/20-16-model-development-and-execution-process-with-repositories-validation-and-verification.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

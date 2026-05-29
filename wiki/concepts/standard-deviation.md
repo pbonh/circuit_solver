@@ -1,11 +1,16 @@
 ---
-title: "Standard Deviation"
-type: concept
-tags: [statistics, foundational]
+title: Standard Deviation
+type: claim
+id: claim-standard-deviation
+tags:
+- statistics
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/10-chapter-6-dashboard-enhancements.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/10-chapter-6-dashboard-enhancements.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

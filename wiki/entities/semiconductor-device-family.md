@@ -1,11 +1,17 @@
 ---
-title: "Semiconductor Device Family"
+title: Semiconductor Device Family
 type: entity
-tags: [semiconductor, device-physics, taxonomy, foundational, well-established]
+id: entity-semiconductor-device-family
+tags:
+- semiconductor
+- device-physics
+- taxonomy
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt
 ---
 
 ## Overview

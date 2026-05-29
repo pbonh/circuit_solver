@@ -1,11 +1,19 @@
 ---
-title: "RATTLE Algorithm"
-type: concept
-tags: [mechanical, symplectic, molecular-dynamics, foundational, well-established]
+title: RATTLE Algorithm
+type: claim
+id: claim-rattle-algorithm
+tags:
+- mechanical
+- symplectic
+- molecular-dynamics
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: high
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.85
 ---
 
 ## Definition

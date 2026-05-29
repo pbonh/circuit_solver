@@ -1,11 +1,18 @@
 ---
-title: "Graph Coloring"
-type: concept
-tags: [graph, algorithm, well-established, vlsi]
+title: Graph Coloring
+type: claim
+id: claim-graph-coloring
+tags:
+- graph
+- algorithm
+- well-established
+- vlsi
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/04-1-introduction.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/04-1-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

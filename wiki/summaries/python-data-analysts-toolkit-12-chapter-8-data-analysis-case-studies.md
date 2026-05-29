@@ -1,11 +1,18 @@
 ---
-title: "Python Data Analyst's Toolkit — Chapter 8: Data Analysis Case Studies"
-type: summary
-tags: [python, pandas, data-analysis, visualization, well-established]
+title: 'Python Data Analyst''s Toolkit — Chapter 8: Data Analysis Case Studies'
+type: source
+id: source-python-data-analysts-toolkit-12-chapter-8-data-analysis-case-studies
+kind: derived-summary
+tags:
+- python
+- pandas
+- data-analysis
+- visualization
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/12-chapter-8-data-analysis-case-studies.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/12-chapter-8-data-analysis-case-studies.txt
 ---
 
 ## Key Points

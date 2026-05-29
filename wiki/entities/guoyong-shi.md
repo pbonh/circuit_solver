@@ -1,11 +1,17 @@
 ---
-title: "Guoyong Shi"
+title: Guoyong Shi
 type: entity
-tags: [person, author, researcher, symbolic, vlsi]
+id: entity-guoyong-shi
+tags:
+- person
+- author
+- researcher
+- symbolic
+- vlsi
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/01-acknowledgments.txt"]
-confidence: high
+sources:
+- raw/AdvancedSymbolicAnalysisForVLSISystems/_txt/01-acknowledgments.txt
 ---
 
 ## Overview

@@ -1,11 +1,15 @@
 ---
-title: "Python `datetime` Module"
+title: Python `datetime` Module
 type: entity
-tags: [python, foundational, well-established]
+id: entity-python-datetime-module
+tags:
+- python
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/05-chapter-1-getting-familiar-with-python.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/05-chapter-1-getting-familiar-with-python.txt
 ---
 
 ## Overview

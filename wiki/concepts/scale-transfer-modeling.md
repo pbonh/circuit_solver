@@ -1,11 +1,19 @@
 ---
-title: "Scale Transfer Modeling"
-type: concept
-tags: [simulation, modeling, multi-scale, living-systems, well-established]
+title: Scale Transfer Modeling
+type: claim
+id: claim-scale-transfer-modeling
+tags:
+- simulation
+- modeling
+- multi-scale
+- living-systems
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/ModelingAndSimulationOfSystems/_txt/21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems.txt"]
-confidence: medium
+sources:
+- raw/ModelingAndSimulationOfSystems/_txt/21-17-modeling-and-simulation-of-living-systems-as-systems-of-systems.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

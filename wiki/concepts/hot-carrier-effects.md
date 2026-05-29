@@ -1,11 +1,19 @@
 ---
-title: "Hot-Carrier Effects"
-type: concept
-tags: [semiconductor, device-physics, mosfet, reliability, well-established]
+title: Hot-Carrier Effects
+type: claim
+id: claim-hot-carrier-effects
+tags:
+- semiconductor
+- device-physics
+- mosfet
+- reliability
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/09-chapter-6-mosfets.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,20 @@
 ---
-title: "Discrete Variation of Constants"
-type: concept
-tags: [ode, numerical-integration, multistep, convergence, foundational, well-established]
+title: Discrete Variation of Constants
+type: claim
+id: claim-discrete-variation-of-constants
+tags:
+- ode
+- numerical-integration
+- multistep
+- convergence
+- foundational
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/
+confidence:
+  base: 0.65
 ---
 
 ## Definition

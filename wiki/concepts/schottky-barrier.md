@@ -1,11 +1,19 @@
 ---
-title: "Schottky Barrier"
-type: concept
-tags: [semiconductor, device-physics, diode, metal-semiconductor, well-established]
+title: Schottky Barrier
+type: claim
+id: claim-schottky-barrier
+tags:
+- semiconductor
+- device-physics
+- diode
+- metal-semiconductor
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

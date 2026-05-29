@@ -1,11 +1,18 @@
 ---
-title: "State-Space Model"
-type: concept
-tags: [analysis, simulation, well-established, linear-algebra]
+title: State-Space Model
+type: claim
+id: claim-state-space-model
+tags:
+- analysis
+- simulation
+- well-established
+- linear-algebra
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt"]
-confidence: medium
+sources:
+- raw/GraphsInVLSI/_txt/12-9-exploratory-methodology-for-power-delivery.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

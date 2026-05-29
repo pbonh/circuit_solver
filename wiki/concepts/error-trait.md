@@ -1,11 +1,18 @@
 ---
-title: "Error Trait"
-type: concept
-tags: [rust, foundational, error-handling, well-established]
+title: Error Trait
+type: claim
+id: claim-error-trait
+tags:
+- rust
+- foundational
+- error-handling
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/10-chapter-9-error-handling.txt"]
-confidence: medium
+sources:
+- raw/rust_book/_txt/10-chapter-9-error-handling.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,19 @@
 ---
-title: "Thyristor"
-type: concept
-tags: [semiconductor, device-physics, power-device, well-established]
+title: Thyristor
+type: claim
+id: claim-thyristor
+tags:
+- semiconductor
+- device-physics
+- power-device
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt", "raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/15-chapter-11-thyristors-and-power-devices.txt"]
-confidence: medium
+sources:
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/02-introduction.txt
+- raw/PhysicsOfSemiconductorDevices3rdEdition-S.M.SzeAndKwokK.Ng/_txt/15-chapter-11-thyristors-and-power-devices.txt
+confidence:
+  base: 0.65
 ---
 
 ## Definition

@@ -1,11 +1,18 @@
 ---
-title: "Join Types (Inner / Outer / Left / Right)"
-type: concept
-tags: [python, pandas, data-analysis, well-established]
+title: Join Types (Inner / Outer / Left / Right)
+type: claim
+id: claim-join-types
+tags:
+- python
+- pandas
+- data-analysis
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt"]
-confidence: high
+sources:
+- raw/PythonDataAnalystsToolkit/_txt/10-chapter-6-prepping-your-data-with-pandas.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

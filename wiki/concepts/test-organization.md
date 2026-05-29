@@ -1,11 +1,18 @@
 ---
-title: "Test Organization (Rust)"
-type: concept
-tags: [rust, foundational, testing, well-established]
+title: Test Organization (Rust)
+type: claim
+id: claim-test-organization
+tags:
+- rust
+- foundational
+- testing
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/rust_book/_txt/12-chapter-11-writing-automated-tests.txt"]
-confidence: high
+sources:
+- raw/rust_book/_txt/12-chapter-11-writing-automated-tests.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

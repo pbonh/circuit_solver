@@ -1,11 +1,18 @@
 ---
-title: "Prototyping Python Dashboards — Introduction"
-type: summary
-tags: [python, dashboard, visualization, prototyping, foundational]
+title: Prototyping Python Dashboards — Introduction
+type: source
+id: source-prototyping-python-dashboards-04-introduction
+kind: derived-summary
+tags:
+- python
+- dashboard
+- visualization
+- prototyping
+- foundational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/04-introduction.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/04-introduction.txt
 ---
 
 ## Key Points

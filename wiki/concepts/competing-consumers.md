@@ -1,11 +1,16 @@
 ---
-title: "Competing Consumers"
-type: concept
-tags: [messaging, well-established]
+title: Competing Consumers
+type: claim
+id: claim-competing-consumers
+tags:
+- messaging
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt"]
-confidence: high
+sources:
+- raw/Foundations of Scalable Systems/_txt/05-part-ii-scalable-systems.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition

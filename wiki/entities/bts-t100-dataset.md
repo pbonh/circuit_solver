@@ -1,11 +1,15 @@
 ---
-title: "BTS T100 Domestic Segment Dataset"
+title: BTS T100 Domestic Segment Dataset
 type: entity
-tags: [aviation, dataset, relational]
+id: entity-bts-t100-dataset
+tags:
+- aviation
+- dataset
+- relational
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/13-chapter-9-the-bts-t100-dataset-interacting-controls-and-tables.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/13-chapter-9-the-bts-t100-dataset-interacting-controls-and-tables.txt
 ---
 
 ## Overview

@@ -1,11 +1,16 @@
 ---
-title: "PHEM56"
+title: PHEM56
 type: entity
-tags: [ode, numerical-integration, foundational, dae]
+id: entity-phem56
+tags:
+- ode
+- numerical-integration
+- foundational
+- dae
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt"]
-confidence: medium
+sources:
+- raw/solving_ordinary_differential_equations_ii/_txt/06-chapter-vii-differential-algebraic-equations.txt
 ---
 
 ## Overview

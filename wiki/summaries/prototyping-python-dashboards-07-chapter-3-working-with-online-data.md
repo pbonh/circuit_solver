@@ -1,11 +1,19 @@
 ---
-title: "Prototyping Python Dashboards — Chapter 3: Working with Online Data"
-type: summary
-tags: [python, screen-scraping, data-cleaning, csv, pandas, web]
+title: 'Prototyping Python Dashboards — Chapter 3: Working with Online Data'
+type: source
+id: source-prototyping-python-dashboards-07-chapter-3-working-with-online-data
+kind: derived-summary
+tags:
+- python
+- screen-scraping
+- data-cleaning
+- csv
+- pandas
+- web
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/PrototypingPythonDashboards/_txt/07-chapter-3-working-with-online-data.txt"]
-confidence: high
+sources:
+- raw/PrototypingPythonDashboards/_txt/07-chapter-3-working-with-online-data.txt
 ---
 
 ## Key Points

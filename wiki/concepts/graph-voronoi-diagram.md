@@ -1,11 +1,18 @@
 ---
-title: "Graph Voronoi Diagram (GVD) Partitioner"
-type: concept
-tags: [graph, graph-partitioning, algorithm, well-established]
+title: Graph Voronoi Diagram (GVD) Partitioner
+type: claim
+id: claim-graph-voronoi-diagram
+tags:
+- graph
+- graph-partitioning
+- algorithm
+- well-established
 created: 2026-05-15
 updated: 2026-05-15
-sources: ["raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt"]
-confidence: high
+sources:
+- raw/SystemsForBigGraphAnalytics/_txt/03-part-ii-think-like-a-graph.txt
+confidence:
+  base: 0.85
 ---
 
 ## Definition
