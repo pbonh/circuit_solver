@@ -1,0 +1,1 @@
+2026-05-23T00:11:35-07:00  [t_1dd43f00]  optimistic-advance-with-correct-prediction  EVIDENCE-RECORDED  spec=openspec/changes/circuit-solver-2026-05-21-v1-spec/specs/mixed-signal-cosim/spec.md  idempotency=2026-05-21-v1-spec:t_1dd43f00:17cb7f610f24b7d56ce96f58858f18b2e227a694
