@@ -302,6 +302,59 @@ impl AssembledSystem {
     pub fn set_rhs(&mut self, row: u32, value: f64) {
         self.b[row as usize] = value;
     }
+
+    /// Construct from raw parts for testing and integration use.
+    ///
+    /// The caller provides the same data that [`IncrementalMnaBuilder::finish`]
+    /// would produce. This constructor validates structural invariants
+    /// (dimension consistency, matrix/RHS lengths) and returns
+    /// [`StampError`] on violation.
+    ///
+    /// # Arguments
+    ///
+    /// - `node_count` — number of node equations (including ground).
+    /// - `branch_count` — number of MNA branch equations.
+    /// - `a` — flat row-major matrix of length `dim * dim`.
+    /// - `b` — RHS vector of length `dim`.
+    ///
+    /// # Errors
+    ///
+    /// - [`StampError::SystemTooLarge`] if `node_count + branch_count`
+    ///   overflows `u32`.
+    /// - [`StampError::MatrixSizeMismatch`] if `a.len() != dim * dim`.
+    /// - [`StampError::RhsSizeMismatch`] if `b.len() != dim`.
+    pub fn from_raw_parts(
+        node_count: u32,
+        branch_count: u32,
+        a: Vec<f64>,
+        b: Vec<f64>,
+    ) -> Result<Self, StampError> {
+        let dim = node_count
+            .checked_add(branch_count)
+            .ok_or(StampError::SystemTooLarge {
+                node_count,
+                branch_count,
+            })?;
+        let dim_usize = dim as usize;
+        if a.len() != dim_usize * dim_usize {
+            return Err(StampError::MatrixSizeMismatch {
+                expected: dim_usize * dim_usize,
+                actual: a.len(),
+            });
+        }
+        if b.len() != dim_usize {
+            return Err(StampError::RhsSizeMismatch {
+                expected: dim_usize,
+                actual: b.len(),
+            });
+        }
+        Ok(Self {
+            node_count,
+            branch_count,
+            a,
+            b,
+        })
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -356,6 +409,20 @@ pub enum StampError {
         /// The offending value.
         value: f64,
     },
+    /// Matrix slice length does not match `dim * dim`.
+    MatrixSizeMismatch {
+        /// Expected length (`dim * dim`).
+        expected: usize,
+        /// Actual length of the slice provided.
+        actual: usize,
+    },
+    /// RHS vector length does not match `dim`.
+    RhsSizeMismatch {
+        /// Expected length (`dim`).
+        expected: usize,
+        /// Actual length of the vector provided.
+        actual: usize,
+    },
 }
 
 impl core::fmt::Display for StampError {
@@ -394,6 +461,12 @@ impl core::fmt::Display for StampError {
             }
             Self::NonFiniteStampValue { row, col, value } => {
                 write!(f, "non-finite stamp value {value} at row {row}, col {col}")
+            }
+            Self::MatrixSizeMismatch { expected, actual } => {
+                write!(f, "matrix size mismatch: expected {expected}, got {actual}")
+            }
+            Self::RhsSizeMismatch { expected, actual } => {
+                write!(f, "rhs size mismatch: expected {expected}, got {actual}")
             }
         }
     }
