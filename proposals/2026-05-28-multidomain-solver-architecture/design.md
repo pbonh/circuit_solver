@@ -117,6 +117,34 @@ C4Component
     Rel(codegen, model_enum, "generates variants into")
 ```
 
+## Component Map
+
+C4 component → the path globs it owns (under `project/`, where the Rust crate +
+PyO3 frontend are built; see `kanban/board.yaml` `project_root`). Boundaries are
+the six containers of the L2 diagram, each aligned to its bounded context. The
+execution layer (`scientia-hermes-emit`) reads these to compute file-collision
+waves; a task whose `touches` stray outside its component's globs is a
+decomposition smell.
+
+- frontend: project/src/frontend/**, project/tests/frontend/**
+- netlist: project/src/netlist/**, project/tests/netlist/**
+- orch: project/src/orchestration/**, project/tests/orchestration/**
+- numeric: project/src/numeric/**, project/tests/numeric/**
+- devices: project/src/devices/**, project/tests/devices/**
+- digital: project/src/digital/**, project/tests/digital/**
+
+## Shared Contracts
+
+The cross-component interfaces, each pinned to an owner and the ADR that ratifies
+it. These are exactly the inter-container relationships in the L2 diagram; the
+execution layer orders each contract's producer task before its consumers.
+
+- netlist.CircuitGraph — owner: netlist — ratified-by: ADR-0001 (built by frontend, consumed by orch; immutable graph)
+- netlist.FlattenedView — owner: netlist — ratified-by: ADR-0003 (two-pass flatten / per-analysis sub-views, consumed by numeric + orch)
+- numeric.StampInterface — owner: numeric — ratified-by: ADR-0002 (MNA branch-stamping the device variants target)
+- devices.DeviceModel — owner: devices — ratified-by: ADR-0005 (closed enum stamp evaluator dispatched in the Newton loop)
+- digital.DigitalKernel — owner: digital — ratified-by: ADR-0006 (in-process run-until event queue the scheduler drives)
+
 ## Trade-offs
 
 - **Native digital kernel vs. external co-simulation.** Chosen: native (single process, no

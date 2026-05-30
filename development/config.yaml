@@ -12,48 +12,75 @@ wiki:
   path: wiki/
   raw_path: raw/
 
-# Hermes integration.
+# Optional execution layer (scientia-hermes-*). Absent this block, the pipeline
+# still ends at tasks.md and never touches Hermes. Present, the scientia
+# orchestrator recommends scientia-hermes-init -> scientia-hermes-emit once tasks
+# are complete. All keys are optional; the values below mirror the 0.2 bundle
+# defaults — drop a key to inherit the bundle default for it.
 hermes:
-  # Override per-repo if the host's kanban.db is project-specific.
-  kanban_db: ~/.hermes/kanban.db
-  # Parallel batch size per delegate_task call. Mapped to hermes'
-  # delegation.max_concurrent_children. Default 3, min 1.
-  # Applied to ~/.hermes/config.yaml when scientia-kanban-init runs;
-  # scientia-kanban-emit refuses if the host drifts from this value.
-  max_concurrent_children: 3
-  # Profile name overrides — leave blank to use defaults.
-  profile_names:
-    implementer: scientia-implementer
-    reviewer:    scientia-reviewer
-    integrator:  scientia-integrator
-    aggregator:  scientia-aggregator
-  # Per-profile model configuration. Optional; absent block = hands-off,
-  # every profile inherits Hermes' host-level defaults. Keys mirror
-  # Hermes' per-profile config.yaml schema 1:1 — copy/paste examples
-  # from https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models
-  # work as-is. scientia-kanban-init applies any declared leaf via
-  # `hermes -p <name> config set`; scientia-kanban-emit refuses on
-  # drift between this block and the effective profile config.
-  # Schema reference:
-  #   skills/scientia-kanban-init/references/profile-models.md
-  #
-  # profiles:
-  #   implementer:
-  #     model:
-  #       provider: anthropic
-  #       default: claude-opus-4.7
-  #     auxiliary:
-  #       vision:
-  #         provider: openrouter
-  #         model: google/gemini-2.5-flash
-  #     model_aliases:
-  #       fav:
-  #         model: claude-sonnet-4.6
-  #         provider: anthropic
-  #   reviewer:
-  #     model:
-  #       default: claude-sonnet-4.6
-  #   # integrator and aggregator omitted -> Hermes defaults
+  board: ""                   # "" = the current project name (slugified project dir,
+                              #      via scientia.hermes.board.resolve_board); else an explicit slug
+  tenant_strategy: change-id  # change-id | none
+  workspace: worktree         # scratch | worktree | dir:<absolute-path>
+  pipeline: impl-review-integrate   # impl-review-integrate | single
+  emit_epic: true
+  on_supersede: archive       # archive | leave
+  backend: rest               # rest | cli
+  rest_base: http://127.0.0.1:8787/api/plugins/kanban   # loopback dashboard plugin
+  conflict_prevention: true   # C4-derived waves + shared-contract ratification
+  max_parallel_per_file_group: 2   # wave cap on tasks sharing a touched path
+  preflight:
+    require_gateway: true
+    require_profiles: true
+  # Default model config — used by any profile that doesn't override it below.
+  # Fireworks (https://app.fireworks.ai/models) is the default provider because
+  # it offers fast, OpenAI-compatible inference for leading open-weight models.
+  # Override per-profile or switch the default to any supported vendor.
+  models:
+    default:
+      provider: fireworks
+      model: accounts/fireworks/models/deepseek-v4-flash
+      base_url: https://api.fireworks.ai/inference/v1
+      api_key_env: FIREWORKS_API_KEY
+      temperature: 0.2
+      max_tokens: 131072
+  profiles:                   # provisioned/validated by scientia-hermes-init
+    implementer:
+      description: "Writes code + tests for one task in an isolated worktree."
+      model:
+        provider: fireworks
+        model: accounts/fireworks/models/glm-5p1
+        base_url: https://api.fireworks.ai/inference/v1
+        api_key_env: FIREWORKS_API_KEY
+        temperature: 0.1
+        max_tokens: 25344
+    reviewer:
+      description: "Reviews a completed task branch against its spec scenario."
+      model:
+        provider: fireworks
+        model: accounts/fireworks/models/kimi-k2p6
+        base_url: https://api.fireworks.ai/inference/v1
+        api_key_env: FIREWORKS_API_KEY
+        temperature: 0.3
+        max_tokens: 32768
+    integrator:
+      description: "Merges an approved branch to trunk; routes conflicts to conflict-resolver."
+      model:
+        provider: fireworks
+        model: accounts/fireworks/models/minimax-m2p7
+        base_url: https://api.fireworks.ai/inference/v1
+        api_key_env: FIREWORKS_API_KEY
+        temperature: 0.0
+        max_tokens: 24576
+    conflict-resolver:
+      description: "Reconciles merge/semantic conflicts using spec scenarios, ratified contracts, and C4 boundaries; resolves without human input where safe, escalates only genuine spec contradictions."
+      model:
+        provider: fireworks
+        model: accounts/fireworks/models/deepseek-v4-pro
+        base_url: https://api.fireworks.ai/inference/v1
+        api_key_env: FIREWORKS_API_KEY
+        temperature: 0.0
+        max_tokens: 131072
 
 # Emit policy.
 emit:
