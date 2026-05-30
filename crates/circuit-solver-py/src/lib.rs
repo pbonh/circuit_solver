@@ -69,8 +69,13 @@
 //!   tasks.md item #61 (spec scenario
 //!   `python-frontend#error-on-malformed-netlist`).
 //!
-//! `NumPy` result arrays are task #58 (still pending); GIL release
-//! around solver entry points is task #59, completed here.
+//! - [`node_voltages_array`](result::PySimulationResult::node_voltages_array)
+//!   / [`branch_currents_array`](result::PySimulationResult::branch_currents_array)
+//!   \u2014 zero-copy `NumPy` views over Rust-owned result vectors
+//!   (task #58 / `frontend-contract#results-zero-copy-numpy`),
+//!   returning `Py<PyArray1<f64>>` via `numpy::PyArray1::from_vec`.
+//!
+//! GIL release around solver entry points is task #59, completed here.
 //!
 //! ## Build profiles
 //!
