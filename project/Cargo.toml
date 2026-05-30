@@ -5,8 +5,9 @@ edition = "2021"
 description = "Pure-Rust analog/digital/mixed-signal circuit simulator"
 
 [dependencies]
-
-[workspace]
+circuit-solver-types = { path = "../crates/circuit-solver-types" }
+numeric-solver = { path = "../crates/numeric-solver" }
+device-modeling = { path = "../crates/device-modeling" }
 
 [[test]]
 name = "digital-equivalence"
