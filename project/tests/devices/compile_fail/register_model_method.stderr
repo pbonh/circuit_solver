@@ -1,0 +1,5 @@
+error[E0599]: no method named `register_model` found for enum `DeviceModel` in the current scope
+ --> $DIR/register_model_method.rs:8:7
+  |
+8 |     m.register_model("new_model");
+  |       ^^^^^^^^^^^^^^ method not found in `DeviceModel`

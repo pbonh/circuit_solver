@@ -1,0 +1,5 @@
+error[E0599]: no method named `add_model` found for enum `DeviceModel` in the current scope
+ --> $DIR/add_model_method.rs:7:7
+  |
+7 |     m.add_model("new_model");
+  |       ^^^^^^^^^ method not found in `DeviceModel`

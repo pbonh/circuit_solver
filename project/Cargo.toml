@@ -11,6 +11,9 @@ device-modeling = { path = "../crates/device-modeling" }
 analysis-orchestration = { path = "../crates/analysis-orchestration" }
 netlist-graph = { path = "../crates/netlist-graph" }
 
+[dev-dependencies]
+trybuild = "1"
+
 [[test]]
 name = "digital-equivalence"
 path = "tests/digital/equivalence.rs"
@@ -18,3 +21,7 @@ path = "tests/digital/equivalence.rs"
 [[test]]
 name = "digital-vcd"
 path = "tests/digital/vcd.rs"
+
+[[test]]
+name = "no-runtime-registration"
+path = "tests/devices/no_runtime_registration.rs"

@@ -1,0 +1,5 @@
+error[E0599]: no method named `into_model` found for enum `DeviceFamily` in the current scope
+ --> $DIR/family_into_model.rs:8:38
+  |
+8 |     let _model = DeviceFamily::Diode.into_model();
+  |                                      ^^^^^^^^^^ method not found in `DeviceFamily`
