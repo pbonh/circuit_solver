@@ -38,9 +38,7 @@
 use circuit_solver_types::SimulationTime;
 use core::fmt;
 
-use crate::event_queue::{
-    DigitalEvent, EventQueue, EventQueueCheckpoint, LogicValue, NetId,
-};
+use crate::event_queue::{DigitalEvent, EventQueue, EventQueueCheckpoint, LogicValue, NetId};
 
 // ---------------------------------------------------------------------------
 // Net state
@@ -86,7 +84,10 @@ impl NetState {
     /// assigned.
     #[must_use]
     pub fn get(&self, id: NetId) -> LogicValue {
-        self.values.get(id.index() as usize).copied().unwrap_or(LogicValue::Unknown)
+        self.values
+            .get(id.index() as usize)
+            .copied()
+            .unwrap_or(LogicValue::Unknown)
     }
 
     /// Set the value of net `id`. Grows the internal vector if needed.
@@ -267,7 +268,10 @@ impl DigitalKernel {
     /// if the event time is before the current simulation clock.
     ///
     /// [`run_until`]: DigitalKernel::run_until
-    pub fn schedule(&mut self, event: DigitalEvent) -> Result<(), crate::event_queue::EventQueueError> {
+    pub fn schedule(
+        &mut self,
+        event: DigitalEvent,
+    ) -> Result<(), crate::event_queue::EventQueueError> {
         self.queue.schedule(event)
     }
 

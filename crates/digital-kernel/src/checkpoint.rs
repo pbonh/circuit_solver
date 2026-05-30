@@ -505,9 +505,7 @@ mod tests {
         mgr.take_checkpoint(&kernel);
 
         let pre_rollback_count = mgr.checkpoint_count();
-        let _ = mgr
-            .rollback_to(&mut kernel, SimulationTime::ZERO)
-            .unwrap();
+        let _ = mgr.rollback_to(&mut kernel, SimulationTime::ZERO).unwrap();
         // The checkpoint is still in the stack.
         assert_eq!(mgr.checkpoint_count(), pre_rollback_count);
     }
@@ -529,18 +527,14 @@ mod tests {
         let _ = kernel.run_until(t50);
 
         // Roll back once.
-        let _ = mgr
-            .rollback_to(&mut kernel, SimulationTime::ZERO)
-            .unwrap();
+        let _ = mgr.rollback_to(&mut kernel, SimulationTime::ZERO).unwrap();
         assert_eq!(kernel.current_time(), SimulationTime::ZERO);
 
         // Run again to 50ns.
         let _ = kernel.run_until(t50);
 
         // Roll back again — should still work.
-        let _ = mgr
-            .rollback_to(&mut kernel, SimulationTime::ZERO)
-            .unwrap();
+        let _ = mgr.rollback_to(&mut kernel, SimulationTime::ZERO).unwrap();
         assert_eq!(kernel.current_time(), SimulationTime::ZERO);
         assert_eq!(kernel.pending_event_count(), 1);
     }
@@ -683,9 +677,7 @@ mod tests {
 
         // 3. Misprediction detected: actual event at t=80ns.
         //    Roll back to the checkpoint at t=0.
-        let restored = mgr
-            .rollback_to(&mut kernel, SimulationTime::ZERO)
-            .unwrap();
+        let restored = mgr.rollback_to(&mut kernel, SimulationTime::ZERO).unwrap();
         assert_eq!(restored, SimulationTime::ZERO);
         assert_eq!(kernel.current_time(), SimulationTime::ZERO);
         assert_eq!(kernel.pending_event_count(), 2);
@@ -730,8 +722,7 @@ mod tests {
         assert_eq!(events_before_rollback.len(), 2);
 
         // Roll back to t=0.
-        mgr.rollback_to(&mut kernel, SimulationTime::ZERO)
-            .unwrap();
+        mgr.rollback_to(&mut kernel, SimulationTime::ZERO).unwrap();
 
         // The processed events after rollback should be the checkpoint's
         // processed events (empty, since we checkpointed before any
@@ -769,8 +760,7 @@ mod tests {
 
         // Cycle 1: advance to 100, rollback to 0.
         let _ = kernel.run_until(t100);
-        mgr.rollback_to(&mut kernel, SimulationTime::ZERO)
-            .unwrap();
+        mgr.rollback_to(&mut kernel, SimulationTime::ZERO).unwrap();
 
         // Cycle 2: advance to 50, checkpoint at 50, advance to 100,
         // rollback to 50.
