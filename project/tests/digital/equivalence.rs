@@ -5,8 +5,7 @@
 //! user of the digital kernel would encounter.
 
 use circuit_solver::digital::equivalence::{
-    check_equivalence, EquivalenceMismatch, EquivalenceTolerance, Event,
-    EventTrace, LogicValue,
+    check_equivalence, EquivalenceMismatch, EquivalenceTolerance, Event, EventTrace, LogicValue,
 };
 
 // -----------------------------------------------------------------------
@@ -69,9 +68,7 @@ fn wrong_logic_value_is_detected() {
     let actual = make_trace(&[
         (0.0, "clk", LogicValue::Zero), // wrong: should be One
     ]);
-    let expected = make_trace(&[
-        (0.0, "clk", LogicValue::One),
-    ]);
+    let expected = make_trace(&[(0.0, "clk", LogicValue::One)]);
     let result = check_equivalence(&actual, &expected, &EquivalenceTolerance::exact());
     assert!(!result.equivalent);
     assert!(matches!(
@@ -86,12 +83,8 @@ fn wrong_logic_value_is_detected() {
 
 #[test]
 fn timing_within_tolerance_is_equivalent() {
-    let actual = make_trace(&[
-        (1.000_000_001, "clk", LogicValue::One),
-    ]);
-    let expected = make_trace(&[
-        (1.0, "clk", LogicValue::One),
-    ]);
+    let actual = make_trace(&[(1.000_000_001, "clk", LogicValue::One)]);
+    let expected = make_trace(&[(1.0, "clk", LogicValue::One)]);
     let tol = EquivalenceTolerance::with_time_tolerance(1e-6);
     let result = check_equivalence(&actual, &expected, &tol);
     assert!(result.equivalent);
@@ -103,12 +96,8 @@ fn timing_within_tolerance_is_equivalent() {
 
 #[test]
 fn timing_exceeding_tolerance_is_mismatch() {
-    let actual = make_trace(&[
-        (1.002, "clk", LogicValue::One),
-    ]);
-    let expected = make_trace(&[
-        (1.0, "clk", LogicValue::One),
-    ]);
+    let actual = make_trace(&[(1.002, "clk", LogicValue::One)]);
+    let expected = make_trace(&[(1.0, "clk", LogicValue::One)]);
     let tol = EquivalenceTolerance::with_time_tolerance(1e-3);
     let result = check_equivalence(&actual, &expected, &tol);
     assert!(!result.equivalent);
@@ -124,12 +113,8 @@ fn timing_exceeding_tolerance_is_mismatch() {
 
 #[test]
 fn different_net_name_is_detected() {
-    let actual = make_trace(&[
-        (1.0, "clk", LogicValue::One),
-    ]);
-    let expected = make_trace(&[
-        (1.0, "rst", LogicValue::One),
-    ]);
+    let actual = make_trace(&[(1.0, "clk", LogicValue::One)]);
+    let expected = make_trace(&[(1.0, "rst", LogicValue::One)]);
     let result = check_equivalence(&actual, &expected, &EquivalenceTolerance::exact());
     assert!(!result.equivalent);
     assert!(matches!(
@@ -174,9 +159,9 @@ fn multi_net_trace_with_tolerance() {
     let actual = make_trace(&[
         (0.0, "clk", LogicValue::One),
         (0.0, "data", LogicValue::Zero),
-        (5.001e-9, "clk", LogicValue::Zero),    // 1ps off from expected clk
-        (5.001e-9, "data", LogicValue::One),    // 1ps off from expected data
-        (10.0005e-9, "clk", LogicValue::One),   // 0.5ps off
+        (5.001e-9, "clk", LogicValue::Zero), // 1ps off from expected clk
+        (5.001e-9, "data", LogicValue::One), // 1ps off from expected data
+        (10.0005e-9, "clk", LogicValue::One), // 0.5ps off
     ]);
     let expected = make_trace(&[
         (0.0, "clk", LogicValue::One),
@@ -269,8 +254,24 @@ fn large_equivalent_trace() {
     let mut expected_events = Vec::new();
     for i in 0..1000u64 {
         let t = i as f64 * 1e-9;
-        actual_events.push(Event::new(t, "clk", if i % 2 == 0 { LogicValue::One } else { LogicValue::Zero }));
-        expected_events.push(Event::new(t, "clk", if i % 2 == 0 { LogicValue::One } else { LogicValue::Zero }));
+        actual_events.push(Event::new(
+            t,
+            "clk",
+            if i % 2 == 0 {
+                LogicValue::One
+            } else {
+                LogicValue::Zero
+            },
+        ));
+        expected_events.push(Event::new(
+            t,
+            "clk",
+            if i % 2 == 0 {
+                LogicValue::One
+            } else {
+                LogicValue::Zero
+            },
+        ));
     }
     let actual = EventTrace::from_sorted(actual_events);
     let expected = EventTrace::from_sorted(expected_events);
@@ -288,7 +289,11 @@ fn large_trace_with_one_mismatch() {
     let mut expected_events = Vec::new();
     for i in 0..1000u64 {
         let t = i as f64 * 1e-9;
-        let v = if i % 2 == 0 { LogicValue::One } else { LogicValue::Zero };
+        let v = if i % 2 == 0 {
+            LogicValue::One
+        } else {
+            LogicValue::Zero
+        };
         actual_events.push(Event::new(t, "clk", v));
         // Flip event #500: actual has One (even index), expected has Zero
         if i == 500 {
@@ -323,7 +328,12 @@ fn push_maintains_sort_with_interleaved_nets() {
     }
     // Verify sorted order
     for window in trace.iter().as_slice().windows(2) {
-        assert!(window[0] <= window[1], "events not sorted: {:?} > {:?}", window[0], window[1]);
+        assert!(
+            window[0] <= window[1],
+            "events not sorted: {:?} > {:?}",
+            window[0],
+            window[1]
+        );
     }
     assert_eq!(trace.len(), 150);
 }

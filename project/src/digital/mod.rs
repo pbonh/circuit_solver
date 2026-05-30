@@ -5,3 +5,4 @@
 //! (supersedes ADR-0004).
 
 pub mod equivalence;
+pub mod vcd;

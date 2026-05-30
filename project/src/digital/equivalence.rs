@@ -356,14 +356,14 @@ impl Default for EquivalenceTolerance {
 impl EquivalenceTolerance {
     /// Exact-match tolerance (no timing slack).
     pub fn exact() -> Self {
-        EquivalenceTolerance { time_tolerance: 0.0 }
+        EquivalenceTolerance {
+            time_tolerance: 0.0,
+        }
     }
 
     /// Tolerance with the given timing slack in seconds.
     pub fn with_time_tolerance(t: f64) -> Self {
-        EquivalenceTolerance {
-            time_tolerance: t,
-        }
+        EquivalenceTolerance { time_tolerance: t }
     }
 }
 
@@ -392,7 +392,7 @@ impl EquivalenceTolerance {
 ///
 /// > Equivalence holds iff the ordered (time, net, value) event sequences
 /// > agree within the timing tolerance (not byte-level VCD identity).
-/// — `digital-equivalence#ordered-events-not-vcd`
+/// > — `digital-equivalence#ordered-events-not-vcd`
 pub fn check_equivalence(
     actual: &EventTrace,
     expected: &EventTrace,
@@ -527,9 +527,7 @@ mod tests {
 
     #[test]
     fn equivalence_length_mismatch() {
-        let actual = EventTrace::from_sorted(vec![
-            Event::new(1.0, "a", LogicValue::One),
-        ]);
+        let actual = EventTrace::from_sorted(vec![Event::new(1.0, "a", LogicValue::One)]);
         let expected = EventTrace::from_sorted(vec![
             Event::new(1.0, "a", LogicValue::One),
             Event::new(2.0, "b", LogicValue::Zero),
@@ -544,12 +542,8 @@ mod tests {
 
     #[test]
     fn equivalence_value_mismatch() {
-        let actual = EventTrace::from_sorted(vec![
-            Event::new(1.0, "a", LogicValue::One),
-        ]);
-        let expected = EventTrace::from_sorted(vec![
-            Event::new(1.0, "a", LogicValue::Zero),
-        ]);
+        let actual = EventTrace::from_sorted(vec![Event::new(1.0, "a", LogicValue::One)]);
+        let expected = EventTrace::from_sorted(vec![Event::new(1.0, "a", LogicValue::Zero)]);
         let result = check_equivalence(&actual, &expected, &EquivalenceTolerance::exact());
         assert!(!result.equivalent);
         assert!(matches!(
@@ -560,12 +554,8 @@ mod tests {
 
     #[test]
     fn equivalence_time_mismatch_exact_tolerance() {
-        let actual = EventTrace::from_sorted(vec![
-            Event::new(1.01, "a", LogicValue::One),
-        ]);
-        let expected = EventTrace::from_sorted(vec![
-            Event::new(1.00, "a", LogicValue::One),
-        ]);
+        let actual = EventTrace::from_sorted(vec![Event::new(1.01, "a", LogicValue::One)]);
+        let expected = EventTrace::from_sorted(vec![Event::new(1.00, "a", LogicValue::One)]);
         let result = check_equivalence(&actual, &expected, &EquivalenceTolerance::exact());
         assert!(!result.equivalent);
         assert!(matches!(
@@ -576,12 +566,8 @@ mod tests {
 
     #[test]
     fn equivalence_time_within_tolerance() {
-        let actual = EventTrace::from_sorted(vec![
-            Event::new(1.01, "a", LogicValue::One),
-        ]);
-        let expected = EventTrace::from_sorted(vec![
-            Event::new(1.00, "a", LogicValue::One),
-        ]);
+        let actual = EventTrace::from_sorted(vec![Event::new(1.01, "a", LogicValue::One)]);
+        let expected = EventTrace::from_sorted(vec![Event::new(1.00, "a", LogicValue::One)]);
         let result = check_equivalence(
             &actual,
             &expected,
@@ -592,12 +578,8 @@ mod tests {
 
     #[test]
     fn equivalence_time_just_outside_tolerance() {
-        let actual = EventTrace::from_sorted(vec![
-            Event::new(1.03, "a", LogicValue::One),
-        ]);
-        let expected = EventTrace::from_sorted(vec![
-            Event::new(1.00, "a", LogicValue::One),
-        ]);
+        let actual = EventTrace::from_sorted(vec![Event::new(1.03, "a", LogicValue::One)]);
+        let expected = EventTrace::from_sorted(vec![Event::new(1.00, "a", LogicValue::One)]);
         let result = check_equivalence(
             &actual,
             &expected,
@@ -608,12 +590,8 @@ mod tests {
 
     #[test]
     fn equivalence_net_mismatch() {
-        let actual = EventTrace::from_sorted(vec![
-            Event::new(1.0, "a", LogicValue::One),
-        ]);
-        let expected = EventTrace::from_sorted(vec![
-            Event::new(1.0, "b", LogicValue::One),
-        ]);
+        let actual = EventTrace::from_sorted(vec![Event::new(1.0, "a", LogicValue::One)]);
+        let expected = EventTrace::from_sorted(vec![Event::new(1.0, "b", LogicValue::One)]);
         let result = check_equivalence(&actual, &expected, &EquivalenceTolerance::exact());
         assert!(!result.equivalent);
         assert!(matches!(
@@ -633,32 +611,20 @@ mod tests {
     #[test]
     fn equivalence_x_and_z_values_must_match_exactly() {
         // X != Zero
-        let actual = EventTrace::from_sorted(vec![
-            Event::new(1.0, "a", LogicValue::X),
-        ]);
-        let expected = EventTrace::from_sorted(vec![
-            Event::new(1.0, "a", LogicValue::Zero),
-        ]);
+        let actual = EventTrace::from_sorted(vec![Event::new(1.0, "a", LogicValue::X)]);
+        let expected = EventTrace::from_sorted(vec![Event::new(1.0, "a", LogicValue::Zero)]);
         let result = check_equivalence(&actual, &expected, &EquivalenceTolerance::exact());
         assert!(!result.equivalent);
 
         // Z != One
-        let actual = EventTrace::from_sorted(vec![
-            Event::new(1.0, "a", LogicValue::Z),
-        ]);
-        let expected = EventTrace::from_sorted(vec![
-            Event::new(1.0, "a", LogicValue::One),
-        ]);
+        let actual = EventTrace::from_sorted(vec![Event::new(1.0, "a", LogicValue::Z)]);
+        let expected = EventTrace::from_sorted(vec![Event::new(1.0, "a", LogicValue::One)]);
         let result = check_equivalence(&actual, &expected, &EquivalenceTolerance::exact());
         assert!(!result.equivalent);
 
         // X == X
-        let actual = EventTrace::from_sorted(vec![
-            Event::new(1.0, "a", LogicValue::X),
-        ]);
-        let expected = EventTrace::from_sorted(vec![
-            Event::new(1.0, "a", LogicValue::X),
-        ]);
+        let actual = EventTrace::from_sorted(vec![Event::new(1.0, "a", LogicValue::X)]);
+        let expected = EventTrace::from_sorted(vec![Event::new(1.0, "a", LogicValue::X)]);
         let result = check_equivalence(&actual, &expected, &EquivalenceTolerance::exact());
         assert!(result.equivalent);
     }
