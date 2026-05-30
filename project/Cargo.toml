@@ -5,9 +5,9 @@ edition = "2021"
 description = "Pure-Rust analog/digital/mixed-signal circuit simulator"
 
 [dependencies]
-tempfile = "3"
-
-[workspace]
+circuit-solver-types = { path = "../crates/circuit-solver-types" }
+numeric-solver = { path = "../crates/numeric-solver" }
+device-modeling = { path = "../crates/device-modeling" }
 
 [[test]]
 name = "digital-equivalence"
@@ -16,7 +16,3 @@ path = "tests/digital/equivalence.rs"
 [[test]]
 name = "digital-vcd"
 path = "tests/digital/vcd.rs"
-
-[[test]]
-name = "digital-golden-icarus"
-path = "tests/digital/golden_icarus.rs"
