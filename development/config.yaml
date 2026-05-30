@@ -1,16 +1,12 @@
-# development/config.yaml — scientia per-repo configuration.
+# development/config.yaml — scientia per-repo configuration override.
 #
-# All keys are optional. Defaults shipped in the scientia bundle apply
-# when a key is absent.
-
-# Version pin. Bumped only by install.sh --upgrade migrations.
-scientia_schema_version: 1
-bundle_version_installed: 0.1.0
-
-# Where the wiki lives.
-wiki:
-  path: wiki/
-  raw_path: raw/
+# Only keys recognized by the current scientia schema belong here; the
+# orchestrator surfaces any UNRECOGNIZED top-level key to the operator. Recognized
+# top-level keys: confidence, thresholds, audit, modes, hermes. Any key absent
+# here inherits the scientia bundle default.
+#
+# This repo overrides only the optional execution layer (hermes); the confidence
+# model, thresholds, audit window, and per-stage modes all use the bundle defaults.
 
 # Optional execution layer (scientia-hermes-*). Absent this block, the pipeline
 # still ends at tasks.md and never touches Hermes. Present, the scientia
@@ -81,31 +77,3 @@ hermes:
         api_key_env: FIREWORKS_API_KEY
         temperature: 0.0
         max_tokens: 131072
-
-# Emit policy.
-emit:
-  # ADR-status -> collaboration pattern. The wiki documents these defaults.
-  default_pattern_by_adr_status:
-    accepted:    P2-pipeline
-    proposed:    P5-human-in-loop
-    deprecated:  refuse
-    superseded:  refuse
-  # Tenants in this list always emit with --require-approval, regardless of ADR status.
-  require_approval_tenants: []
-
-# Verify strictness. block_on_severity is the threshold for verify_all.py
-# (and the orchestrator) to refuse to advance.
-verify:
-  block_on_severity: critical    # critical | warning | suggestion
-
-# Ingest policy.
-ingest:
-  # When true, scientia-ingest-synthesize writes only proposed edits to
-  # wiki/syntheses/; direct writes to wiki/concepts/ and wiki/entities/
-  # are not allowed.
-  synthesize_proposes_only: true
-
-# Per-tenant overrides. Tenant name = bounded-context slug.
-tenants: {}
-#   billing:
-#     require_approval: true
