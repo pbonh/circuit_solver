@@ -8,6 +8,8 @@ description = "Pure-Rust analog/digital/mixed-signal circuit simulator"
 circuit-solver-types = { path = "../crates/circuit-solver-types" }
 numeric-solver = { path = "../crates/numeric-solver" }
 device-modeling = { path = "../crates/device-modeling" }
+analysis-orchestration = { path = "../crates/analysis-orchestration" }
+netlist-graph = { path = "../crates/netlist-graph" }
 
 [[test]]
 name = "digital-equivalence"
