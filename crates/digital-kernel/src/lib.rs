@@ -58,6 +58,4 @@ pub use kernel::{
     DigitalKernel, KernelCheckpoint, KernelRunReport, NetState, NetStateCheckpoint,
     TimePointSettleReport,
 };
-pub use settle::{
-    CombinationalEvaluator, FnEvaluator, SettleConfig, SettleOutcome,
-};
+pub use settle::{CombinationalEvaluator, FnEvaluator, SettleConfig, SettleOutcome};

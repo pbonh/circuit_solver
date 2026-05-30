@@ -57,9 +57,7 @@
 use circuit_solver_types::SimulationTime;
 use core::fmt;
 
-use crate::event_queue::{
-    DigitalEvent, EventQueue, EventQueueCheckpoint, LogicValue, NetId,
-};
+use crate::event_queue::{DigitalEvent, EventQueue, EventQueueCheckpoint, LogicValue, NetId};
 use crate::settle::{self, CombinationalEvaluator, SettleConfig, SettleOutcome};
 
 // ---------------------------------------------------------------------------
@@ -106,7 +104,10 @@ impl NetState {
     /// assigned.
     #[must_use]
     pub fn get(&self, id: NetId) -> LogicValue {
-        self.values.get(id.index() as usize).copied().unwrap_or(LogicValue::Unknown)
+        self.values
+            .get(id.index() as usize)
+            .copied()
+            .unwrap_or(LogicValue::Unknown)
     }
 
     /// Set the value of net `id`. Grows the internal vector if needed.
@@ -369,7 +370,10 @@ impl DigitalKernel {
     /// if the event time is before the current simulation clock.
     ///
     /// [`run_until`]: DigitalKernel::run_until
-    pub fn schedule(&mut self, event: DigitalEvent) -> Result<(), crate::event_queue::EventQueueError> {
+    pub fn schedule(
+        &mut self,
+        event: DigitalEvent,
+    ) -> Result<(), crate::event_queue::EventQueueError> {
         self.queue.schedule(event)
     }
 
@@ -552,16 +556,21 @@ impl KernelRunReport {
     /// Whether any time point reported oscillation.
     #[must_use]
     pub fn has_oscillation(&self) -> bool {
-        self.settle_reports.iter().any(|r| matches!(r.outcome, SettleOutcome::Oscillating { .. }))
+        self.settle_reports
+            .iter()
+            .any(|r| matches!(r.outcome, SettleOutcome::Oscillating { .. }))
     }
 
     /// Total delta cycles across all time points.
     #[must_use]
     pub fn total_delta_cycles(&self) -> u32 {
-        self.settle_reports.iter().map(|r| match r.outcome {
-            SettleOutcome::Settled { delta_cycles } => delta_cycles,
-            SettleOutcome::Oscillating { delta_cycles, .. } => delta_cycles,
-        }).sum()
+        self.settle_reports
+            .iter()
+            .map(|r| match r.outcome {
+                SettleOutcome::Settled { delta_cycles }
+                | SettleOutcome::Oscillating { delta_cycles, .. } => delta_cycles,
+            })
+            .sum()
     }
 }
 
@@ -578,9 +587,21 @@ impl fmt::Display for KernelRunReport {
             }
         )?;
         if !self.settle_reports.is_empty() {
-            let settled = self.settle_reports.iter().filter(|r| matches!(r.outcome, SettleOutcome::Settled { .. })).count();
-            let oscillating = self.settle_reports.iter().filter(|r| matches!(r.outcome, SettleOutcome::Oscillating { .. })).count();
-            write!(f, ", settle: {settled} settled, {oscillating} oscillating, {} total delta cycles", self.total_delta_cycles())?;
+            let settled = self
+                .settle_reports
+                .iter()
+                .filter(|r| matches!(r.outcome, SettleOutcome::Settled { .. }))
+                .count();
+            let oscillating = self
+                .settle_reports
+                .iter()
+                .filter(|r| matches!(r.outcome, SettleOutcome::Oscillating { .. }))
+                .count();
+            write!(
+                f,
+                ", settle: {settled} settled, {oscillating} oscillating, {} total delta cycles",
+                self.total_delta_cycles()
+            )?;
         }
         Ok(())
     }
@@ -972,8 +993,7 @@ mod tests {
         let k = DigitalKernel::new();
         assert_eq!(k.settle_config().max_delta_cycles, 100);
 
-        let k = DigitalKernel::new()
-            .with_settle_config(SettleConfig::with_max_delta_cycles(50));
+        let k = DigitalKernel::new().with_settle_config(SettleConfig::with_max_delta_cycles(50));
         assert_eq!(k.settle_config().max_delta_cycles, 50);
     }
 

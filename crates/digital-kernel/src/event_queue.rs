@@ -323,10 +323,7 @@ impl EventQueue {
             if event.time > target {
                 break;
             }
-            let event = self
-                .heap
-                .pop()
-                .expect("peek succeeded, pop must succeed");
+            let event = self.heap.pop().expect("peek succeeded, pop must succeed");
             self.current_time = event.time;
             self.processed_events.push(event.clone());
             events_processed.push(event);
