@@ -33,6 +33,7 @@
 //! - **ADR-0010** — Unstable public Rust API surface for v1.
 
 pub mod model;
+pub mod mosfet;
 pub mod stamp;
 
 pub use model::{DeviceModel, LinearizedModel, OperatingPoint};

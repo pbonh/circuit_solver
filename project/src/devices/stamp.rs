@@ -171,10 +171,11 @@ fn stamp_nterm<const N: usize, S: StampInterface>(
 mod tests {
     use super::*;
     use crate::devices::model::{
-        DiodeParams, BJTParams, BJTPolarity,
-        DiodeLinearization,
-        linearize_diode, linearize_bjt,
-        DIODE_TERMINALS,
+        DiodeParams, BJTParams, BJTPolarity, MOSFETParams,
+        MosPolarity,
+        DiodeLinearization, MOSFETLinearization,
+        linearize_diode, linearize_bjt, linearize_mosfet,
+        DIODE_TERMINALS, MOSFET_TERMINALS,
     };
     use crate::numeric::mna::IncrementalMnaBuilder;
     use circuit_solver_types::NodeId;
@@ -423,5 +424,143 @@ mod tests {
             }
             assert_eq!(sys.get_rhs(r as u32), 0.0, "b[{r}] should be zero");
         }
+    }
+
+    // ------------------------------------------------------------------
+    // MOSFET conformance test (Level-1)
+    // ------------------------------------------------------------------
+
+    /// Verify that stamping a MOSFET Level-1 linearization touches
+    /// exactly the expected MNA entries (4×4 conductance block +
+    /// 4 RHS entries) and that the values match the Shichman-Hodges
+    /// companion model.
+    ///
+    /// This is a *structure + value* conformance test: it validates
+    /// both that the stamp evaluator routes entries to the correct
+    /// matrix positions and that the linearize_mosfet → stamp
+    /// pipeline produces numerically correct MOSFET companions.
+    #[test]
+    fn mosfet_level1_stamp_conformance() {
+        // 5-node system: ground (0) + nodes 1, 2, 3, 4.
+        let flat = make_flat(5);
+        let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder should succeed");
+        assert_eq!(builder.dim(), 5);
+
+        // NMOS Level-1: drain=1, gate=2, source=3, bulk=4.
+        let nodes = [
+            NodeId::new(1), NodeId::new(2),
+            NodeId::new(3), NodeId::new(4),
+        ];
+
+        let params = MOSFETParams::Level1(device_modeling::MosLevel1Params {
+            name: ModelName::new("nmos_test"),
+            polarity: MosPolarity::Nmos,
+            vto: 1.0,
+            kp: 50.0e-6,
+            lambda: 0.02,
+            gamma: 0.0,
+            phi: 0.6,
+            kf: 0.0,
+            af: 1.0,
+        });
+
+        // Vgs = 3 V > Vto = 1 V, Vds = 5 V > Vov = 2 V → saturation.
+        let terminal_voltages: [f64; MOSFET_TERMINALS] = [5.0, 3.0, 0.0, 0.0];
+
+        let lin = linearize_mosfet(&params, &terminal_voltages);
+
+        // Stamp into the builder.
+        stamp_linearized_device(&mut builder, &LinearizedModel::MOSFET(lin.clone()), &nodes)
+            .expect("MOSFET stamp should succeed");
+
+        let sys = builder.finish().expect("finish should succeed");
+
+        // Verify the 4×4 Jacobian landed correctly.
+        // lin.jacobian[i][j] → A[nodes[i].index(), nodes[j].index()]
+        let tol = 1e-6;
+
+        for (r, nr) in nodes.iter().enumerate() {
+            for (c, nc) in nodes.iter().enumerate() {
+                let actual = sys.get_matrix(nr.index(), nc.index());
+                let expected = lin.jacobian[r][c];
+                let allowed = tol * expected.abs().max(1.0);
+                assert!(
+                    (actual - expected).abs() < allowed,
+                    "A[{nr},{nc}] = {actual} expected J[{r}][{c}] = {expected}"
+                );
+            }
+        }
+
+        // Verify RHS entries: b[k] += -companion_current[k]
+        for (k, nk) in nodes.iter().enumerate() {
+            let actual = sys.get_rhs(nk.index());
+            let expected = -lin.companion_current[k];
+            let allowed = tol * expected.abs().max(1e-30);
+            assert!(
+                (actual - expected).abs() < allowed,
+                "b[{nk}] = {actual} expected -companion[{k}] = {expected}"
+            );
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // MOSFET zero-linearization structural test
+    // ------------------------------------------------------------------
+
+    /// Verify that a zero MOSFET linearization (all Jacobian and
+    /// companion entries = 0, as in cutoff) leaves the MNA system
+    /// unchanged. This extends the zero-linearization test to the
+    /// 4-terminal stamp path.
+    #[test]
+    fn mosfet_zero_linearization_leaves_system_unchanged() {
+        let flat = make_flat(5);
+        let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder should succeed");
+
+        let lin = LinearizedModel::MOSFET(MOSFETLinearization::zero());
+        let nodes = [
+            NodeId::new(1), NodeId::new(2),
+            NodeId::new(3), NodeId::new(4),
+        ];
+
+        stamp_linearized_device(&mut builder, &lin, &nodes)
+            .expect("zero MOSFET stamp should succeed");
+
+        let sys = builder.finish().expect("finish should succeed");
+
+        let dim = sys.dim() as usize;
+        for r in 0..dim {
+            for c in 0..dim {
+                assert_eq!(
+                    sys.get_matrix(r as u32, c as u32), 0.0,
+                    "A[{r},{c}] should be zero"
+                );
+            }
+            assert_eq!(sys.get_rhs(r as u32), 0.0, "b[{r}] should be zero");
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // MOSFET node-count mismatch test
+    // ------------------------------------------------------------------
+
+    #[test]
+    fn mosfet_stamp_rejects_wrong_node_count() {
+        let flat = make_flat(5);
+        let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder should succeed");
+
+        let lin = LinearizedModel::MOSFET(MOSFETLinearization::zero());
+        // Supply 2 nodes instead of the required 4.
+        let nodes = [NodeId::new(1), NodeId::new(2)];
+
+        let err = stamp_linearized_device(&mut builder, &lin, &nodes)
+            .expect_err("should reject wrong node count for MOSFET");
+
+        assert_eq!(
+            err,
+            StampDeviceError::NodeCountMismatch {
+                expected: MOSFET_TERMINALS,
+                actual: 2,
+            }
+        );
     }
 }

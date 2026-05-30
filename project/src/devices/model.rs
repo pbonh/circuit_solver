@@ -23,10 +23,16 @@ pub use device_modeling::stamp::{
 
 // Re-export the per-family linearization functions for direct use
 // in conformance tests and the stamp evaluator.
-pub use device_modeling::stamp::{linearize_diode, linearize_bjt};
+pub use device_modeling::stamp::{linearize_diode, linearize_bjt, linearize_mosfet};
+
+// Re-export the per-level MOSFET linearization helpers and the
+// BSIM3v3 standalone function for direct use in conformance tests.
+pub use device_modeling::stamp::{linearize_mosfet_level1, linearize_mosfet_bsim4};
+pub use device_modeling::linearize_bsim3v3;
 
 // Re-export parameter types needed to construct DeviceModel instances.
 pub use device_modeling::params::{
     DiodeParams, BJTParams, MOSFETParams,
     BJTPolarity,
+    MosLevel1Params, MosBSIM3v3Params, MosBSIM4Params, MosPolarity,
 };
