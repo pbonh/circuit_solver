@@ -214,22 +214,31 @@ fn tokenize(input: &str) -> Vec<(Token, usize)> {
             ' ' | '\t' => {
                 chars.next();
             }
-            // Comments: $comment ... $end
+            // '$' starts either a keyword ($date, $end, $var, …) or,
+            // when standalone, a VCD id code (Icarus Verilog uses '$'
+            // as a signal id code in $var declarations and value-change
+            // records like "0$").
             '$' => {
                 let start_line = line;
-                let mut kw = String::from("$");
                 chars.next(); // consume '$'
 
-                // Collect keyword characters
+                // Collect keyword characters after '$'
+                let mut after = String::new();
                 while let Some(&kc) = chars.peek() {
                     if kc.is_whitespace() || kc == '\n' || kc == '\r' {
                         break;
                     }
-                    kw.push(kc);
+                    after.push(kc);
                     chars.next();
                 }
 
-                tokens.push((Token::Keyword(kw), start_line));
+                if after.is_empty() {
+                    // Bare '$' followed by whitespace — treat as an
+                    // id-code value token, not a keyword.
+                    tokens.push((Token::Value(String::from("$")), start_line));
+                } else {
+                    tokens.push((Token::Keyword(format!("${}", after)), start_line));
+                }
             }
             _ => {
                 let start_line = line;
@@ -238,9 +247,12 @@ fn tokenize(input: &str) -> Vec<(Token, usize)> {
                     if vc.is_whitespace() || vc == '\n' || vc == '\r' {
                         break;
                     }
-                    if vc == '$' {
-                        break;
-                    }
+                    // Do NOT break on '$' here — Icarus Verilog uses '$'
+                    // as an id code (e.g. signal `b` may get id `$`,
+                    // producing value-change tokens like `0$`).  The '$'
+                    // is only a keyword delimiter when it starts a
+                    // whitespace-delimited token (handled by the '$'
+                    // arm above).
                     val.push(vc);
                     chars.next();
                 }
@@ -447,22 +459,62 @@ pub fn parse_vcd(input: &str) -> Result<VcdParseResult, VcdParseError> {
                         }
                     }
                     "$dumpoff" => {
-                        return Err(VcdParseError::UnsupportedDumpSection {
-                            line,
-                            keyword: "dumpoff".into(),
-                        });
+                        // Icarus Verilog emits $dumpoff during simulation.
+                        // Skip the X-value lines until $end.
+                        pos += 1;
+                        while pos < tokens.len() {
+                            match &tokens[pos].0 {
+                                Token::Keyword(kw) if kw == "$end" => {
+                                    pos += 1;
+                                    break;
+                                }
+                                _ => {
+                                    pos += 1;
+                                }
+                            }
+                        }
                     }
                     "$dumpon" => {
-                        return Err(VcdParseError::UnsupportedDumpSection {
-                            line,
-                            keyword: "dumpon".into(),
-                        });
+                        // Icarus Verilog emits $dumpon during simulation.
+                        // Skip value lines until $end.
+                        pos += 1;
+                        while pos < tokens.len() {
+                            match &tokens[pos].0 {
+                                Token::Keyword(kw) if kw == "$end" => {
+                                    pos += 1;
+                                    break;
+                                }
+                                _ => {
+                                    pos += 1;
+                                }
+                            }
+                        }
                     }
                     "$dumpall" => {
-                        return Err(VcdParseError::UnsupportedDumpSection {
-                            line,
-                            keyword: "dumpall".into(),
-                        });
+                        // Icarus Verilog emits $dumpall in the header section.
+                        // Skip value lines until $end.
+                        pos += 1;
+                        while pos < tokens.len() {
+                            match &tokens[pos].0 {
+                                Token::Keyword(kw) if kw == "$end" => {
+                                    pos += 1;
+                                    break;
+                                }
+                                Token::Value(v) => {
+                                    // Process value changes (same as $dumpvars)
+                                    if let Some((logic_val, id_code)) = parse_value_change(v) {
+                                        if let Some(net) = signals.get(&id_code).cloned() {
+                                            let time = current_time.unwrap_or(0.0);
+                                            events.push(Event::new(time, net, logic_val));
+                                        }
+                                    }
+                                    pos += 1;
+                                }
+                                _ => {
+                                    pos += 1;
+                                }
+                            }
+                        }
                     }
                     other => {
                         // Unknown keyword in header: skip until $end
@@ -814,21 +866,26 @@ $enddefinitions $end
     }
 
     #[test]
-    fn parse_vcd_dumpoff_rejected() {
+    fn parse_vcd_dumpoff_skipped() {
         let vcd = "\
 $timescale 1 ns $end
 $scope module m $end
 $var wire 1 ! a $end
 $upscope $end
 $enddefinitions $end
+#0
+0!
 $dumpoff
 x!
 $end
+#10
+1!
 ";
-        assert!(matches!(
-            parse_vcd(vcd),
-            Err(VcdParseError::UnsupportedDumpSection { .. })
-        ));
+        let result = parse_vcd(vcd).unwrap();
+        // $dumpoff values are skipped; we get the initial 0! and the #10 1!
+        assert_eq!(result.trace.len(), 2);
+        assert_eq!(result.trace.as_slice()[0].value, LogicValue::Zero);
+        assert_eq!(result.trace.as_slice()[1].value, LogicValue::One);
     }
 
     #[test]
