@@ -1,0 +1,11 @@
+[package]
+name = "circuit-solver"
+version = "0.1.0"
+edition = "2021"
+description = "Pure-Rust analog/digital/mixed-signal circuit simulator"
+
+[dependencies]
+
+[[test]]
+name = "digital-equivalence"
+path = "tests/digital/equivalence.rs"
