@@ -1,0 +1,5 @@
+error[E0599]: no variant, associated function, or constant named `from_name` found for enum `DeviceModel` in the current scope
+ --> $DIR/from_name.rs:6:27
+  |
+6 |     let _m = DeviceModel::from_name("Diode");
+  |                           ^^^^^^^^^ variant, associated function, or constant not found in `DeviceModel`

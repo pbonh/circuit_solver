@@ -1,0 +1,5 @@
+error[E0432]: unresolved import `device_modeling::ModelFactory`
+ --> $DIR/model_factory.rs:4:5
+  |
+4 | use device_modeling::ModelFactory;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `ModelFactory` in the root
