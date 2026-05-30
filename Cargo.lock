@@ -196,6 +196,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "digital-kernel"
+version = "0.0.1"
+dependencies = [
+ "circuit-solver-types",
+]
+
+[[package]]
 name = "dyn-stack"
 version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
