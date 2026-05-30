@@ -393,10 +393,7 @@ impl core::fmt::Display for StampError {
                 )
             }
             Self::NonFiniteStampValue { row, col, value } => {
-                write!(
-                    f,
-                    "non-finite stamp value {value} at row {row}, col {col}"
-                )
+                write!(f, "non-finite stamp value {value} at row {row}, col {col}")
             }
         }
     }
@@ -488,23 +485,12 @@ impl IncrementalMnaBuilder {
     ///
     /// Returns [`StampError::RowOutOfRange`] or
     /// [`StampError::ColOutOfRange`] if the indices are invalid.
-    pub fn add_to_matrix(
-        &mut self,
-        row: u32,
-        col: u32,
-        value: f64,
-    ) -> Result<(), StampError> {
+    pub fn add_to_matrix(&mut self, row: u32, col: u32, value: f64) -> Result<(), StampError> {
         if row >= self.dim {
-            return Err(StampError::RowOutOfRange {
-                row,
-                dim: self.dim,
-            });
+            return Err(StampError::RowOutOfRange { row, dim: self.dim });
         }
         if col >= self.dim {
-            return Err(StampError::ColOutOfRange {
-                col,
-                dim: self.dim,
-            });
+            return Err(StampError::ColOutOfRange { col, dim: self.dim });
         }
         if !value.is_finite() {
             return Err(StampError::NonFiniteStampValue { row, col, value });
@@ -523,10 +509,7 @@ impl IncrementalMnaBuilder {
     /// NaN or infinite.
     pub fn add_to_rhs(&mut self, row: u32, value: f64) -> Result<(), StampError> {
         if row >= self.dim {
-            return Err(StampError::RowOutOfRange {
-                row,
-                dim: self.dim,
-            });
+            return Err(StampError::RowOutOfRange { row, dim: self.dim });
         }
         if !value.is_finite() {
             return Err(StampError::NonFiniteStampValue { row, col: 0, value });
@@ -552,12 +535,7 @@ impl IncrementalMnaBuilder {
     /// # Errors
     ///
     /// Returns an error if `j` or `k` is out of range.
-    pub fn stamp_conductive(
-        &mut self,
-        j: u32,
-        k: u32,
-        y: f64,
-    ) -> Result<(), StampError> {
+    pub fn stamp_conductive(&mut self, j: u32, k: u32, y: f64) -> Result<(), StampError> {
         self.add_to_matrix(j, j, y)?;
         self.add_to_matrix(k, k, y)?;
         self.add_to_matrix(j, k, -y)?;
@@ -577,12 +555,7 @@ impl IncrementalMnaBuilder {
     /// # Errors
     ///
     /// Returns an error if `j` or `k` is out of range.
-    pub fn stamp_current_source(
-        &mut self,
-        j: u32,
-        k: u32,
-        i: f64,
-    ) -> Result<(), StampError> {
+    pub fn stamp_current_source(&mut self, j: u32, k: u32, i: f64) -> Result<(), StampError> {
         self.add_to_rhs(j, i)?;
         self.add_to_rhs(k, -i)?;
         Ok(())
@@ -631,12 +604,7 @@ impl IncrementalMnaBuilder {
     /// # Errors
     ///
     /// Returns an error if any index is out of range.
-    pub fn stamp_inductor_dc(
-        &mut self,
-        j: u32,
-        k: u32,
-        m: u32,
-    ) -> Result<(), StampError> {
+    pub fn stamp_inductor_dc(&mut self, j: u32, k: u32, m: u32) -> Result<(), StampError> {
         // DC: inductor is a short circuit (voltage source with e = 0)
         self.stamp_voltage_source(j, k, m, 0.0)
     }
@@ -747,13 +715,7 @@ impl IncrementalMnaBuilder {
     /// # Errors
     ///
     /// Returns an error if any index is out of range.
-    pub fn stamp_cccs(
-        &mut self,
-        j: u32,
-        k: u32,
-        mn: u32,
-        beta: f64,
-    ) -> Result<(), StampError> {
+    pub fn stamp_cccs(&mut self, j: u32, k: u32, mn: u32, beta: f64) -> Result<(), StampError> {
         self.add_to_matrix(j, mn, beta)?;
         self.add_to_matrix(k, mn, -beta)?;
         Ok(())
@@ -892,21 +854,13 @@ impl IncrementalMnaBuilder {
                 // the numeric-solver crate's `assemble` function.
                 // Here we just ensure the branch row/column
                 // connectivity is established.
-                let branch_idx = inc
-                    .branch
-                    .expect("has_branch implies Some")
-                    .index();
+                let branch_idx = inc.branch.expect("has_branch implies Some").index();
 
                 if nodes.len() == 2 {
                     // DC: stamp the voltage-source/inductor template
                     // with e = 0. Actual values come from the graph,
                     // which this project-level code doesn't own.
-                    builder.stamp_voltage_source(
-                        nodes[0],
-                        nodes[1],
-                        branch_idx,
-                        0.0,
-                    )?;
+                    builder.stamp_voltage_source(nodes[0], nodes[1], branch_idx, 0.0)?;
                 }
             }
 
@@ -1057,7 +1011,7 @@ mod tests {
 
         let sys = builder.finish().expect("finish");
         assert_eq!(sys.dim(), 4); // 3 nodes + 1 branch
-        // A[0,3] = 1, A[1,3] = -1, A[3,0] = 1, A[3,1] = -1
+                                  // A[0,3] = 1, A[1,3] = -1, A[3,0] = 1, A[3,1] = -1
         assert_eq!(sys.get_matrix(0, 3), 1.0);
         assert_eq!(sys.get_matrix(1, 3), -1.0);
         assert_eq!(sys.get_matrix(3, 0), 1.0);
@@ -1086,10 +1040,7 @@ mod tests {
         let flat = make_trivial_flat();
         let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
         let err = builder.add_to_matrix(5, 0, 1.0).unwrap_err();
-        assert!(matches!(
-            err,
-            StampError::RowOutOfRange { row: 5, dim: 2 }
-        ));
+        assert!(matches!(err, StampError::RowOutOfRange { row: 5, dim: 2 }));
     }
 
     #[test]
@@ -1097,10 +1048,7 @@ mod tests {
         let flat = make_trivial_flat();
         let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
         let err = builder.add_to_matrix(0, 5, 1.0).unwrap_err();
-        assert!(matches!(
-            err,
-            StampError::ColOutOfRange { col: 5, dim: 2 }
-        ));
+        assert!(matches!(err, StampError::ColOutOfRange { col: 5, dim: 2 }));
     }
 
     #[test]
@@ -1117,10 +1065,7 @@ mod tests {
     fn stamp_batch() {
         let flat = make_trivial_flat();
         let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
-        let stamps = [
-            StampValue::new(0, 0, 2.0),
-            StampValue::new(1, 1, 3.0),
-        ];
+        let stamps = [StampValue::new(0, 0, 2.0), StampValue::new(1, 1, 3.0)];
         builder.stamp_batch(&stamps).expect("batch should succeed");
 
         let sys = builder.finish().expect("finish");
@@ -1133,12 +1078,8 @@ mod tests {
         let flat = make_trivial_flat();
         let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
         // Stamp the same resistor twice
-        builder
-            .stamp_conductive(0, 1, 1.0)
-            .expect("first stamp");
-        builder
-            .stamp_conductive(0, 1, 2.0)
-            .expect("second stamp");
+        builder.stamp_conductive(0, 1, 1.0).expect("first stamp");
+        builder.stamp_conductive(0, 1, 2.0).expect("second stamp");
 
         let sys = builder.finish().expect("finish");
         // Both stamps add up
@@ -1152,9 +1093,7 @@ mod tests {
     fn assembled_system_accessors() {
         let flat = make_vs_flat();
         let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
-        builder
-            .stamp_voltage_source(0, 1, 3, 10.0)
-            .expect("stamp");
+        builder.stamp_voltage_source(0, 1, 3, 10.0).expect("stamp");
 
         let mut sys = builder.finish().expect("finish");
         assert_eq!(sys.dim(), 4);
@@ -1214,7 +1153,7 @@ mod tests {
             .expect("stamp should succeed");
         let sys = builder.finish().expect("finish");
         assert_eq!(sys.dim(), 4); // 2 nodes + 2 branches
-        // A[0,m] = 1, A[1,m] = -1
+                                  // A[0,m] = 1, A[1,m] = -1
         assert_eq!(sys.get_matrix(0, 2), 1.0);
         assert_eq!(sys.get_matrix(1, 2), -1.0);
         // A[m,0] = 1, A[m,1] = -1
@@ -1333,11 +1272,8 @@ mod tests {
         // Element 0: resistor (conductive, G=0.5 between n1 and n2)
         // Element 1: voltage source (V=5.0 between ground and n1, branch 0)
         let flat = make_vs_flat();
-        let sys = IncrementalMnaBuilder::assemble_from_flat(
-            &flat,
-            &[],
-        )
-        .expect("assembly should succeed");
+        let sys =
+            IncrementalMnaBuilder::assemble_from_flat(&flat, &[]).expect("assembly should succeed");
         // Only the voltage source template gets stamped (with e=0
         // since assemble_from_flat doesn't carry element values).
         // The resistor is not stamped because assemble_from_flat
