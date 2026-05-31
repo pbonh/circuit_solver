@@ -991,3 +991,208 @@ fn transfer_function_arrays_are_zero_copy_numpy_ndarrays() {
         }
     });
 }
+
+// -- tasks.md #26 / scenario frontend-contract#results-zero-copy-numpy
+// ----------------------------------------------------------------------------
+//
+// Gherkin (from
+// `proposals/2026-05-28-multidomain-solver-architecture/specs/frontend-contract/spec.md`):
+//
+//   Scenario: results-zero-copy-numpy
+//     Given a DC analysis Result containing node voltages and branch currents
+//      When the CircuitDesigner accesses the node voltages as a NumPy array
+//       And accesses the branch currents as a NumPy array
+//      Then the returned arrays are numpy.ndarray of dtype float64
+//       And successive calls return handles to the same underlying buffer
+//       And array[i] corresponds to the value for node_names()[i] / branch_names()[i]
+// ----------------------------------------------------------------------------
+
+/// Assert that `node_voltages_array()` returns a `numpy.ndarray` of
+/// `dtype=float64` whose values are in sorted node-name order and
+/// correspond to the by-name scalar channel.
+///
+/// This test covers the node-voltage arm of scenario
+/// `frontend-contract#results-zero-copy-numpy` (task #26).
+#[test]
+fn node_voltages_array_is_zero_copy_numpy_ndarray() {
+    Python::attach(|py| {
+        let nv = make_scalar_map(py, &[("n0", 0.0), ("n1", 5.0), ("n2", 3.3)])
+            .unwrap()
+            .into_any();
+        let bc = make_scalar_map(py, &[("V1", 1e-3)])
+            .unwrap()
+            .into_any();
+        let result = fresh_result(py, Some(nv), Some(bc), None, None).unwrap();
+
+        // 1. The accessor returns a numpy.ndarray of dtype float64.
+        let arr1 = result.call_method0("node_voltages_array").unwrap();
+        expect_float64_ndarray(&arr1, "node_voltages_array");
+
+        // 2. Successive calls return handles to the same buffer
+        //    (zero-copy: refcount bump, not a fresh allocation).
+        let arr2 = result.call_method0("node_voltages_array").unwrap();
+        let numpy = py.import("numpy").unwrap();
+        let shares_memory: bool = numpy
+            .getattr("shares_memory")
+            .unwrap()
+            .call1((&arr1, &arr2))
+            .unwrap()
+            .extract()
+            .unwrap();
+        assert!(
+            shares_memory,
+            "two successive node_voltages_array() calls must return ndarray views \
+             over the same buffer (zero-copy); numpy.shares_memory returned False"
+        );
+
+        // Belt-and-suspenders: raw data pointers must be identical.
+        // Use a Python one-liner to extract the data pointer from
+        // __array_interface__["data"][0] to avoid pyo3 type-chain issues.
+        let get_data_ptr = |py: Python<'_>, arr: &Bound<'_, PyAny>| -> isize {
+            let code = c"lambda a: a.__array_interface__['data'][0]";
+            let getter = py.eval(code, None, None).unwrap();
+            getter.call1((arr,)).unwrap().extract().unwrap()
+        };
+        let ptr1 = get_data_ptr(py, &arr1);
+        let ptr2 = get_data_ptr(py, &arr2);
+        assert_eq!(
+            ptr1, ptr2,
+            "node_voltages_array: data pointers must match across calls"
+        );
+
+        // 3. array[i] corresponds to node_names()[i] (sorted order).
+        let node_names: Vec<String> = result
+            .call_method0("node_names")
+            .unwrap()
+            .extract()
+            .unwrap();
+        assert_eq!(node_names, vec!["n0", "n1", "n2"], "node_names must be sorted");
+
+        let values: Vec<f64> = arr1.extract().unwrap();
+        assert_eq!(values.len(), 3, "node_voltages_array must have 3 entries");
+        assert_eq!(values[0], 0.0, "node_voltages_array[0] == voltage at n0");
+        assert!(
+            (values[1] - 5.0).abs() < ADR_0008_ABSOLUTE_TOLERANCE_VOLTS,
+            "node_voltages_array[1] == voltage at n1 (≈5 V)"
+        );
+        assert!(
+            (values[2] - 3.3).abs() < ADR_0008_ABSOLUTE_TOLERANCE_VOLTS,
+            "node_voltages_array[2] == voltage at n2 (≈3.3 V)"
+        );
+
+        // Cross-check: array[i] == node_voltage(node_names()[i]).
+        for (i, name) in node_names.iter().enumerate() {
+            let by_name: f64 = result
+                .call_method1("node_voltage", (name,))
+                .unwrap()
+                .extract()
+                .unwrap();
+            let diff = (values[i] - by_name).abs();
+            assert!(
+                diff < 1e-15,
+                "node_voltages_array[{}] must equal node_voltage({:?}): \
+                 array={}, by_name={}, diff={}",
+                i, name, values[i], by_name, diff
+            );
+        }
+    });
+}
+
+/// Assert that `branch_currents_array()` returns a `numpy.ndarray` of
+/// `dtype=float64` whose values are in sorted branch-name order and
+/// correspond to the by-name scalar channel.
+///
+/// This test covers the branch-current arm of scenario
+/// `frontend-contract#results-zero-copy-numpy` (task #26).
+#[test]
+fn branch_currents_array_is_zero_copy_numpy_ndarray() {
+    Python::attach(|py| {
+        let nv = make_scalar_map(py, &[("n1", 5.0)])
+            .unwrap()
+            .into_any();
+        let bc = make_scalar_map(py, &[("I1", 0.0), ("V1", 1e-3), ("V2", -2e-3)])
+            .unwrap()
+            .into_any();
+        let result = fresh_result(py, Some(nv), Some(bc), None, None).unwrap();
+
+        // 1. dtype=float64 numpy.ndarray.
+        let arr1 = result.call_method0("branch_currents_array").unwrap();
+        expect_float64_ndarray(&arr1, "branch_currents_array");
+
+        // 2. Zero-copy: successive calls share the same buffer.
+        let arr2 = result.call_method0("branch_currents_array").unwrap();
+        let numpy = py.import("numpy").unwrap();
+        let shares_memory: bool = numpy
+            .getattr("shares_memory")
+            .unwrap()
+            .call1((&arr1, &arr2))
+            .unwrap()
+            .extract()
+            .unwrap();
+        assert!(
+            shares_memory,
+            "two successive branch_currents_array() calls must return ndarray views \
+             over the same buffer (zero-copy); numpy.shares_memory returned False"
+        );
+
+        // 3. array[i] corresponds to branch_names()[i] (sorted order).
+        let branch_names: Vec<String> = result
+            .call_method0("branch_names")
+            .unwrap()
+            .extract()
+            .unwrap();
+        assert_eq!(
+            branch_names, vec!["I1", "V1", "V2"],
+            "branch_names must be sorted"
+        );
+
+        let values: Vec<f64> = arr1.extract().unwrap();
+        assert_eq!(values.len(), 3, "branch_currents_array must have 3 entries");
+        assert_eq!(values[0], 0.0, "branch_currents_array[0] == current through I1");
+        assert!(
+            (values[1] - 1e-3).abs() < 1e-15,
+            "branch_currents_array[1] == current through V1 (≈1 mA)"
+        );
+        assert!(
+            (values[2] - (-2e-3)).abs() < 1e-15,
+            "branch_currents_array[2] == current through V2 (≈−2 mA)"
+        );
+
+        // Cross-check: array[i] == branch_current(branch_names()[i]).
+        for (i, name) in branch_names.iter().enumerate() {
+            let by_name: f64 = result
+                .call_method1("branch_current", (name,))
+                .unwrap()
+                .extract()
+                .unwrap();
+            let diff = (values[i] - by_name).abs();
+            assert!(
+                diff < 1e-15,
+                "branch_currents_array[{}] must equal branch_current({:?}): \
+                 array={}, by_name={}, diff={}",
+                i, name, values[i], by_name, diff
+            );
+        }
+    });
+}
+
+/// Empty result: both scalar array accessors return 0-length
+/// `numpy.ndarray(dtype=float64)`.
+///
+/// Edge case for `frontend-contract#results-zero-copy-numpy`: the
+/// zero-copy promise still holds (the handles share a buffer, just a
+/// zero-length one).
+#[test]
+fn empty_result_scalar_arrays_are_zero_length_float64_ndarrays() {
+    Python::attach(|py| {
+        let result = fresh_result(py, None, None, None, None).unwrap();
+
+        let nv_arr = result.call_method0("node_voltages_array").unwrap();
+        expect_float64_ndarray(&nv_arr, "empty node_voltages_array");
+        assert_eq!(nv_arr.len().unwrap(), 0, "empty node_voltages_array must have length 0");
+
+        let bc_arr = result.call_method0("branch_currents_array").unwrap();
+        expect_float64_ndarray(&bc_arr, "empty branch_currents_array");
+        assert_eq!(bc_arr.len().unwrap(), 0, "empty branch_currents_array must have length 0");
+    });
+}

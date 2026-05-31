@@ -40,3 +40,10 @@ pub use analysis_orchestration::{
 // --- Re-exports from `numeric-solver` ---------------------------------
 // The binding crate uses flatten (simulator).
 pub use numeric_solver::flatten;
+
+// --- PyO3-adjacent result types (task #26) ----------------------------
+// SimulationResult and NamedScalarData provide contiguous Vec<f64>
+// storage for zero-copy NumPy transfer at the Python boundary.
+// Spec scenario: frontend-contract#results-zero-copy-numpy.
+pub mod pymodule;
+pub use pymodule::{NamedScalarData, SimulationResult};
