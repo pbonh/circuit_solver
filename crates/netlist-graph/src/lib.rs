@@ -21,6 +21,15 @@
 //! returning an immutable `CircuitGraph`. The headline scenario it
 //! enables is `python-frontend#incremental-circuit-construction-via-builder-api`.
 //!
+//! # tasks.md item #6
+//!
+//! The [`flatten`] module delivers item #6 of
+//! `circuit-solver/2026-05-21-v1-spec`: Pass-1 structure flattening
+//! per [ADR-0003]. It walks a [`CircuitGraph`] once and produces a
+//! [`FlattenedView`] with full incidence including the ground node.
+//! The netlist-graph crate owns the `FlattenedView` contract per
+//! ADR-0003's shared-contracts table.
+//!
 //! # tasks.md item #4
 //!
 //! The [`topology`] module delivers item #4 of
@@ -42,6 +51,11 @@
 //! `CircuitGraph` from `netlist-graph`. This keeps the dataflow
 //! strictly unidirectional per design.md.
 //!
+//! The flattener itself now lives in `netlist-graph` (where
+//! `CircuitGraph` also lives), so there is no cycle; `numeric-solver`
+//! re-exports [`flatten`] and [`FlattenError`] from here for backward
+//! compatibility.
+//!
 //! # Public surface
 //!
 //! - [`CircuitBuilder`] — the incremental construction entry point.
@@ -51,6 +65,8 @@
 //! - [`SubcircuitDefinition`], [`SubcircuitName`] — reusable circuit
 //!   modules and their port interfaces.
 //! - [`NetlistGraphError`] — the closed enumeration of builder errors.
+//! - [`flatten`], [`FlattenedView`], [`FlattenError`] — Pass-1
+//!   structure flattening (ADR-0003, tasks.md item #6).
 //! - [`topology::check_topology`], [`topology::ConductivityClass`] —
 //!   Pass-1 floating-node detection (ADR-0009).
 //!
@@ -61,6 +77,7 @@
 //! ADR.
 //!
 //! [ctx]: ../../../../wiki/contexts/netlist-graph.md
+//! [ADR-0003]: ../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0003-two-pass-graph-flattening-with-per-analysis-sub-views.md
 //! [ADR-0009]: ../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0009-topology-checker-floating-node-detection.md
 
 #![deny(missing_docs)]
@@ -68,6 +85,7 @@
 pub mod builder;
 pub mod element;
 pub mod error;
+pub mod flatten;
 pub mod graph;
 pub mod subcircuit;
 pub mod topology;
@@ -75,5 +93,6 @@ pub mod topology;
 pub use builder::{CircuitBuilder, ElementDecl, NetName, GROUND_NET};
 pub use element::{Element, ElementKind, ElementName, SubcircuitName};
 pub use error::NetlistGraphError;
+pub use flatten::{flatten, FlattenError, FlattenedView};
 pub use graph::{CircuitGraph, Node, VoltageSourceOverrideError};
 pub use subcircuit::SubcircuitDefinition;

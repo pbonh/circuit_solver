@@ -105,7 +105,7 @@
 //! - the immutable [`CircuitGraph`] (for element parameter lookups,
 //!   used by both DC and AC),
 //! - the [`FlattenedStructure`] produced by Pass 1
-//!   ([`numeric_solver::flatten()`]),
+//!   ([`netlist_graph::flatten()`]),
 //! - the frequency vector (Hz) to sweep,
 //! - the list of node IDs whose voltages should be reported as
 //!   [`TransferFunction`][crate::ac::TransferFunction]s,
@@ -572,7 +572,7 @@ pub fn ac_analysis_with_auto_dc(
 mod tests {
     use super::*;
     use netlist_graph::{CircuitBuilder, ElementKind};
-    use numeric_solver::flatten;
+    use netlist_graph::flatten;
 
     // -------- builders ----------------------------------------------------
 

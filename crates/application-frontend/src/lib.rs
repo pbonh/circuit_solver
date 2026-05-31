@@ -37,9 +37,10 @@ pub use analysis_orchestration::{
     dc_analysis, DcAnalysisError, DcAnalysisRequest, OperatingPoint,
 };
 
-// --- Re-exports from `numeric-solver` ---------------------------------
-// The binding crate uses flatten (simulator).
-pub use numeric_solver::flatten;
+// --- Re-exports from `netlist-graph` (flatten) ------------------------
+// The binding crate uses flatten (simulator). Per ADR-0003 the flatten
+// function and FlattenedView contract are owned by netlist-graph.
+pub use netlist_graph::{flatten, FlattenError, FlattenedView};
 
 // --- PyO3-adjacent result types (task #26) ----------------------------
 // SimulationResult and NamedScalarData provide contiguous Vec<f64>

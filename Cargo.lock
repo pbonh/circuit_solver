@@ -9,6 +9,7 @@ dependencies = [
  "circuit-solver-types",
  "conformance-harness",
  "device-modeling",
+ "digital-kernel",
  "netlist-graph",
  "num-complex",
  "numeric-solver",
@@ -37,7 +38,6 @@ dependencies = [
  "analysis-orchestration",
  "circuit-solver-types",
  "netlist-graph",
- "numeric-solver",
  "trybuild",
 ]
 

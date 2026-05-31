@@ -18,7 +18,7 @@ circuit-solver-types = { path = "../circuit-solver-types" }
 # numeric-solver crate. The control loop owns no MNA assembly logic
 # of its own; it composes existing numeric-solver pieces. The noise
 # control loop (tasks.md #37) shares this composition pattern.
-numeric-solver = { path = "../numeric-solver" }
+numeric-solver = { path = "../numeric-solver", pub = false }
 netlist-graph = { path = "../netlist-graph" }
 # Noise analysis (tasks.md #37) consumes the intrinsic-noise stamp
 # contract from device-modeling (tasks.md #36): the per-resistor

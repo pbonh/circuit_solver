@@ -1493,7 +1493,7 @@ fn infer_capacitor_current(_v_old: f64, _v_new: f64, _c_farads: f64, _h: f64) ->
 mod tests {
     use super::*;
     use netlist_graph::{CircuitBuilder, ElementKind};
-    use numeric_solver::flatten;
+    use netlist_graph::flatten;
 
     fn add_resistor(b: &mut CircuitBuilder, name: &str, n1: &str, n2: &str, ohms: f64) {
         b.add_element(
