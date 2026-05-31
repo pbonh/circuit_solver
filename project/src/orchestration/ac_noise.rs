@@ -709,6 +709,7 @@ mod tests {
     use device_modeling::noise::{BOLTZMANN_J_PER_K, ROOM_TEMPERATURE_K};
     use netlist_graph::{CircuitBuilder, ElementKind};
     use numeric_solver::flatten;
+    use std::error::Error;
 
     const _BOLTZMANN: f64 = BOLTZMANN_J_PER_K;
     const _ROOM_TEMP: f64 = ROOM_TEMPERATURE_K;
@@ -755,7 +756,7 @@ mod tests {
         b.add_element(
             name,
             ElementKind::Inductor {
-                inductance_henries,
+                inductance_henries: henries,
             },
             [n1, n2],
             None,
@@ -791,26 +792,27 @@ mod tests {
         let f0 = 1.0 / (2.0 * std::f64::consts::PI * 1.0e3 * 1.0e-6);
         let freqs = [f0 / 10.0, f0, f0 * 10.0];
 
-        let req = ProjectAcRequest::new(&sys, &fs, &g, &freqs, &[n_out]);
+        let outputs = [n_out];
+        let req = ProjectAcRequest::new(&sys, &fs, &g, &freqs, &outputs);
         let result = project_ac_analysis(req).expect("AC analysis ok");
 
         // At f0, magnitude should be −3 dB (±0.5 dB tolerance).
-        let tf = result.transfer_functions().first().expect("tf present");
-        let mag_at_f0 = tf.magnitudes_db()[1];
+        let tf = result.transfer_functions.first().expect("tf present");
+        let mag_at_f0 = tf.magnitude_db[1];
         assert!(
             (mag_at_f0 - (-3.0)).abs() < 0.5,
             "expected ≈ −3 dB at f₀, got {mag_at_f0:.2} dB"
         );
 
         // At low frequency, magnitude should be near 0 dB.
-        let mag_at_low = tf.magnitudes_db()[0];
+        let mag_at_low = tf.magnitude_db[0];
         assert!(
             mag_at_low.abs() < 0.1,
             "expected ≈ 0 dB at low f, got {mag_at_low:.2} dB"
         );
 
         // At high frequency, magnitude should roll off (≤ −20 dB).
-        let mag_at_high = tf.magnitudes_db()[2];
+        let mag_at_high = tf.magnitude_db[2];
         assert!(
             mag_at_high < -20.0,
             "expected < −20 dB at high f, got {mag_at_high:.2} dB"
@@ -861,18 +863,21 @@ mod tests {
         assert!(op.node_count() > 0, "operating point has nodes");
 
         let ac_res = result.ac_result().expect("ac result");
-        let tf = ac_res.transfer_functions().first().expect("tf");
-        let mag_at_f0 = tf.magnitudes_db()[1];
+        let tf = ac_res.transfer_functions.first().expect("tf");
+        let mag_at_f0 = tf.magnitude_db[1];
         assert!(
             (mag_at_f0 - (-3.0)).abs() < 0.5,
             "expected ≈ −3 dB at f₀, got {mag_at_f0:.2} dB"
         );
     }
 
-    /// RLC bandpass: V1 → R1 → L1 → C1 → gnd, output at L1∩C1.
-    /// Peak at f_res = 1/(2π√LC).
+    /// RLC series: V1 → R1 → L1 → C1 → gnd, output at L1∩C1.
+    /// Resonant frequency f_res = 1/(2π√LC).
+    /// In a series RLC with output across C, the magnitude dips at
+    /// resonance (notch / lowpass-like behaviour) because the LC
+    /// impedance cancels and R1 drops the voltage.
     #[test]
-    fn project_ac_rlc_bandpass_peak() {
+    fn project_ac_rlc_series_resonance() {
         let mut b = CircuitBuilder::default();
         add_voltage_source(&mut b, "V1", "n_in", "0", 1.0);
         add_resistor(&mut b, "R1", "n_in", "n_mid", 100.0);
@@ -884,24 +889,29 @@ mod tests {
         let sys: MnaSystem = assemble(&fs, &g, &[]).expect("assemble ok");
 
         let n_out = node_id_by_name(&g, "n_out");
-        let f_res = 1.0 / (2.0 * std::f64::consts::PI * (1.0e-3 * 1.0e-6).sqrt());
+        let lc_product: f64 = 1.0e-3 * 1.0e-6;
+        let f_res = 1.0 / (2.0 * std::f64::consts::PI * lc_product.sqrt());
         let freqs = [f_res / 10.0, f_res, f_res * 10.0];
 
-        let req = ProjectAcRequest::new(&sys, &fs, &g, &freqs, &[n_out]);
+        let outputs = [n_out];
+        let req = ProjectAcRequest::new(&sys, &fs, &g, &freqs, &outputs);
         let result = project_ac_analysis(req).expect("AC analysis ok");
 
-        let tf = result.transfer_functions().first().expect("tf");
-        let mag_at_peak = tf.magnitudes_db()[1];
-        // At resonance the bandpass should have a clear peak.
+        let tf = result.transfer_functions.first().expect("tf");
+        let mag_at_res = tf.magnitude_db[1];
+        // At resonance in a series RLC with output across C, the
+        // magnitude dips because L and C cancel, leaving R to drop
+        // the voltage. Verify the dip is present.
         assert!(
-            mag_at_peak > tf.magnitudes_db()[0],
-            "peak magnitude {mag_at_peak:.2} dB should exceed low-f magnitude {:.2} dB",
-            tf.magnitudes_db()[0]
+            mag_at_res < tf.magnitude_db[0],
+            "resonance magnitude {mag_at_res:.2} dB should be below low-f magnitude {:.2} dB",
+            tf.magnitude_db[0]
         );
+        // Off-resonance (low f), C is open so most of V1 reaches n_out.
         assert!(
-            mag_at_peak > tf.magnitudes_db()[2],
-            "peak magnitude {mag_at_peak:.2} dB should exceed high-f magnitude {:.2} dB",
-            tf.magnitudes_db()[2]
+            tf.magnitude_db[0].abs() < 1.0,
+            "low-f magnitude should be near 0 dB, got {:.2} dB",
+            tf.magnitude_db[0]
         );
     }
 
@@ -998,7 +1008,8 @@ mod tests {
         let n_in = node_id_by_name(&g, "n_in");
         let freqs = [100.0];
 
-        let project_req = ProjectAcRequest::new(&sys, &fs, &g, &freqs, &[n_in]);
+        let outputs = [n_in];
+        let project_req = ProjectAcRequest::new(&sys, &fs, &g, &freqs, &outputs);
         let crate_req = project_req.as_crate_request();
 
         assert!(std::ptr::eq(crate_req.system, &sys));
@@ -1095,13 +1106,14 @@ mod tests {
                 node_voltages: vec![0.0, 1.0],
                 branch_currents: vec![],
             },
-            ac_result: AcAnalysisResult::new(
-                vec![100.0],
-                vec![TransferFunction::new(
-                    vec![0.0],
-                    vec![0.0],
-                )],
-            ),
+            ac_result: AcAnalysisResult {
+                transfer_functions: vec![TransferFunction {
+                    output: NodeId::new(0),
+                    frequencies_hz: vec![100.0],
+                    magnitude_db: vec![0.0],
+                    phase_degrees: vec![0.0],
+                }],
+            },
         };
         assert!(ok_result.is_ok());
         assert!(!ok_result.is_failed());
