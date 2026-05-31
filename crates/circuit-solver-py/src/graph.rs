@@ -49,7 +49,7 @@
 //!   `print(graph)` from a Python REPL produces something useful.
 
 use crate::errors::immutable_handle_err;
-use netlist_graph::CircuitGraph;
+use application_frontend::CircuitGraph;
 use pyo3::prelude::*;
 use pyo3::types::{PyDict, PyTuple};
 

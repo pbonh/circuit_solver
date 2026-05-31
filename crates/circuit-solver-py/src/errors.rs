@@ -52,7 +52,7 @@
 //! Rust error — a stable contract owned by the appropriate Rust
 //! crate.
 
-use netlist_graph::NetlistGraphError;
+use application_frontend::NetlistGraphError;
 use pyo3::create_exception;
 use pyo3::exceptions::PyException;
 use pyo3::prelude::*;

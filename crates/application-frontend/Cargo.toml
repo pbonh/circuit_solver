@@ -13,3 +13,9 @@ workspace = true
 
 [dependencies]
 circuit-solver-types = { path = "../circuit-solver-types" }
+# Per ADR-0001, the PyO3 binding crate depends *only* on application-frontend.
+# application-frontend re-exports the domain-crate types the binding needs so
+# that no domain crate appears as a direct dep of circuit-solver-py.
+netlist-graph = { path = "../netlist-graph" }
+analysis-orchestration = { path = "../analysis-orchestration" }
+numeric-solver = { path = "../numeric-solver" }

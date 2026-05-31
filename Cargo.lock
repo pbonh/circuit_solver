@@ -28,7 +28,10 @@ dependencies = [
 name = "application-frontend"
 version = "0.0.1"
 dependencies = [
+ "analysis-orchestration",
  "circuit-solver-types",
+ "netlist-graph",
+ "numeric-solver",
 ]
 
 [[package]]
@@ -115,10 +118,7 @@ dependencies = [
 name = "circuit-solver-py"
 version = "0.0.1"
 dependencies = [
- "analysis-orchestration",
- "circuit-solver-types",
- "netlist-graph",
- "numeric-solver",
+ "application-frontend",
  "numpy",
  "pyo3",
  "pyo3-build-config",

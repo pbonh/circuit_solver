@@ -222,3 +222,73 @@ fn circuit_solver(py: Python<'_>, module: &Bound<'_, PyModule>) -> PyResult<()> 
     module.add_function(wrap_pyfunction!(parse_netlist_py, module)?)?;
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    //! Contract-verification tests for the PyO3 binding crate.
+
+    /// Verify ADR-0001 contract: the PyO3 binding crate declares only
+    /// `application-frontend` as a direct domain-crate dependency.
+    ///
+    /// Scenario: `frontend-contract#pyo3-binding-crate-declares-only-frontend-as-direct-dep`
+    ///
+    /// ```text
+    /// Given the binding crate's Cargo.toml
+    /// When the [dependencies] section is inspected
+    /// Then no domain crate other than application-frontend appears
+    ///  And application-frontend is present as a direct dependency
+    /// ```
+    #[test]
+    fn binding_crate_depends_only_on_application_frontend() {
+        let manifest = include_str!("../Cargo.toml");
+
+        // Domain crates in the workspace (other than this crate and
+        // application-frontend). If any of these appear as a direct
+        // [dependency] this test fails — ADR-0001 requires the binding
+        // crate to reach them only through application-frontend re-exports.
+        let forbidden_deps = [
+            "netlist-graph",
+            "circuit-solver-types",
+            "analysis-orchestration",
+            "numeric-solver",
+        ];
+
+        let mut in_dependencies = false;
+        let mut found_forbidden: Vec<&str> = Vec::new();
+
+        for line in manifest.lines() {
+            let trimmed = line.trim();
+
+            if trimmed == "[dependencies]" {
+                in_dependencies = true;
+                continue;
+            }
+
+            // Any other section header ends the [dependencies] block.
+            if trimmed.starts_with('[') {
+                in_dependencies = false;
+                continue;
+            }
+
+            if in_dependencies {
+                for forbidden in &forbidden_deps {
+                    if trimmed.starts_with(forbidden) {
+                        found_forbidden.push(forbidden);
+                    }
+                }
+            }
+        }
+
+        assert!(
+            found_forbidden.is_empty(),
+            "ADR-0001 violation: binding crate Cargo.toml declares forbidden domain-crate \
+             dependencies: {found_forbidden:?}. Only `application-frontend` is permitted.",
+        );
+
+        // Also verify that application-frontend IS present.
+        assert!(
+            manifest.contains("application-frontend ="),
+            "ADR-0001: binding crate must declare `application-frontend` as a dependency",
+        );
+    }
+}

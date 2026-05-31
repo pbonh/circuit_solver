@@ -47,7 +47,7 @@
 //!   `&mut self` directly and the Rust builder mutates in place. No
 //!   `RefCell` / `Mutex` is needed.
 
-use netlist_graph::{CircuitBuilder, ElementDecl, ElementKind, SubcircuitDefinition};
+use application_frontend::{CircuitBuilder, ElementDecl, ElementKind, SubcircuitDefinition};
 use pyo3::exceptions::PyTypeError;
 use pyo3::prelude::*;
 use pyo3::types::{PyDict, PyList};
@@ -128,7 +128,7 @@ impl PyCircuitBuilder {
         model: Option<String>,
     ) -> PyResult<()> {
         let kind = parse_kind(kind, value, model.as_deref())?;
-        let model_name = model.map(circuit_solver_types::ModelName::new);
+        let model_name = model.map(application_frontend::ModelName::new);
         self.inner
             .add_element(name, kind, terminals, model_name)
             .map_err(|e| to_py_err(&e))?;
@@ -154,7 +154,7 @@ impl PyCircuitBuilder {
     /// registry.
     pub fn add_model(&mut self, name: &str) {
         self.inner
-            .add_model(circuit_solver_types::ModelName::new(name));
+            .add_model(application_frontend::ModelName::new(name));
     }
 
     /// Register a subcircuit definition.
@@ -328,7 +328,7 @@ fn parse_decl(item: &Bound<'_, PyAny>) -> PyResult<ElementDecl> {
         name: name.into(),
         kind,
         terminals,
-        model: model.map(circuit_solver_types::ModelName::new),
+        model: model.map(application_frontend::ModelName::new),
     })
 }
 

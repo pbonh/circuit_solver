@@ -89,7 +89,7 @@ use pyo3::exceptions::{PyTypeError, PyValueError};
 use pyo3::prelude::*;
 use pyo3::types::PyTuple;
 
-use circuit_solver_types::AnalysisType;
+use application_frontend::AnalysisType;
 
 /// Default integration method for transient analyses.
 ///

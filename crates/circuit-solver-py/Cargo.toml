@@ -76,21 +76,12 @@ pyo3 = { version = "0.28", default-features = false, features = ["abi3-py39", "m
 # the v1 surface.
 numpy = { version = "0.28", default-features = false }
 
-# The PyO3 frontend is a thin shim over the netlist-graph builder. Per
-# the design.md C4 L1 diagram, application-frontend / circuit-solver-py
-# call `CircuitBuilder.build()` on netlist-graph and never re-enter the
-# graph crate during solve. The dependency is one-way (no reverse pin).
-netlist-graph = { path = "../netlist-graph" }
-circuit-solver-types = { path = "../circuit-solver-types" }
-# tasks.md item #57 follow-up — the `Simulator` PyO3 entry point for the
-# `python-frontend#analysis-request-and-result-retrieval` scenario submits
-# an `AnalysisRequest` against a `CircuitGraph` and returns a `Result`. The
-# DC operating-point branch dispatches through `analysis_orchestration::dc_analysis`;
-# Pass 1 flattening goes through `numeric_solver::flatten`. Both deps are
-# one-way (no reverse pin) and inherit the workspace `publish = false` stance
-# per ADR-0010.
-analysis-orchestration = { path = "../analysis-orchestration" }
-numeric-solver = { path = "../numeric-solver" }
+# Per ADR-0001, the PyO3 binding crate depends *only* on
+# `application-frontend`. All domain-crate types the binding needs
+# (CircuitGraph, CircuitBuilder, NetlistGraphError, AnalysisType,
+# dc_analysis, flatten, etc.) are re-exported by `application-frontend`,
+# so no other domain crate appears as a direct dep here.
+application-frontend = { path = "../application-frontend" }
 
 [dev-dependencies]
 # Rust-side PyO3 unit tests embed the CPython interpreter to drive the

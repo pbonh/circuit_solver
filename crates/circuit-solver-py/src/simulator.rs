@@ -92,14 +92,14 @@
 
 use std::collections::BTreeMap;
 
-use circuit_solver_types::flattened::FlattenedStructure;
-use circuit_solver_types::{AnalysisType, BranchId, NodeId};
-use netlist_graph::CircuitGraph;
+use application_frontend::FlattenedStructure;
+use application_frontend::{AnalysisType, BranchId, NodeId};
+use application_frontend::CircuitGraph;
 use pyo3::exceptions::{PyRuntimeError, PyValueError};
 use pyo3::prelude::*;
 
-use analysis_orchestration::{dc_analysis, DcAnalysisError, DcAnalysisRequest, OperatingPoint};
-use numeric_solver::flatten;
+use application_frontend::{dc_analysis, DcAnalysisError, DcAnalysisRequest, OperatingPoint};
+use application_frontend::flatten;
 
 use crate::analysis_request::PyAnalysisRequest;
 use crate::graph::PyCircuitGraph;

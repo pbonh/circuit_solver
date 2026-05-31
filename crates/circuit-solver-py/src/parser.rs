@@ -90,7 +90,7 @@
 use std::fs;
 use std::path::Path;
 
-use netlist_graph::{CircuitBuilder, CircuitGraph, ElementDecl, ElementKind, SubcircuitDefinition};
+use application_frontend::{CircuitBuilder, CircuitGraph, ElementDecl, ElementKind, SubcircuitDefinition};
 use pyo3::exceptions::{PyIOError, PyValueError};
 use pyo3::PyErr;
 
@@ -323,7 +323,7 @@ fn handle_directive(
             // consumed-and-discarded — the v1 surface only needs the
             // name so `add_model` can register it.
             for _ in toks {}
-            builder.add_model(circuit_solver_types::ModelName::new(name));
+            builder.add_model(application_frontend::ModelName::new(name));
             Ok(())
         }
         "SUBCKT" => {
@@ -478,7 +478,7 @@ fn parse_element_card(line: &str, _lineno: usize) -> Result<ElementDecl, PyErr> 
                 name: name.into(),
                 kind: ElementKind::Semiconductor,
                 terminals: vec![n1, n2],
-                model: Some(circuit_solver_types::ModelName::new(model)),
+                model: Some(application_frontend::ModelName::new(model)),
             })
         }
         'Q' => {
@@ -495,7 +495,7 @@ fn parse_element_card(line: &str, _lineno: usize) -> Result<ElementDecl, PyErr> 
                 name: name.into(),
                 kind: ElementKind::Semiconductor,
                 terminals,
-                model: Some(circuit_solver_types::ModelName::new(model)),
+                model: Some(application_frontend::ModelName::new(model)),
             })
         }
         'M' => {
@@ -517,7 +517,7 @@ fn parse_element_card(line: &str, _lineno: usize) -> Result<ElementDecl, PyErr> 
                 name: name.into(),
                 kind: ElementKind::Semiconductor,
                 terminals,
-                model: Some(circuit_solver_types::ModelName::new(model)),
+                model: Some(application_frontend::ModelName::new(model)),
             })
         }
         other => Err(netlist_parse_error_unrecognised_device(&name, other)),
@@ -656,7 +656,7 @@ fn annotate_with_line(lineno: usize) -> impl Fn(PyErr) -> PyErr {
 #[cfg(all(test, not(feature = "extension-module")))]
 mod tests {
     use super::*;
-    use netlist_graph::CircuitBuilder;
+    use application_frontend::CircuitBuilder;
 
     /// Build the equivalent graph incrementally, the way a Python
     /// caller would after task #53. The Gherkin scenario's third
