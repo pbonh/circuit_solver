@@ -2,16 +2,19 @@
 //! integration methods.
 //!
 //! This crate hosts the numeric core of the solver: it consumes the
-//! flattened netlist topology produced by Pass 1 (this crate, item #6)
-//! over a `CircuitGraph` from `netlist-graph`, and progressively builds
-//! the Pass-2 MNA matrix, runs the Newton-Raphson outer loop, and
-//! dispatches to sparse-LU backends per ADR-0002. Most of the
-//! implementation lands incrementally as `tasks.md` items #14–#35.
+//! flattened netlist topology produced by Pass 1 (now in `netlist-graph`,
+//! item #6) over a `CircuitGraph` from `netlist-graph`, and
+//! progressively builds the Pass-2 MNA matrix, runs the Newton-Raphson
+//! outer loop, and dispatches to sparse-LU backends per ADR-0002. Most
+//! of the implementation lands incrementally as `tasks.md` items
+//! #14–#35.
 //!
-//! Per ADR-0003 the flattener lives inside this crate (the Numeric
-//! Solver Engine "reads the `CircuitGraph` once" and produces the full
-//! incidence structure); `netlist-graph` owns *construction* of the
-//! immutable graph, this crate owns *consumption* of it.
+//! Per ADR-0003 the [`FlattenedView`](netlist_graph::FlattenedView)
+//! contract is owned by the `netlist-graph` crate; the
+//! [`flatten`] function and [`FlattenError`] type are re-exported
+//! here for backward compatibility. `netlist-graph` owns *construction*
+//! of the immutable graph and *flattening* of it; this crate owns
+//! *consumption* of the flattened incidence for MNA assembly and solve.
 //!
 //! As of `tasks.md` item #35 the public surface is:
 //!
@@ -19,8 +22,8 @@
 //!   netlist crate and the assembler (item #3). Defined in
 //!   `circuit-solver-types` to avoid a netlist-graph ↔ numeric-solver
 //!   dependency cycle; re-exported here for convenience.
-//! - [`flatten::flatten`] — Pass 1 itself: read a `CircuitGraph` and
-//!   return a `FlattenedStructure` (item #6).
+//! - [`flatten::flatten`] — Pass 1 itself: re-exported from
+//!   `netlist_graph::flatten` per ADR-0003 (item #6).
 //! - [`assemble::assemble`] — Pass 2: stamp the flattened incidence
 //!   (and any linearized device contributions) into the full MNA
 //!   matrix, producing an [`assemble::MnaSystem`] with ground row and
@@ -76,7 +79,7 @@ pub use assemble::{assemble, MnaAssemblyError, MnaSystem};
 pub use circuit_solver_types::flattened::{
     ElementIncidence, FlattenedStructure, FlattenedStructureError, TopologyReport,
 };
-pub use flatten::{flatten, FlattenError};
+pub use flatten::{FlattenError, FlattenedView};
 pub use gmin_stepping::{
     GminAugmentedSystem, GminSchedule, GminScheduleError, GminSteppingConfig, GminSteppingDriver,
     GminSteppingError, GminSteppingOutcome, HomotopyStatus,

@@ -418,7 +418,7 @@ mod tests {
     use super::*;
     use circuit_solver_types::ConvergenceTolerances;
     use netlist_graph::{CircuitBuilder, ElementKind};
-    use numeric_solver::flatten;
+    use netlist_graph::flatten;
 
     // -------- helpers ------------------------------------------------------
 

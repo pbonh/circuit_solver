@@ -115,7 +115,7 @@
 //!
 //! - the immutable [`CircuitGraph`] (for element parameter lookups),
 //! - the [`FlattenedStructure`] produced by Pass 1
-//!   ([`numeric_solver::flatten()`]).
+//!   ([`netlist_graph::flatten()`]).
 //! - an optional [`NewtonRaphsonConfig`] (defaults to
 //!   [`NewtonRaphsonConfig::DC_DEFAULTS`]).
 //!
