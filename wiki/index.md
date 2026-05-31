@@ -20,8 +20,8 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 - Context Maps: 1
 - Grills: 1
 - Architecture: 1
-- Decisions: 7
-- Specs: 1
+- Decisions: 12
+- Specs: 7
 
 ## Concepts
 
@@ -1635,6 +1635,12 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | Page | Goal | Scenarios | Created |
 |------|------|-----------|---------|
 | [[specs/circuit-solver|Circuit Solver]] | v1 binary acceptance criteria vs ngspice (analog) and Icarus Verilog (digital) on Sky130 / ASAP7 | 13 | 2026-05-17 |
+| [[specs/dc-operating-point|DC Operating Point]] | Steady-state equilibrium via Newton-Raphson with homotopy; node voltages and branch currents | 6 | 2026-05-21 |
+| [[specs/ac-small-signal|AC Small Signal]] | Frequency-domain linearized analysis; magnitude/phase TransferFunctions via complex sparse LU | 6 | 2026-05-21 |
+| [[specs/transient-time-domain|Transient Time Domain]] | Nonlinear time-domain simulation with adaptive timestepping and implicit integration | 6 | 2026-05-21 |
+| [[specs/noise-spectral-density|Noise Spectral Density]] | Output-referred noise from intrinsic device sources; spectral density vs. frequency | 6 | 2026-05-21 |
+| [[specs/mixed-signal-cosim|Mixed-Signal Co-Simulation]] | Optimistic analog/digital synchronization with rollback on misprediction | 6 | 2026-05-21 |
+| [[specs/python-frontend|Python Frontend]] | PyO3 builder API, immutable CircuitGraph, zero-copy NumPy results, GIL release | 8 | 2026-05-21 |
 
 ## Books
 
@@ -1663,6 +1669,14 @@ Master catalog of all wiki pages. Every page in the wiki must have an entry here
 | [[decisions/0003-two-pass-graph-flattening-with-per-analysis-sub-views|0003]] | Two-Pass Graph Flattening with Per-Analysis Sub-Views | accepted | 2026-05-18 |
 | [[decisions/0004-optimistic-mixed-signal-synchronization-via-shared-scheduler|0004]] | Optimistic Mixed-Signal Synchronization via Shared Scheduler | superseded | 2026-05-28 |
 | [[decisions/0005-closed-enum-device-model-dispatch|0005]] | Closed Enum Device Model Dispatch | accepted | 2026-05-18 |
+<<<<<<< HEAD
 | [[decisions/0006-native-event-driven-digital-engine|0006]] | Native Event-Driven Digital Engine | accepted | 2026-05-28 |
 | [[decisions/0007-in-tree-codegen-seam-for-closed-enum-device-models|0007]] | In-Tree Codegen Seam for Closed-Enum Device Models | accepted | 2026-05-28 |
+=======
+| [[decisions/0006-dual-convergence-criterion-newton-raphson|0006]] | Dual Convergence Criterion for Newton-Raphson | accepted | 2025-07-18 |
+| [[decisions/0007-zero-order-hold-analog-digital-boundary|0007]] | Zero-Order Hold Default at Analog-Digital Boundary | accepted | 2025-07-18 |
+| [[decisions/0008-per-node-max-relative-absolute-tolerance-envelope|0008]] | Per-Node max(Relative, Absolute) Tolerance Envelope | accepted | 2025-07-18 |
+| [[decisions/0009-topology-checker-floating-node-detection|0009]] | Topology Checker for Floating-Node Detection in Pass 1 | accepted | 2025-07-18 |
+| [[decisions/0010-unstable-public-rust-api-surface-for-v1|0010]] | Unstable Public Rust API Surface for v1 | accepted | 2025-07-18 |
+>>>>>>> cad510f
 

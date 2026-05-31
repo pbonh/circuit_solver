@@ -1,0 +1,93 @@
+[package]
+name = "circuit-solver-py"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false  # ADR-0010: PyO3 extension is unstable and distributed via maturin, not crates.io.
+description = "PyO3 extension module hosting the Python frontend (tasks.md items #52–#61)."
+
+# A PyO3 extension module is a `cdylib` so the resulting shared object can be
+# imported by CPython at runtime. The `rlib` artifact is retained so the crate
+# can also participate in workspace `cargo test` and downstream Rust unit-test
+# harnesses without re-linking. Both artifacts are required by the PyO3
+# recommended layout (see <https://pyo3.rs/v0.28/building-and-distribution>).
+[lib]
+name = "circuit_solver"  # `import circuit_solver` from Python (PEP 8 module name).
+crate-type = ["cdylib", "rlib"]
+
+[lints.rust]
+# Relax `unsafe_code` from the workspace-wide `forbid` to `deny`. PyO3's
+# `#[pymodule]` / `#[pyclass]` macros expand to `unsafe` blocks (FFI to
+# CPython); `forbid` would reject them outright. `deny` still requires
+# every `unsafe { ... }` block in *our own* code to be explicitly
+# justified. We re-declare the rest of the workspace lints explicitly
+# here because Cargo does not support per-lint overrides when also
+# inheriting via `[lints] workspace = true`.
+
+unsafe_code = "deny"
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+
+[features]
+# `extension-module` is the default for `maturin develop` and
+# `maturin build --release`: the resulting `cdylib` is loaded by CPython
+# and resolves symbols against the host interpreter at import time.
+#
+# Disable the default features when running `cargo test` so the test
+# binary can link against the Python ABI directly via the
+# `auto-initialize` dev-dependency feature. The `Makefile` /
+# `xtask` recipe for `cargo test -p circuit-solver-py` therefore runs:
+#
+#     cargo test -p circuit-solver-py --no-default-features
+#
+# Workspace-wide `cargo test --workspace` likewise passes
+# `--no-default-features` for this crate via a build-script-free
+# convention: integration tests live behind the
+# `#[cfg(not(feature = "extension-module"))]` gate so they are skipped
+# under the default feature set rather than failing to link.
+default = ["extension-module"]
+extension-module = ["pyo3/extension-module"]
+
+[build-dependencies]
+# Used by `build.rs` to discover the host Python `LIBDIR` and embed it
+# as an `rpath` on the test binary. The build script is a no-op when
+# the `extension-module` feature is active.
+pyo3-build-config = "0.28"
+
+[dependencies]
+# `abi3-py39` builds a stable-ABI wheel compatible with CPython >= 3.9,
+# which satisfies the v1 proposal's "maturin develop / maturin build
+# --release" distribution intent (design.md §"PyO3 distribution
+# packaging"). The `extension-module` feature is gated via the local
+# `extension-module` cargo feature above so the test target can opt
+# out and link the Python ABI directly.
+pyo3 = { version = "0.28", default-features = false, features = ["abi3-py39", "macros"] }
+
+# tasks.md item #58: zero-copy NumPy result arrays. `rust-numpy` 0.28 is the
+# version paired with `pyo3` 0.28 (the crates ship in lockstep). The
+# `Result` waveform/transfer-function accessors return `Py<PyArray1<f64>>`
+# handles — `numpy.ndarray` views over Rust-owned heap memory — so a Python
+# user touching `result.waveform("n1")` does not pay a copy. The default
+# features are sufficient; `half`/`nalgebra` interop are not required for
+# the v1 surface.
+numpy = { version = "0.28", default-features = false }
+
+# Per ADR-0001, the PyO3 binding crate depends *only* on
+# `application-frontend`. All domain-crate types the binding needs
+# (CircuitGraph, CircuitBuilder, NetlistGraphError, AnalysisType,
+# dc_analysis, flatten, etc.) are re-exported by `application-frontend`,
+# so no other domain crate appears as a direct dep here.
+application-frontend = { path = "../application-frontend" }
+
+[dev-dependencies]
+# Rust-side PyO3 unit tests embed the CPython interpreter to drive the
+# extension as if it were imported. The `auto-initialize` feature lets
+# `Python::attach` start an interpreter on first use without a manual
+# `prepare_freethreaded_python` call. The test target deliberately
+# turns off the local `extension-module` feature (see [features] above)
+# so the dev binary can link against `libpython` directly.
+pyo3 = { version = "0.28", default-features = false, features = ["abi3-py39", "macros", "auto-initialize"] }

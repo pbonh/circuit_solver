@@ -1,0 +1,37 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/circuit-solver-types",
+    "crates/netlist-graph",
+    "crates/device-modeling",
+    "crates/numeric-solver",
+    "crates/analysis-orchestration",
+    "crates/application-frontend",
+    "crates/circuit-solver-py",
+    "crates/conformance-harness",
+    "crates/digital-kernel",
+    "project",
+]
+# `circuit-solver-py` hosts the PyO3 extension module (`import circuit_solver`).
+# It is a workspace member as of tasks.md item #1, but its public API surface
+# (CircuitBuilder, CircuitGraph, AnalysisRequest, NumPy result arrays) is
+# filled in by tasks #52–#61. ADR-0010 keeps all v1 Rust API unstable.
+
+[workspace.package]
+version = "0.0.1"
+edition = "2021"
+rust-version = "1.75"
+license = "MIT"
+repository = "https://github.com/pbonh/circuit_solver"
+publish = false  # ADR-0010: API surface is unstable; not for crates.io until stabilized.
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1

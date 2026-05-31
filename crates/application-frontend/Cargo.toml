@@ -1,0 +1,21 @@
+[package]
+name = "application-frontend"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+description = "Public Rust API surface (CircuitGraph, AnalysisRequest, AnalysisResult). Marked unstable per ADR-0010."
+
+[lints]
+workspace = true
+
+[dependencies]
+circuit-solver-types = { path = "../circuit-solver-types" }
+# Per ADR-0001, the PyO3 binding crate depends *only* on application-frontend.
+# application-frontend re-exports the domain-crate types the binding needs so
+# that no domain crate appears as a direct dep of circuit-solver-py.
+netlist-graph = { path = "../netlist-graph" }
+analysis-orchestration = { path = "../analysis-orchestration" }
+numeric-solver = { path = "../numeric-solver" }

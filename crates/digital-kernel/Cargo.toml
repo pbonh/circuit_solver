@@ -1,0 +1,15 @@
+[package]
+name = "digital-kernel"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+description = "Native event-driven digital simulation kernel (DEVS-style event queue with delta-cycle settling). Supersedes ADR-0004 external co-simulation per ADR-0006."
+
+[lints]
+workspace = true
+
+[dependencies]
+circuit-solver-types = { path = "../circuit-solver-types" }

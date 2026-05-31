@@ -1,0 +1,15 @@
+[package]
+name = "netlist-graph"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+description = "Circuit graph construction, flattening, and topology checking (tasks.md items #3–#6, #15, #52–#55)."
+
+[lints]
+workspace = true
+
+[dependencies]
+circuit-solver-types = { path = "../circuit-solver-types" }
