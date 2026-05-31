@@ -104,4 +104,7 @@ pub use source_stepping::{
     SourceSteppingOutcome,
 };
 pub use sub_view::{source_rhs_from, SubView, SubViewBuilder, SubViewError};
-pub use mna::{IncrementalMnaBuilder, StampError, StampInterface, StampValue};
+pub use mna::{
+    IncrementalMnaBuilder, StampError, StampInterface, StampLinearizationError,
+    StampLinearizationOrStampError, StampValue, stamp_linearized_model,
+};

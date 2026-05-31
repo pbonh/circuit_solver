@@ -440,6 +440,184 @@ impl StampInterface for IncrementalMnaBuilder {
 }
 
 // ---------------------------------------------------------------------------
+// Device stamp evaluator: LinearizedModel → StampInterface
+// ---------------------------------------------------------------------------
+
+/// Error returned by [`stamp_linearized_model`] when the terminal-to-node
+/// mapping does not match the [`LinearizedModel`] variant's terminal count.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct StampLinearizationError {
+    /// The linearization family name (e.g. `"Diode"`, `"BJT"`, `"MOSFET"`).
+    pub family: &'static str,
+    /// Number of terminals the linearization expects.
+    pub expected_terminals: usize,
+    /// Number of terminal node indices supplied.
+    pub actual_terminals: usize,
+}
+
+impl core::fmt::Display for StampLinearizationError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(
+            f,
+            "terminal-count mismatch for {} linearization: expected {} nodes, got {}",
+            self.family, self.expected_terminals, self.actual_terminals
+        )
+    }
+}
+
+impl std::error::Error for StampLinearizationError {}
+
+/// Stamp a [`LinearizedModel`] into any [`StampInterface`] target.
+///
+/// This is the ADR-0005 dispatch bridge between the device-modeling context
+/// (which produces `LinearizedModel` in terminal-local coordinates) and the
+/// MNA assembly context (which consumes stamps in global coordinates via
+/// `StampInterface`). The function matches on the [`LinearizedModel`] variant
+/// to learn the stamp dimensions, then maps each terminal slot to the
+/// corresponding global row/column through `terminal_nodes`.
+///
+/// # Stamp convention
+///
+/// For each terminal pair `(i, j)`:
+/// - `A[terminal_nodes[i], terminal_nodes[j]] += jacobian[i][j]`
+///
+/// For each terminal `k`:
+/// - `RHS[terminal_nodes[k]] -= companion_current[k]`
+///
+/// (The companion current is *subtracted* from the RHS because the
+/// linearized device current is moved from the LHS to the RHS in the
+/// standard MNA companion-model rewrite — see `assemble::stamp_dense_block`
+/// for the derivation.)
+///
+/// # Errors
+///
+/// Returns [`StampLinearizationError`] if `terminal_nodes.len()` does not
+/// match the variant's terminal count (2 for Diode, 3 for BJT, 4 for MOSFET).
+/// Propagates [`StampError`] from individual `stamp_matrix`/`stamp_rhs` calls.
+pub fn stamp_linearized_model<S: StampInterface + ?Sized>(
+    target: &mut S,
+    lin: &device_modeling::stamp::LinearizedModel,
+    terminal_nodes: &[u32],
+) -> Result<(), StampLinearizationOrStampError> {
+    use device_modeling::stamp::LinearizedModel;
+
+    match lin {
+        LinearizedModel::Diode(d) => {
+            const N: usize = device_modeling::stamp::DIODE_TERMINALS;
+            if terminal_nodes.len() != N {
+                return Err(StampLinearizationOrStampError::Linearization(
+                    StampLinearizationError {
+                        family: "Diode",
+                        expected_terminals: N,
+                        actual_terminals: terminal_nodes.len(),
+                    },
+                ));
+            }
+            stamp_terminal_block(target, terminal_nodes, &d.jacobian, &d.companion_current)?;
+        }
+        LinearizedModel::BJT(b) => {
+            const N: usize = device_modeling::stamp::BJT_TERMINALS;
+            if terminal_nodes.len() != N {
+                return Err(StampLinearizationOrStampError::Linearization(
+                    StampLinearizationError {
+                        family: "BJT",
+                        expected_terminals: N,
+                        actual_terminals: terminal_nodes.len(),
+                    },
+                ));
+            }
+            stamp_terminal_block(target, terminal_nodes, &b.jacobian, &b.companion_current)?;
+        }
+        LinearizedModel::MOSFET(m) => {
+            const N: usize = device_modeling::stamp::MOSFET_TERMINALS;
+            if terminal_nodes.len() != N {
+                return Err(StampLinearizationOrStampError::Linearization(
+                    StampLinearizationError {
+                        family: "MOSFET",
+                        expected_terminals: N,
+                        actual_terminals: terminal_nodes.len(),
+                    },
+                ));
+            }
+            stamp_terminal_block(target, terminal_nodes, &m.jacobian, &m.companion_current)?;
+        }
+    }
+    Ok(())
+}
+
+/// Stamp an `N×N` terminal-local Jacobian and `N`-vector companion current
+/// into a [`StampInterface`] target.
+///
+/// Generic over the terminal count so that all three device families
+/// (Diode 2×2, BJT 3×3, MOSFET 4×4) share one body.
+fn stamp_terminal_block<S: StampInterface + ?Sized, const N: usize>(
+    target: &mut S,
+    nodes: &[u32],
+    jacobian: &[[f64; N]; N],
+    companion: &[f64; N],
+) -> Result<(), StampError> {
+    debug_assert_eq!(nodes.len(), N, "terminal count validated upstream");
+    for i in 0..N {
+        for j in 0..N {
+            let val = jacobian[i][j];
+            if val != 0.0 {
+                target.stamp_matrix(nodes[i], nodes[j], val)?;
+            }
+        }
+        let comp = companion[i];
+        if comp != 0.0 {
+            // Companion current is subtracted from RHS per the MNA
+            // companion-model convention (see `assemble::stamp_dense_block`).
+            target.stamp_rhs(nodes[i], -comp)?;
+        }
+    }
+    Ok(())
+}
+
+/// Combined error type for [`stamp_linearized_model`].
+///
+/// The function can fail either because the terminal mapping is wrong
+/// ([`StampLinearizationError`]) or because an individual stamp operation
+/// fails ([`StampError`]).
+#[derive(Debug)]
+pub enum StampLinearizationOrStampError {
+    /// The terminal-to-node mapping has the wrong length for the variant.
+    Linearization(StampLinearizationError),
+    /// An individual `stamp_matrix` or `stamp_rhs` call failed.
+    Stamp(StampError),
+}
+
+impl From<StampError> for StampLinearizationOrStampError {
+    fn from(e: StampError) -> Self {
+        Self::Stamp(e)
+    }
+}
+
+impl From<StampLinearizationError> for StampLinearizationOrStampError {
+    fn from(e: StampLinearizationError) -> Self {
+        Self::Linearization(e)
+    }
+}
+
+impl core::fmt::Display for StampLinearizationOrStampError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::Linearization(e) => write!(f, "{e}"),
+            Self::Stamp(e) => write!(f, "{e}"),
+        }
+    }
+}
+
+impl std::error::Error for StampLinearizationOrStampError {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        match self {
+            Self::Linearization(e) => Some(e),
+            Self::Stamp(e) => Some(e),
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
 
@@ -800,5 +978,537 @@ mod tests {
         assert_eq!(iface.dim(), 4);
         assert_eq!(iface.node_count(), 3);
         assert_eq!(iface.branch_count(), 1);
+    }
+
+    // ===================================================================
+    // stamp_linearized_model: Diode + BJT reference-matching tests
+    // ===================================================================
+
+    /// Helper: 5-node, 0-branch system for device-stamp tests.
+    /// Nodes: 0=ground, 1, 2, 3, 4. Enough for a BJT (3 terminals)
+    /// or two diodes (2+2 terminals with no overlap).
+    fn five_node_flat() -> FlattenedStructure {
+        FlattenedStructure::new(5, 0, vec![]).expect("5-node flat")
+    }
+
+    // ---------------------------------------------------------------
+    // Diode reference stamp: Shockley model at Vd = 0.7 V
+    // ---------------------------------------------------------------
+    //
+    // Given:
+    //   IS = 1e-14 A, N = 1.0, Vt = 0.02585 V (room temp)
+    //   V_anode = 0.7 V, V_cathode = 0.0 V  →  Vd = 0.7 V
+    //
+    // Hand-computed (Shockey):
+    //   arg   = Vd/(N·Vt) = 0.7/0.02585 ≈ 27.0788
+    //   exp   = e^27.0788  ≈ 5.5185e11
+    //   I_d   = IS·(exp−1) ≈ 5.5185e-3 A
+    //   gd    = IS/N·Vt · exp ≈ 2.1339e-2 S
+    //   I_eq  = I_d − gd·Vd   ≈ 5.5185e-3 − 2.1339e-2·0.7 ≈ −9.419e-3 A
+    //
+    // Jacobian (terminal-local):
+    //   [[ gd, -gd], [-gd, gd]]
+    //
+    // Companion current (terminal-local):
+    //   [I_eq, −I_eq]
+    //
+    // With anode→node 1, cathode→node 2, the MNA stamps become:
+    //   A[1,1] += gd,   A[1,2] += -gd
+    //   A[2,1] += -gd,  A[2,2] += gd
+    //   RHS[1] -= I_eq  (= RHS[1] += 9.419e-3)
+    //   RHS[2] -= -I_eq (= RHS[2] += -9.419e-3)
+
+    #[test]
+    fn diode_stamp_matches_shockley_reference() {
+        use device_modeling::params::DiodeParams;
+        use device_modeling::stamp::{linearize_diode, DiodeLinearization, LinearizedModel};
+
+        let params = DiodeParams {
+            is: 1e-14,
+            n: 1.0,
+            vt: 0.02585,
+            ..DiodeParams::default()
+        };
+        let v = [0.7, 0.0]; // [V_anode, V_cathode]
+
+        let lin: DiodeLinearization = linearize_diode(&params, &v);
+        let model = LinearizedModel::Diode(lin.clone());
+
+        // Compute reference values by hand
+        let n_vt = params.n * params.vt; // 0.02585
+        let arg = 0.7 / n_vt; // ≈ 27.0788
+        let exp_arg = arg.exp();
+        let i_d = params.is * (exp_arg - 1.0);
+        let gd = (params.is / n_vt) * exp_arg;
+        let i_eq = i_d - gd * 0.7;
+
+        // Build a 5-node MNA system and stamp through StampInterface
+        let flat = five_node_flat();
+        let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
+        let terminal_nodes: [u32; 2] = [1, 2]; // anode→node1, cathode→node2
+
+        stamp_linearized_model(&mut builder, &model, &terminal_nodes)
+            .expect("diode stamp via StampInterface");
+
+        let sys: MnaSystem = builder.finish().expect("finish");
+
+        // Matrix: Jacobian mapped into global coordinates
+        assert!(
+            (sys.get_matrix(1, 1) - gd).abs() < 1e-10,
+            "A[1,1] = {} expected gd = {}",
+            sys.get_matrix(1, 1),
+            gd
+        );
+        assert!(
+            (sys.get_matrix(1, 2) - (-gd)).abs() < 1e-10,
+            "A[1,2] = {} expected -gd = {}",
+            sys.get_matrix(1, 2),
+            -gd
+        );
+        assert!(
+            (sys.get_matrix(2, 1) - (-gd)).abs() < 1e-10,
+            "A[2,1] = {} expected -gd = {}",
+            sys.get_matrix(2, 1),
+            -gd
+        );
+        assert!(
+            (sys.get_matrix(2, 2) - gd).abs() < 1e-10,
+            "A[2,2] = {} expected gd = {}",
+            sys.get_matrix(2, 2),
+            gd
+        );
+
+        // RHS: companion current subtracted
+        assert!(
+            (sys.get_rhs(1) - (-i_eq)).abs() < 1e-10,
+            "RHS[1] = {} expected -i_eq = {}",
+            sys.get_rhs(1),
+            -i_eq
+        );
+        assert!(
+            (sys.get_rhs(2) - i_eq).abs() < 1e-10,
+            "RHS[2] = {} expected i_eq = {}",
+            sys.get_rhs(2),
+            i_eq
+        );
+    }
+
+    // ---------------------------------------------------------------
+    // BJT reference stamp: Ebers-Moll NPN at forward-active
+    // ---------------------------------------------------------------
+    //
+    // Given (NPN, no Early effect):
+    //   IS = 1e-14 A, BF = 100, BR = 1, NF = 1.0, NR = 1.0,
+    //   VAF = +inf, VAR = +inf, Vt = 0.02585 V
+    //   V_C = 5.0, V_B = 0.7, V_E = 0.0
+    //
+    // Hand-computed (Ebers-Moll, q_b = 1 since VAF=VAR=inf):
+    //   Vbe = 0.7, Vbc = -4.3
+    //   arg_f = Vbe/(NF·Vt) = 27.0788 → exp_f ≈ 5.5185e11
+    //   arg_r = Vbc/(NR·Vt) = -166.35 → exp_r ≈ 0 (clamped by Ebers-Moll)
+    //   If = IS·(exp_f − 1) ≈ 5.5185e-3 A
+    //   Ir = IS·(exp_r − 1) ≈ −1e-14 A ≈ 0
+    //   gf = IS/(NF·Vt) · exp_f ≈ 2.1339e-2 S
+    //   gr = IS/(NR·Vt) · exp_r ≈ 0 S
+    //
+    // Terminal currents (NPN, q_b=1):
+    //   Ic = (If − Ir)/q_b − Ir/BR ≈ If ≈ 5.5185e-3 A
+    //   Ib = If/BF + Ir/BR ≈ 5.5185e-5 A
+    //   Ie = −(Ic + Ib) ≈ −5.5737e-3 A
+    //
+    // Jacobian (3×3, [C,B,E]):
+    //   dIc/dVbe = gf/q_b ≈ 2.1334e-2
+    //   dIc/dVbc = −gr/q_b − gr/BR ≈ 0
+    //   dIb/dVbe = gf/BF ≈ 2.1334e-4
+    //   dIb/dVbc = gr/BR ≈ 0
+    //   dIe = −(dIc + dIb)
+    //
+    // Chain rule → terminal voltages:
+    //   dIc/dV_C = −dIc/dVbc ≈ 0
+    //   dIc/dV_B = dIc/dVbe + dIc/dVbc ≈ gf
+    //   dIc/dV_E = −dIc/dVbe ≈ −gf
+    //   (similar for Ib, Ie)
+
+    #[test]
+    fn bjt_stamp_matches_ebers_moll_reference() {
+        use device_modeling::params::BJTParams;
+        use device_modeling::stamp::{linearize_bjt, BJTLinearization, LinearizedModel};
+
+        let params = BJTParams {
+            is: 1e-14,
+            bf: 100.0,
+            br: 1.0,
+            nf: 1.0,
+            nr: 1.0,
+            vaf: f64::INFINITY,
+            var: f64::INFINITY,
+            vt: 0.02585,
+            ..BJTParams::default()
+        };
+        let v = [5.0, 0.7, 0.0]; // [V_C, V_B, V_E]
+
+        let lin: BJTLinearization = linearize_bjt(&params, &v);
+        let model = LinearizedModel::BJT(lin.clone());
+
+        // Build a 5-node MNA system and stamp through StampInterface
+        let flat = five_node_flat();
+        let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
+        let terminal_nodes: [u32; 3] = [1, 2, 3]; // C→node1, B→node2, E→node3
+
+        stamp_linearized_model(&mut builder, &model, &terminal_nodes)
+            .expect("BJT stamp via StampInterface");
+
+        let sys: MnaSystem = builder.finish().expect("finish");
+        // Verify the stamp by computing the same reference from scratch
+        let n_vt = params.nf * params.vt; // 0.02585
+        let vbe = 0.7;
+        let vbc = -4.3;
+        let arg_f = (vbe / n_vt).min(40.0);
+        let arg_r = (vbc / n_vt).clamp(-40.0, 40.0);
+        let exp_f = arg_f.exp();
+        let exp_r = arg_r.exp();
+        let i_f = params.is * (exp_f - 1.0);
+        let i_r = params.is * (exp_r - 1.0);
+        let gf = params.is / (params.nf * params.vt) * exp_f;
+        let gr = params.is / (params.nr * params.vt) * exp_r;
+
+        // q_b = 1 (VAF=VAR=inf)
+        let q_b = 1.0_f64;
+        let inv_bf = 1.0 / params.bf;
+        let inv_br = 1.0 / params.br;
+
+        let dic_dvbe = gf / q_b;
+        let dic_dvbc = -gr / q_b - gr * inv_br;
+        let dib_dvbe = gf * inv_bf;
+        let dib_dvbc = gr * inv_br;
+        let die_dvbe = -(dic_dvbe + dib_dvbe);
+        let die_dvbc = -(dic_dvbc + dib_dvbc);
+
+        // Jacobian in terminal coordinates [C, B, E]
+        let ref_jac = [
+            [-dic_dvbc, dic_dvbe + dic_dvbc, -dic_dvbe], // dIc/dV_C, dIc/dV_B, dIc/dV_E
+            [-dib_dvbc, dib_dvbe + dib_dvbc, -dib_dvbe], // dIb
+            [-die_dvbc, die_dvbe + die_dvbc, -die_dvbe], // dIe
+        ];
+
+        // Verify Jacobian from LinearizedModel matches hand-computed
+        for i in 0..3 {
+            for j in 0..3 {
+                assert!(
+                    (lin.jacobian[i][j] - ref_jac[i][j]).abs() < 1e-10,
+                    "lin.jacobian[{i}][{j}] = {} expected {}",
+                    lin.jacobian[i][j],
+                    ref_jac[i][j]
+                );
+            }
+        }
+
+        // Verify MNA matrix entries match Jacobian in global coords
+        // terminal_nodes = [1, 2, 3]
+        for i in 0..3 {
+            for j in 0..3 {
+                let row = terminal_nodes[i];
+                let col = terminal_nodes[j];
+                assert!(
+                    (sys.get_matrix(row, col) - ref_jac[i][j]).abs() < 1e-10,
+                    "A[{row},{col}] = {} expected jac[{i}][{j}] = {}",
+                    sys.get_matrix(row, col),
+                    ref_jac[i][j]
+                );
+            }
+        }
+
+        // Companion current: I_eq[k] = I_k(V0) − Σⱼ J[k][j]·V0[j]
+        let i_c_npn = (i_f - i_r) / q_b - i_r * inv_br;
+        let i_b_npn = i_f * inv_bf + i_r * inv_br;
+        let i_e_npn = -(i_c_npn + i_b_npn);
+        let currents = [i_c_npn, i_b_npn, i_e_npn];
+        let v0 = [5.0_f64, 0.7, 0.0];
+
+        for k in 0..3 {
+            let mut i_eq_k = currents[k];
+            for j in 0..3 {
+                i_eq_k -= ref_jac[k][j] * v0[j];
+            }
+            // RHS[terminal_nodes[k]] -= companion[k] = -i_eq_k added to RHS
+            let row = terminal_nodes[k];
+            assert!(
+                (sys.get_rhs(row) - (-i_eq_k)).abs() < 1e-9,
+                "RHS[{row}] = {} expected -I_eq[{k}] = {}",
+                sys.get_rhs(row),
+                -i_eq_k
+            );
+        }
+    }
+
+    // ---------------------------------------------------------------
+    // Terminal-count mismatch errors
+    // ---------------------------------------------------------------
+
+    #[test]
+    fn diode_stamp_wrong_terminal_count() {
+        use device_modeling::params::DiodeParams;
+        use device_modeling::stamp::{linearize_diode, LinearizedModel};
+
+        let params = DiodeParams {
+            is: 1e-14,
+            n: 1.0,
+            vt: 0.02585,
+            ..DiodeParams::default()
+        };
+        let lin = linearize_diode(&params, &[0.0, 0.0]);
+        let model = LinearizedModel::Diode(lin);
+
+        let flat = five_node_flat();
+        let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
+
+        // Supply 3 terminals for a 2-terminal device → error
+        let err = stamp_linearized_model(&mut builder, &model, &[1, 2, 3])
+            .expect_err("wrong terminal count");
+        assert!(
+            matches!(
+                err,
+                StampLinearizationOrStampError::Linearization(
+                    StampLinearizationError {
+                        family: "Diode",
+                        expected_terminals: 2,
+                        actual_terminals: 3,
+                    }
+                )
+            ),
+            "expected Diode terminal-count mismatch, got {err:?}"
+        );
+    }
+
+    #[test]
+    fn bjt_stamp_wrong_terminal_count() {
+        use device_modeling::params::BJTParams;
+        use device_modeling::stamp::{linearize_bjt, LinearizedModel};
+
+        let params = BJTParams {
+            is: 1e-14,
+            bf: 100.0,
+            br: 1.0,
+            nf: 1.0,
+            nr: 1.0,
+            vaf: f64::INFINITY,
+            var: f64::INFINITY,
+            vt: 0.02585,
+            ..BJTParams::default()
+        };
+        let lin = linearize_bjt(&params, &[0.0, 0.0, 0.0]);
+        let model = LinearizedModel::BJT(lin);
+
+        let flat = five_node_flat();
+        let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
+
+        // Supply 2 terminals for a 3-terminal device → error
+        let err = stamp_linearized_model(&mut builder, &model, &[1, 2])
+            .expect_err("wrong terminal count");
+        assert!(
+            matches!(
+                err,
+                StampLinearizationOrStampError::Linearization(
+                    StampLinearizationError {
+                        family: "BJT",
+                        expected_terminals: 3,
+                        actual_terminals: 2,
+                    }
+                )
+            ),
+            "expected BJT terminal-count mismatch, got {err:?}"
+        );
+    }
+
+    // ---------------------------------------------------------------
+    // stamp_linearized_model through dyn StampInterface (object safety)
+    // ---------------------------------------------------------------
+
+    #[test]
+    fn diode_stamp_through_dyn_interface() {
+        use device_modeling::params::DiodeParams;
+        use device_modeling::stamp::{linearize_diode, LinearizedModel};
+
+        let params = DiodeParams {
+            is: 1e-14,
+            n: 1.0,
+            vt: 0.02585,
+            ..DiodeParams::default()
+        };
+        let lin = linearize_diode(&params, &[0.7, 0.0]);
+        let model = LinearizedModel::Diode(lin);
+
+        let flat = five_node_flat();
+        let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
+
+        // Stamp through &mut dyn StampInterface — verifies the
+        // bridge works with dynamic dispatch too
+        let iface: &mut dyn StampInterface<Error = MnaAssemblyError> = &mut builder;
+        stamp_linearized_model(iface, &model, &[1, 2]).expect("dyn stamp");
+
+        let sys: MnaSystem = builder.finish().expect("finish");
+
+        // Verify the same gd-based stamp as the direct test
+        let n_vt = params.n * params.vt;
+        let gd = (params.is / n_vt) * (0.7 / n_vt).exp();
+        assert!(
+            (sys.get_matrix(1, 1) - gd).abs() < 1e-10,
+            "dyn dispatch: A[1,1] = {} expected gd = {}",
+            sys.get_matrix(1, 1),
+            gd
+        );
+    }
+
+    // ---------------------------------------------------------------
+    // Diode reverse-bias stamp
+    // ---------------------------------------------------------------
+
+    #[test]
+    fn diode_reverse_bias_stamp_matches_reference() {
+        use device_modeling::params::DiodeParams;
+        use device_modeling::stamp::{linearize_diode, LinearizedModel};
+
+        let params = DiodeParams {
+            is: 1e-14,
+            n: 1.0,
+            vt: 0.02585,
+            ..DiodeParams::default()
+        };
+        // Reverse bias: Vd = -5.0 V
+        let v = [0.0, 5.0]; // V_anode < V_cathode
+        let lin = linearize_diode(&params, &v);
+        let model = LinearizedModel::Diode(lin.clone());
+
+        // Hand-computed for Vd = -5.0:
+        //   arg = -5.0 / 0.02585 ≈ -193.4 → exp ≈ 0
+        //   I_d ≈ IS·(0 − 1) = −1e-14
+        //   gd ≈ 0
+        //   I_eq ≈ I_d − gd·Vd = −1e-14 − 0 ≈ −1e-14
+        let n_vt = params.n * params.vt;
+        let arg = -5.0 / n_vt;
+        let exp_arg = arg.exp();
+        let i_d = params.is * (exp_arg - 1.0);
+        let gd = (params.is / n_vt) * exp_arg;
+        let i_eq = i_d - gd * (-5.0);
+
+        let flat = five_node_flat();
+        let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
+        stamp_linearized_model(&mut builder, &model, &[1, 2])
+            .expect("reverse-bias diode stamp");
+
+        let sys: MnaSystem = builder.finish().expect("finish");
+
+        // gd ≈ 0, so matrix entries should be essentially zero
+        assert!(
+            sys.get_matrix(1, 1).abs() < 1e-20,
+            "reverse-bias A[1,1] should be ≈0, got {}",
+            sys.get_matrix(1, 1)
+        );
+        assert!(
+            sys.get_matrix(1, 2).abs() < 1e-20,
+            "reverse-bias A[1,2] should be ≈0, got {}",
+            sys.get_matrix(1, 2)
+        );
+
+        // Companion current should match I_eq
+        assert!(
+            (sys.get_rhs(1) - (-i_eq)).abs() < 1e-20,
+            "RHS[1] = {} expected {}",
+            sys.get_rhs(1),
+            -i_eq
+        );
+    }
+
+    // ---------------------------------------------------------------
+    // BJT with Early effect (VAF finite)
+    // ---------------------------------------------------------------
+
+    #[test]
+    fn bjt_stamp_with_early_effect() {
+        use device_modeling::params::BJTParams;
+        use device_modeling::stamp::{linearize_bjt, LinearizedModel};
+
+        let params = BJTParams {
+            is: 1e-14,
+            bf: 100.0,
+            br: 1.0,
+            nf: 1.0,
+            nr: 1.0,
+            vaf: 100.0,  // Finite Early voltage
+            var: f64::INFINITY,
+            vt: 0.02585,
+            ..BJTParams::default()
+        };
+        let v = [5.0, 0.7, 0.0]; // [V_C, V_B, V_E]
+        let lin = linearize_bjt(&params, &v);
+        let model = LinearizedModel::BJT(lin.clone());
+
+        let flat = five_node_flat();
+        let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
+        stamp_linearized_model(&mut builder, &model, &[1, 2, 3])
+            .expect("BJT Early-effect stamp");
+
+        let sys: MnaSystem = builder.finish().expect("finish");
+
+        // With VAF = 100, q_b ≠ 1 — the Early-effect modifies the
+        // Jacobian via d_inv_qb_dvbc = -1/VAF = -0.01.
+        // Verify that the stamp produces non-zero entries at the
+        // collector row where Early-effect modifies dIc/dV_C.
+        //
+        // Key check: dIc/dV_C = -dic_dvbc should be non-zero because
+        // dic_dvbc now includes (i_f - i_r) * d_inv_qb_dvbc ≠ 0.
+
+        // Compute reference with Early effect
+        let n_vt = params.nf * params.vt;
+        let vbe = 0.7;
+        let vbc = -4.3;
+        let arg_f = (vbe / n_vt).min(40.0);
+        let arg_r = (vbc / n_vt).clamp(-40.0, 40.0);
+        let exp_f = arg_f.exp();
+        let exp_r = arg_r.exp();
+        let i_f = params.is * (exp_f - 1.0);
+        let i_r = params.is * (exp_r - 1.0);
+        let gf = params.is / (params.nf * params.vt) * exp_f;
+        let gr = params.is / (params.nr * params.vt) * exp_r;
+
+        let inv_vaf = 1.0 / params.vaf; // 0.01
+        let inv_var = 0.0; // VAR = inf
+        let denom = 1.0 - vbc * inv_vaf - vbe * inv_var;
+        let q_b = 1.0 / denom;
+        let d_inv_qb_dvbc = -inv_vaf;
+        let d_inv_qb_dvbe = -inv_var;
+
+        let inv_bf = 1.0 / params.bf;
+        let inv_br = 1.0 / params.br;
+
+        let dic_dvbe = gf / q_b + (i_f - i_r) * d_inv_qb_dvbe;
+        let dic_dvbc = -gr / q_b + (i_f - i_r) * d_inv_qb_dvbc - gr * inv_br;
+        let _dib_dvbe = gf * inv_bf;
+        let _dib_dvbc = gr * inv_br;
+
+        // dIc/dV_C = -dic_dvbc — should be non-zero due to Early effect
+        let dic_dvc = -dic_dvbc;
+        assert!(
+            dic_dvc.abs() > 1e-10,
+            "Early effect should make dIc/dV_C non-zero, got {}",
+            dic_dvc
+        );
+
+        // Verify A[1,1] (= dIc/dV_C) matches reference
+        assert!(
+            (sys.get_matrix(1, 1) - dic_dvc).abs() < 1e-9,
+            "A[1,1] = {} expected dIc/dV_C = {}",
+            sys.get_matrix(1, 1),
+            dic_dvc
+        );
+
+        // Cross-check: verify A[1,2] (= dIc/dV_B) matches
+        let dic_dvb = dic_dvbe + dic_dvbc;
+        assert!(
+            (sys.get_matrix(1, 2) - dic_dvb).abs() < 1e-9,
+            "A[1,2] = {} expected dIc/dV_B = {}",
+            sys.get_matrix(1, 2),
+            dic_dvb
+        );
     }
 }
