@@ -50,7 +50,10 @@
 //! - [`mixed_signal`] — Mixed-Signal Scheduler skeleton with the
 //!   `optimistic-advance-with-correct-prediction` happy path. Sibling
 //!   implementer tasks fill in mis-prediction rollback, boundary
-//!   signal exchange interpolation, conformance, etc.
+//!   signal exchange interpolation, conformance, etc. The
+//!   [`DigitalKernelAdapter`] wraps the native DEVS digital kernel
+//!   (ADR-0006) and implements [`DigitalSimulator`] with
+//!   checkpoint/rollback support for the mixed-signal run loop.
 //! - [`boundary_exchanger`] — Analog↔digital boundary signal exchanger
 //!   with the **zero-order hold** default per ADR-0007 (tasks.md item
 //!   #45) and the **linear interpolation opt-in** (tasks.md item #46).
@@ -110,6 +113,7 @@ pub use dc_sweep::{dc_sweep, DcSweepError, DcSweepPoint, DcSweepRequest, DcSweep
 pub use mixed_signal::icarus::{
     IcarusVerilogAdapter, InMemoryVvp, ScriptedEvent, VvpAdvanceReport, VvpCall, VvpTransport,
 };
+pub use mixed_signal::native_kernel::DigitalKernelAdapter;
 pub use mixed_signal::rollback::{RollbackHandler, RollbackOutcome};
 pub use mixed_signal::{
     AnalogSolver, AnalogStepReport, BoundarySignals, DigitalAdapterKind, DigitalSimulator,

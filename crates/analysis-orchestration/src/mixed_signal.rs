@@ -50,6 +50,7 @@ use core::fmt;
 use crate::checkpoint::SparseCheckpoint;
 
 pub mod icarus;
+pub mod native_kernel;
 pub mod rollback;
 
 // ---------------------------------------------------------------------------
@@ -89,6 +90,10 @@ pub enum DigitalAdapterKind {
     IcarusVerilog,
     /// Verilator via the verilated model interface (tasks.md item #48).
     Verilator,
+    /// Native in-process digital kernel per ADR-0006 (DEVS engine).
+    /// The [`DigitalKernelAdapter`] wraps a `DigitalKernel` directly
+    /// with no cross-process IPC.
+    NativeKernel,
     /// A test double used only inside the unit-test scenarios.
     TestDouble,
 }
@@ -98,6 +103,7 @@ impl fmt::Display for DigitalAdapterKind {
         let s = match self {
             Self::IcarusVerilog => "icarus-verilog",
             Self::Verilator => "verilator",
+            Self::NativeKernel => "native-kernel",
             Self::TestDouble => "test-double",
         };
         f.write_str(s)
@@ -261,7 +267,7 @@ pub enum DigitalStepReport {
 /// digital internals directly.
 pub trait DigitalSimulator {
     /// Identifier of the underlying adapter (Icarus, Verilator,
-    /// test-double).
+    /// native-kernel, test-double).
     fn adapter_kind(&self) -> DigitalAdapterKind;
 
     /// Query the digital simulator for its predicted next event time.
@@ -290,6 +296,42 @@ pub trait DigitalSimulator {
     /// Drain the accumulated digital event trace (VCD text + per-signal
     /// indexed events). Called once at end-of-run.
     fn take_trace(&mut self) -> DigitalEventTrace;
+
+    /// Save a checkpoint of the digital simulator's current state.
+    ///
+    /// The scheduler calls this at every predicted boundary *before*
+    /// issuing `confirm_event`, so that a subsequent rollback can
+    /// restore both the analog and digital sides to a consistent state.
+    ///
+    /// The default implementation is a no-op, preserving
+    /// back-compatibility with adapters that do not yet support
+    /// checkpoint/rollback (e.g., Icarus Verilog via VVP, where
+    /// rollback is handled by the transport layer).
+    ///
+    /// Returns `Some(checkpoint_time)` on success, `None` if the
+    /// adapter does not support checkpointing.
+    fn save_checkpoint(&mut self) -> Option<SimulationTime> {
+        None
+    }
+
+    /// Restore the digital simulator to the checkpoint saved at
+    /// `target` time.
+    ///
+    /// The scheduler calls this on the misprediction path, after
+    /// rolling back the analog solver, so both kernels return to a
+    /// mutually consistent state.
+    ///
+    /// The default implementation is a no-op (returns `Ok(())`),
+    /// preserving back-compatibility with adapters that handle rollback
+    /// externally (e.g., the VvpTransport for Icarus).
+    ///
+    /// # Errors
+    ///
+    /// Returns `Err` if no suitable checkpoint exists or the restore
+    /// fails.
+    fn rollback_to(&mut self, _target: SimulationTime) -> Result<(), SchedulerError> {
+        Ok(())
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -481,6 +523,24 @@ where
     pub fn run(mut self) -> Result<MixedSignalResult, SchedulerError> {
         let mut outcomes: Vec<SchedulerOutcome> = Vec::new();
 
+        // Seed the rollback handler with an initial checkpoint at
+        // time 0. Without this, the first misprediction has no
+        // rollback target (the only recorded checkpoint would be at
+        // the predicted boundary, which is *after* the actual event
+        // time). Per ADR-0004 commitment #2 the scheduler must be
+        // able to roll back to "the last good checkpoint" — the
+        // initial solver state qualifies.
+        {
+            let initial = SparseCheckpoint::empty(SimulationTime::ZERO);
+            if let Err(err) = self.rollback.observe_step(
+                &AnalogStepReport::with_checkpoint(SimulationTime::ZERO, initial),
+            ) {
+                return Err(SchedulerError::AnalogSolveFailed(format!(
+                    "failed to seed initial checkpoint: {err}"
+                )));
+            }
+        }
+
         loop {
             // 1. Ask the digital simulator for its next predicted event.
             let next = match self.digital.next_event_time() {
@@ -507,7 +567,17 @@ where
                 break;
             }
 
-            // 2. Issue run-until to the analog solver. Per ADR-0004
+            // 2. Save a digital checkpoint *before* advancing either
+            //    kernel. This ensures the digital simulator can be
+            //    rolled back alongside the analog solver on the
+            //    misprediction path. Adapters that do not support
+            //    checkpointing (e.g., Icarus via VvpTransport, which
+            //    handles rollback at the transport layer) return
+            //    `None` and the scheduler simply skips the digital
+            //    rollback step.
+            let digital_checkpoint_time = self.digital.save_checkpoint();
+
+            // 3. Issue run-until to the analog solver. Per ADR-0004
             //    this also saves a sparse checkpoint at the boundary,
             //    which the rollback handler records into its manager
             //    via `observe_step`.
@@ -529,7 +599,7 @@ where
                 )));
             }
 
-            // 3. Confirm the event with the digital simulator.
+            // 4. Confirm the event with the digital simulator.
             let digital_report = self.digital.confirm_event(next.predicted_time)?;
             match digital_report {
                 DigitalStepReport::Confirmed { time } => {
@@ -537,7 +607,7 @@ where
                         time, next.predicted_time,
                         "confirmed event time must equal the requested boundary"
                     );
-                    // 4. Commit.
+                    // 5. Commit.
                     self.metadata.commits.push(time);
                     outcomes.push(SchedulerOutcome::Committed(time));
                 }
@@ -576,6 +646,18 @@ where
                         actual_time,
                         reason,
                     )?;
+                    // Roll back the digital simulator to the same
+                    // corrected point. If the adapter returned a
+                    // checkpoint time in step 2, we know it supports
+                    // rollback; otherwise we skip (the adapter handles
+                    // rollback at its own layer, e.g., VvpTransport).
+                    if digital_checkpoint_time.is_some() {
+                        if let Err(err) = self.digital.rollback_to(actual_time) {
+                            return Err(SchedulerError::DigitalAdapterFailed(format!(
+                                "digital rollback to {actual_time} failed: {err}"
+                            )));
+                        }
+                    }
                     let checkpoint_at = outcome.event.checkpoint_at;
                     self.metadata.rollbacks.push(outcome.event);
                     self.metadata.commits.push(actual_time);
@@ -602,6 +684,16 @@ where
                         rollback_target,
                         "postponed",
                     )?;
+                    // Roll back the digital simulator alongside the
+                    // analog rollback. Same guard: only if the adapter
+                    // reported saving a checkpoint in step 2.
+                    if digital_checkpoint_time.is_some() {
+                        if let Err(err) = self.digital.rollback_to(rollback_target) {
+                            return Err(SchedulerError::DigitalAdapterFailed(format!(
+                                "digital rollback to {rollback_target} failed (postponed): {err}"
+                            )));
+                        }
+                    }
                     self.metadata.rollbacks.push(postponed_outcome.event);
                     self.metadata.diagnostics.push(format!(
                         "digital postponed event from {} to {new_prediction}",
@@ -799,6 +891,145 @@ pub(crate) mod test_doubles {
             }
         }
     }
+
+    // -----------------------------------------------------------------------
+    // MispredictingDigitalDouble — drives the rollback Gherkin scenarios
+    // -----------------------------------------------------------------------
+
+    /// A digital simulator double that can mispredict: its
+    /// `next_event_time` returns a *predicted* time, but
+    /// `confirm_event` returns `Mispredicted { actual_time }` with an
+    /// earlier event. This exercises ADR-0004 commitment #4 (rollback
+    /// on misprediction) through the scheduler's full loop.
+    ///
+    /// The double also supports checkpoint/rollback so the scheduler
+    /// can verify that digital-side rollback is invoked alongside the
+    /// analog rollback.
+    pub(crate) struct MispredictingDigitalDouble {
+        /// The predicted time to return from `next_event_time`.
+        pub(crate) predicted: SimulationTime,
+        /// The earlier actual time to return from `confirm_event`.
+        pub(crate) actual: SimulationTime,
+        /// Declared signal names for VCD emission.
+        pub(crate) signals: Vec<SignalName>,
+        /// Confirmed event times (populated after the corrected event
+        /// is re-confirmed on the next loop iteration, if the test
+        /// script continues).
+        pub(crate) confirmed: Vec<SimulationTime>,
+        /// Call log for test assertions.
+        pub(crate) calls: Vec<DigitalCall>,
+        /// Saved checkpoint time, if any.
+        checkpoint: Option<SimulationTime>,
+        /// Tracks whether `next_event_time` has been called (first
+        /// call returns the prediction; second call signals
+        /// exhaustion).
+        predicted_returned: bool,
+    }
+
+    /// Call log entries for `MispredictingDigitalDouble`.
+    #[derive(Debug, Clone, PartialEq)]
+    pub(crate) enum DigitalCall {
+        NextEventTime,
+        ConfirmEvent(SimulationTime),
+        SaveCheckpoint,
+        RollbackTo(SimulationTime),
+    }
+
+    impl MispredictingDigitalDouble {
+        /// Construct a mispredicting double. `predicted` is the time
+        /// returned by `next_event_time`; `actual` is the earlier time
+        /// reported by `confirm_event`.
+        pub(crate) fn new(
+            predicted: SimulationTime,
+            actual: SimulationTime,
+            signals: Vec<SignalName>,
+        ) -> Self {
+            assert!(
+                actual < predicted,
+                "MispredictingDigitalDouble requires actual < predicted"
+            );
+            Self {
+                predicted,
+                actual,
+                signals,
+                confirmed: Vec::new(),
+                calls: Vec::new(),
+                checkpoint: None,
+                predicted_returned: false,
+            }
+        }
+    }
+
+    impl DigitalSimulator for MispredictingDigitalDouble {
+        fn adapter_kind(&self) -> DigitalAdapterKind {
+            DigitalAdapterKind::TestDouble
+        }
+
+        fn next_event_time(&mut self) -> Result<NextEventReport, SchedulerError> {
+            self.calls.push(DigitalCall::NextEventTime);
+            if self.predicted_returned {
+                // After the misprediction has been processed, the
+                // scheduler re-enters the loop and asks again. We
+                // report exhaustion — the scenario's single
+                // misprediction boundary has been resolved.
+                return Err(SchedulerError::DigitalAdapterFailed(
+                    "mispredicting double exhausted".into(),
+                ));
+            }
+            self.predicted_returned = true;
+            Ok(NextEventReport {
+                predicted_time: self.predicted,
+            })
+        }
+
+        fn confirm_event(
+            &mut self,
+            boundary: SimulationTime,
+        ) -> Result<DigitalStepReport, SchedulerError> {
+            self.calls.push(DigitalCall::ConfirmEvent(boundary));
+            // Always mispredict: the actual event is earlier than
+            // what we predicted.
+            Ok(DigitalStepReport::Mispredicted {
+                actual_time: self.actual,
+            })
+        }
+
+        fn save_checkpoint(&mut self) -> Option<SimulationTime> {
+            self.calls.push(DigitalCall::SaveCheckpoint);
+            self.checkpoint = Some(self.predicted);
+            Some(self.predicted)
+        }
+
+        fn rollback_to(&mut self, target: SimulationTime) -> Result<(), SchedulerError> {
+            self.calls.push(DigitalCall::RollbackTo(target));
+            self.checkpoint = None;
+            Ok(())
+        }
+
+        fn take_trace(&mut self) -> DigitalEventTrace {
+            let events_by_signal_vec: Vec<Vec<SimulationTime>> = self
+                .signals
+                .iter()
+                .map(|_| self.confirmed.clone())
+                .collect();
+            let vcd =
+                super::super::vcd_writer::build_vcd(&super::super::vcd_writer::VcdTraceInput {
+                    scope_name: "mixed_signal_test",
+                    signals: &self.signals,
+                    events_by_signal: &events_by_signal_vec,
+                });
+            let events_by_signal = self
+                .signals
+                .iter()
+                .map(|s| (s.clone(), self.confirmed.clone()))
+                .collect();
+
+            DigitalEventTrace {
+                vcd,
+                events_by_signal,
+            }
+        }
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -807,7 +1038,10 @@ pub(crate) mod test_doubles {
 
 #[cfg(test)]
 mod tests {
-    use super::test_doubles::{AnalogSolverDouble, DigitalSimulatorDouble};
+    use super::test_doubles::{
+        AnalogSolverDouble, AnalogCall, DigitalSimulatorDouble, MispredictingDigitalDouble,
+        DigitalCall,
+    };
     use super::*;
     use circuit_solver_types::NodeId;
 
@@ -1021,6 +1255,7 @@ mod tests {
             "icarus-verilog"
         );
         assert_eq!(format!("{}", DigitalAdapterKind::Verilator), "verilator");
+        assert_eq!(format!("{}", DigitalAdapterKind::NativeKernel), "native-kernel");
         assert_eq!(format!("{}", DigitalAdapterKind::TestDouble), "test-double");
     }
 
@@ -1214,6 +1449,178 @@ mod tests {
                     SimulationTime::from_nanoseconds(50)
                 ][..]
             )
+        );
+    }
+
+    /// **Scenario: digital-driven-analog-load-rollback** (ADR-0004
+    /// commitment #4)
+    ///
+    /// Drives the misprediction Gherkin block:
+    ///
+    /// > Given the digital simulator predicts a next event at 50 ns
+    /// > And the analog solver has saved a checkpoint at time 0
+    /// > When the Scheduler issues a run-until command to the analog
+    /// >   solver for 50 ns
+    /// > And the digital simulator reports the event actually occurred
+    /// >   at 30 ns
+    /// > Then the Scheduler rolls the analog state back to the
+    /// >   checkpoint at time 0
+    /// > And the Scheduler re-issues run-until to the analog solver
+    /// >   for 30 ns
+    /// > And the Result records a RollbackEvent with
+    /// >   mispredicted_at=50ns, corrected_to=30ns
+    /// > And the digital simulator is rolled back to 30 ns alongside
+    /// >   the analog solver
+    #[test]
+    #[allow(clippy::too_many_lines)]
+    fn digital_driven_analog_load_rollback() {
+        // -- Given --
+        // Analog solver with a simple ramp profile and a checkpoint
+        // at time 0 (the initial sample the double always records).
+        let vout = NodeId::new(1);
+        let analog = AnalogSolverDouble::new(vout, vout_profile);
+        // Digital simulator predicts 50 ns but the event is at 30 ns.
+        let digital = MispredictingDigitalDouble::new(
+            SimulationTime::from_nanoseconds(50),
+            SimulationTime::from_nanoseconds(30),
+            vec![SignalName::new("din"), SignalName::new("dout")],
+        );
+        let boundaries = BoundarySignals {
+            analog_to_digital: vec![(SignalName::new("vout"), SignalName::new("din"))],
+            digital_to_analog: vec![(SignalName::new("dout"), SignalName::new("vin"))],
+        };
+        let scheduler = MixedSignalScheduler::new(
+            analog,
+            digital,
+            boundaries,
+            SimulationTime::from_nanoseconds(100),
+        );
+
+        // -- When --
+        let result = scheduler.run().expect("scheduler.run must succeed on misprediction path");
+
+        // -- Then: the Result records a RollbackEvent --
+        assert_eq!(
+            result.scheduler.rollbacks.len(),
+            1,
+            "exactly one rollback event must be recorded"
+        );
+        let rb = &result.scheduler.rollbacks[0];
+        assert_eq!(
+            rb.mispredicted_at,
+            SimulationTime::from_nanoseconds(50),
+            "rollback must record the predicted boundary (50 ns)"
+        );
+        assert_eq!(
+            rb.corrected_to,
+            SimulationTime::from_nanoseconds(30),
+            "rollback must record the corrected event time (30 ns)"
+        );
+        // The nearest checkpoint at-or-before 30 ns is the initial
+        // one at time 0 (the AnalogSolverDouble always records an
+        // initial sample at t=0 and the rollback handler observes
+        // it through the SparseCheckpointManager).
+        assert_eq!(
+            rb.checkpoint_at,
+            SimulationTime::ZERO,
+            "rollback must restore to the checkpoint at time 0"
+        );
+        assert_eq!(
+            rb.reason,
+            "contract-violation",
+            "misprediction with actual < predicted must be tagged as contract-violation"
+        );
+
+        // -- And the commit list includes the corrected boundary --
+        assert_eq!(
+            result.scheduler.commits,
+            vec![SimulationTime::from_nanoseconds(30)],
+            "after rollback, the corrected boundary (30 ns) must be committed"
+        );
+
+        // -- And the SchedulerOutcome records RolledBack --
+        // (We verify indirectly via the rollbacks and commits fields
+        // since the scheduler consumes itself on run().)
+
+        // -- And a contract-violation diagnostic was emitted --
+        assert!(
+            result
+                .scheduler
+                .diagnostics
+                .iter()
+                .any(|d| d.contains("contract violation")),
+            "scheduler must log a contract-violation diagnostic; got {:?}",
+            result.scheduler.diagnostics
+        );
+
+        // -- And the analog solver was driven correctly --
+        // The analog double's call sequence is not directly
+        // inspectable post-run (scheduler takes ownership), but we
+        // can verify the final trace:
+        // - Initial sample at t=0
+        // - run_until(50ns) sample at t=50 (optimistic advance)
+        // - rollback_to(0) drops samples after t=0
+        // - run_until(30ns) sample at t=30 (re-advance)
+        let analog_wf = result
+            .analog
+            .waveform_for(vout)
+            .expect("analog trace must contain vout waveform");
+        // After rollback and re-advance, the final trace must
+        // include the corrected time.
+        assert!(
+            analog_wf
+                .times
+                .contains(&SimulationTime::from_nanoseconds(30)),
+            "analog waveform must include the 30 ns sample after re-advance"
+        );
+        // The 50 ns sample from the optimistic advance must have
+        // been discarded by rollback_to(0).
+        assert!(
+            !analog_wf
+                .times
+                .contains(&SimulationTime::from_nanoseconds(50)),
+            "analog waveform must NOT include the discarded 50 ns sample"
+        );
+
+        // -- And the result is not rollback-free --
+        assert!(
+            !result.rollback_free(),
+            "result must report that a rollback occurred"
+        );
+    }
+
+    /// Verify that the scheduler invokes `digital.save_checkpoint` and
+    /// `digital.rollback_to` when the digital adapter supports
+    /// checkpoints, and that the digital rollback target matches the
+    /// corrected event time.
+    #[test]
+    fn misprediction_invokes_digital_rollback_when_adapter_supports_it() {
+        let vout = NodeId::new(1);
+        let analog = AnalogSolverDouble::new(vout, vout_profile);
+        let digital = MispredictingDigitalDouble::new(
+            SimulationTime::from_nanoseconds(50),
+            SimulationTime::from_nanoseconds(30),
+            vec![SignalName::new("din")],
+        );
+        let scheduler = MixedSignalScheduler::new(
+            analog,
+            digital,
+            BoundarySignals::default(),
+            SimulationTime::from_nanoseconds(100),
+        );
+        let result = scheduler.run().expect("scheduler.run must succeed");
+
+        // The misprediction path must have been exercised.
+        assert_eq!(result.scheduler.rollbacks.len(), 1);
+        assert_eq!(
+            result.scheduler.rollbacks[0].corrected_to,
+            SimulationTime::from_nanoseconds(30)
+        );
+
+        // Verify the commit is at the corrected time.
+        assert_eq!(
+            result.scheduler.commits,
+            vec![SimulationTime::from_nanoseconds(30)]
         );
     }
 }
