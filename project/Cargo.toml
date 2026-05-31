@@ -10,6 +10,7 @@ numeric-solver = { path = "../crates/numeric-solver" }
 device-modeling = { path = "../crates/device-modeling" }
 analysis-orchestration = { path = "../crates/analysis-orchestration" }
 netlist-graph = { path = "../crates/netlist-graph" }
+tempfile = "3"
 
 [dev-dependencies]
 trybuild = "1"
@@ -21,6 +22,10 @@ path = "tests/digital/equivalence.rs"
 [[test]]
 name = "digital-vcd"
 path = "tests/digital/vcd.rs"
+
+[[test]]
+name = "digital-golden-icarus"
+path = "tests/digital/golden_icarus.rs"
 
 [[test]]
 name = "no-runtime-registration"
