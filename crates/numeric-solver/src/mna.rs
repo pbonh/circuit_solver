@@ -1511,4 +1511,223 @@ mod tests {
             dic_dvb
         );
     }
+
+    // ===================================================================
+    // stamp_linearized_model: MOSFET reference-matching tests
+    // ===================================================================
+
+    // ---------------------------------------------------------------
+    // NMOS Level-1 saturation stamp with body effect + CLM
+    // ---------------------------------------------------------------
+    //
+    // Given:
+    //   VTO = 1.0 V, KP = 50µA/V², LAMBDA = 0.02 /V,
+    //   GAMMA = 0.5 √V, PHI = 0.6 V, NMOS polarity
+    //   V_D = 5.0 V, V_G = 3.0 V, V_S = 0.0 V, V_B = 0.0 V
+    //
+    // Hand-computed (Shichman-Hodges, V_BS = 0 so no body-effect
+    // shift, V_GS = 3.0, V_DS = 5.0, V_ov = 2.0, saturation):
+    //
+    //   clm = 1 + LAMBDA·V_DS = 1.1
+    //   I_d = (KP/2)·V_ov²·clm = 110 µA
+    //   gm  = KP·V_ov·clm       = 110 µA/V
+    //   gds = (KP/2)·V_ov²·λ    = 2 µA/V
+    //   dvth/dvbs = -γ/(2·√PHI)  ≈ -0.3227
+    //   gmb = KP·V_ov·(−dvth/dvbs)·clm ≈ 35.50 µA/V
+    //
+    // Drain-row Jacobian [D, G, S, B]:
+    //   [gds, gm, −gm−gds−gmb, gmb]
+    // Source-row = negation of drain-row.
+    // Gate, bulk rows = zero.
+    //
+    // Companion:
+    //   I_eq[D] = I_d − (gds·V_D + gm·V_G)
+    //   I_eq[S] = −I_d − (−gds·V_D − gm·V_G)
+    #[test]
+    fn nmos_level1_saturation_stamp_matches_reference() {
+        use circuit_solver_types::ModelName;
+        use device_modeling::params::{MosLevel1Params, MosPolarity, MOSFETParams};
+        use device_modeling::stamp::{linearize_mosfet, LinearizedModel};
+
+        let params = MosLevel1Params {
+            name: ModelName::new("nmos_test"),
+            polarity: MosPolarity::Nmos,
+            vto: 1.0,
+            kp: 50.0e-6,
+            lambda: 0.02,
+            gamma: 0.5,
+            phi: 0.6,
+            ..MosLevel1Params::default()
+        };
+        let mos_params = MOSFETParams::Level1(params.clone());
+        let v: [f64; 4] = [5.0, 3.0, 0.0, 0.0]; // [V_D, V_G, V_S, V_B]
+        let lin = linearize_mosfet(&mos_params, &v);
+        let model = LinearizedModel::MOSFET(lin.clone());
+
+        // ---- Hand-computed reference values ----
+        let vgs = 3.0; // V_G - V_S
+        let vds = 5.0; // V_D - V_S
+        let vbs = 0.0; // V_B - V_S
+        let clm = 1.0 + params.lambda * vds;
+        let vto_mag = params.vto.abs();
+        let phi_sqrt = params.phi.max(0.0).sqrt();
+        let body_sqrt_arg = (params.phi - vbs).max(0.0);
+        let vth = vto_mag + params.gamma * (body_sqrt_arg.sqrt() - phi_sqrt);
+        let v_ov = vgs - vth; // 2.0
+
+        let id = 0.5 * params.kp * v_ov * v_ov * clm;
+        let gm = params.kp * v_ov * clm;
+        let gds = 0.5 * params.kp * v_ov * v_ov * params.lambda;
+        let dvth_dvbs = if body_sqrt_arg > 0.0 {
+            -params.gamma / (2.0 * body_sqrt_arg.sqrt())
+        } else {
+            0.0
+        };
+        let gmb = params.kp * v_ov * (-dvth_dvbs) * clm;
+
+        // Drain-row Jacobian: [gds, gm, -gm-gds-gmb, gmb]
+        let j_dd = gds;
+        let j_dg = gm;
+        let j_ds = -gm - gds - gmb;
+        let j_db = gmb;
+
+        // Source-row Jacobian (negation of drain-row)
+        let j_sd = -gds;
+        let j_sg = -gm;
+        let j_ss = gm + gds + gmb;
+        let j_sb = -gmb;
+
+        // Companion currents: I_eq_k = I_k(V*) - Σ_j J[k,j]·V*_j
+        let id_true = id; // NMOS: polarity_sign * id = +id
+        let i_terminal_d = id_true;
+        let i_terminal_s = -id_true;
+        let i_eq_d = i_terminal_d - (j_dd * 5.0 + j_dg * 3.0 + j_ds * 0.0 + j_db * 0.0);
+        let i_eq_s = i_terminal_s - (j_sd * 5.0 + j_sg * 3.0 + j_ss * 0.0 + j_sb * 0.0);
+
+        // ---- Stamp into MNA and verify ----
+        let flat = five_node_flat();
+        let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
+        stamp_linearized_model(&mut builder, &model, &[1, 2, 3, 4])
+            .expect("NMOS saturation stamp");
+
+        let sys: MnaSystem = builder.finish().expect("finish");
+
+        // Verify drain-row matrix entries
+        assert!(
+            (sys.get_matrix(1, 1) - j_dd).abs() < 1e-12,
+            "A[1,1] = {} expected J[D,D] = {}",
+            sys.get_matrix(1, 1),
+            j_dd
+        );
+        assert!(
+            (sys.get_matrix(1, 2) - j_dg).abs() < 1e-12,
+            "A[1,2] = {} expected J[D,G] = {}",
+            sys.get_matrix(1, 2),
+            j_dg
+        );
+        assert!(
+            (sys.get_matrix(1, 3) - j_ds).abs() < 1e-12,
+            "A[1,3] = {} expected J[D,S] = {}",
+            sys.get_matrix(1, 3),
+            j_ds
+        );
+        assert!(
+            (sys.get_matrix(1, 4) - j_db).abs() < 1e-12,
+            "A[1,4] = {} expected J[D,B] = {}",
+            sys.get_matrix(1, 4),
+            j_db
+        );
+
+        // Verify source-row matrix entries
+        assert!(
+            (sys.get_matrix(3, 1) - j_sd).abs() < 1e-12,
+            "A[3,1] = {} expected J[S,D] = {}",
+            sys.get_matrix(3, 1),
+            j_sd
+        );
+        assert!(
+            (sys.get_matrix(3, 2) - j_sg).abs() < 1e-12,
+            "A[3,2] = {} expected J[S,G] = {}",
+            sys.get_matrix(3, 2),
+            j_sg
+        );
+        assert!(
+            (sys.get_matrix(3, 3) - j_ss).abs() < 1e-12,
+            "A[3,3] = {} expected J[S,S] = {}",
+            sys.get_matrix(3, 3),
+            j_ss
+        );
+        assert!(
+            (sys.get_matrix(3, 4) - j_sb).abs() < 1e-12,
+            "A[3,4] = {} expected J[S,B] = {}",
+            sys.get_matrix(3, 4),
+            j_sb
+        );
+
+        // Verify companion currents (subtracted from RHS by stamp_terminal_block)
+        assert!(
+            (sys.get_rhs(1) - (-i_eq_d)).abs() < 1e-12,
+            "RHS[1] = {} expected -I_eq[D] = {}",
+            sys.get_rhs(1),
+            -i_eq_d
+        );
+        assert!(
+            (sys.get_rhs(3) - (-i_eq_s)).abs() < 1e-12,
+            "RHS[3] = {} expected -I_eq[S] = {}",
+            sys.get_rhs(3),
+            -i_eq_s
+        );
+
+        // Gate and bulk rows are zero at Level-1
+        assert!(
+            sys.get_matrix(2, 1).abs() < 1e-20,
+            "A[2,1] (gate-drain) should be 0 at Level-1"
+        );
+        assert!(
+            sys.get_matrix(4, 1).abs() < 1e-20,
+            "A[4,1] (bulk-drain) should be 0 at Level-1"
+        );
+    }
+
+    // ---------------------------------------------------------------
+    // MOSFET terminal-count mismatch: 3 terminals for a 4-terminal
+    // device → StampLinearizationError
+    // ---------------------------------------------------------------
+    #[test]
+    fn mosfet_stamp_rejects_wrong_terminal_count() {
+        use circuit_solver_types::ModelName;
+        use device_modeling::params::{MosLevel1Params, MosPolarity, MOSFETParams};
+        use device_modeling::stamp::{linearize_mosfet, LinearizedModel};
+
+        let params = MosLevel1Params {
+            name: ModelName::new("nmos_mismatch"),
+            polarity: MosPolarity::Nmos,
+            vto: 1.0,
+            kp: 50.0e-6,
+            ..MosLevel1Params::default()
+        };
+        let mos_params = MOSFETParams::Level1(params);
+        let lin = linearize_mosfet(&mos_params, &[5.0, 3.0, 0.0, 0.0]);
+        let model = LinearizedModel::MOSFET(lin);
+
+        let flat = five_node_flat();
+        let mut builder = IncrementalMnaBuilder::new(&flat).expect("builder");
+
+        // Supply 3 terminals for a 4-terminal device → error
+        let err = stamp_linearized_model(&mut builder, &model, &[1, 2, 3])
+            .expect_err("wrong terminal count");
+        assert!(
+            matches!(
+                err,
+                StampLinearizationOrStampError::Linearization(
+                    StampLinearizationError {
+                        family: "MOSFET",
+                        expected_terminals: 4,
+                        actual_terminals: 3,
+                    }
+                )
+            ),
+            "expected MOSFET terminal-count mismatch, got {err:?}"
+        );
+    }
 }

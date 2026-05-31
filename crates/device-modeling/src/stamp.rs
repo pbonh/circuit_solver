@@ -342,10 +342,15 @@ impl DeviceModel {
     ///
     /// # Placeholder behavior at task #8
     ///
-    /// Every per-family helper currently returns the all-zero
+    /// ~~Every per-family helper currently returns the all-zero~~
     /// linearization defined by `*Linearization::zero()`. tasks.md
-    /// #9–#13 replace those zero bodies with the actual device
+    /// #9–#13 ~~replace those zero bodies with the actual device~~
     /// equations under the same dispatch site.
+    ///
+    /// **Update (post #9/#10/#12):** Diode, BJT, and MOSFET Level-1
+    /// linearization helpers now return actual device equations.
+    /// Only BSIM3v3/BSIM4 MOSFET sub-levels still fall back to
+    /// `MOSFETLinearization::zero()` until their stamps land.
     pub fn linearize(
         &self,
         op: &OperatingPoint,
