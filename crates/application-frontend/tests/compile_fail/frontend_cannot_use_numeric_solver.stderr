@@ -1,0 +1,7 @@
+error[E0432]: unresolved import `numeric_solver`
+ --> tests/compile_fail/frontend_cannot_use_numeric_solver.rs:6:5
+  |
+6 | use numeric_solver::newton_raphson;
+  |     ^^^^^^^^^^^^^^ use of unresolved module or unlinked crate `numeric_solver`
+  |
+  = help: if you wanted to use a crate named `numeric_solver`, use `cargo add numeric_solver` to add it to your `Cargo.toml`

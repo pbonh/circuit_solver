@@ -19,6 +19,16 @@
 //!   via exhaustive `match`.
 //! - **ADR-0010** — Unstable public Rust API surface for v1.
 
+pub mod lu_real;
 pub mod mna;
 
-pub use mna::{IncrementalMnaBuilder, StampInterface, StampValue};
+// LU dispatch convenience functions from lu_real.
+pub use lu_real::{dense_to_sparse, solve_assembled, solve_sub_view};
+
+// Solver types re-exported from numeric-solver for downstream consumers.
+pub use numeric_solver::{
+    LinearSolverError, RussellRealSolver, SolutionVector, SparseLinearSystem, SparseTriplet,
+};
+
+// MNA assembly types.
+pub use mna::{AssembledSystem, IncrementalMnaBuilder, StampInterface, StampValue};

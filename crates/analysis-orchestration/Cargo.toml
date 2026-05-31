@@ -27,6 +27,9 @@ netlist-graph = { path = "../netlist-graph" }
 # are re-used to keep the thermal-noise formula in one canonical site.
 device-modeling = { path = "../device-modeling" }
 num-complex = { version = "0.4", default-features = false }
+# ADR-0006: the Mixed-Signal Scheduler drives the native digital kernel
+# via its in-process run-until API. No cross-process IPC.
+digital-kernel = { path = "../digital-kernel" }
 
 [dev-dependencies]
 circuit-solver-types = { path = "../circuit-solver-types" }

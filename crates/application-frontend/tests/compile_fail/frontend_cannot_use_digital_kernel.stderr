@@ -1,0 +1,7 @@
+error[E0432]: unresolved import `digital_kernel`
+ --> tests/compile_fail/frontend_cannot_use_digital_kernel.rs:7:5
+  |
+7 | use digital_kernel::kernel;
+  |     ^^^^^^^^^^^^^^ use of unresolved module or unlinked crate `digital_kernel`
+  |
+  = help: if you wanted to use a crate named `digital_kernel`, use `cargo add digital_kernel` to add it to your `Cargo.toml`

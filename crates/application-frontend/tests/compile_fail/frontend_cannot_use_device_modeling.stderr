@@ -1,0 +1,7 @@
+error[E0432]: unresolved import `device_modeling`
+ --> tests/compile_fail/frontend_cannot_use_device_modeling.rs:6:5
+  |
+6 | use device_modeling::model;
+  |     ^^^^^^^^^^^^^^^ use of unresolved module or unlinked crate `device_modeling`
+  |
+  = help: if you wanted to use a crate named `device_modeling`, use `cargo add device_modeling` to add it to your `Cargo.toml`

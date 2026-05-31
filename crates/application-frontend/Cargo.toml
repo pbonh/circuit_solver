@@ -23,3 +23,7 @@ analysis-orchestration = { path = "../analysis-orchestration" }
 # Compile-fail test infrastructure: verifies that undeclared cross-crate
 # accesses are rejected by the compiler (ADR-0008).
 trybuild = "1"
+
+[[test]]
+name = "compile_fail_undeclared_dep"
+path = "tests/compile_fail_undeclared_dep.rs"
