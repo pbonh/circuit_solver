@@ -872,10 +872,10 @@ mod tests {
     }
 
     /// RLC series: V1 → R1 → L1 → C1 → gnd, output at L1∩C1.
-    /// Resonant frequency f_res = 1/(2π√LC).
-    /// In a series RLC with output across C, the magnitude dips at
-    /// resonance (notch / lowpass-like behaviour) because the LC
-    /// impedance cancels and R1 drops the voltage.
+    /// Resonant frequency f_res = 1/(2π√LC) ≈ 5.03 kHz.
+    /// With R = 10 Ω the quality factor Q = (1/R)√(L/C) ≈ 3.16,
+    /// producing an underdamped resonant peak at f_res
+    /// (≈ +10 dB gain across C at resonance).
     #[test]
     fn project_ac_rlc_series_resonance() {
         let mut b = CircuitBuilder::default();
@@ -898,20 +898,19 @@ mod tests {
         let result = project_ac_analysis(req).expect("AC analysis ok");
 
         let tf = result.transfer_functions.first().expect("tf");
-        let mag_at_res = tf.magnitude_db[1];
-        // At resonance in a series RLC with output across C, the
-        // magnitude dips because L and C cancel, leaving R to drop
-        // the voltage. Verify the dip is present.
+        let mag_at_peak = tf.magnitude_db[1];
+        // At resonance in a series RLC with R=10 (Q≈3.16), the
+        // magnitude peaks because the LC impedance cancels and
+        // the voltage across C is amplified by Q.
         assert!(
-            mag_at_res < tf.magnitude_db[0],
-            "resonance magnitude {mag_at_res:.2} dB should be below low-f magnitude {:.2} dB",
+            mag_at_peak > tf.magnitude_db[0],
+            "peak magnitude {mag_at_peak:.2} dB should exceed low-f magnitude {:.2} dB",
             tf.magnitude_db[0]
         );
-        // Off-resonance (low f), C is open so most of V1 reaches n_out.
         assert!(
-            tf.magnitude_db[0].abs() < 1.0,
-            "low-f magnitude should be near 0 dB, got {:.2} dB",
-            tf.magnitude_db[0]
+            mag_at_peak > tf.magnitude_db[2],
+            "peak magnitude {mag_at_peak:.2} dB should exceed high-f magnitude {:.2} dB",
+            tf.magnitude_db[2]
         );
     }
 
