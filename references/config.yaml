@@ -1,4 +1,9 @@
-# development/config.yaml — scientia per-repo configuration override.
+# references/config.yaml — scientia per-repo configuration override.
+#
+# This is the ONLY config the scientia package reads: scientia.paths.config_path()
+# resolves to <project_root>/references/config.yaml when that dir exists, else the
+# packaged bundle default. (It previously lived in development/, which the package
+# never read — see references/README.md.)
 #
 # Only keys recognized by the current scientia schema belong here; the
 # orchestrator surfaces any UNRECOGNIZED top-level key to the operator. Recognized
