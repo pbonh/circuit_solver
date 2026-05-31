@@ -39,3 +39,10 @@ Given a DC problem that fails plain Newton-Raphson convergence
 When the engine applies gmin-stepping then source-stepping continuation
 Then it either converges within tolerance or returns a structured non-convergence error (no unconverged result is reported as a solution)
 ```
+
+### Scenario: The orchestration crate declares an explicit Cargo dependency on the numeric crate
+```gherkin
+Given the orchestration crate's Cargo.toml
+When its [dependencies] are inspected
+Then circuit-solver-numeric is present as a direct path dependency and the numeric solver is not accessed via module re-export from any other crate
+```

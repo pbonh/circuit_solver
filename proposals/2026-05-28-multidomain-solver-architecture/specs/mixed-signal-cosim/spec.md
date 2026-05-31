@@ -5,7 +5,7 @@ created: 2026-05-28
 
 # Feature: Mixed-Signal Co-Simulation (Optimistic Shared Scheduler)
 
-Analog/digital co-simulation mediated by the shared Mixed-Signal Scheduler using optimistic time advance with rollback (ADR-0004). The digital domain stays an EXTERNAL event-driven simulator; this change does not embed a native digital engine (grill cc-adr0004-external-cosim, oq-native-digital-scope deferred to design).
+Analog/digital co-simulation mediated by the shared Mixed-Signal Scheduler using optimistic time advance with rollback. The digital domain is served by the in-process native digital kernel (circuit-solver-digital crate), which is a peer crate depended on by the orchestration crate (ADR-0004 superseded; native engine confirmed at design halt Q1).
 
 ## Scenarios
 
@@ -38,4 +38,11 @@ Then the shifted output level matches the golden reference within tolerance
 Given the scheduler needs the digital domain evaluated
 When it requires digital progress
 Then it issues a run-until command to the in-process native event-driven kernel (no cross-process IPC), per the ADR superseding 0004
+```
+
+### Scenario: The scheduler accesses the native kernel only via the digital crate's public API
+```gherkin
+Given the orchestration crate (owning the Mixed-Signal Scheduler) and the digital crate as peer workspace members
+When the scheduler issues a run-until command to the native digital kernel
+Then it calls only items exported by the circuit-solver-digital crate's public API; no internal module paths are accessed cross-crate
 ```

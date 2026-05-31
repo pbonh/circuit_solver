@@ -31,3 +31,10 @@ Given the native digital kernel under the Mixed-Signal Scheduler
 When the analog side rolls back past a digital event that was optimistically processed
 Then the kernel restores its event queue and net state to the checkpoint, consistent with the superseding sync ADR
 ```
+
+### Scenario: The orchestration crate declares an explicit Cargo dependency on the digital crate
+```gherkin
+Given the orchestration crate's Cargo.toml
+When its [dependencies] are inspected
+Then circuit-solver-digital is present as a direct path dependency and the native kernel is invoked only via the digital crate's public API
+```

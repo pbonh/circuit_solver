@@ -31,3 +31,10 @@ Given a CircuitGraph built via the PyO3 builder API
 When Python attempts to mutate the graph after construction
 Then the mutation is rejected, preserving the immutable-graph invariant
 ```
+
+### Scenario: The PyO3 binding crate declares only the frontend crate as a direct dependency
+```gherkin
+Given the PyO3 binding crate's Cargo.toml
+When its [dependencies] are inspected
+Then circuit-solver-frontend is the only domain crate listed as a direct path dependency; no other domain crate (netlist, numeric, devices, digital, orchestration) appears as a direct dep
+```

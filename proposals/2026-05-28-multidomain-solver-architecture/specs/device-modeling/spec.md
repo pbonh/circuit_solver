@@ -39,3 +39,10 @@ Given a model family declared through the compile-time macro/codegen seam
 When the crate is built
 Then the generated variants are members of the closed `enum DeviceModel`, dispatched by static monomorphization with no runtime registration
 ```
+
+### Scenario: The numeric crate declares an explicit Cargo dependency on the devices crate
+```gherkin
+Given the numeric crate's Cargo.toml
+When its [dependencies] are inspected
+Then circuit-solver-devices is present as a direct path dependency and enum DeviceModel is accessed only via the devices crate's public API
+```

@@ -9,9 +9,11 @@ created: 2026-05-28
 
 This design extends the accepted v1 architecture to industrial-strength coverage across
 **analog** (continuous-time), **digital** (event-driven), and **mixed-signal** domains,
-for both the device-modeling and simulation-engine layers. It is a single Rust process
-exposing a PyO3 frontend, decomposed into six containers aligned to the wiki's bounded
-contexts.
+for both the device-modeling and simulation-engine layers. The implementation is a
+**Cargo workspace of six domain crates** (one per bounded-context container) plus a thin
+PyO3 binding crate that depends only on the frontend crate. All six domain crates live
+under `crates/<name>/`; inter-crate dependencies are explicit Cargo path-deps, not
+module re-exports across undeclared boundaries.
 
 Decisions carried in unchanged (high inherited confidence): in-process PyO3 with an
 immutable `CircuitGraph` ([[decisions/0001-pyo3-in-process-binding-with-immutable-circuit-graph]],
@@ -57,25 +59,28 @@ C4Context
 
 ```mermaid
 C4Container
-    title Containers — circuit-solver (single Rust process)
+    title Containers — circuit-solver (Cargo workspace, one crate per bounded-context)
     Person(designer, "Circuit Designer")
     System_Ext(ngspice, "ngspice", "Analog golden ref")
     System_Ext(icarus, "Icarus Verilog", "Digital golden trace")
-    Container_Boundary(corep, "circuit-solver (single Rust process)") {
-        Container(frontend, "Application Frontend", "Rust / PyO3", "Immutable CircuitGraph builder, zero-copy results, GIL release [ADR-0001]")
-        Container(netlist, "Netlist Graph", "Rust", "Immutable graph; two-pass flattening, per-analysis sub-views [ADR-0003]")
-        Container(orch, "Analysis Orchestration", "Rust", "Mixed-Signal Scheduler: optimistic time advance + checkpoint/rollback")
-        Container(numeric, "Numeric Solver", "Rust", "Sparse LU — russell (real DC/transient) + faer (complex AC) [ADR-0002]")
-        Container(devices, "Device Model Engine", "Rust", "Closed enum DeviceModel + in-tree codegen seam [ADR-0005, refined]")
-        Container(digital, "Native Digital Kernel", "Rust", "Event-driven DEVS engine [supersedes ADR-0004]")
+    Container_Boundary(corep, "circuit-solver (Cargo workspace)") {
+        Container(binding, "PyO3 Binding", "Rust / PyO3", "Thin crate loaded by Python; depends only on circuit-solver-frontend [ADR-0001]")
+        Container(frontend, "Application Frontend", "crates/frontend", "Immutable CircuitGraph builder, zero-copy results, GIL release [ADR-0001]")
+        Container(netlist, "Netlist Graph", "crates/netlist", "Immutable graph; two-pass flattening, per-analysis sub-views [ADR-0003]")
+        Container(orch, "Analysis Orchestration", "crates/orchestration", "Mixed-Signal Scheduler: optimistic time advance + checkpoint/rollback")
+        Container(numeric, "Numeric Solver", "crates/numeric", "Sparse LU — russell (real DC/transient) + faer (complex AC) [ADR-0002]")
+        Container(devices, "Device Model Engine", "crates/devices", "Closed enum DeviceModel + in-tree codegen seam [ADR-0005, refined]")
+        Container(digital, "Native Digital Kernel", "crates/digital", "Event-driven DEVS engine [supersedes ADR-0004]")
     }
-    Rel(designer, frontend, "builds circuits, runs analyses")
-    Rel(frontend, netlist, "builds")
-    Rel(frontend, orch, "requests analyses")
-    Rel(orch, netlist, "flattens / sub-views")
-    Rel(orch, numeric, "solves MNA systems")
-    Rel(orch, digital, "run-until (in-process)")
-    Rel(numeric, devices, "stamps in Newton loop")
+    Rel(designer, binding, "imports", "Python / PyO3")
+    Rel(binding, frontend, "Cargo dep (only)")
+    Rel(frontend, netlist, "Cargo dep — builds CircuitGraph")
+    Rel(frontend, orch, "Cargo dep — requests analyses")
+    Rel(orch, netlist, "Cargo dep — flattens / sub-views")
+    Rel(orch, numeric, "Cargo dep — solves MNA systems")
+    Rel(orch, digital, "Cargo dep — run-until (in-process)")
+    Rel(numeric, devices, "Cargo dep — stamps in Newton loop")
+    Rel(numeric, netlist, "Cargo dep — reads FlattenedView")
     Rel(orch, ngspice, "validated against")
     Rel(digital, icarus, "validated against")
 ```
@@ -117,21 +122,40 @@ C4Component
     Rel(codegen, model_enum, "generates variants into")
 ```
 
+## Cargo Workspace
+
+Seven crates in the workspace (`Cargo.toml` at the repo root declares all members).
+Dependency edges are the only legal cross-crate access paths; the spec scenario
+"inter-crate access requires an explicit Cargo dependency" enforces this.
+
+| Crate | Path | Direct Cargo deps |
+|-------|------|-------------------|
+| `circuit-solver` (PyO3 binding) | _(workspace root)_ | `circuit-solver-frontend` |
+| `circuit-solver-frontend` | `crates/frontend/` | `circuit-solver-netlist`, `circuit-solver-orchestration` |
+| `circuit-solver-orchestration` | `crates/orchestration/` | `circuit-solver-netlist`, `circuit-solver-numeric`, `circuit-solver-digital` |
+| `circuit-solver-numeric` | `crates/numeric/` | `circuit-solver-devices`, `circuit-solver-netlist` |
+| `circuit-solver-netlist` | `crates/netlist/` | _(none)_ |
+| `circuit-solver-devices` | `crates/devices/` | _(none)_ |
+| `circuit-solver-digital` | `crates/digital/` | _(none)_ |
+
+The three leaf crates (`netlist`, `devices`, `digital`) have no domain deps and
+compile independently. `netlist` is the only type-exporter shared by multiple
+upstream crates (`FlattenedView` consumed by both `orchestration` and `numeric`).
+
 ## Component Map
 
-C4 component → the path globs it owns (under `project/`, where the Rust crate +
-PyO3 frontend are built; see `kanban/board.yaml` `project_root`). Boundaries are
-the six containers of the L2 diagram, each aligned to its bounded context. The
-execution layer (`scientia-hermes-emit`) reads these to compute file-collision
-waves; a task whose `touches` stray outside its component's globs is a
-decomposition smell.
+C4 component → the path globs it owns (under the Cargo workspace root; each
+domain crate lives at `crates/<name>/`). Boundaries are the six domain crates
+of the L2 diagram, each aligned to its bounded context. The execution layer
+(`scientia-hermes-emit`) reads these to compute file-collision waves; a task
+whose `touches` stray outside its component's globs is a decomposition smell.
 
-- frontend: project/src/frontend/**, project/tests/frontend/**
-- netlist: project/src/netlist/**, project/tests/netlist/**
-- orch: project/src/orchestration/**, project/tests/orchestration/**
-- numeric: project/src/numeric/**, project/tests/numeric/**
-- devices: project/src/devices/**, project/tests/devices/**
-- digital: project/src/digital/**, project/tests/digital/**
+- frontend: crates/frontend/src/**, crates/frontend/tests/**
+- netlist: crates/netlist/src/**, crates/netlist/tests/**
+- orch: crates/orchestration/src/**, crates/orchestration/tests/**
+- numeric: crates/numeric/src/**, crates/numeric/tests/**
+- devices: crates/devices/src/**, crates/devices/tests/**
+- digital: crates/digital/src/**, crates/digital/tests/**
 
 ## Shared Contracts
 
@@ -147,6 +171,11 @@ execution layer orders each contract's producer task before its consumers.
 
 ## Trade-offs
 
+- **Multi-crate workspace vs. single flat crate.** Chosen: one crate per
+  bounded-context container. Benefit: independent compilation units, enforced
+  dependency boundaries (the compiler rejects undeclared cross-crate access),
+  and finer-grained incremental rebuilds. Accepted cost: more `Cargo.toml`
+  manifests to maintain and explicit re-exports at each crate boundary.
 - **Native digital kernel vs. external co-simulation.** Chosen: native (single process, no
   IPC, tighter mixed-signal rollback). Accepted cost: building and maintaining an
   event-driven kernel, and **superseding an accepted ADR (0004)** — a durable reversal.
