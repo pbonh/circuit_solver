@@ -48,11 +48,16 @@
 #![warn(clippy::pedantic)]
 #![forbid(unsafe_code)]
 
+pub mod equivalence;
 pub mod event_queue;
 pub mod kernel;
 pub mod settle;
 
 // Re-export the primary public API at crate root for convenience.
+pub use equivalence::{
+    check_equivalence, check_equivalence_per_net, EquivalenceResult, EquivalenceTolerance,
+    EventTrace, TraceEvent,
+};
 pub use event_queue::{DigitalEvent, EventQueue, LogicValue, NetId, RunUntilReport};
 pub use kernel::{
     DigitalKernel, KernelCheckpoint, KernelRunReport, NetState, NetStateCheckpoint,
