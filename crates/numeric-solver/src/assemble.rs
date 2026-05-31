@@ -246,6 +246,110 @@ impl MnaSystem {
     pub fn rhs_entry(&self, r: u32) -> Option<f64> {
         self.b.get(r as usize).copied()
     }
+
+    /// Mutably borrow the matrix `a` for in-place modification
+    /// (e.g. Gmin stepping, companion-model updates).
+    pub fn matrix_mut(&mut self) -> &mut Vec<f64> {
+        &mut self.a
+    }
+
+    /// Mutably borrow the RHS vector `b` for in-place modification.
+    pub fn rhs_mut(&mut self) -> &mut Vec<f64> {
+        &mut self.b
+    }
+
+    /// Read a single matrix entry at `(row, col)`.
+    ///
+    /// # Panics
+    ///
+    /// Panics if `(row, col)` is out of bounds.
+    #[must_use]
+    pub fn get_matrix(&self, row: u32, col: u32) -> f64 {
+        let dim = self.dim() as usize;
+        self.a[row as usize * dim + col as usize]
+    }
+
+    /// Write a single matrix entry at `(row, col)`.
+    ///
+    /// # Panics
+    ///
+    /// Panics if `(row, col)` is out of bounds.
+    pub fn set_matrix(&mut self, row: u32, col: u32, value: f64) {
+        let dim = self.dim() as usize;
+        self.a[row as usize * dim + col as usize] = value;
+    }
+
+    /// Read a single RHS entry at `row`.
+    ///
+    /// # Panics
+    ///
+    /// Panics if `row` is out of bounds.
+    #[must_use]
+    pub fn get_rhs(&self, row: u32) -> f64 {
+        self.b[row as usize]
+    }
+
+    /// Write a single RHS entry at `row`.
+    ///
+    /// # Panics
+    ///
+    /// Panics if `row` is out of bounds.
+    pub fn set_rhs(&mut self, row: u32, value: f64) {
+        self.b[row as usize] = value;
+    }
+
+    /// Construct from raw parts for testing and integration use.
+    ///
+    /// The caller provides the same data that [`IncrementalMnaBuilder::finish`]
+    /// would produce. This constructor validates structural invariants
+    /// (dimension consistency, matrix/RHS lengths) and returns
+    /// [`MnaAssemblyError`] on violation.
+    ///
+    /// # Arguments
+    ///
+    /// - `node_count` — number of node equations (including ground).
+    /// - `branch_count` — number of MNA branch equations.
+    /// - `a` — flat row-major matrix of length `dim * dim`.
+    /// - `b` — RHS vector of length `dim`.
+    ///
+    /// # Errors
+    ///
+    /// - [`MnaAssemblyError::SystemTooLarge`] if `node_count + branch_count`
+    ///   overflows `u32`.
+    /// - [`MnaAssemblyError::MatrixSizeMismatch`] if `a.len() != dim * dim`.
+    /// - [`MnaAssemblyError::RhsSizeMismatch`] if `b.len() != dim`.
+    pub fn from_raw_parts(
+        node_count: u32,
+        branch_count: u32,
+        a: Vec<f64>,
+        b: Vec<f64>,
+    ) -> Result<Self, MnaAssemblyError> {
+        let dim = node_count
+            .checked_add(branch_count)
+            .ok_or(MnaAssemblyError::SystemTooLarge {
+                node_count,
+                branch_count,
+            })?;
+        let dim_usize = dim as usize;
+        if a.len() != dim_usize * dim_usize {
+            return Err(MnaAssemblyError::MatrixSizeMismatch {
+                expected: dim_usize * dim_usize,
+                actual: a.len(),
+            });
+        }
+        if b.len() != dim_usize {
+            return Err(MnaAssemblyError::RhsSizeMismatch {
+                expected: dim_usize,
+                actual: b.len(),
+            });
+        }
+        Ok(Self {
+            node_count,
+            branch_count,
+            a,
+            b,
+        })
+    }
 }
 
 /// Errors raised by [`assemble`].
@@ -378,6 +482,20 @@ pub enum MnaAssemblyError {
         /// Branch count at the point of overflow.
         branch_count: u32,
     },
+    /// Matrix slice length does not match `dim * dim`.
+    MatrixSizeMismatch {
+        /// Expected length (`dim * dim`).
+        expected: usize,
+        /// Actual length of the slice provided.
+        actual: usize,
+    },
+    /// RHS vector length does not match `dim`.
+    RhsSizeMismatch {
+        /// Expected length (`dim`).
+        expected: usize,
+        /// Actual length of the vector provided.
+        actual: usize,
+    },
 }
 
 impl core::fmt::Display for MnaAssemblyError {
@@ -463,6 +581,12 @@ impl core::fmt::Display for MnaAssemblyError {
                 f,
                 "MNA system dimension overflowed u32 (nodes={node_count}, branches={branch_count})"
             ),
+            Self::MatrixSizeMismatch { expected, actual } => {
+                write!(f, "matrix size mismatch: expected {expected}, got {actual}")
+            }
+            Self::RhsSizeMismatch { expected, actual } => {
+                write!(f, "rhs size mismatch: expected {expected}, got {actual}")
+            }
         }
     }
 }

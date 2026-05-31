@@ -70,6 +70,7 @@ pub mod flatten;
 pub mod gmin_stepping;
 pub mod integration;
 pub mod linear_solver;
+pub mod mna;
 pub mod newton_raphson;
 pub mod source_stepping;
 pub mod sub_view;
@@ -103,3 +104,4 @@ pub use source_stepping::{
     SourceSteppingOutcome,
 };
 pub use sub_view::{source_rhs_from, SubView, SubViewBuilder, SubViewError};
+pub use mna::{IncrementalMnaBuilder, StampError, StampInterface, StampValue};
