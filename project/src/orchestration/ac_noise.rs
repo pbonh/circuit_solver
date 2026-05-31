@@ -852,7 +852,7 @@ mod tests {
         // DC operating point: n_out should be at ~0 V (C1 is open at DC
         // for a V1→R1→C1→gnd topology where V1 drives n_in and R1
         // drops all voltage).
-        let v_out = op.voltage_at(n_out).unwrap_or(0.0);
+        let _v_out = op.voltage_at(n_out).unwrap_or(0.0);
         // In the linear DC solution, the voltage source forces n_in to
         // 1 V. R1 connects n_in to n_out; C1 is open at DC so no
         // current flows and n_out = n_in = 1 V (no drop across R1
@@ -880,7 +880,7 @@ mod tests {
     fn project_ac_rlc_series_resonance() {
         let mut b = CircuitBuilder::default();
         add_voltage_source(&mut b, "V1", "n_in", "0", 1.0);
-        add_resistor(&mut b, "R1", "n_in", "n_mid", 100.0);
+        add_resistor(&mut b, "R1", "n_in", "n_mid", 10.0);
         add_inductor(&mut b, "L1", "n_mid", "n_out", 1.0e-3);
         add_capacitor(&mut b, "C1", "n_out", "0", 1.0e-6);
 

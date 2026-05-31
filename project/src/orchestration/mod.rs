@@ -39,6 +39,8 @@
 //!   `analysis-orchestration::noise::SemiconductorNoiseSource`.
 
 pub mod ac_noise;
+pub mod dc_op;
+pub mod transient;
 
 // Re-export the analysis-orchestration crate's core types so downstream
 // consumers can use them without a direct dependency.
@@ -53,3 +55,18 @@ pub use analysis_orchestration::noise::{
     NoiseAnalysisWithAutoDcError, NoiseAnalysisWithAutoDcRequest,
     NoiseAnalysisWithAutoDcResult, NoiseInjection, SemiconductorNoiseSource,
 };
+
+// Re-export transient analysis types from the project-level driver.
+pub use transient::{
+    project_transient_analysis, project_transient_with_auto_dc,
+    ProjectTransientRequest, ProjectTransientWithAutoDcError,
+    ProjectTransientWithAutoDcResult,
+};
+
+// Re-export DC operating-point analysis types from the crate-level driver
+// and the project-level wrapper.
+pub use analysis_orchestration::dc::{
+    dc_analysis, BranchCurrentSample, DcAnalysisError, DcAnalysisRequest, DcAnalysisResult,
+    DeviceModelBinding, OperatingPoint,
+};
+pub use dc_op::{project_dc_analysis, ProjectDcOpRequest};
