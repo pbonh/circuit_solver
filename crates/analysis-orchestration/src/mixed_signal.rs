@@ -524,12 +524,12 @@ where
         let mut outcomes: Vec<SchedulerOutcome> = Vec::new();
 
         // Seed the rollback handler with an initial checkpoint at
-        // time 0. Without this, the first misprediction has no
-        // rollback target (the only recorded checkpoint would be at
-        // the predicted boundary, which is *after* the actual event
-        // time). Per ADR-0004 commitment #2 the scheduler must be
-        // able to roll back to "the last good checkpoint" — the
-        // initial solver state qualifies.
+        // time 0 so the first misprediction has a rollback target.
+        // Per the digital-driven-analog-load-rollback Gherkin
+        // precondition "And the analog solver has saved a checkpoint
+        // at time 0" the scheduler must establish this before the
+        // main loop so that rollback_to(earlier_time) is always
+        // satisfiable when the analog has not yet been run that far.
         {
             let initial = SparseCheckpoint::empty(SimulationTime::ZERO);
             if let Err(err) = self.rollback.observe_step(
@@ -660,7 +660,14 @@ where
                     }
                     let checkpoint_at = outcome.event.checkpoint_at;
                     self.metadata.rollbacks.push(outcome.event);
-                    self.metadata.commits.push(actual_time);
+                    // Guard against double-commit: if actual_time is already
+                    // the last committed boundary (e.g., if the analog solver
+                    // reached it before misprediction was confirmed), skip the
+                    // duplicate push. Preserves the existing test
+                    // `contract_violation_without_prior_checkpoint_errors`.
+                    if self.metadata.commits.last() != Some(&actual_time) {
+                        self.metadata.commits.push(actual_time);
+                    }
                     outcomes.push(SchedulerOutcome::RolledBack {
                         checkpoint: checkpoint_at,
                         corrected: actual_time,

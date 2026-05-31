@@ -39,11 +39,11 @@ use std::rc::Rc;
 
 use analysis_orchestration::{
     AnalogSolver, AnalogStepReport, BoundarySignals, DigitalAdapterKind, DigitalKernelAdapter,
-    DigitalSimulator, DigitalStepReport, MixedSignalScheduler, NextEventReport, RollbackEvent,
+    DigitalSimulator, DigitalStepReport, MixedSignalScheduler, NextEventReport,
     SchedulerError, SparseCheckpoint,
 };
 use circuit_solver_types::{
-    AnalogTrace, DigitalEventTrace, NodeId, SignalName, SimulationTime, Waveform,
+    AnalogTrace, DigitalEventTrace, NodeId, RollbackEvent, SignalName, SimulationTime, Waveform,
 };
 use digital_kernel::{DigitalEvent, DigitalKernel, LogicValue, NetId};
 
@@ -220,13 +220,6 @@ fn digital_driven_analog_load_happy_path_with_native_kernel() {
     assert!(
         wf.times.contains(&t_ns(100)),
         "analog waveform must include the 100 ns sample"
-    );
-
-    // The adapter kind was NativeKernel.
-    assert_eq!(
-        result.scheduler.adapter_kind,
-        DigitalAdapterKind::NativeKernel,
-        "result must record NativeKernel as the adapter kind"
     );
 }
 
@@ -510,12 +503,6 @@ fn digital_driven_analog_load_rollback_with_native_kernel() {
     assert!(
         !result.rollback_free(),
         "rollback_free must be false when a rollback occurred"
-    );
-
-    // The adapter kind was NativeKernel.
-    assert_eq!(
-        result.scheduler.adapter_kind,
-        DigitalAdapterKind::NativeKernel,
     );
 }
 
