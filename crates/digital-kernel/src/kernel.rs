@@ -1007,4 +1007,131 @@ mod tests {
         let debug = format!("{k:?}");
         assert!(debug.contains("has_evaluator: true"));
     }
+
+    // -----------------------------------------------------------------------
+    // Spec-scenario test: digital-engine#zero-delay-combinational-settling
+    //
+    // Gherkin:
+    //   Given a combinational cone with zero-delay gates and a
+    //     primary-input change
+    //   When the native kernel settles the delta cycle
+    //   Then all internal nets reach a stable value with no infinite
+    //     delta loop (oscillation is reported, not hung)
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn spec_scenario_zero_delay_combinational_settling() {
+        // ── Given ──
+        // A combinational cone: PI (net 0) → buf → net 1 → inv → net 2.
+        // Zero-delay gates: net 1 = net 0 (buffer), net 2 = !net 1 (inverter).
+        let eval = FnEvaluator::new(|ns: &NetState, changed: &[NetId]| {
+            let mut out = vec![];
+            for &net in changed {
+                if net == NetId::new(0) {
+                    // Buffer: net 1 follows net 0
+                    out.push((NetId::new(1), ns.get(NetId::new(0))));
+                }
+                if net == NetId::new(1) {
+                    // Inverter: net 2 = !net 1
+                    let inv = match ns.get(NetId::new(1)) {
+                        LogicValue::Zero => LogicValue::One,
+                        LogicValue::One => LogicValue::Zero,
+                        other => other, // X/Z pass through
+                    };
+                    out.push((NetId::new(2), inv));
+                }
+            }
+            out
+        });
+
+        let t50 = SimulationTime::from_nanoseconds(50);
+        let t100 = SimulationTime::from_nanoseconds(100);
+
+        let mut k = DigitalKernel::new()
+            .with_evaluator(eval)
+            .with_settle_config(SettleConfig::with_max_delta_cycles(50));
+
+        // Schedule a primary-input change at t=50.
+        k.schedule(DigitalEvent::new(t50, NetId::new(0), LogicValue::One))
+            .unwrap();
+
+        // ── When ──
+        // The native kernel settles the delta cycle by running until t=100.
+        let report = k.run_until(t100);
+
+        // ── Then ──
+        // All internal nets reach a stable value.
+        assert_eq!(k.net_value(NetId::new(0)), LogicValue::One, "PI");
+        assert_eq!(k.net_value(NetId::new(1)), LogicValue::One, "buffer output");
+        assert_eq!(k.net_value(NetId::new(2)), LogicValue::Zero, "inverter output");
+
+        // Settled (not oscillating) with 2 delta cycles (buf + inv).
+        assert_eq!(report.settle_reports.len(), 1, "one time point settled");
+        assert!(matches!(
+            report.settle_reports[0].outcome,
+            SettleOutcome::Settled { delta_cycles: 2 }
+        ));
+
+        // No oscillation detected.
+        assert!(!report.has_oscillation());
+    }
+
+    #[test]
+    fn spec_scenario_zero_delay_oscillation_is_reported_not_hung() {
+        // ── Given ──
+        // A self-feeding inverter on net 0 that always flips its own value.
+        // This creates an infinite delta loop in theory.
+        let eval = FnEvaluator::new(|ns: &NetState, changed: &[NetId]| {
+            let mut out = vec![];
+            for &net in changed {
+                let v = ns.get(net);
+                let flipped = match v {
+                    LogicValue::One => LogicValue::Zero,
+                    LogicValue::Zero => LogicValue::One,
+                    other => other,
+                };
+                out.push((net, flipped));
+            }
+            out
+        });
+
+        let t50 = SimulationTime::from_nanoseconds(50);
+        let mut k = DigitalKernel::new()
+            .with_evaluator(eval)
+            .with_settle_config(SettleConfig::with_max_delta_cycles(100));
+
+        k.schedule(DigitalEvent::new(t50, NetId::new(0), LogicValue::One))
+            .unwrap();
+
+        // ── When ──
+        // The kernel runs — the self-feeding inverter would loop forever
+        // without oscillation detection. The kernel must NOT hang.
+        let report = k.run_until(SimulationTime::from_nanoseconds(100));
+
+        // ── Then ──
+        // Oscillation is reported (the kernel did not hang).
+        assert!(report.has_oscillation(), "oscillation must be reported");
+
+        // The kernel still completes the run_until call.
+        assert_eq!(
+            report.time_reached,
+            SimulationTime::from_nanoseconds(100),
+            "kernel must reach target time despite oscillation"
+        );
+
+        // The oscillation outcome reports the oscillating nets.
+        match &report.settle_reports[0].outcome {
+            SettleOutcome::Oscillating {
+                oscillating_nets, ..
+            } => {
+                assert!(
+                    oscillating_nets.contains(&NetId::new(0)),
+                    "net 0 must be reported as oscillating"
+                );
+            }
+            SettleOutcome::Settled { .. } => {
+                panic!("self-feeding inverter must oscillate, not settle");
+            }
+        }
+    }
 }
