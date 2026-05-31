@@ -41,23 +41,29 @@
 //! # Task scope
 //!
 //! - Task #11: Event queue + `run_until` API.
-//! - Task #12 (this addition): Delta-cycle combinational settling +
-//!   oscillation detection.
-//! - Task #13: Checkpoint/restore for rollback.
+//! - Task #12: Delta-cycle combinational settling + oscillation detection.
+//! - Task #13: Checkpoint/restore for rollback (see [`checkpoint`] module).
 
 #![warn(clippy::pedantic)]
 #![forbid(unsafe_code)]
 
+pub mod checkpoint;
+pub mod equivalence;
 pub mod event_queue;
 pub mod kernel;
 pub mod settle;
 
 // Re-export the primary public API at crate root for convenience.
+pub use checkpoint::{
+    DigitalCheckpointError, DigitalCheckpointManager, TimedKernelCheckpoint,
+};
+pub use equivalence::{
+    check_equivalence, check_equivalence_per_net, EquivalenceResult, EquivalenceTolerance,
+    EventTrace, TraceEvent,
+};
 pub use event_queue::{DigitalEvent, EventQueue, LogicValue, NetId, RunUntilReport};
 pub use kernel::{
     DigitalKernel, KernelCheckpoint, KernelRunReport, NetState, NetStateCheckpoint,
     TimePointSettleReport,
 };
-pub use settle::{
-    CombinationalEvaluator, FnEvaluator, SettleConfig, SettleOutcome,
-};
+pub use settle::{CombinationalEvaluator, FnEvaluator, SettleConfig, SettleOutcome};

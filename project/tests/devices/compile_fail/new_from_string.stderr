@@ -1,0 +1,5 @@
+error[E0599]: no variant, associated function, or constant named `new_from_string` found for enum `DeviceModel` in the current scope
+ --> $DIR/new_from_string.rs:6:27
+  |
+6 |     let _m = DeviceModel::new_from_string("MOSFET");
+  |                           ^^^^^^^^^^^^^^^ variant, associated function, or constant not found in `DeviceModel`

@@ -298,7 +298,7 @@ $enddefinitions $end
 }
 
 #[test]
-fn vcd_dumpoff_rejected() {
+fn vcd_dumpoff_skipped() {
     let vcd = "\
 $timescale 1 ns $end
 $scope module m $end
@@ -308,34 +308,41 @@ $enddefinitions $end
 $dumpoff
 x!
 $end
+#10
+1!
 ";
-    assert!(matches!(
-        parse_vcd(vcd),
-        Err(VcdParseError::UnsupportedDumpSection { .. })
-    ));
+    let parsed = parse_vcd(vcd).unwrap();
+    // $dumpoff values are skipped; only the #10 event remains
+    assert_eq!(parsed.trace.len(), 1);
+    assert_eq!(parsed.trace.as_slice()[0].value, LogicValue::One);
 }
 
 #[test]
-fn vcd_dumpon_rejected() {
+fn vcd_dumpon_skipped() {
     let vcd = "\
 $timescale 1 ns $end
 $scope module m $end
 $var wire 1 ! a $end
 $upscope $end
 $enddefinitions $end
+#0
+0!
 #10
+$dumpoff
+x!
+$end
 $dumpon
 1!
 $end
 ";
-    assert!(matches!(
-        parse_vcd(vcd),
-        Err(VcdParseError::UnsupportedDumpSection { .. })
-    ));
+    let parsed = parse_vcd(vcd).unwrap();
+    // $dumpoff is skipped, $dumpon values are skipped too;
+    // we have the initial 0! at t=0 from $dumpvars
+    assert!(parsed.trace.len() >= 1);
 }
 
 #[test]
-fn vcd_dumpall_rejected() {
+fn vcd_dumpall_processed() {
     let vcd = "\
 $timescale 1 ns $end
 $scope module m $end
@@ -343,13 +350,16 @@ $var wire 1 ! a $end
 $upscope $end
 $enddefinitions $end
 $dumpall
-1!
+0!
 $end
+#10
+1!
 ";
-    assert!(matches!(
-        parse_vcd(vcd),
-        Err(VcdParseError::UnsupportedDumpSection { .. })
-    ));
+    let parsed = parse_vcd(vcd).unwrap();
+    // $dumpall produces value changes (0! at t=0), then #10 produces 1!
+    assert_eq!(parsed.trace.len(), 2);
+    assert_eq!(parsed.trace.as_slice()[0].value, LogicValue::Zero);
+    assert_eq!(parsed.trace.as_slice()[1].value, LogicValue::One);
 }
 
 #[test]

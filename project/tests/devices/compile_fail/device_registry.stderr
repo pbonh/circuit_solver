@@ -1,0 +1,5 @@
+error[E0432]: unresolved import `device_modeling::DeviceRegistry`
+ --> $DIR/device_registry.rs:3:5
+  |
+3 | use device_modeling::DeviceRegistry;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `DeviceRegistry` in the root

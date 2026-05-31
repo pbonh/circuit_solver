@@ -34,7 +34,7 @@
 //! Both mechanisms are always active. The hard limit is the safety net; the
 //! state-hashing check typically detects oscillation earlier.
 //!
-//! # Integration with DigitalKernel
+//! # Integration with `DigitalKernel`
 //!
 //! When a [`CombinationalEvaluator`] is installed on the kernel, `run_until`
 //! processes events **one time point at a time** and invokes settling after
@@ -271,8 +271,7 @@ pub fn settle(
 
         // Hard limit exceeded → oscillation.
         if delta_cycles > config.max_delta_cycles {
-            let oscillating_nets: Vec<NetId> =
-                updates.iter().map(|(net, _)| *net).collect();
+            let oscillating_nets: Vec<NetId> = updates.iter().map(|(net, _)| *net).collect();
             return SettleOutcome::Oscillating {
                 delta_cycles,
                 oscillating_nets,
@@ -309,6 +308,7 @@ pub fn settle(
 }
 
 /// Snapshot the net-state values as a Vec for cycle detection.
+#[allow(clippy::cast_possible_truncation)]
 fn snapshot_net_state(net_state: &NetState) -> Vec<LogicValue> {
     // We iterate over all nets by index. NetState stores values in a Vec
     // indexed by NetId::index(). We capture the full vector.
@@ -375,10 +375,7 @@ mod tests {
         let eval = FnEvaluator::new(|_, _| vec![]);
         let cfg = SettleConfig::default();
         let outcome = settle(&mut ns, &eval, vec![], &cfg);
-        assert_eq!(
-            outcome,
-            SettleOutcome::Settled { delta_cycles: 0 }
-        );
+        assert_eq!(outcome, SettleOutcome::Settled { delta_cycles: 0 });
     }
 
     #[test]
@@ -387,10 +384,7 @@ mod tests {
         let eval = FnEvaluator::new(|_, _| vec![(NetId::new(0), LogicValue::Zero)]);
         let cfg = SettleConfig::with_max_delta_cycles(0);
         let outcome = settle(&mut ns, &eval, vec![NetId::new(0)], &cfg);
-        assert_eq!(
-            outcome,
-            SettleOutcome::Settled { delta_cycles: 0 }
-        );
+        assert_eq!(outcome, SettleOutcome::Settled { delta_cycles: 0 });
     }
 
     #[test]
@@ -400,10 +394,7 @@ mod tests {
         let eval = FnEvaluator::new(|_, _| vec![]);
         let cfg = SettleConfig::default();
         let outcome = settle(&mut ns, &eval, vec![NetId::new(0)], &cfg);
-        assert_eq!(
-            outcome,
-            SettleOutcome::Settled { delta_cycles: 0 }
-        );
+        assert_eq!(outcome, SettleOutcome::Settled { delta_cycles: 0 });
     }
 
     #[test]
@@ -427,10 +418,7 @@ mod tests {
 
         let cfg = SettleConfig::default();
         let outcome = settle(&mut ns, &eval, vec![NetId::new(0)], &cfg);
-        assert_eq!(
-            outcome,
-            SettleOutcome::Settled { delta_cycles: 1 }
-        );
+        assert_eq!(outcome, SettleOutcome::Settled { delta_cycles: 1 });
         assert_eq!(ns.get(NetId::new(1)), LogicValue::Zero);
     }
 
@@ -458,10 +446,7 @@ mod tests {
 
         let cfg = SettleConfig::default();
         let outcome = settle(&mut ns, &eval, vec![NetId::new(0)], &cfg);
-        assert_eq!(
-            outcome,
-            SettleOutcome::Settled { delta_cycles: 2 }
-        );
+        assert_eq!(outcome, SettleOutcome::Settled { delta_cycles: 2 });
         assert_eq!(ns.get(NetId::new(0)), LogicValue::One);
         assert_eq!(ns.get(NetId::new(1)), LogicValue::Zero);
         assert_eq!(ns.get(NetId::new(2)), LogicValue::One);
@@ -495,10 +480,16 @@ mod tests {
         let cfg = SettleConfig::with_max_delta_cycles(1000);
         let outcome = settle(&mut ns, &eval, vec![NetId::new(0)], &cfg);
         match outcome {
-            SettleOutcome::Oscillating { delta_cycles, oscillating_nets } => {
+            SettleOutcome::Oscillating {
+                delta_cycles,
+                oscillating_nets,
+            } => {
                 // Should detect after 2 delta cycles (1→0, then 0→1 which
                 // returns to the initial state).
-                assert!(delta_cycles <= 3, "expected early detection, got {delta_cycles}");
+                assert!(
+                    delta_cycles <= 3,
+                    "expected early detection, got {delta_cycles}"
+                );
                 assert!(oscillating_nets.contains(&NetId::new(0)));
             }
             SettleOutcome::Settled { .. } => {
@@ -532,7 +523,10 @@ mod tests {
         let cfg = SettleConfig::with_max_delta_cycles(1);
         let outcome = settle(&mut ns, &eval, vec![NetId::new(0)], &cfg);
         match outcome {
-            SettleOutcome::Oscillating { delta_cycles, oscillating_nets } => {
+            SettleOutcome::Oscillating {
+                delta_cycles,
+                oscillating_nets,
+            } => {
                 // Hard limit should fire at delta_cycles=2 (which exceeds max=1).
                 assert_eq!(delta_cycles, 2);
                 assert!(oscillating_nets.contains(&NetId::new(0)));
@@ -550,10 +544,7 @@ mod tests {
         let eval = FnEvaluator::new(|_, _| vec![(NetId::new(0), LogicValue::One)]);
         let cfg = SettleConfig::default();
         let outcome = settle(&mut ns, &eval, vec![NetId::new(0)], &cfg);
-        assert_eq!(
-            outcome,
-            SettleOutcome::Settled { delta_cycles: 1 }
-        );
+        assert_eq!(outcome, SettleOutcome::Settled { delta_cycles: 1 });
     }
 
     #[test]
@@ -633,7 +624,14 @@ mod tests {
             for &net in changed {
                 if net == NetId::new(0) {
                     let v = ns.get(net);
-                    out.push((net, if v == LogicValue::One { LogicValue::Zero } else { LogicValue::One }));
+                    out.push((
+                        net,
+                        if v == LogicValue::One {
+                            LogicValue::Zero
+                        } else {
+                            LogicValue::One
+                        },
+                    ));
                 }
             }
             out
@@ -641,7 +639,10 @@ mod tests {
 
         let cfg = SettleConfig::with_max_delta_cycles(100);
         let outcome = settle(&mut ns, &eval, vec![NetId::new(0)], &cfg);
-        if let SettleOutcome::Oscillating { oscillating_nets, .. } = outcome {
+        if let SettleOutcome::Oscillating {
+            oscillating_nets, ..
+        } = outcome
+        {
             assert!(oscillating_nets.contains(&NetId::new(0)));
         } else {
             panic!("expected Oscillating");

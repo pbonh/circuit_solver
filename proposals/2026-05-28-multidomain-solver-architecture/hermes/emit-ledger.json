@@ -1,0 +1,537 @@
+{
+  "change_id": "2026-05-28-multidomain-solver-architecture",
+  "entries": {
+    "2026-05-28-multidomain-solver-architecture:epic:5eff41da4e04": {
+      "hermes_id": "t_28065ccc",
+      "last_status": "todo",
+      "source_sha": "5eff41da4e04",
+      "stage": "epic",
+      "task_number": null
+    },
+    "2026-05-28-multidomain-solver-architecture:task:10:77ce9efa4352:impl": {
+      "hermes_id": "t_ab0ffb7c",
+      "last_status": "todo",
+      "source_sha": "77ce9efa4352",
+      "stage": "impl",
+      "task_number": 10
+    },
+    "2026-05-28-multidomain-solver-architecture:task:10:77ce9efa4352:integrate": {
+      "hermes_id": "t_898637d7",
+      "last_status": "todo",
+      "source_sha": "77ce9efa4352",
+      "stage": "integrate",
+      "task_number": 10
+    },
+    "2026-05-28-multidomain-solver-architecture:task:10:77ce9efa4352:review": {
+      "hermes_id": "t_61e5cd14",
+      "last_status": "todo",
+      "source_sha": "77ce9efa4352",
+      "stage": "review",
+      "task_number": 10
+    },
+    "2026-05-28-multidomain-solver-architecture:task:11:69ed529b1c5f:impl": {
+      "hermes_id": "t_f79d1048",
+      "last_status": "todo",
+      "source_sha": "69ed529b1c5f",
+      "stage": "impl",
+      "task_number": 11
+    },
+    "2026-05-28-multidomain-solver-architecture:task:11:69ed529b1c5f:integrate": {
+      "hermes_id": "t_44b341c5",
+      "last_status": "todo",
+      "source_sha": "69ed529b1c5f",
+      "stage": "integrate",
+      "task_number": 11
+    },
+    "2026-05-28-multidomain-solver-architecture:task:11:69ed529b1c5f:review": {
+      "hermes_id": "t_055d0662",
+      "last_status": "todo",
+      "source_sha": "69ed529b1c5f",
+      "stage": "review",
+      "task_number": 11
+    },
+    "2026-05-28-multidomain-solver-architecture:task:12:b1831b564603:impl": {
+      "hermes_id": "t_a35d3153",
+      "last_status": "todo",
+      "source_sha": "b1831b564603",
+      "stage": "impl",
+      "task_number": 12
+    },
+    "2026-05-28-multidomain-solver-architecture:task:12:b1831b564603:integrate": {
+      "hermes_id": "t_18a53186",
+      "last_status": "todo",
+      "source_sha": "b1831b564603",
+      "stage": "integrate",
+      "task_number": 12
+    },
+    "2026-05-28-multidomain-solver-architecture:task:12:b1831b564603:review": {
+      "hermes_id": "t_841c0b96",
+      "last_status": "todo",
+      "source_sha": "b1831b564603",
+      "stage": "review",
+      "task_number": 12
+    },
+    "2026-05-28-multidomain-solver-architecture:task:13:192c125c984c:impl": {
+      "hermes_id": "t_c42a4f8b",
+      "last_status": "todo",
+      "source_sha": "192c125c984c",
+      "stage": "impl",
+      "task_number": 13
+    },
+    "2026-05-28-multidomain-solver-architecture:task:13:192c125c984c:integrate": {
+      "hermes_id": "t_a888c82c",
+      "last_status": "todo",
+      "source_sha": "192c125c984c",
+      "stage": "integrate",
+      "task_number": 13
+    },
+    "2026-05-28-multidomain-solver-architecture:task:13:192c125c984c:review": {
+      "hermes_id": "t_679f59db",
+      "last_status": "todo",
+      "source_sha": "192c125c984c",
+      "stage": "review",
+      "task_number": 13
+    },
+    "2026-05-28-multidomain-solver-architecture:task:14:38cf4408eaa5:impl": {
+      "hermes_id": "t_53122288",
+      "last_status": "todo",
+      "source_sha": "38cf4408eaa5",
+      "stage": "impl",
+      "task_number": 14
+    },
+    "2026-05-28-multidomain-solver-architecture:task:14:38cf4408eaa5:integrate": {
+      "hermes_id": "t_e1fc1b67",
+      "last_status": "todo",
+      "source_sha": "38cf4408eaa5",
+      "stage": "integrate",
+      "task_number": 14
+    },
+    "2026-05-28-multidomain-solver-architecture:task:14:38cf4408eaa5:review": {
+      "hermes_id": "t_1483645b",
+      "last_status": "todo",
+      "source_sha": "38cf4408eaa5",
+      "stage": "review",
+      "task_number": 14
+    },
+    "2026-05-28-multidomain-solver-architecture:task:15:932916aa8504:impl": {
+      "hermes_id": "t_1860251c",
+      "last_status": "todo",
+      "source_sha": "932916aa8504",
+      "stage": "impl",
+      "task_number": 15
+    },
+    "2026-05-28-multidomain-solver-architecture:task:15:932916aa8504:integrate": {
+      "hermes_id": "t_7e05c30e",
+      "last_status": "todo",
+      "source_sha": "932916aa8504",
+      "stage": "integrate",
+      "task_number": 15
+    },
+    "2026-05-28-multidomain-solver-architecture:task:15:932916aa8504:review": {
+      "hermes_id": "t_0cb2ea54",
+      "last_status": "todo",
+      "source_sha": "932916aa8504",
+      "stage": "review",
+      "task_number": 15
+    },
+    "2026-05-28-multidomain-solver-architecture:task:16:a384dc9f077d:impl": {
+      "hermes_id": "t_9d21d018",
+      "last_status": "todo",
+      "source_sha": "a384dc9f077d",
+      "stage": "impl",
+      "task_number": 16
+    },
+    "2026-05-28-multidomain-solver-architecture:task:16:a384dc9f077d:integrate": {
+      "hermes_id": "t_ae24296e",
+      "last_status": "todo",
+      "source_sha": "a384dc9f077d",
+      "stage": "integrate",
+      "task_number": 16
+    },
+    "2026-05-28-multidomain-solver-architecture:task:16:a384dc9f077d:review": {
+      "hermes_id": "t_f23e8dfc",
+      "last_status": "todo",
+      "source_sha": "a384dc9f077d",
+      "stage": "review",
+      "task_number": 16
+    },
+    "2026-05-28-multidomain-solver-architecture:task:17:517645a7e1fa:impl": {
+      "hermes_id": "t_2841c030",
+      "last_status": "todo",
+      "source_sha": "517645a7e1fa",
+      "stage": "impl",
+      "task_number": 17
+    },
+    "2026-05-28-multidomain-solver-architecture:task:17:517645a7e1fa:integrate": {
+      "hermes_id": "t_0db89747",
+      "last_status": "todo",
+      "source_sha": "517645a7e1fa",
+      "stage": "integrate",
+      "task_number": 17
+    },
+    "2026-05-28-multidomain-solver-architecture:task:17:517645a7e1fa:review": {
+      "hermes_id": "t_b5db0358",
+      "last_status": "todo",
+      "source_sha": "517645a7e1fa",
+      "stage": "review",
+      "task_number": 17
+    },
+    "2026-05-28-multidomain-solver-architecture:task:18:1c1f1ad178e9:impl": {
+      "hermes_id": "t_3dc07589",
+      "last_status": "todo",
+      "source_sha": "1c1f1ad178e9",
+      "stage": "impl",
+      "task_number": 18
+    },
+    "2026-05-28-multidomain-solver-architecture:task:18:1c1f1ad178e9:integrate": {
+      "hermes_id": "t_d19652f0",
+      "last_status": "todo",
+      "source_sha": "1c1f1ad178e9",
+      "stage": "integrate",
+      "task_number": 18
+    },
+    "2026-05-28-multidomain-solver-architecture:task:18:1c1f1ad178e9:review": {
+      "hermes_id": "t_8d1e9a4e",
+      "last_status": "todo",
+      "source_sha": "1c1f1ad178e9",
+      "stage": "review",
+      "task_number": 18
+    },
+    "2026-05-28-multidomain-solver-architecture:task:19:aae769cd169e:impl": {
+      "hermes_id": "t_7558257d",
+      "last_status": "todo",
+      "source_sha": "aae769cd169e",
+      "stage": "impl",
+      "task_number": 19
+    },
+    "2026-05-28-multidomain-solver-architecture:task:19:aae769cd169e:integrate": {
+      "hermes_id": "t_cf35e2ec",
+      "last_status": "todo",
+      "source_sha": "aae769cd169e",
+      "stage": "integrate",
+      "task_number": 19
+    },
+    "2026-05-28-multidomain-solver-architecture:task:19:aae769cd169e:review": {
+      "hermes_id": "t_1acab4bc",
+      "last_status": "todo",
+      "source_sha": "aae769cd169e",
+      "stage": "review",
+      "task_number": 19
+    },
+    "2026-05-28-multidomain-solver-architecture:task:1:48dfa7054f9a:impl": {
+      "hermes_id": "t_dd542a6c",
+      "last_status": "todo",
+      "source_sha": "48dfa7054f9a",
+      "stage": "impl",
+      "task_number": 1
+    },
+    "2026-05-28-multidomain-solver-architecture:task:1:48dfa7054f9a:integrate": {
+      "hermes_id": "t_baf80684",
+      "last_status": "todo",
+      "source_sha": "48dfa7054f9a",
+      "stage": "integrate",
+      "task_number": 1
+    },
+    "2026-05-28-multidomain-solver-architecture:task:1:48dfa7054f9a:review": {
+      "hermes_id": "t_854e0517",
+      "last_status": "todo",
+      "source_sha": "48dfa7054f9a",
+      "stage": "review",
+      "task_number": 1
+    },
+    "2026-05-28-multidomain-solver-architecture:task:20:049b42521571:impl": {
+      "hermes_id": "t_dace9d6e",
+      "last_status": "todo",
+      "source_sha": "049b42521571",
+      "stage": "impl",
+      "task_number": 20
+    },
+    "2026-05-28-multidomain-solver-architecture:task:20:049b42521571:integrate": {
+      "hermes_id": "t_7ea79482",
+      "last_status": "todo",
+      "source_sha": "049b42521571",
+      "stage": "integrate",
+      "task_number": 20
+    },
+    "2026-05-28-multidomain-solver-architecture:task:20:049b42521571:review": {
+      "hermes_id": "t_0b1ac4b9",
+      "last_status": "todo",
+      "source_sha": "049b42521571",
+      "stage": "review",
+      "task_number": 20
+    },
+    "2026-05-28-multidomain-solver-architecture:task:21:a1560b1dbd9d:impl": {
+      "hermes_id": "t_cc13789f",
+      "last_status": "todo",
+      "source_sha": "a1560b1dbd9d",
+      "stage": "impl",
+      "task_number": 21
+    },
+    "2026-05-28-multidomain-solver-architecture:task:21:a1560b1dbd9d:integrate": {
+      "hermes_id": "t_da3581b9",
+      "last_status": "todo",
+      "source_sha": "a1560b1dbd9d",
+      "stage": "integrate",
+      "task_number": 21
+    },
+    "2026-05-28-multidomain-solver-architecture:task:21:a1560b1dbd9d:review": {
+      "hermes_id": "t_1f9dc4bc",
+      "last_status": "todo",
+      "source_sha": "a1560b1dbd9d",
+      "stage": "review",
+      "task_number": 21
+    },
+    "2026-05-28-multidomain-solver-architecture:task:22:cbac48878916:impl": {
+      "hermes_id": "t_c975aa95",
+      "last_status": "todo",
+      "source_sha": "cbac48878916",
+      "stage": "impl",
+      "task_number": 22
+    },
+    "2026-05-28-multidomain-solver-architecture:task:22:cbac48878916:integrate": {
+      "hermes_id": "t_d4ad6db3",
+      "last_status": "todo",
+      "source_sha": "cbac48878916",
+      "stage": "integrate",
+      "task_number": 22
+    },
+    "2026-05-28-multidomain-solver-architecture:task:22:cbac48878916:review": {
+      "hermes_id": "t_5f1bedbd",
+      "last_status": "todo",
+      "source_sha": "cbac48878916",
+      "stage": "review",
+      "task_number": 22
+    },
+    "2026-05-28-multidomain-solver-architecture:task:23:1901adb4c453:impl": {
+      "hermes_id": "t_48cb4df9",
+      "last_status": "todo",
+      "source_sha": "1901adb4c453",
+      "stage": "impl",
+      "task_number": 23
+    },
+    "2026-05-28-multidomain-solver-architecture:task:23:1901adb4c453:integrate": {
+      "hermes_id": "t_8c90d84d",
+      "last_status": "todo",
+      "source_sha": "1901adb4c453",
+      "stage": "integrate",
+      "task_number": 23
+    },
+    "2026-05-28-multidomain-solver-architecture:task:23:1901adb4c453:review": {
+      "hermes_id": "t_7ab9fd3a",
+      "last_status": "todo",
+      "source_sha": "1901adb4c453",
+      "stage": "review",
+      "task_number": 23
+    },
+    "2026-05-28-multidomain-solver-architecture:task:24:1b67d4bfd1ed:impl": {
+      "hermes_id": "t_a702d1b2",
+      "last_status": "todo",
+      "source_sha": "1b67d4bfd1ed",
+      "stage": "impl",
+      "task_number": 24
+    },
+    "2026-05-28-multidomain-solver-architecture:task:24:1b67d4bfd1ed:integrate": {
+      "hermes_id": "t_223dbcb5",
+      "last_status": "todo",
+      "source_sha": "1b67d4bfd1ed",
+      "stage": "integrate",
+      "task_number": 24
+    },
+    "2026-05-28-multidomain-solver-architecture:task:24:1b67d4bfd1ed:review": {
+      "hermes_id": "t_33010336",
+      "last_status": "todo",
+      "source_sha": "1b67d4bfd1ed",
+      "stage": "review",
+      "task_number": 24
+    },
+    "2026-05-28-multidomain-solver-architecture:task:25:b6c765f65668:impl": {
+      "hermes_id": "t_0df6321a",
+      "last_status": "todo",
+      "source_sha": "b6c765f65668",
+      "stage": "impl",
+      "task_number": 25
+    },
+    "2026-05-28-multidomain-solver-architecture:task:25:b6c765f65668:integrate": {
+      "hermes_id": "t_52dd08e3",
+      "last_status": "todo",
+      "source_sha": "b6c765f65668",
+      "stage": "integrate",
+      "task_number": 25
+    },
+    "2026-05-28-multidomain-solver-architecture:task:25:b6c765f65668:review": {
+      "hermes_id": "t_b896538b",
+      "last_status": "todo",
+      "source_sha": "b6c765f65668",
+      "stage": "review",
+      "task_number": 25
+    },
+    "2026-05-28-multidomain-solver-architecture:task:2:a3cdcd93e42b:impl": {
+      "hermes_id": "t_3bc2b93b",
+      "last_status": "todo",
+      "source_sha": "a3cdcd93e42b",
+      "stage": "impl",
+      "task_number": 2
+    },
+    "2026-05-28-multidomain-solver-architecture:task:2:a3cdcd93e42b:integrate": {
+      "hermes_id": "t_dc2e60c0",
+      "last_status": "todo",
+      "source_sha": "a3cdcd93e42b",
+      "stage": "integrate",
+      "task_number": 2
+    },
+    "2026-05-28-multidomain-solver-architecture:task:2:a3cdcd93e42b:review": {
+      "hermes_id": "t_b54a0c22",
+      "last_status": "todo",
+      "source_sha": "a3cdcd93e42b",
+      "stage": "review",
+      "task_number": 2
+    },
+    "2026-05-28-multidomain-solver-architecture:task:3:9922618e1f00:impl": {
+      "hermes_id": "t_c22d903f",
+      "last_status": "todo",
+      "source_sha": "9922618e1f00",
+      "stage": "impl",
+      "task_number": 3
+    },
+    "2026-05-28-multidomain-solver-architecture:task:3:9922618e1f00:integrate": {
+      "hermes_id": "t_fa23afc9",
+      "last_status": "todo",
+      "source_sha": "9922618e1f00",
+      "stage": "integrate",
+      "task_number": 3
+    },
+    "2026-05-28-multidomain-solver-architecture:task:3:9922618e1f00:review": {
+      "hermes_id": "t_05daffd6",
+      "last_status": "todo",
+      "source_sha": "9922618e1f00",
+      "stage": "review",
+      "task_number": 3
+    },
+    "2026-05-28-multidomain-solver-architecture:task:4:b80a1aa70cb4:impl": {
+      "hermes_id": "t_eb479455",
+      "last_status": "todo",
+      "source_sha": "b80a1aa70cb4",
+      "stage": "impl",
+      "task_number": 4
+    },
+    "2026-05-28-multidomain-solver-architecture:task:4:b80a1aa70cb4:integrate": {
+      "hermes_id": "t_0db622dd",
+      "last_status": "todo",
+      "source_sha": "b80a1aa70cb4",
+      "stage": "integrate",
+      "task_number": 4
+    },
+    "2026-05-28-multidomain-solver-architecture:task:4:b80a1aa70cb4:review": {
+      "hermes_id": "t_9309b5f2",
+      "last_status": "todo",
+      "source_sha": "b80a1aa70cb4",
+      "stage": "review",
+      "task_number": 4
+    },
+    "2026-05-28-multidomain-solver-architecture:task:5:bf9348794579:impl": {
+      "hermes_id": "t_a3ee6ac4",
+      "last_status": "todo",
+      "source_sha": "bf9348794579",
+      "stage": "impl",
+      "task_number": 5
+    },
+    "2026-05-28-multidomain-solver-architecture:task:5:bf9348794579:integrate": {
+      "hermes_id": "t_b3589b74",
+      "last_status": "todo",
+      "source_sha": "bf9348794579",
+      "stage": "integrate",
+      "task_number": 5
+    },
+    "2026-05-28-multidomain-solver-architecture:task:5:bf9348794579:review": {
+      "hermes_id": "t_56cb76fd",
+      "last_status": "todo",
+      "source_sha": "bf9348794579",
+      "stage": "review",
+      "task_number": 5
+    },
+    "2026-05-28-multidomain-solver-architecture:task:6:371c05393730:impl": {
+      "hermes_id": "t_09f837ba",
+      "last_status": "todo",
+      "source_sha": "371c05393730",
+      "stage": "impl",
+      "task_number": 6
+    },
+    "2026-05-28-multidomain-solver-architecture:task:6:371c05393730:integrate": {
+      "hermes_id": "t_475759c2",
+      "last_status": "todo",
+      "source_sha": "371c05393730",
+      "stage": "integrate",
+      "task_number": 6
+    },
+    "2026-05-28-multidomain-solver-architecture:task:6:371c05393730:review": {
+      "hermes_id": "t_fa5ad25a",
+      "last_status": "todo",
+      "source_sha": "371c05393730",
+      "stage": "review",
+      "task_number": 6
+    },
+    "2026-05-28-multidomain-solver-architecture:task:7:7cec63c17477:impl": {
+      "hermes_id": "t_d10533bb",
+      "last_status": "todo",
+      "source_sha": "7cec63c17477",
+      "stage": "impl",
+      "task_number": 7
+    },
+    "2026-05-28-multidomain-solver-architecture:task:7:7cec63c17477:integrate": {
+      "hermes_id": "t_459f3f5d",
+      "last_status": "todo",
+      "source_sha": "7cec63c17477",
+      "stage": "integrate",
+      "task_number": 7
+    },
+    "2026-05-28-multidomain-solver-architecture:task:7:7cec63c17477:review": {
+      "hermes_id": "t_78b6ac20",
+      "last_status": "todo",
+      "source_sha": "7cec63c17477",
+      "stage": "review",
+      "task_number": 7
+    },
+    "2026-05-28-multidomain-solver-architecture:task:8:b70b8527be2e:impl": {
+      "hermes_id": "t_7e83f0f6",
+      "last_status": "todo",
+      "source_sha": "b70b8527be2e",
+      "stage": "impl",
+      "task_number": 8
+    },
+    "2026-05-28-multidomain-solver-architecture:task:8:b70b8527be2e:integrate": {
+      "hermes_id": "t_dab50fa8",
+      "last_status": "todo",
+      "source_sha": "b70b8527be2e",
+      "stage": "integrate",
+      "task_number": 8
+    },
+    "2026-05-28-multidomain-solver-architecture:task:8:b70b8527be2e:review": {
+      "hermes_id": "t_e8d598c2",
+      "last_status": "todo",
+      "source_sha": "b70b8527be2e",
+      "stage": "review",
+      "task_number": 8
+    },
+    "2026-05-28-multidomain-solver-architecture:task:9:61be9f9521fb:impl": {
+      "hermes_id": "t_c8f0a06c",
+      "last_status": "todo",
+      "source_sha": "61be9f9521fb",
+      "stage": "impl",
+      "task_number": 9
+    },
+    "2026-05-28-multidomain-solver-architecture:task:9:61be9f9521fb:integrate": {
+      "hermes_id": "t_4bc3abae",
+      "last_status": "todo",
+      "source_sha": "61be9f9521fb",
+      "stage": "integrate",
+      "task_number": 9
+    },
+    "2026-05-28-multidomain-solver-architecture:task:9:61be9f9521fb:review": {
+      "hermes_id": "t_6d4d5656",
+      "last_status": "todo",
+      "source_sha": "61be9f9521fb",
+      "stage": "review",
+      "task_number": 9
+    }
+  }
+}
