@@ -46,6 +46,7 @@
 
 pub mod codegen;
 pub mod model;
+pub mod mosfet;
 pub mod stamp;
 
 pub use model::{DeviceModel, LinearizedModel, OperatingPoint};
