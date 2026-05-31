@@ -607,8 +607,15 @@ where
                         time, next.predicted_time,
                         "confirmed event time must equal the requested boundary"
                     );
-                    // 5. Commit.
-                    self.metadata.commits.push(time);
+                    // Guard against double-commit: after a rollback
+                    // re-advance, the Mispredicted path already pushed
+                    // `actual_time` to commits. Without this guard the
+                    // Confirmed path that follows (same time boundary)
+                    // would push the same time again, producing
+                    // [50ns, 80ns, 80ns] instead of [50ns, 80ns].
+                    if !self.metadata.commits.contains(&time) {
+                        self.metadata.commits.push(time);
+                    }
                     outcomes.push(SchedulerOutcome::Committed(time));
                 }
                 DigitalStepReport::Mispredicted { actual_time } => {
@@ -661,11 +668,12 @@ where
                     let checkpoint_at = outcome.event.checkpoint_at;
                     self.metadata.rollbacks.push(outcome.event);
                     // Guard against double-commit: if actual_time is already
-                    // the last committed boundary (e.g., if the analog solver
-                    // reached it before misprediction was confirmed), skip the
-                    // duplicate push. Preserves the existing test
-                    // `contract_violation_without_prior_checkpoint_errors`.
-                    if self.metadata.commits.last() != Some(&actual_time) {
+                    // in commits (pushed by a prior loop iteration's
+                    // Confirmed path after re-advance), skip the duplicate.
+                    // Without this, the Confirmed(80ns) path that follows a
+                    // Mispredicted(80ns) re-advance would push 80ns again,
+                    // producing [50ns, 80ns, 80ns] instead of [50ns, 80ns].
+                    if !self.metadata.commits.contains(&actual_time) {
                         self.metadata.commits.push(actual_time);
                     }
                     outcomes.push(SchedulerOutcome::RolledBack {
