@@ -17,7 +17,7 @@
 // BranchId/NodeId (simulator), FlattenedStructure (simulator), and
 // ModelName (builder, parser).
 pub use circuit_solver_types::{
-    AnalysisType, BranchId, ModelName, NodeId,
+    AnalysisType, BranchId, ConvergenceStatus, ModelName, NodeId,
     flattened::FlattenedStructure,
 };
 
@@ -48,3 +48,12 @@ pub use netlist_graph::{flatten, FlattenError, FlattenedView};
 // Spec scenario: frontend-contract#results-zero-copy-numpy.
 pub mod pymodule;
 pub use pymodule::{NamedScalarData, SimulationResult};
+
+// --- GIL-release contract (task #27) ----------------------------------
+// Spec scenario: frontend-contract#gil-released-during-solve.
+// Provides pure-Rust solve entry points that are safe to run inside
+// py.detach (no CPython state touched, Send-only data). The binding
+// crate wraps these in Python::detach; this module is the contractual
+// guarantee that the compute is GIL-safe.
+pub mod gil;
+pub use gil::{DcSolveResult, GilSafeSolver, GilSafeSolve, GilSolveError, solve_dc};
