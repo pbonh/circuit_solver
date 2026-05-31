@@ -13,3 +13,17 @@ workspace = true
 
 [dependencies]
 circuit-solver-types = { path = "../circuit-solver-types" }
+# Per ADR-0001 the application frontend consumes the immutable CircuitGraph
+# produced by netlist-graph and delegates analysis to the orchestration crate.
+# Both deps are one-way (no reverse pin).
+netlist-graph = { path = "../netlist-graph" }
+analysis-orchestration = { path = "../analysis-orchestration" }
+
+[dev-dependencies]
+# Compile-fail test infrastructure: verifies that undeclared cross-crate
+# accesses are rejected by the compiler (ADR-0008).
+trybuild = "1"
+
+[[test]]
+name = "compile_fail_undeclared_dep"
+path = "tests/compile_fail_undeclared_dep.rs"
