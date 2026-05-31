@@ -18,6 +18,7 @@ circuit-solver-types = { path = "../circuit-solver-types" }
 # Both deps are one-way (no reverse pin).
 netlist-graph = { path = "../netlist-graph" }
 analysis-orchestration = { path = "../analysis-orchestration" }
+numeric-solver = { path = "../numeric-solver" }
 
 [dev-dependencies]
 # Compile-fail test infrastructure: verifies that undeclared cross-crate

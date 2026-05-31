@@ -129,6 +129,7 @@
 
 use std::collections::BTreeMap;
 
+use application_frontend::SimulationResult;
 use numpy::PyArray1;
 use pyo3::exceptions::{PyKeyError, PyTypeError, PyValueError};
 use pyo3::prelude::*;
@@ -193,6 +194,21 @@ pub struct PyAnalysisResult {
     /// `analysis_orchestration::BranchCurrentSample`: positive =
     /// flowing from the element's `+` terminal to its `−` terminal.
     branch_currents: BTreeMap<String, f64>,
+    /// Zero-copy NumPy array of node voltage values, in sorted
+    /// name order. Constructed at `__new__` time via
+    /// [`numpy::PyArray1::from_vec`] so that
+    /// [`Self::node_voltages_array`] returns a view over Rust-owned
+    /// memory without element-wise copy. Task #26 /
+    /// `frontend-contract#results-zero-copy-numpy`.
+    node_voltages_array: Py<PyArray1<f64>>,
+    /// Node names in the same index order as `node_voltages_array`.
+    node_voltage_names: Vec<String>,
+    /// Zero-copy NumPy array of branch current values, in sorted
+    /// name order. Same zero-copy posture as
+    /// `node_voltages_array`.
+    branch_currents_array: Py<PyArray1<f64>>,
+    /// Branch names in the same index order as `branch_currents_array`.
+    branch_current_names: Vec<String>,
     /// Time-domain waveforms keyed by node name. Empty when the
     /// underlying analysis was non-transient.
     waveforms: BTreeMap<String, WaveformChannel>,
@@ -269,9 +285,20 @@ impl PyAnalysisResult {
             Some(obj) => parse_transfer_function_map(py, obj)?,
         };
 
+        // Project scalar channels into parallel (names, values) vectors
+        // for zero-copy NumPy array access (task #26).
+        let (nv_names, nv_values): (Vec<String>, Vec<f64>) =
+            node_voltages.iter().map(|(k, &v)| (k.clone(), v)).unzip();
+        let (bc_names, bc_values): (Vec<String>, Vec<f64>) =
+            branch_currents.iter().map(|(k, &v)| (k.clone(), v)).unzip();
+
         Ok(Self {
             node_voltages,
             branch_currents,
+            node_voltages_array: PyArray1::from_vec(py, nv_values).unbind(),
+            node_voltage_names: nv_names,
+            branch_currents_array: PyArray1::from_vec(py, bc_values).unbind(),
+            branch_current_names: bc_names,
             waveforms,
             transfer_functions,
         })
@@ -305,6 +332,42 @@ impl PyAnalysisResult {
             .get(name)
             .copied()
             .ok_or_else(|| PyKeyError::new_err(format!("no branch current recorded for {name:?}")))
+    }
+
+    /// All node voltage values as a `numpy.ndarray` of `dtype=float64`,
+    /// in sorted node-name order (matching `node_names()`).
+    ///
+    /// # Zero-copy semantics
+    ///
+    /// The returned array is a *view* into Rust-allocated heap memory
+    /// owned by NumPy: the underlying buffer was transferred at
+    /// `__new__` time via [`numpy::PyArray1::from_vec`] and is held
+    /// inside the `Result` as `Py<PyArray1<f64>>`. Each accessor call
+    /// returns a clone of that handle — a refcount bump, not a buffer
+    /// copy. Accessing the property twice yields handles to the same
+    /// underlying memory. Satisfies scenario
+    /// `frontend-contract#results-zero-copy-numpy`. Task #26.
+    ///
+    /// The index order matches [`Self::node_names`]: `array[i]` is the
+    /// voltage at the node returned by `node_names()[i]`.
+    pub fn node_voltages_array<'py>(&self, py: Python<'py>) -> Bound<'py, PyArray1<f64>> {
+        self.node_voltages_array.clone_ref(py).into_bound(py)
+    }
+
+    /// All branch current values as a `numpy.ndarray` of `dtype=float64`,
+    /// in sorted branch-name order (matching `branch_names()`).
+    ///
+    /// # Zero-copy semantics
+    ///
+    /// Same as [`Self::node_voltages_array`]: the array is a refcounted
+    /// handle into Rust-owned heap memory. No element-wise copy on
+    /// access. Task #26 / `frontend-contract#results-zero-copy-numpy`.
+    ///
+    /// The index order matches [`Self::branch_names`]: `array[i]` is
+    /// the current through the element returned by
+    /// `branch_names()[i]`.
+    pub fn branch_currents_array<'py>(&self, py: Python<'py>) -> Bound<'py, PyArray1<f64>> {
+        self.branch_currents_array.clone_ref(py).into_bound(py)
     }
 
     /// Time-domain waveform at node `name`, as a `(times, values)`
@@ -382,23 +445,26 @@ impl PyAnalysisResult {
     }
 
     /// Tuple of every node name that has a recorded DC voltage, in
-    /// stable sorted order.
+    /// stable sorted order. Uses the cached `node_voltage_names` vector
+    /// (task #26) for O(1) retrieval without re-iterating the BTreeMap.
     ///
     /// # Errors
     ///
     /// Returns a `PyErr` only on host-Python allocation failure.
     pub fn node_names<'py>(&self, py: Python<'py>) -> PyResult<Bound<'py, PyTuple>> {
-        PyTuple::new(py, self.node_voltages.keys().map(String::as_str))
+        PyTuple::new(py, self.node_voltage_names.iter().map(String::as_str))
     }
 
     /// Tuple of every branch (element) name that has a recorded DC
-    /// current, in stable sorted order.
+    /// current, in stable sorted order. Uses the cached
+    /// `branch_current_names` vector (task #26) for O(1) retrieval
+    /// without re-iterating the BTreeMap.
     ///
     /// # Errors
     ///
     /// Returns a `PyErr` only on host-Python allocation failure.
     pub fn branch_names<'py>(&self, py: Python<'py>) -> PyResult<Bound<'py, PyTuple>> {
-        PyTuple::new(py, self.branch_currents.keys().map(String::as_str))
+        PyTuple::new(py, self.branch_current_names.iter().map(String::as_str))
     }
 
     /// Tuple of every node name that has a recorded waveform, in
@@ -443,6 +509,74 @@ impl PyAnalysisResult {
             self.waveforms.len(),
             self.transfer_functions.len(),
         )
+    }
+}
+
+// --- Rust-side constructors (not exposed to Python) -----------------------
+
+impl PyAnalysisResult {
+    /// Construct a `PyAnalysisResult` from a frontend
+    /// [`SimulationResult`](application_frontend::SimulationResult).
+    ///
+    /// This is the production path: the orchestration layer produces a
+    /// `SimulationResult`, and the binding crate converts it to a
+    /// Python-accessible `Result` object via this method. The scalar
+    /// channel `Vec<f64>` values are moved into NumPy ownership with
+    /// zero-copy semantics; waveform and transfer-function inner vectors
+    /// are likewise transferred element-by-element.
+    ///
+    /// Task #26 / `frontend-contract#results-zero-copy-numpy`.
+    pub fn from_simulation_result(py: Python<'_>, sr: SimulationResult) -> Self {
+        let nv_map: BTreeMap<String, f64> = sr.node_voltages.into_map();
+        let bc_map: BTreeMap<String, f64> = sr.branch_currents.into_map();
+
+        // Project scalar channels into parallel (names, values) vectors.
+        let (nv_names, nv_values): (Vec<String>, Vec<f64>) =
+            nv_map.iter().map(|(k, &v)| (k.clone(), v)).unzip();
+        let (bc_names, bc_values): (Vec<String>, Vec<f64>) =
+            bc_map.iter().map(|(k, &v)| (k.clone(), v)).unzip();
+
+        // Transfer waveform inner Vecs into NumPy ownership.
+        let waveforms = sr
+            .waveforms
+            .into_iter()
+            .map(|(name, (times, values))| {
+                (
+                    name,
+                    WaveformChannel {
+                        times: PyArray1::from_vec(py, times).unbind(),
+                        values: PyArray1::from_vec(py, values).unbind(),
+                    },
+                )
+            })
+            .collect();
+
+        // Transfer transfer-function inner Vecs into NumPy ownership.
+        let transfer_functions = sr
+            .transfer_functions
+            .into_iter()
+            .map(|(name, (freq, mag, phase))| {
+                (
+                    name,
+                    TransferFunctionChannel {
+                        frequencies_hz: PyArray1::from_vec(py, freq).unbind(),
+                        magnitude_db: PyArray1::from_vec(py, mag).unbind(),
+                        phase_degrees: PyArray1::from_vec(py, phase).unbind(),
+                    },
+                )
+            })
+            .collect();
+
+        Self {
+            node_voltages: nv_map,
+            branch_currents: bc_map,
+            node_voltages_array: PyArray1::from_vec(py, nv_values).unbind(),
+            node_voltage_names: nv_names,
+            branch_currents_array: PyArray1::from_vec(py, bc_values).unbind(),
+            branch_current_names: bc_names,
+            waveforms,
+            transfer_functions,
+        }
     }
 }
 
@@ -692,9 +826,20 @@ impl PyAnalysisResult {
         waveforms: WaveformChannels,
         transfer_functions: TransferFunctionChannels,
     ) -> Self {
+        // Project scalar channels into parallel (names, values) vectors
+        // for zero-copy NumPy array access (task #26).
+        let (nv_names, nv_values): (Vec<String>, Vec<f64>) =
+            node_voltages.iter().map(|(k, &v)| (k.clone(), v)).unzip();
+        let (bc_names, bc_values): (Vec<String>, Vec<f64>) =
+            branch_currents.iter().map(|(k, &v)| (k.clone(), v)).unzip();
+
         Self {
             node_voltages,
             branch_currents,
+            node_voltages_array: PyArray1::from_vec(py, nv_values).unbind(),
+            node_voltage_names: nv_names,
+            branch_currents_array: PyArray1::from_vec(py, bc_values).unbind(),
+            branch_current_names: bc_names,
             waveforms: waveforms
                 .into_iter()
                 .map(|(k, (times, values))| {

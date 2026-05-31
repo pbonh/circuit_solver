@@ -69,11 +69,16 @@
 //!   tasks.md item #61 (spec scenario
 //!   `python-frontend#error-on-malformed-netlist`).
 //!
-//! - [`node_voltages_array`](result::PySimulationResult::node_voltages_array)
-//!   / [`branch_currents_array`](result::PySimulationResult::branch_currents_array)
-//!   \u2014 zero-copy `NumPy` views over Rust-owned result vectors
-//!   (task #58 / `frontend-contract#results-zero-copy-numpy`),
+//! - [`node_voltages_array`](result::PyAnalysisResult::node_voltages_array)
+//!   / [`branch_currents_array`](result::PyAnalysisResult::branch_currents_array)
+//!   — zero-copy `NumPy` views over Rust-owned result vectors
+//!   (task #58 / task #26 / `frontend-contract#results-zero-copy-numpy`),
 //!   returning `Py<PyArray1<f64>>` via `numpy::PyArray1::from_vec`.
+//!   The scalar-channel arrays are built at `__new__` time from the
+//!   same `BTreeMap<String, f64>` that backs the by-name accessors,
+//!   projected into parallel (names, values) vectors. The production
+//!   path from [`SimulationResult`](application_frontend::SimulationResult)
+//!   uses [`PyAnalysisResult::from_simulation_result`] (task #26).
 //!
 //! GIL release around solver entry points is task #59, completed here.
 //!
