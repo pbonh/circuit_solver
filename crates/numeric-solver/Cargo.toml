@@ -1,0 +1,45 @@
+[package]
+name = "numeric-solver"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+description = "MNA assembly, Newton-Raphson driver, sparse direct solvers, integration methods (tasks.md items #6, #14–#35)."
+
+[lints]
+workspace = true
+
+[dependencies]
+circuit-solver-types = { path = "../circuit-solver-types" }
+netlist-graph = { path = "../netlist-graph" }
+device-modeling = { path = "../device-modeling" }
+
+# Sparse direct solvers per ADR-0002 ("Hybrid Sparse Direct Solver
+# Backend (russell + faer)"). The two backends sit behind the
+# scalar-generic `LinearSolver<Scalar>` trait declared in
+# `linear_solver/mod.rs`:
+#
+# - `russell_sparse` (+ `russell_lab` for its `Vector` value type)
+#   backs the real-valued (`f64`) LU dispatch used by DC operating-
+#   point and transient timestep solves (tasks.md #16). It links
+#   against SuiteSparse (UMFPACK); the workspace `.cargo/config.toml`
+#   ships SuiteSparse search paths for the four common install
+#   layouts (linuxbrew, macOS brew, `/usr/local`, system package
+#   manager) so the build does not require pre-set `CPATH` /
+#   `LD_LIBRARY_PATH`.
+# - `faer` backs the complex-valued (`Complex<f64>`) LU dispatch used
+#   by AC and noise small-signal analyses (tasks.md #23). The
+#   `default-features = false` opt-out drops the optional NumPy
+#   interop, RNG, and serde features so the solver pulls in only
+#   `std + linalg + sparse-linalg + rayon` parallelism, all of which
+#   it actually uses.
+# - `num-complex` provides the `Complex<f64>` element type that the
+#   trait surface exposes to callers; `faer` re-exports its own
+#   `c64` (which is layout- and ABI-compatible with
+#   `num_complex::Complex<f64>`) and we convert at the boundary.
+faer = { version = "0.19.4", default-features = false, features = ["std", "rayon"] }
+num-complex = { version = "0.4", default-features = false }
+russell_sparse = "1.15"
+russell_lab = "1.15"

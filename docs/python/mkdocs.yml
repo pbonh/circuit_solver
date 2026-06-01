@@ -1,0 +1,81 @@
+site_name: circuit_solver — Python API reference
+site_description: >
+  Python frontend reference for the circuit-solver mixed-signal SPICE
+  engine. Documents the in-process PyO3 surface exposed by the
+  `circuit_solver` extension module (Rust crate
+  `circuit-solver-py`).
+site_author: circuit-solver contributors
+site_url: https://example.invalid/circuit-solver/python/
+docs_dir: source
+site_dir: ../../target/docs/python
+# Per ADR-0010 the public Rust API is unstable at v1.0.0; per ADR-0001
+# the Python-facing surface is the in-process PyO3 binding with an
+# immutable CircuitGraph handle. This site is the authoritative
+# reference for what Python callers may rely on.
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - content.code.copy
+    - toc.integrate
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+# `mkdocstrings` is configured but disabled by default: it requires
+# `import circuit_solver`, which in turn requires a `maturin develop`
+# (tasks.md #72) that this non-behavioral documentation task does not
+# perform. The hand-curated reference pages under `reference/`
+# faithfully reproduce the `///` docstrings in
+# `crates/circuit-solver-py/src/`, so the site is readable without
+# the compiled extension. Once #72 lands, flip `enabled: true` and
+# the auto-generated content will supplement (not replace) the
+# hand-curated pages.
+plugins:
+  - search
+  - mkdocstrings:
+      enabled: false
+      default_handler: python
+      handlers:
+        python:
+          options:
+            show_source: false
+            show_root_heading: true
+            show_root_full_path: false
+            members_order: source
+            docstring_style: google
+            separate_signature: true
+            line_length: 80
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Reference:
+      - Overview: reference/index.md
+      - CircuitBuilder: reference/circuit-builder.md
+      - CircuitGraph: reference/circuit-graph.md
+      - AnalysisRequest: reference/analysis-request.md
+      - parse_netlist: reference/parse-netlist.md
+      - Exceptions: reference/exceptions.md
+  - Stability policy: stability.md
+  - Building this site: building.md
