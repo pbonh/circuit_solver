@@ -1,0 +1,15 @@
+[package]
+name = "device-modeling"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+description = "Closed-enum DeviceModel + LinearizedModel stamps (tasks.md items #7–#13, #29–#31, #36)."
+
+[lints]
+workspace = true
+
+[dependencies]
+circuit-solver-types = { path = "../circuit-solver-types" }

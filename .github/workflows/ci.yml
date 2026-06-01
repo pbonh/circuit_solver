@@ -1,0 +1,277 @@
+# Continuous integration for circuit-solver (tasks.md item #71).
+#
+# This workflow encodes the same four checks the scientia integrator
+# runs as preflight gates on every merge to main, so that pull
+# requests opened against the trunk surface failures *before* a human
+# reviewer has to repeat them locally:
+#
+#   1. `cargo fmt --all -- --check`   — formatting drift
+#   2. `cargo clippy ... -D warnings` — lint gate (workspace pedantic
+#      level is `warn`; CI escalates to `deny` so a warning fails the
+#      build)
+#   3. `cargo test --workspace`       — every workspace crate's unit
+#      tests plus the per-scenario integration tests under
+#      `crates/analysis-orchestration/tests/` and the
+#      conformance-harness smoke test (tasks.md #62)
+#   4. `cargo doc --workspace -D warnings` — rustdoc warnings are
+#      treated as errors so that the `cargo doc` build the
+#      integrator runs locally cannot silently rot
+#   5. `maturin develop` + `python -c "import circuit_solver"` —
+#      verifies the PyO3 extension still imports under the abi3-py39
+#      contract from pyproject.toml. This is the "wheel-buildable"
+#      smoke check; the production wheel build (tasks.md #72) is
+#      orthogonal and runs on tag pushes only.
+#
+# Non-behavioral: this workflow modifies *no* Rust source, *no*
+# Python source, and *no* spec/design/ADR artifact. It is pure CI
+# infrastructure.
+#
+# Governing ADRs (change-level, from tasks.md item #71 body):
+#   ADR-0006, ADR-0007, ADR-0008, ADR-0009, ADR-0010.
+# (None are item-level for #71; they govern the *behavior* the CI
+# pipeline gates, not the gating mechanism itself.)
+#
+# Host expectations:
+#   - Ubuntu (apt for SuiteSparse). The `.cargo/config.toml` also
+#     lists linuxbrew, /opt/homebrew, and /usr/local paths, but
+#     GitHub-hosted runners install SuiteSparse via apt at the
+#     system locations (`/usr/include/suitesparse`, `/usr/lib/...`)
+#     which `russell_sparse`'s own probe finds without the
+#     `.cargo/config.toml` overrides being needed.
+#   - Python 3.11 (mid-range of the supported `requires-python =
+#     ">=3.9"` window).
+#   - Rust stable (workspace floor is 1.75 per Cargo.toml; current
+#     stable is well above that).
+
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# A new push to a PR cancels the in-flight run for that PR. main
+# pushes never cancel each other (no `head_ref` for `push`).
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# Read-only token; CI only inspects the repository, never writes.
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  # Backtraces on panics make CI failures self-diagnosing.
+  RUST_BACKTRACE: 1
+
+jobs:
+  # --------------------------------------------------------------
+  # 1. Format check.
+  #
+  # Cheap, runs without compiling, fails fast. Kept as its own job
+  # so a fmt-only failure does not waste compute on the heavier
+  # jobs below.
+  # --------------------------------------------------------------
+  fmt:
+    name: cargo fmt --check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable Rust toolchain (with rustfmt)
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - name: cargo fmt --all -- --check
+        run: cargo fmt --all -- --check
+
+  # --------------------------------------------------------------
+  # 2. Clippy gate.
+  #
+  # The workspace pins clippy::pedantic at `warn` and
+  # module_name_repetitions at `allow`. We escalate warnings to
+  # errors here (`-D warnings`) so any pedantic lint not silenced by
+  # the workspace allow-list will fail CI. `--all-targets` covers
+  # tests and benches in addition to libs/bins.
+  # --------------------------------------------------------------
+  clippy:
+    name: cargo clippy -D warnings
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SuiteSparse (umfpack, klu) headers and libs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsuitesparse-dev
+      - name: Install stable Rust toolchain (with clippy)
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - name: Cache cargo registry, target/
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: clippy
+      - name: cargo clippy --workspace --all-targets -- -D warnings
+        run: cargo clippy --workspace --all-targets --locked -- -D warnings
+
+  # --------------------------------------------------------------
+  # 3. Workspace tests.
+  #
+  # Runs every test in the workspace, including:
+  #   - per-crate unit tests
+  #   - per-scenario integration tests under
+  #     `crates/analysis-orchestration/tests/scenario_*.rs`
+  #   - the conformance-harness smoke test
+  #     (`crates/conformance-harness/tests/conformance_harness_smoke.rs`)
+  #     which exercises ADR-0008's max(rel, abs) tolerance envelope
+  #     against a small ngspice golden file.
+  #
+  # `--all-targets` ensures doctests are *not* skipped when the
+  # main binary targets resolve (cargo's default `--tests` excludes
+  # examples/benches; `--all-targets` excludes doctests but includes
+  # everything else, and we cover doctests in the `docs` job via
+  # `cargo doc` which surfaces malformed doctests as warnings).
+  # --------------------------------------------------------------
+  test:
+    name: cargo test --workspace
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SuiteSparse (umfpack, klu) headers and libs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsuitesparse-dev
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+      - name: Cache cargo registry, target/
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: test
+      - name: cargo test --workspace --all-targets --locked
+        run: cargo test --workspace --all-targets --locked
+      - name: cargo test --doc --workspace --locked
+        # Doctests are excluded by --all-targets above; re-run them
+        # explicitly so rustdoc-embedded examples do not silently
+        # rot. Failures here usually indicate stale `///` examples
+        # against changed APIs (ADR-0010 keeps the API unstable, so
+        # this drift is expected and CI is the right place to catch
+        # it).
+        run: cargo test --doc --workspace --locked
+
+  # --------------------------------------------------------------
+  # 4. Conformance harness — explicit re-run for visibility.
+  #
+  # The conformance harness (tasks.md #62) is also covered by job
+  # `test` via `--workspace`, but we give it its own job so a
+  # broken golden-reference comparison surfaces as a distinct red
+  # check on a PR rather than buried under thousands of unrelated
+  # tests. This is the gate that protects ADR-0008.
+  # --------------------------------------------------------------
+  conformance:
+    name: conformance harness (tasks.md #62)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SuiteSparse (umfpack, klu) headers and libs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsuitesparse-dev
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+      - name: Cache cargo registry, target/
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: conformance
+      - name: cargo test -p conformance-harness --all-targets
+        run: cargo test -p conformance-harness --all-targets --locked
+
+  # --------------------------------------------------------------
+  # 5. Docs gate.
+  #
+  # The integrator runs `cargo doc --workspace --no-deps` with
+  # `RUSTDOCFLAGS=-D warnings` as part of the per-task preflight.
+  # We mirror that here so doc rot fails CI rather than blocking a
+  # merge later. `--no-deps` keeps the run scoped to first-party
+  # crates and avoids the noise of generating documentation for
+  # `faer`, `russell_sparse`, etc.
+  # --------------------------------------------------------------
+  docs:
+    name: cargo doc -D warnings
+    runs-on: ubuntu-latest
+    env:
+      RUSTDOCFLAGS: -D warnings
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SuiteSparse (umfpack, klu) headers and libs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsuitesparse-dev
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+      - name: Cache cargo registry, target/
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: docs
+      - name: cargo doc --workspace --no-deps --locked
+        run: cargo doc --workspace --no-deps --locked
+
+  # --------------------------------------------------------------
+  # 6. maturin develop smoke check.
+  #
+  # Builds the PyO3 extension via `maturin develop` (editable
+  # install) into a fresh virtual environment, then imports
+  # `circuit_solver` to confirm the abi3 extension loads. This is
+  # the gating mechanism for the v1 distribution contract from
+  # design.md §"PyO3 distribution packaging":
+  #
+  #     maturin develop                    # editable install for dev
+  #     maturin build --release            # produce a wheel (#72)
+  #
+  # We *do not* run `maturin build --release` here — wheel
+  # production is owned by tasks.md #72 (and a future
+  # release-tagged workflow). This job only proves the develop
+  # path stays green so contributors are not surprised at
+  # `maturin develop` failures on their machine after a PR merges.
+  # --------------------------------------------------------------
+  maturin-develop:
+    name: maturin develop + import smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SuiteSparse (umfpack, klu) headers and libs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsuitesparse-dev
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+      - name: Cache cargo registry, target/
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: maturin
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install maturin (pinned to pyproject.toml's requires)
+        # pyproject.toml declares `requires = ["maturin>=1.4,<2.0"]`
+        # under [build-system]. Mirror that range here so CI uses
+        # the same maturin a PEP 517 frontend (`pip install .`)
+        # would resolve.
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'maturin>=1.4,<2.0'
+      - name: maturin develop (editable install of the PyO3 wheel)
+        # maturin develop installs the cdylib into the active
+        # interpreter's site-packages as `circuit_solver`. We do
+        # NOT pass `--release` here: dev-profile build keeps
+        # compile times in check and matches the contract the
+        # design.md docstring above quotes verbatim.
+        run: maturin develop --locked
+      - name: import circuit_solver
+        # Confirms the abi3-py39 extension module loads and
+        # exposes its top-level surface. Any unresolved symbol or
+        # ABI mismatch would surface here as an ImportError.
+        run: python -c "import circuit_solver; print('circuit_solver OK:', circuit_solver)"

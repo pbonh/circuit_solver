@@ -1,0 +1,121 @@
+# pyproject.toml — maturin build configuration for the circuit-solver
+# PyO3 extension module.
+#
+# This file lives at the Cargo workspace root rather than next to
+# `crates/circuit-solver-py/Cargo.toml` because the PyO3 crate is one
+# member of a multi-crate workspace and the wheel published to Python
+# users carries the workspace's top-level identity ("circuit_solver",
+# not "circuit-solver-py"). The `[tool.maturin]` table below points
+# maturin at the extension crate via `manifest-path`, so the
+# canonical build invocations remain:
+#
+#     maturin develop --release            # editable install for dev
+#     maturin build --release              # produce a .whl in target/wheels
+#
+# Both forms honor the `pyo3 = { ..., features = ["abi3-py39", ...] }`
+# pin in crates/circuit-solver-py/Cargo.toml, so the resulting wheel
+# is tagged `cp39-abi3-<platform>` and is compatible with CPython >= 3.9.
+#
+# Decision context: design.md §"PyO3 distribution packaging" — "the
+# application-frontend crate supports `maturin develop` for development
+# and `maturin build --release` for wheel production. Conda packaging
+# is out of scope for this design." Per ADR-0010 the Rust API surface
+# remains unstable for v1; the Python wheel inherits that status (no
+# semver promise across pre-1.0 minor bumps).
+
+[build-system]
+# `maturin >= 1.4` is the first release with stable support for the
+# `pyo3 = "0.28"` macro layout used by `crates/circuit-solver-py`. The
+# upper bound stays open so CI can pick up bugfixes without pyproject
+# churn. PEP 517 frontends (`pip install`, `python -m build`, etc.)
+# read this section to bootstrap maturin into an isolated build env.
+requires = ["maturin>=1.4,<2.0"]
+build-backend = "maturin"
+
+[project]
+# The PyPI / wheel package name is `circuit-solver` (hyphenated, PEP
+# 503 normalized). The importable Python module name is `circuit_solver`
+# (underscored, PEP 8) and is set by `[lib] name = "circuit_solver"` in
+# crates/circuit-solver-py/Cargo.toml. Maturin emits the latter as the
+# extension's `.so` filename; the former is metadata for the wheel.
+name = "circuit-solver"
+# Keep the wheel version in lockstep with `[workspace.package] version`
+# in the root Cargo.toml. Both currently sit at "0.0.1" per ADR-0010
+# (unstable v1 surface). When bumping the workspace version, bump
+# this string in the same commit so the wheel filename and the Rust
+# crate version never disagree.
+version = "0.0.1"
+description = "Unified analog / digital / mixed-signal circuit simulator with a memory-safe Rust core and PyO3 frontend."
+# The repository's primary README lives at `project/README.md`
+# (the `wiki/` and `openspec/` trees are the canonical docs for now;
+# a top-level README will be added as part of tasks.md #69/#70).
+# Maturin tolerates a missing `readme` key by emitting a wheel with
+# no long description, which is acceptable for an unstable v1 wheel.
+license = { text = "MIT" }
+# `abi3-py39` in Cargo.toml pins the floor; we mirror it here so pip
+# / build frontends reject installs on CPython < 3.9 up front instead
+# of failing at import time with an opaque ABI mismatch.
+requires-python = ">=3.9"
+authors = [
+    { name = "pbonh" },
+]
+keywords = ["spice", "circuit", "simulator", "analog", "mixed-signal", "pyo3", "rust"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Rust",
+    "Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)",
+]
+
+[project.urls]
+Repository = "https://github.com/pbonh/circuit_solver"
+
+[tool.maturin]
+# Point maturin at the PyO3 extension crate. Without this, maturin
+# would look for a `Cargo.toml` in the same directory as this file
+# (the workspace root), find the workspace manifest, and fail because
+# a virtual workspace cannot itself be built as a PyO3 extension.
+manifest-path = "crates/circuit-solver-py/Cargo.toml"
+
+# Emit a stable-ABI wheel. Combined with `pyo3/abi3-py39` in
+# crates/circuit-solver-py/Cargo.toml, this produces a single wheel
+# tagged `cp39-abi3-<platform>` that imports on every CPython 3.9+
+# interpreter, rather than one wheel per minor Python version. The
+# floor must match `requires-python` above and `abi3-py39` in the
+# Cargo.toml; bump all three together.
+#
+# `python-source` is intentionally omitted: v1 ships a pure-Rust
+# extension module (no .py sidecar files). Adding pure-Python helpers
+# later is a single-line addition (`python-source = "python"`) plus
+# the corresponding `python/circuit_solver/` directory.
+features = ["pyo3/extension-module"]
+
+# `strip` removes debug symbols from the cdylib. Release wheels ship
+# without symbols; developers running `maturin develop` (which omits
+# `--release`) still get full debug info via the dev profile.
+strip = true
+
+# Manifests for sdist contents. The sdist must contain every Rust
+# source the wheel build needs (the entire workspace, not just the
+# circuit-solver-py crate, because the PyO3 crate depends on
+# `netlist-graph` and `circuit-solver-types` via path = "../..").
+sdist-include = [
+    "Cargo.toml",
+    "Cargo.lock",
+    "crates/**/Cargo.toml",
+    "crates/**/src/**/*",
+    "crates/**/tests/**/*",
+    "crates/**/build.rs",
+    "LICENSE",
+    "README.md",
+]
