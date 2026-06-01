@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2021"
 description = "Pure-Rust analog/digital/mixed-signal circuit simulator"
 
+[workspace]
+
 [dependencies]
 
 [dev-dependencies]
@@ -11,3 +13,7 @@ description = "Pure-Rust analog/digital/mixed-signal circuit simulator"
 [[test]]
 name = "digital-equivalence"
 path = "tests/digital/equivalence.rs"
+
+[[test]]
+name = "digital-vcd"
+path = "tests/digital/vcd.rs"
