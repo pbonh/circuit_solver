@@ -5,4 +5,5 @@
 //! provides an in-process `run-until` API driven by the Mixed-Signal Scheduler,
 //! with delta-cycle settling and checkpoint/rollback support.
 
+pub mod checkpoint;
 pub mod event_queue;
