@@ -62,7 +62,7 @@ method, or constant is a compile error.
 
 ## Tests
 
-Run `cargo test -p device-modeling` to exercise all 226+ tests.  All tests
+Run `cargo test -p device-modeling` to exercise all 206+ tests.  All tests
 are `#[cfg(test)]` inline unit tests; no integration tests in this crate.
 New stamp methods must include:
 1. A test that verifies KCL closure (diagonal and off-diagonal sums).
@@ -118,6 +118,22 @@ in the open `traits::DeviceModel` trait.  Key properties:
 - `is_smooth()` returns `false` — Level-1 has two kink boundaries (Vov=0, Vds=Vov).
 - Re-exported at crate root as `pub use mosfet_level1_device::MosfetLevel1`.
 
+## Diode — traits::DeviceModel implementor (US-013)
+
+`diode::Diode` implements the Shockley diode model with tangent-line clamping,
+series resistance, and junction capacitance.  Key properties:
+
+- Shockley: `I = IS * (exp(Vd / (N*Vt)) - 1)` with defaults IS=1e-14 A, N=1,
+  Vt=0.02585 V (300 K).
+- **Forward clamp**: arg capped at `DIODE_MAX_EXP_ARG = 40.0` (same as SPICE3).
+- **Reverse clamp**: arg floored at `DIODE_MIN_EXP_ARG = -5.0`; keeps `gd ≈ 0`.
+- `stamp_linear` stamps `G_rs = 1/RS` if `rs > 0`; no-op otherwise.
+- `stamp_nonlinear` stamps Jacobian `gd` + companion current `I_eq = I - gd*Vd`,
+  plus transient `G_cj = Cj/h` when `cj > 0` and timestep is set.
+- Use `Diode::with_timestep(h)` to enable junction-capacitance transient companion.
+- `is_smooth()` returns `false` — clamping introduces kinks at the clamp boundaries.
+- Re-exported at crate root as `pub use diode::Diode`.
+
 ## VerilogAmsBlock — behavioral traits::DeviceModel (verilog_ams)
 
 `verilog_ams::VerilogAmsBlock` implements `traits::DeviceModel` for behavioral
@@ -130,4 +146,3 @@ V-AMS modules.  Two key pitfalls:
   resistance-form (evaluates to R with unit-I probe; invert to get G = 1/R).
   `V(a,b) <+ V(a,b)*G` is conductance-form (evaluates to G with unit-V probe;
   no inversion needed).  `expr_has_iprobe()` determines which form to use.
-
