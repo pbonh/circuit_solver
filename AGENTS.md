@@ -41,3 +41,22 @@ For this project the branch name is `ralph/circuit-solver-delta`.
 - `#[derive(Default)]` on `CircuitGraph` is intentional: it lets the struct be
   used in aggregate `Default` derives for parent structs, but consumers should
   use `::new()` for correct initial state.
+
+## US-005 patterns — MnaMatrix / CsrMatrix
+
+- `MnaMatrix` is a COO accumulator: `stamp(row, col, val)` pushes a raw
+  triplet; duplicate `(row, col)` entries are **summed** during `to_csr()`.
+  This is intentional — elements stamp independently without needing to look
+  up existing values.
+- `to_csr()` uses a dense `n × n` scratch buffer to accumulate duplicates
+  before compressing.  Correct and simple for small-to-medium circuits;
+  a future optimisation could use sorted-triplet merging for large `n`.
+- `reset()` calls `Vec::clear()` (not `Vec::new()`) to preserve capacity —
+  no heap reallocation on subsequent stamps.
+- Module doc comments use `//!` (inner doc), not `///` (outer doc), because
+  clippy `empty_line_after_doc_comments` fires when an outer `///` block is
+  separated from the next item by a blank line at the top of a file.
+- `CsrMatrix::get()` is a linear scan within the row; sufficient for tests
+  and small circuits.  For solver use, pass `row_ptr`/`col_idx`/`values`
+  directly to LAPACK-style routines.
+- Public re-exports live in `lib.rs`: `pub use mna_matrix::{CsrMatrix, MnaMatrix};`
