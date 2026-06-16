@@ -73,8 +73,10 @@
 
 #![deny(missing_docs)]
 
+pub mod bjt_ebers_moll;
 pub mod bsim3v3;
 pub mod companion;
+pub mod linear_elements;
 pub mod mna_matrix;
 pub mod model;
 pub mod noise;
@@ -84,6 +86,7 @@ pub mod traits;
 pub mod var_map;
 
 pub use bsim3v3::linearize_bsim3v3;
+pub use bjt_ebers_moll::BjtEbersMoll;
 pub use companion::{
     CapacitorCompanion, CompanionConstructionError, InductorCompanion, ReactiveCompanion,
     ReactiveState, REACTIVE_TERMINALS,
@@ -99,6 +102,7 @@ pub use params::{
     BJTParams, BJTPolarity, DiodeParams, MOSFETParams, MosBSIM3v3Params, MosBSIM4Params,
     MosLevel1Params, MosPolarity,
 };
+pub use linear_elements::{Capacitor, CurrentSource, Inductor, Resistor, VoltageSource};
 pub use mna_matrix::MnaMatrix;
 pub use stamp::{
     linearize_bjt, linearize_diode, linearize_mosfet, linearize_mosfet_bsim4,

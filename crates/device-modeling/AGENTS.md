@@ -62,9 +62,28 @@ method, or constant is a compile error.
 
 ## Tests
 
-Run `cargo test -p device-modeling` to exercise all 162+ tests.  All tests
+Run `cargo test -p device-modeling` to exercise all 171+ tests.  All tests
 are `#[cfg(test)]` inline unit tests; no integration tests in this crate.
 New stamp methods must include:
 1. A test that verifies KCL closure (diagonal and off-diagonal sums).
 2. A test that the Jacobian matches a numerical finite-difference for at
    least one operating point.
+
+## BjtEbersMoll — traits::DeviceModel concrete implementor (US-015)
+
+`bjt_ebers_moll::BjtEbersMoll` is the first concrete implementor of the open
+`traits::DeviceModel` trait for a nonlinear device.  It bridges
+`stamp::linearize_bjt` (tasks.md #10) to the `dyn`-dispatch path.
+
+Key conventions to follow for future nonlinear trait implementors:
+
+- `stamp_linear` is a **no-op** for purely nonlinear devices.
+- `stamp_nonlinear` reads terminal voltages from `x[var_map.node_index(t)]`,
+  calls the matching `linearize_*` helper, then:
+  - accumulates `lin.jacobian[i][j]` into `matrix.add_element(row_i, row_j, …)`.
+  - subtracts `lin.companion_current[i]` via `matrix.add_rhs(row_i, -…)`.
+- Use `rows.iter().enumerate()` (not `for i in 0..N`) to avoid the
+  `clippy::needless_range_loop` lint that fires on `rows[i]` patterns.
+- `is_smooth()` returns `true` for exponential-family (smooth) equations;
+  `false` for piecewise-linear / switch-level models.
+
