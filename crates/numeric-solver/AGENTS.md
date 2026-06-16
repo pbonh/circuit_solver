@@ -43,3 +43,30 @@ Branch-current variables follow at `node_count` onward.
 
 ### Gotcha: `circuit-solver-py` linker failure is pre-existing
 Use `--exclude circuit-solver-py` for workspace-wide checks.
+
+## SparseLU with Markowitz pivot selection (US-018)
+
+### Pattern: SparseLU lives in `src/sparse_lu.rs`, re-exported from `lib.rs`
+`CsrMatrix`, `SparseLU`, and `SingularMatrix` are defined in `crates/numeric-solver/src/sparse_lu.rs`
+and re-exported via `pub use sparse_lu::{CsrMatrix, SingularMatrix, SparseLU};` in `lib.rs`.
+New public types also require `pub mod sparse_lu;` in `lib.rs`.
+
+### Pattern: Markowitz cost is (row_nnz - 1) * (col_nnz - 1) in the active submatrix
+Only count entries in the `step..n` submatrix (the "active" part), not the whole matrix.
+This counts entries that will participate in future elimination steps.
+
+### Pattern: threshold partial-pivot = reject candidates with |a_rk| < threshold * col_max
+Default threshold is 0.1 (SPICE-conventional). Only rows passing this test are eligible
+as pivot candidates; Markowitz cost breaks ties within that eligible set. Secondary
+tiebreaker: largest absolute value (most numerically stable).
+
+### Pattern: dense working copy for small circuits
+`SparseLU` uses a dense n×n working copy internally. This is acceptable for circuit-
+matrix sizes (up to a few thousand nodes). For production use, `RussellRealSolver`
+(UMFPACK) is preferred. The dense approach avoids tracking dynamic sparsity patterns
+during elimination, which is complex to implement correctly.
+
+### Gotcha: pre-existing `clippy::let_and_return` warning in `adaptive.rs`
+`cargo clippy -p numeric-solver -- -D warnings` fails with a pre-existing warning in
+`crates/numeric-solver/src/integration/adaptive.rs:652`. This existed before US-018.
+`cargo check -p numeric-solver` passes with 0 warnings (no new issues introduced).
