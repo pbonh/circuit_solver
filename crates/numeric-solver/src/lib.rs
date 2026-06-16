@@ -69,6 +69,7 @@ pub mod integration;
 pub mod linear_solver;
 pub mod newton_raphson;
 pub mod source_stepping;
+pub mod sparse_lu;
 pub mod sub_view;
 
 // US-010 MNA formulation verification tests.
@@ -103,4 +104,5 @@ pub use source_stepping::{
     SourceSteppableSystem, SourceSteppingConfig, SourceSteppingDriver, SourceSteppingError,
     SourceSteppingOutcome,
 };
+pub use sparse_lu::{CsrMatrix, SingularMatrix, SparseLU};
 pub use sub_view::{source_rhs_from, SubView, SubViewBuilder, SubViewError};
