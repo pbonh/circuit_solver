@@ -71,6 +71,10 @@ pub mod newton_raphson;
 pub mod source_stepping;
 pub mod sub_view;
 
+// US-010 MNA formulation verification tests.
+#[cfg(test)]
+mod mna_verification;
+
 pub use ac_sub_view::{AcSubView, AcSubViewBuilder, AcSubViewError};
 pub use assemble::{assemble, MnaAssemblyError, MnaSystem};
 pub use circuit_solver_types::flattened::{
