@@ -80,12 +80,20 @@ pub struct DiodeParams {
     /// in `0.5..=2.0`. Together with [`Self::kf`] this drives the
     /// flicker term `KF · I_D^AF / f` in [`crate::noise`].
     pub af: f64,
+
+    /// Zero-bias junction capacitance `CJ`, in farads.
+    ///
+    /// When `cj > 0` and a transient timestep is provided, the diode
+    /// model stamps a companion conductance `G_cj = CJ / h` to account
+    /// for the depletion capacitance. `CJ = 0` disables this (the SPICE
+    /// default for simple models).
+    pub cj: f64,
 }
 
 impl Default for DiodeParams {
     /// SPICE-canonical defaults: `IS = 1e-14 A`, `N = 1`, `RS = 0 Ω`,
     /// `Vt = 25.85 mV` (room temperature `T = 300.15 K`),
-    /// `KF = 0` (flicker disabled), `AF = 1`.
+    /// `KF = 0` (flicker disabled), `AF = 1`, `CJ = 0 F`.
     fn default() -> Self {
         Self {
             name: ModelName::new(""),
@@ -95,6 +103,7 @@ impl Default for DiodeParams {
             vt: 0.025_852_0,
             kf: 0.0,
             af: 1.0,
+            cj: 0.0,
         }
     }
 }

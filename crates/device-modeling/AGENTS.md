@@ -62,7 +62,7 @@ method, or constant is a compile error.
 
 ## Tests
 
-Run `cargo test -p device-modeling` to exercise all 171+ tests.  All tests
+Run `cargo test -p device-modeling` to exercise all 226+ tests.  All tests
 are `#[cfg(test)]` inline unit tests; no integration tests in this crate.
 New stamp methods must include:
 1. A test that verifies KCL closure (diagonal and off-diagonal sums).
@@ -104,4 +104,30 @@ Key conventions:
   The branch row is at `var_map.branch_index(bid)` which equals `node_count + branch_idx`.
 - **CurrentSource** stamps RHS only (`add_rhs`) — the A matrix is untouched.
 - All five are re-exported at the crate root (`pub use linear_elements::{...}`).
+
+## MosfetLevel1 — traits::DeviceModel implementor (US-014)
+
+`mosfet_level1_device::MosfetLevel1` wraps `stamp::linearize_mosfet_level1`
+in the open `traits::DeviceModel` trait.  Key properties:
+
+- `stamp_linear` is a **no-op** — purely nonlinear device.
+- `stamp_nonlinear` evaluates the Shichman-Hodges DC stamp via `linearize_mosfet_level1`
+  then optionally stamps Meyer gate capacitances as trapezoidal companion
+  conductances `G_eq = 2·C/h` (when `cox_wl > 0` and `timestep > 0`).
+- Meyer partitions: cutoff → Cgb=C_ox; triode → Cgs=Cgd=C_ox/2; sat → Cgs=2/3·C_ox.
+- `is_smooth()` returns `false` — Level-1 has two kink boundaries (Vov=0, Vds=Vov).
+- Re-exported at crate root as `pub use mosfet_level1_device::MosfetLevel1`.
+
+## VerilogAmsBlock — behavioral traits::DeviceModel (verilog_ams)
+
+`verilog_ams::VerilogAmsBlock` implements `traits::DeviceModel` for behavioral
+V-AMS modules.  Two key pitfalls:
+
+- **EvalContext must always set `i_probe_override`**: the field was added
+  post-initial-implementation; forgetting it causes E0063 compile errors.
+  Non-probe contexts pass `None`; unit-current probe passes `Some(1.0)`.
+- **`extract_conductance` probe mode selection**: `V(a,b) <+ I(a,b)*R` is
+  resistance-form (evaluates to R with unit-I probe; invert to get G = 1/R).
+  `V(a,b) <+ V(a,b)*G` is conductance-form (evaluates to G with unit-V probe;
+  no inversion needed).  `expr_has_iprobe()` determines which form to use.
 

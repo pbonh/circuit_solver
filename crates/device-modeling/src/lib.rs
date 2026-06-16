@@ -76,14 +76,17 @@
 pub mod bjt_ebers_moll;
 pub mod bsim3v3;
 pub mod companion;
+pub mod diode;
 pub mod linear_elements;
 pub mod mna_matrix;
 pub mod model;
+pub mod mosfet_level1_device;
 pub mod noise;
 pub mod params;
 pub mod stamp;
 pub mod traits;
 pub mod var_map;
+pub mod verilog_ams;
 
 pub use bsim3v3::linearize_bsim3v3;
 pub use bjt_ebers_moll::BjtEbersMoll;
@@ -91,6 +94,7 @@ pub use companion::{
     CapacitorCompanion, CompanionConstructionError, InductorCompanion, ReactiveCompanion,
     ReactiveState, REACTIVE_TERMINALS,
 };
+pub use diode::Diode;
 pub use model::{DeviceFamily, DeviceModel};
 pub use noise::{
     noise_stamp_bjt, noise_stamp_diode, noise_stamp_mosfet, resistor_thermal_noise, BJTNoiseStamp,
@@ -104,6 +108,8 @@ pub use params::{
 };
 pub use linear_elements::{Capacitor, CurrentSource, Inductor, Resistor, VoltageSource};
 pub use mna_matrix::MnaMatrix;
+pub use mosfet_level1_device::MosfetLevel1;
+pub use verilog_ams::{ContribStmt, VamsExpr, VamsModule, VerilogAmsBlock, VerilogAmsState};
 pub use stamp::{
     linearize_bjt, linearize_diode, linearize_mosfet, linearize_mosfet_bsim4,
     linearize_mosfet_level1, BJTLinearization, DiodeLinearization, LinearizedModel,
