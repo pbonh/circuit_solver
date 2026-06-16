@@ -79,3 +79,8 @@ Append-only timeline of ingests, queries and lint passes. Each entry starts with
 - summary: Fixed broken link (effective-resistance-and-power-grid→power-grid-analysis); added inline wikilinks to resolve all 11 source-page orphans; updated sources frontmatter on 6 pages
 - sources: 0
 - pages: vlsi-graph-methods, graph-algorithms, stiff-ode-methods, constraint-reasoning, scalable-distributed-systems, semiconductor-physics, data-analysis-tooling, circuit-simulation, rust-systems-programming, bdf-methods
+
+## [2026-06-16] note | Circuit Solver Delta — planning phase complete
+
+- summary: Learning brief synthesized; proposal, 6 specs, 5 ADRs, C4 architecture, design, and tasks authored for circuit-solver-delta openspec change
+- pages: circuit-solver-delta-learning-brief

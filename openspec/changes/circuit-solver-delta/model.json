@@ -1,0 +1,225 @@
+{
+  "name": "Circuit Solver Delta",
+  "description": "A Rust-based analog/digital/mixed-signal circuit simulator",
+  "people": [
+    {
+      "id": "circuitDesigner",
+      "name": "Circuit Designer",
+      "description": "Designs analog/mixed-signal ICs; runs simulations to verify behavior"
+    },
+    {
+      "id": "cadEngineer",
+      "name": "CAD / EDA Engineer",
+      "description": "Integrates the simulator into design flows; writes behavioral models"
+    }
+  ],
+  "systems": [
+    {
+      "id": "circuitSolverDelta",
+      "name": "Circuit Solver Delta",
+      "description": "Rust-based analog/digital/mixed-signal circuit simulator",
+      "external": false,
+      "containers": [
+        {
+          "id": "netlParser",
+          "name": "Netlist Parser",
+          "description": "Parses SPICE .sp/.cir and Verilog-AMS .vams into an internal IR; outputs circuit graph",
+          "technology": "Rust/nom",
+          "type": "application"
+        },
+        {
+          "id": "mnaEngine",
+          "name": "MNA Engine",
+          "description": "Stamps circuit elements into the sparse MNA matrix; performs topology validation (floating nodes, V-source loops)",
+          "technology": "Rust",
+          "type": "application"
+        },
+        {
+          "id": "deviceRegistry",
+          "name": "Device Registry",
+          "description": "Holds SPICE-compatible device model implementations (diode, MOSFET Level 1/3, BJT Ebers-Moll, R/L/C, behavioral macromodels)",
+          "technology": "Rust",
+          "type": "application"
+        },
+        {
+          "id": "solverCore",
+          "name": "Solver Core",
+          "description": "Implements the nonlinear NR solver, Radau IIA and BDF transient integrators, sparse LU kernel; the performance-critical inner loop",
+          "technology": "Rust/faer+sprs",
+          "type": "application",
+          "components": [
+            {
+              "id": "nrSolver",
+              "name": "Newton-Raphson Solver",
+              "description": "Iterative NR with KCL convergence check and Gmin insertion",
+              "technology": "Rust"
+            },
+            {
+              "id": "sparseLU",
+              "name": "Sparse LU Factorizer",
+              "description": "Markowitz-ordered sparse LU for inner-loop linear solve",
+              "technology": "Rust/sprs"
+            },
+            {
+              "id": "radauIntegrator",
+              "name": "Radau IIA Integrator",
+              "description": "Variable-step Radau IIA (order 5) stiff DAE integrator with LTE voltage-domain control",
+              "technology": "Rust"
+            },
+            {
+              "id": "bdfIntegrator",
+              "name": "BDF Integrator",
+              "description": "BDF1/BDF2 fallback integrator (SPICE-compatible)",
+              "technology": "Rust"
+            },
+            {
+              "id": "homotopyEngine",
+              "name": "Homotopy Engine",
+              "description": "Gmin stepping and source stepping convergence recovery",
+              "technology": "Rust"
+            }
+          ]
+        },
+        {
+          "id": "mixedSignalBridge",
+          "name": "Mixed-Signal Bridge",
+          "description": "Threshold-crossing event detector; waveform-injection (transition/slew) for digital→analog; synchronizes analog timestep to digital events",
+          "technology": "Rust",
+          "type": "application"
+        },
+        {
+          "id": "analysisRunner",
+          "name": "Analysis Runner",
+          "description": "Orchestrates DC, AC, transient, noise, Fourier analyses; coordinates solverCore and mixedSignalBridge",
+          "technology": "Rust",
+          "type": "application"
+        },
+        {
+          "id": "outputPipeline",
+          "name": "Output Pipeline",
+          "description": "Writes Nutmeg binary, VCD, Parquet waveform files; exposes Python-callable result objects",
+          "technology": "Rust+PyO3",
+          "type": "application"
+        },
+        {
+          "id": "waveformStore",
+          "name": "Waveform Store",
+          "description": "Durable waveform data between analysis runs and post-processing",
+          "technology": "Parquet/Nutmeg files",
+          "type": "filesystem"
+        }
+      ]
+    },
+    {
+      "id": "edaToolchain",
+      "name": "EDA Toolchain",
+      "description": "Provides SPICE netlists and Verilog-AMS source files as input",
+      "external": true
+    },
+    {
+      "id": "waveformViewer",
+      "name": "Waveform Viewer",
+      "description": "Reads Nutmeg/VCD output files (e.g., ngscope, GTKWave)",
+      "external": true
+    },
+    {
+      "id": "pythonAnalysis",
+      "name": "Python Analysis Stack",
+      "description": "Reads Parquet/NumPy output for post-processing (pandas, matplotlib)",
+      "external": true
+    }
+  ],
+  "relationships": [
+    {
+      "source": "circuitDesigner",
+      "target": "circuitSolverDelta",
+      "label": "Simulates circuits using",
+      "sourceType": "person",
+      "targetType": "system"
+    },
+    {
+      "source": "cadEngineer",
+      "target": "circuitSolverDelta",
+      "label": "Integrates into design flow and writes models for",
+      "sourceType": "person",
+      "targetType": "system"
+    },
+    {
+      "source": "edaToolchain",
+      "target": "netlParser",
+      "label": "Provides SPICE/Verilog-AMS netlists to",
+      "sourceType": "system",
+      "targetType": "container"
+    },
+    {
+      "source": "netlParser",
+      "target": "mnaEngine",
+      "label": "Delivers circuit graph to",
+      "sourceType": "container",
+      "targetType": "container"
+    },
+    {
+      "source": "mnaEngine",
+      "target": "deviceRegistry",
+      "label": "Queries device model stamps from",
+      "sourceType": "container",
+      "targetType": "container"
+    },
+    {
+      "source": "mnaEngine",
+      "target": "solverCore",
+      "label": "Passes MNA matrix to",
+      "sourceType": "container",
+      "targetType": "container"
+    },
+    {
+      "source": "solverCore",
+      "target": "analysisRunner",
+      "label": "Returns solution vectors to",
+      "sourceType": "container",
+      "targetType": "container"
+    },
+    {
+      "source": "mixedSignalBridge",
+      "target": "solverCore",
+      "label": "Injects threshold events and waveform discontinuities into",
+      "sourceType": "container",
+      "targetType": "container"
+    },
+    {
+      "source": "mixedSignalBridge",
+      "target": "analysisRunner",
+      "label": "Reports digital state transitions to",
+      "sourceType": "container",
+      "targetType": "container"
+    },
+    {
+      "source": "analysisRunner",
+      "target": "outputPipeline",
+      "label": "Sends waveform data to",
+      "sourceType": "container",
+      "targetType": "container"
+    },
+    {
+      "source": "outputPipeline",
+      "target": "waveformStore",
+      "label": "Writes waveform files to",
+      "sourceType": "container",
+      "targetType": "container"
+    },
+    {
+      "source": "outputPipeline",
+      "target": "waveformViewer",
+      "label": "Produces Nutmeg/VCD files consumed by",
+      "sourceType": "container",
+      "targetType": "system"
+    },
+    {
+      "source": "outputPipeline",
+      "target": "pythonAnalysis",
+      "label": "Exposes Parquet/PyO3 results to",
+      "sourceType": "container",
+      "targetType": "system"
+    }
+  ]
+}

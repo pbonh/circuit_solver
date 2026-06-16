@@ -1,14 +1,27 @@
 {
   "project": "Circuit Solver Delta",
   "mode": "waterfall",
-  "phase": "learn",
+  "phase": "plan",
   "scientiaVersion": "0.3.0",
   "description": "Scientia-managed R&D project scaffolded by scientia-init.",
   "wiki": {
     "path": "wiki",
     "learningBrief": "wiki/pages/analyses/circuit-solver-delta-learning-brief.md",
-    "sourceSlugs": [],
-    "analysisSlugs": []
+    "sourceSlugs": [
+      "simulation-analog-mixed-signal-circuits",
+      "computer-methods-circuit-analysis-design",
+      "solving-ode-ii-stiff-dae",
+      "graphs-in-vlsi",
+      "advanced-symbolic-analysis-vlsi",
+      "modeling-simulation-systems",
+      "rust-programming-language",
+      "physics-of-semiconductor-devices-3rd-ed",
+      "guide-to-graph-algorithms",
+      "rust-programming-language"
+    ],
+    "analysisSlugs": [
+      "circuit-solver-delta-learning-brief"
+    ]
   },
   "openspec": {
     "change": "circuit-solver-delta",

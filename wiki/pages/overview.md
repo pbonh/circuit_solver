@@ -78,3 +78,8 @@ Circuit simulation at scale requires mastery of four orthogonal problem spaces: 
 - How does distributed MNA solve (domain decomposition from [[graphs-in-vlsi]]) compare to Pregel-style iterative solvers for resistive networks?
 - What is the right data pipeline: Kafka → Flink → Parquet for real-time simulation yield tracking?
 - Can SAT/SMT formal verification and SPICE simulation be co-scheduled to achieve full mixed-signal correctness?
+
+
+## Planning and analyses
+
+- [[circuit-solver-delta-learning-brief]] — cited learning brief synthesizing wiki evidence for the Circuit Solver Delta Rust simulator
