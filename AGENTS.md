@@ -83,3 +83,50 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   feature available because this crate targets nightly.  Clippy prefers them
   over nested `if`/`if let` blocks (`collapsible_if`).
 
+## US-006 patterns — MNA stamping for linear elements
+
+- All stamping functions live in `src/stamper.rs`; public API re-exported from
+  `lib.rs` as `stamp_resistor`, `stamp_capacitor`, `stamp_inductor`,
+  `stamp_voltage_source`, `stamp_current_source`.
+- **Ground-node convention**: callers pass `Option<usize>` for each node.
+  `None` means ground; the stamper silently skips any stamp that would touch a
+  ground row/column.  This avoids redundant `if node != 0` guards at call sites.
+- **Backward-Euler companion models**:
+  - Capacitor: `G_eff = C / h`; history current `I_hist = G_eff * V_prev`
+    added to RHS (+into n_pos, -into n_neg).
+  - Inductor: extra branch-current row at `branch_row`; `-L/h` on diagonal;
+    `+(L/h)` coupling at (n_pos, branch_row) and (branch_row, n_pos);
+    `-L/h * I_prev` on RHS at `branch_row`.
+- **Voltage source / inductor share the same branch-current pattern**: KCL
+  coupling ±1 at (node, branch) and (branch, node); only the diagonal and RHS
+  differ (voltage source: no diagonal term, `V_src` on RHS; inductor: `-L/h`
+  on diagonal, history voltage on RHS).
+- **Controlled sources** (`stamp_vccs`, `stamp_vcvs`, `stamp_cccs`, `stamp_ccvs`)
+  live in `src/controlled_sources.rs` and use 1-based node indices (0 = ground,
+  non-ground nodes start at 1).  The linear-element stamper uses `Option<usize>`
+  (0-based) instead — be consistent within each file.
+- The 2-node resistor-divider test (`resistor_divider_mna_2node`) is the
+  canonical integration test: V1 (5 V) + R1 (1 kΩ) + R2 (1 kΩ), 3×3 MNA,
+  hand-computes the full G matrix and RHS before asserting.
+
+## US-007 patterns — Controlled-source MNA stamping
+
+- Controlled-source stamp functions live in `src/controlled_sources.rs`;
+  exported from `lib.rs` as `stamp_vccs`, `stamp_vcvs`, `stamp_cccs`, `stamp_ccvs`.
+- **Node convention**: nodes are 1-based (ground = 0 is skipped silently).
+  Pass raw SPICE node indices; the stamp functions subtract 1 internally.
+  This differs from `stamper.rs` which uses `Option<usize>` (0-based indices,
+  `None` for ground).  Choose consistently per module.
+- **VCCS** needs no extra row/col — stamps four cross-entries directly on the
+  conductance sub-matrix: `±gm` at `(n±, nc±)`.
+- **VCVS/CCVS** each introduce one branch-current unknown `j_row`; the MNA
+  matrix must be pre-allocated to `n_nodes + n_branch_currents`.
+- **CCCS** borrows the sensing voltage-source's existing branch-current column
+  (`j_sense`) — no new row needed for the CCCS itself.
+- Sedra-Smith example (g_m = 0.04 S, nodes 1→4): `G[0,2]=+0.04`,
+  `G[0,3]=-0.04`, `G[1,2]=-0.04`, `G[1,3]=+0.04` — use as a regression anchor.
+- Child task (t_daa2b394) also added `stamper.rs` for passive/linear elements
+  and extended `netlist.rs` with `Mosfet`, `Diode`, `Bjt` tokens plus
+  `ModelCard` / `ModelRegistry` (`.model` directive).  The `tokenize` function
+  now returns a 3-tuple `(tokens, warnings, models)`.  All 38 tests pass.
+
