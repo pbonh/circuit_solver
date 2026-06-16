@@ -87,3 +87,21 @@ Key conventions to follow for future nonlinear trait implementors:
 - `is_smooth()` returns `true` for exponential-family (smooth) equations;
   `false` for piecewise-linear / switch-level models.
 
+## Linear elements as DeviceModel trait implementors (US-012)
+
+`linear_elements.rs` provides five concrete `traits::DeviceModel` structs:
+`Resistor`, `Capacitor`, `Inductor`, `VoltageSource`, `CurrentSource`.
+
+Key conventions:
+
+- **stamp_nonlinear delegates to stamp_linear** for all five — linear devices
+  have no operating-point-dependent contribution.
+- **Capacitor** uses `G_eq = C / timestep_s` (default `timestep_s = 1.0`) so
+  it produces a non-trivial stamp.  For real transient accuracy use
+  `CapacitorCompanion` instead.
+- **Inductor and VoltageSource** require a `BranchId` field.  Callers must
+  register the branch in `VarMap` via `VarMap::from_nodes(...).with_branches(&[bid])`.
+  The branch row is at `var_map.branch_index(bid)` which equals `node_count + branch_idx`.
+- **CurrentSource** stamps RHS only (`add_rhs`) — the A matrix is untouched.
+- All five are re-exported at the crate root (`pub use linear_elements::{...}`).
+
