@@ -83,7 +83,27 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   feature available because this crate targets nightly.  Clippy prefers them
   over nested `if`/`if let` blocks (`collapsible_if`).
 
-## US-006 patterns — MNA stamping for linear elements
+## US-003 patterns — MOSFET, Diode, BJT instance lines + .MODEL registry
+
+- `NetlistToken::Mosfet { name, drain, gate, source, bulk, model, params }` —
+  params is `Vec<(String, String)>` for W/L/AD/AS etc. in declaration order.
+- `NetlistToken::Diode { name, anode, cathode, model, params }` — same
+  `Vec<(String, String)>` for AREA etc.
+- `NetlistToken::Bjt { name, collector, base, emitter, model, params }` — same.
+- `NetlistToken::Model(ModelCard)` — produced by `.model` directives.
+- `ModelCard { name, model_type, params: HashMap<String, String> }` — params
+  here are a HashMap (order-independent lookup) unlike device instance params.
+- `ModelRegistry = HashMap<String, ModelCard>` — keyed by lower-cased model name.
+  Populated automatically by `tokenize()`; also present in the token stream.
+- `tokenize()` now returns `(Vec<NetlistToken>, Vec<ParseWarning>, ModelRegistry)`.
+  All existing tests were updated to destructure `(tokens, warnings, _models)`.
+- `parse_kv(token)` parses a `KEY=value` token; `collect_params(rest)` gathers
+  all key=value tokens from the remaining fields of a device line.
+- Unknown element types (e.g. `X` for subcircuit instances) still produce
+  `ParseWarning`; the existing `unknown_element_produces_warning_not_error` test
+  was updated from `Q1` (now supported) to `X1` (not yet supported).
+
+
 
 - All stamping functions live in `src/stamper.rs`; public API re-exported from
   `lib.rs` as `stamp_resistor`, `stamp_capacitor`, `stamp_inductor`,
