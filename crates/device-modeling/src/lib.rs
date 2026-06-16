@@ -1,4 +1,5 @@
-//! `device-modeling` — closed-enum [`DeviceModel`] and Jacobian stamps.
+//! `device-modeling` — closed-enum [`model::DeviceModel`] and Jacobian stamps,
+//! plus the open [`traits::DeviceModel`] trait for Newton-Raphson dispatch.
 //!
 //! This crate owns the electrical behavior of nonlinear and linear
 //! devices for the circuit-solver workspace. It supplies linearized
@@ -7,9 +8,9 @@
 //!
 //! # Closed-enum dispatch (ADR-0005)
 //!
-//! [`DeviceModel`] is a Rust enum with one variant per in-scope model
-//! family ([`DeviceModel::Diode`], [`DeviceModel::BJT`],
-//! [`DeviceModel::MOSFET`]). Each variant owns its
+//! [`model::DeviceModel`] is a Rust enum with one variant per in-scope model
+//! family ([`model::DeviceModel::Diode`], [`model::DeviceModel::BJT`],
+//! [`model::DeviceModel::MOSFET`]). Each variant owns its
 //! `ModelParameters` payload **inline** — no `Box`,
 //! no `dyn`, no string-keyed registry. Stamp evaluation and Jacobian
 //! computation dispatch through `match` on the enum, producing
@@ -20,18 +21,33 @@
 //! — every `match` arm must be updated, which is exactly the property
 //! the closed enum exists to guarantee.
 //!
+//! # Trait-based dispatch (US-011)
+//!
+//! [`traits::DeviceModel`] is the open-ended `dyn`-safe trait used when
+//! the Newton-Raphson engine needs to hold a heterogeneous mix of device
+//! types without a closed variant list. Both dispatch styles coexist:
+//! the enum is the hot-path zero-cost path; the trait is the extension
+//! point for tests, future user-defined models, and uniform NR iteration.
+//!
+//! Supporting types:
+//!
+//! - [`MnaMatrix`] — mutable view over the MNA matrix + RHS passed to
+//!   stamp methods.
+//! - [`VarMap`] — maps [`circuit_solver_types::NodeId`] /
+//!   [`circuit_solver_types::BranchId`] to integer MNA row/column offsets.
+//!
 //! # Module map
 //!
 //! - [`params`] — per-family `ModelParameters` payload structs
 //!   (`DiodeParams`, `BJTParams`, `MOSFETParams`). `MOSFETParams` is
 //!   itself a closed enum over MOS levels (Level-1, `BSIM3v3`, BSIM4)
 //!   per the design slice at `openspec/changes/circuit-solver-2026-05-21-v1-spec/design.md`.
-//! - [`model`] — the top-level [`DeviceModel`] enum, its family
+//! - [`model`] — the top-level closed-enum device model, its family
 //!   discriminator [`DeviceFamily`], and convenience accessors.
 //! - [`stamp`] — the `LinearizedModel` stamp + Jacobian surface
 //!   introduced in tasks.md #8. Defines the [`stamp::LinearizedModel`]
 //!   response type, the [`stamp::OperatingPoint`] request type, and
-//!   the [`DeviceModel::linearize`](crate::DeviceModel) dispatch entry
+//!   the [`model::DeviceModel::linearize`] dispatch entry
 //!   point. Per-family equation bodies land in tasks.md #9
 //!   (Diode), #10 (BJT), #11–#13 (MOSFET levels). As of the
 //!   merged state of this slice the Diode arm
@@ -42,6 +58,12 @@
 //!   ([`stamp::linearize_mosfet_bsim4`]) are all real
 //!   implementations dispatching through the closed-enum `match`;
 //!   no arm is a placeholder at this point.
+//! - [`mna_matrix`] — [`MnaMatrix`]: mutable view over the flat MNA
+//!   matrix and RHS vector, passed to [`traits::DeviceModel`] stamp methods.
+//! - [`var_map`] — [`VarMap`]: maps node/branch identifiers to MNA
+//!   row/column indices.
+//! - [`traits`] — [`traits::DeviceModel`]: the `dyn`-safe trait that
+//!   both linear and nonlinear devices implement for uniform NR stamping.
 //!
 //! # Stability
 //!
@@ -53,10 +75,13 @@
 
 pub mod bsim3v3;
 pub mod companion;
+pub mod mna_matrix;
 pub mod model;
 pub mod noise;
 pub mod params;
 pub mod stamp;
+pub mod traits;
+pub mod var_map;
 
 pub use bsim3v3::linearize_bsim3v3;
 pub use companion::{
@@ -74,9 +99,11 @@ pub use params::{
     BJTParams, BJTPolarity, DiodeParams, MOSFETParams, MosBSIM3v3Params, MosBSIM4Params,
     MosLevel1Params, MosPolarity,
 };
+pub use mna_matrix::MnaMatrix;
 pub use stamp::{
     linearize_bjt, linearize_diode, linearize_mosfet, linearize_mosfet_bsim4,
     linearize_mosfet_level1, BJTLinearization, DiodeLinearization, LinearizedModel,
     MOSFETLinearization, OperatingPoint, OperatingPointFamilyMismatch, BJT_TERMINALS,
     DIODE_MAX_EXP_ARG, DIODE_TERMINALS, MOSFET_TERMINALS,
 };
+pub use var_map::VarMap;
