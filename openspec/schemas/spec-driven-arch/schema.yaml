@@ -1,0 +1,135 @@
+name: spec-driven-arch
+version: 1
+description: >
+  Spec-driven workflow with C4 architecture modeling and Architecture Decision
+  Records. proposal -> (specs, decisions, architecture) -> design -> tasks.
+artifacts:
+  - id: proposal
+    generates: proposal.md
+    description: Initial proposal establishing why the change is needed.
+    template: proposal.md
+    requires: []
+    instruction: >
+      Create proposal.md establishing WHY this change is needed.
+
+
+      Sections:
+
+      - **Why**: 1-2 sentences on the problem or opportunity.
+
+      - **What Changes**: Bullet list of capabilities added, modified, or removed.
+      Mark breaking changes with **BREAKING**.
+
+      - **Capabilities**: Which specs will be created or modified (kebab-case names).
+
+      - **Impact**: Affected code, APIs, dependencies, or systems.
+
+
+      Keep it to 1-2 pages and focus on the "why", not the "how". This proposal is
+      the root of the graph; specs, decisions, architecture, design, and tasks all
+      build on it.
+
+  - id: specs
+    generates: specs/**/*.md
+    description: Delta specifications defining WHAT the system should do.
+    template: spec.md
+    requires: [proposal]
+    instruction: >
+      Create one spec file per capability listed in the proposal (specs/<capability>/spec.md).
+
+
+      Use delta headers: `## ADDED Requirements`, `## MODIFIED Requirements`,
+      `## REMOVED Requirements`, `## RENAMED Requirements`.
+
+      - Each requirement: `### Requirement: <name>` using SHALL/MUST.
+
+      - Each scenario: `#### Scenario: <name>` with **WHEN**/**THEN** (exactly 4 hashtags).
+
+      - Every requirement MUST have at least one scenario. Scenarios are test cases.
+
+  - id: decisions
+    generates: decisions/**/*.md
+    description: Architecture Decision Records (ADRs) for significant choices.
+    template: adr.md
+    requires: [proposal]
+    instruction: >
+      Record the architecturally significant decisions this change requires, one
+      ADR per decision, as decisions/NNNN-title-with-dashes.md.
+
+
+      ACTIVATE THE adr-authoring SKILL. Use the MADR 4.0 template: Context and
+      Problem Statement, Decision Drivers, Considered Options, Decision Outcome,
+      Consequences, and Confirmation. Set frontmatter `status: proposed` while the
+      change is in planning.
+
+
+      Create the file and validate it:
+
+      - `python3 <adr-authoring>/scripts/adr.py new --title "..." --dir decisions --status proposed`
+
+      - `python3 <adr-authoring>/scripts/adr.py validate decisions/`
+
+
+      A decision is "architecturally significant" if it is costly to reverse, shapes
+      structure, or constrains multiple components. Skip trivial choices.
+
+  - id: architecture
+    generates: architecture.md
+    description: C4 model and diagrams describing the structure of the change.
+    template: architecture.md
+    requires: [proposal]
+    instruction: >
+      Describe the structure of the system after this change using the C4 model.
+
+
+      ACTIVATE THE c4-modeling SKILL. Author a C4 model (model.json or model.yaml)
+      and embed the rendered Mermaid diagrams in architecture.md.
+
+      - Always include the System Context (level 1) and Container (level 2) diagrams.
+
+      - Add a Component (level 3) diagram only for containers this change reshapes.
+
+
+      Validate and render with the bundled script:
+
+      - `python3 <c4-modeling>/scripts/c4.py validate model.json`
+
+      - `python3 <c4-modeling>/scripts/c4.py render model.json --level container`
+
+
+      Reference the relevant ADRs from the decisions artifact next to the elements
+      they affect.
+
+  - id: design
+    generates: design.md
+    description: Technical design tying specs, decisions, and architecture together.
+    template: design.md
+    requires: [specs, architecture, decisions]
+    instruction: >
+      Create design.md describing HOW the change is implemented.
+
+
+      Reconcile the three planning inputs:
+
+      - **Specs**: the behavior each capability must exhibit.
+
+      - **Decisions**: link each relevant ADR and state how it shapes the design.
+
+      - **Architecture**: reference the C4 containers/components being added or changed.
+
+
+      Include data flow, interface contracts, error handling, and sequence diagrams
+      for complex flows. Flag anything that should become a new ADR back in decisions.
+
+  - id: tasks
+    generates: tasks.md
+    description: Ordered, checkable implementation tasks.
+    template: tasks.md
+    requires: [design]
+    instruction: >
+      Break the design into a checklist of small, verifiable tasks in tasks.md.
+
+
+      Use `- [ ] N. <task>` items grouped by capability or C4 container. Each task
+      should be independently testable. The apply action checks these off as work
+      proceeds, and archive verifies they are all complete.

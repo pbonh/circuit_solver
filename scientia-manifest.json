@@ -1,0 +1,36 @@
+{
+  "project": "Circuit Solver Delta",
+  "mode": "waterfall",
+  "phase": "learn",
+  "scientiaVersion": "0.3.0",
+  "description": "Scientia-managed R&D project scaffolded by scientia-init.",
+  "wiki": {
+    "path": "wiki",
+    "learningBrief": "wiki/pages/analyses/circuit-solver-delta-learning-brief.md",
+    "sourceSlugs": [],
+    "analysisSlugs": []
+  },
+  "openspec": {
+    "change": "circuit-solver-delta",
+    "schema": "spec-driven-arch",
+    "changeDir": "openspec/changes/circuit-solver-delta",
+    "tasks": "openspec/changes/circuit-solver-delta/tasks.md"
+  },
+  "hermes": {
+    "plan": "plan.json",
+    "board": "circuit-solver-delta",
+    "profiles": [
+      "circuit-solver-delta-dev"
+    ],
+    "workspace": "worktree"
+  },
+  "outcomes": {
+    "sources": [
+      "wiki/sources/circuit-solver-delta-outcome.md"
+    ],
+    "handoffs": [
+      "handoff.json"
+    ],
+    "status": "status.json"
+  }
+}

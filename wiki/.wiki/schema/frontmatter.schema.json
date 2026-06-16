@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://llm-wiki/frontmatter.schema.json",
+  "title": "LLM Wiki page frontmatter",
+  "description": "YAML frontmatter required at the top of every wiki page. Validated by `wikikit validate`.",
+  "type": "object",
+  "required": ["title", "type", "slug", "updated"],
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Human-readable page title."
+    },
+    "type": {
+      "type": "string",
+      "description": "Page kind; determines which pages/<dir> it lives in.",
+      "enum": ["entity", "concept", "source", "topic", "analysis", "overview"]
+    },
+    "slug": {
+      "type": "string",
+      "description": "Kebab-case identifier. MUST equal the filename without .md. Used as the [[slug]] link target.",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "created": {
+      "type": "string",
+      "description": "Creation date, YYYY-MM-DD.",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "updated": {
+      "type": "string",
+      "description": "Last-updated date, YYYY-MM-DD. Bump it on every edit.",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "summary": {
+      "type": "string",
+      "description": "One-line description shown in index.md."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Free-form tags for grouping / Dataview queries.",
+      "items": {"type": "string"}
+    },
+    "sources": {
+      "type": "array",
+      "description": "Provenance: slugs of the source pages that support this page's claims.",
+      "items": {"type": "string"}
+    },
+    "source_file": {
+      "type": "string",
+      "description": "For type=source pages: path (relative to sources/) of the raw file this page summarizes."
+    },
+    "status": {
+      "type": "string",
+      "description": "Lifecycle state.",
+      "enum": ["active", "stale", "draft"]
+    }
+  }
+}
