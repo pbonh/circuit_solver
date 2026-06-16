@@ -60,3 +60,26 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   and small circuits.  For solver use, pass `row_ptr`/`col_idx`/`values`
   directly to LAPACK-style routines.
 - Public re-exports live in `lib.rs`: `pub use mna_matrix::{CsrMatrix, MnaMatrix};`
+
+## US-002 patterns — SPICE netlist tokenizer
+
+- Tokenizer lives in `src/netlist.rs`; public API re-exported from `lib.rs`
+  as `tokenize`, `NetlistToken`, `ParseWarning`.
+- **SPICE title line rule**: line 1 of every netlist is the title and MUST be
+  skipped unconditionally.  Failure to skip it is the most common source of
+  spurious `ParseWarning`s.
+- Line continuation (SPICE `+` prefix) is handled by `join_continuation_lines`
+  before token dispatch; each logical line may span multiple raw lines.
+- Unknown element types (e.g. `Q` for BJT) produce a `ParseWarning` (with
+  `line`, `text`, `reason`) — not a hard `Err`.  This allows partial parses
+  of real-world netlists that use unsupported elements.
+- Controlled sources use different arities:
+  - `E`/`G` (VCVS/VCCS): four node fields + one value (6 total after name)
+  - `H`/`F` (CCVS/CCCS): two node fields + sensing voltage source name + value (5 total)
+- `parse_line` dispatches on the **first character** of the element name (case
+  insensitive); the rest of the token (after the type char) is the element
+  name suffix stored in `.name`.
+- `let-chains` (`if cond && let Some(x) = expr { ... }`) are a nightly
+  feature available because this crate targets nightly.  Clippy prefers them
+  over nested `if`/`if let` blocks (`collapsible_if`).
+
