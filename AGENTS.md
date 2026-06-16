@@ -130,3 +130,20 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   `ModelCard` / `ModelRegistry` (`.model` directive).  The `tokenize` function
   now returns a 3-tuple `(tokens, warnings, models)`.  All 38 tests pass.
 
+
+## US-009 patterns — VarMap
+
+- `VarMap` lives in `src/var_map.rs`; re-exported from `lib.rs` as `VarMap`.
+- Ground node is always index 0, stored as name `"0"`, pre-seeded by `VarMap::new()`.
+- `add_node(name)` assigns the next available node index; idempotent on repeat calls.
+- `add_branch(name)` appends a branch-current variable after all nodes; idempotent.
+- `node_index(&str) -> Option<usize>` and `var_name(usize) -> Option<&str>` are the
+  public read API for MNA assemblers and result extractors.
+- **Ordering invariant**: all node indices are contiguous at `0..node_count`, then
+  branch variables at `node_count..len()`.  If `add_node` is called after
+  `add_branch`, existing branch indices shift up by 1 (to preserve the invariant).
+  For stable indices, always add all nodes before any branches.
+- `len()` returns total variables (nodes + branches); `node_count()` returns only
+  the node count (including ground).
+- Internal storage: `HashMap<String, usize>` for name→index; `Vec<String>` for
+  index→name (dense; `Vec::insert` used when shifting branches).
