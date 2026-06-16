@@ -1,4 +1,4 @@
-//! Topology checker — Pass-1 floating-node detection (tasks.md item #4, ADR-0009).
+//! Topology checker — floating-node detection and KVL-loop validation (tasks.md item #4, US-008).
 //!
 //! This module owns the pre-solve graph-connectivity check that
 //! [ADR-0009](../../../openspec/changes/circuit-solver-2026-05-21-v1-spec/adr/0009-topology-checker-floating-node-detection.md)
@@ -93,6 +93,284 @@
 
 use circuit_solver_types::flattened::{FlattenedStructure, TopologyReport};
 use circuit_solver_types::NodeId;
+
+use crate::element::ElementKind;
+use crate::graph::CircuitGraph;
+
+// -----------------------------------------------------------------------
+// TopologyError and validate_topology (US-008)
+// -----------------------------------------------------------------------
+
+/// Errors produced by [`validate_topology`] when a circuit graph has an
+/// unanalyzable topology.
+///
+/// These are hard faults that must be reported to the user before any
+/// matrix assembly is attempted:
+///
+/// - [`TopologyError::FloatingNode`] — one or more nodes have no DC path
+///   to ground through any always-conductive element (resistor, voltage
+///   source, or inductor). The MNA matrix would be structurally singular.
+/// - [`TopologyError::VoltageLoop`] — a loop composed entirely of ideal
+///   voltage sources exists. KVL requires the voltages round the loop to
+///   sum to zero, making the system over-determined (conflicting voltage
+///   constraints).
+/// - [`TopologyError::InductorLoop`] — a loop composed entirely of
+///   inductors exists. At DC every inductor is a short; an all-inductor
+///   loop produces a structurally singular matrix for the same reason as
+///   an all-voltage-source loop.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum TopologyError {
+    /// One or more circuit nodes have no DC path to ground.
+    ///
+    /// The inner `Vec<NodeId>` lists every floating node in
+    /// `NodeId` order (ascending index) so diagnostic messages can name
+    /// each offending node without re-traversing the graph.
+    FloatingNode(Vec<NodeId>),
+
+    /// A loop composed exclusively of ideal voltage sources was
+    /// detected.
+    ///
+    /// Such a loop is over-determined: KVL requires voltages to sum to
+    /// zero around any closed path, but independent voltage sources
+    /// impose fixed values at their terminals, making the system
+    /// inconsistent unless all voltages in the loop happen to sum to
+    /// zero (a degenerate case the static checker does not verify).
+    VoltageLoop,
+
+    /// A loop composed exclusively of inductors was detected.
+    ///
+    /// At DC every ideal inductor is a short circuit; a loop formed
+    /// entirely of shorts collapses all nodes in the loop to the same
+    /// potential and makes the MNA matrix rank-deficient.
+    InductorLoop,
+}
+
+impl core::fmt::Display for TopologyError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::FloatingNode(nodes) => {
+                write!(f, "floating node(s) detected: ")?;
+                for (i, n) in nodes.iter().enumerate() {
+                    if i > 0 {
+                        write!(f, ", ")?;
+                    }
+                    write!(f, "{n}")?;
+                }
+                Ok(())
+            }
+            Self::VoltageLoop => {
+                write!(f, "KVL-violating voltage-source loop detected")
+            }
+            Self::InductorLoop => {
+                write!(f, "KVL-violating inductor loop detected")
+            }
+        }
+    }
+}
+
+impl std::error::Error for TopologyError {}
+
+/// Validate the topology of a built [`CircuitGraph`].
+///
+/// Runs two checks in order, returning the first error found:
+///
+/// 1. **Floating-node check (BFS from ground).**
+///    Every node must have a DC path to ground through at least one
+///    *always-conductive* edge (resistor, voltage source, or inductor —
+///    all three are DC shorts or low-impedance paths). Nodes reachable
+///    only through capacitors or current sources are floating and produce
+///    a structurally singular MNA matrix.
+///
+/// 2. **KVL-loop check (DFS on V-source / inductor subgraph).**
+///    The subgraph formed by ideal voltage sources alone is searched for
+///    cycles first; a cycle means conflicting voltage constraints. Then
+///    the inductor-only subgraph is searched for cycles; a cycle means
+///    shorted-together nodes at DC.
+///
+/// Returns `Ok(())` if the circuit passes both checks.
+///
+/// # Errors
+///
+/// - [`TopologyError::FloatingNode`] if one or more nodes have no DC path
+///   to ground.
+/// - [`TopologyError::VoltageLoop`] if a cycle exists in the
+///   voltage-source subgraph.
+/// - [`TopologyError::InductorLoop`] if a cycle exists in the
+///   inductor-only subgraph.
+///
+/// # Panics
+///
+/// Panics only if `graph.node_count()` exceeds `u32::MAX`, which is
+/// structurally impossible because every [`NodeId`] is itself a `u32`
+/// and the builder assigns them sequentially.
+///
+/// # Examples
+///
+/// A simple RC circuit has a clean topology:
+///
+/// ```
+/// use netlist_graph::builder::{CircuitBuilder, GROUND_NET};
+/// use netlist_graph::element::ElementKind;
+/// use netlist_graph::topology::validate_topology;
+///
+/// let mut b = CircuitBuilder::new();
+/// b.add_element("R1", ElementKind::Resistor { resistance_ohms: 1e3 },
+///               vec!["n1".to_owned(), GROUND_NET.to_owned()], None).unwrap();
+/// b.add_element("C1", ElementKind::Capacitor { capacitance_farads: 1e-9 },
+///               vec!["n1".to_owned(), GROUND_NET.to_owned()], None).unwrap();
+/// let g = b.build().unwrap();
+/// assert!(validate_topology(&g).is_ok());
+/// ```
+///
+/// Two voltage sources in series (a V-loop) are rejected:
+///
+/// ```
+/// use netlist_graph::builder::{CircuitBuilder, GROUND_NET};
+/// use netlist_graph::element::ElementKind;
+/// use netlist_graph::topology::{validate_topology, TopologyError};
+///
+/// let mut b = CircuitBuilder::new();
+/// b.add_element("V1", ElementKind::VoltageSource { voltage_volts: 1.0 },
+///               vec!["n1".to_owned(), GROUND_NET.to_owned()], None).unwrap();
+/// b.add_element("V2", ElementKind::VoltageSource { voltage_volts: 2.0 },
+///               vec![GROUND_NET.to_owned(), "n1".to_owned()], None).unwrap();
+/// let g = b.build().unwrap();
+/// assert_eq!(validate_topology(&g), Err(TopologyError::VoltageLoop));
+/// ```
+pub fn validate_topology(graph: &CircuitGraph) -> Result<(), TopologyError> {
+    let node_count = graph.node_count();
+
+    // --- Step 1: floating-node check via union-find -----------------------
+    // Build an undirected adjacency over always-conductive elements:
+    // VoltageSource, Inductor, Resistor.  (Capacitor and CurrentSource are
+    // open at DC; Semiconductor is Possibly-conductive and is conservatively
+    // omitted here — if it were included it could mask a true floating node.)
+    let node_count_u32 =
+        u32::try_from(node_count).expect("node count fits in u32 — graphs are bounded by u32 NodeId");
+    let mut uf = UnionFind::new(node_count_u32);
+    for elem in graph.elements() {
+        let always_conductive = matches!(
+            elem.kind(),
+            ElementKind::VoltageSource { .. }
+                | ElementKind::Inductor { .. }
+                | ElementKind::Resistor { .. }
+        );
+        if always_conductive {
+            let terms = elem.terminals();
+            for i in 0..terms.len() {
+                for j in (i + 1)..terms.len() {
+                    uf.union(terms[i].index(), terms[j].index());
+                }
+            }
+        }
+    }
+
+    let ground = NodeId::GROUND.index();
+    let mut floating: Vec<NodeId> = Vec::new();
+    for raw in 1..node_count_u32 {
+        if !uf.same_component(raw, ground) {
+            floating.push(NodeId::new(raw));
+        }
+    }
+    if !floating.is_empty() {
+        return Err(TopologyError::FloatingNode(floating));
+    }
+
+    // --- Step 2: V-source loop check (DFS cycle detection) ----------------
+    if has_loop_in_subgraph(graph, node_count, |k| {
+        matches!(k, ElementKind::VoltageSource { .. })
+    }) {
+        return Err(TopologyError::VoltageLoop);
+    }
+
+    // --- Step 3: Inductor loop check (DFS cycle detection) ----------------
+    if has_loop_in_subgraph(graph, node_count, |k| {
+        matches!(k, ElementKind::Inductor { .. })
+    }) {
+        return Err(TopologyError::InductorLoop);
+    }
+
+    Ok(())
+}
+
+/// Return `true` iff the subgraph formed by elements accepted by `accept`
+/// contains a cycle (i.e., a loop).
+///
+/// Builds an undirected adjacency list over `node_count` nodes including
+/// only elements for which `accept(kind)` is true, then runs an iterative
+/// DFS to detect back-edges.
+fn has_loop_in_subgraph<F>(graph: &CircuitGraph, node_count: usize, accept: F) -> bool
+where
+    F: Fn(&ElementKind) -> bool,
+{
+    // Build adjacency list: adj[u] = list of (v, edge_index) neighbours.
+    // We include the edge index so we can skip the parent edge in an
+    // undirected DFS (avoid treating the reverse of the edge we came
+    // from as a back-edge).  Each edge is stored twice (once per endpoint).
+    let mut adj: Vec<Vec<(usize, usize)>> = vec![Vec::new(); node_count];
+    let mut edge_idx = 0usize;
+    for elem in graph.elements() {
+        if accept(elem.kind()) {
+            let terms = elem.terminals();
+            // For two-terminal elements (the only case for V / L) this is
+            // one edge.  We guard against degenerate zero-terminal or
+            // one-terminal records defensively.
+            if terms.len() >= 2 {
+                let u = terms[0].index() as usize;
+                let v = terms[1].index() as usize;
+                adj[u].push((v, edge_idx));
+                adj[v].push((u, edge_idx));
+                edge_idx += 1;
+            }
+        }
+    }
+
+    // Iterative DFS cycle detection over all connected components.
+    // State: (node, parent_edge_index_or_usize::MAX_for_root, neighbour_cursor)
+    let mut visited = vec![false; node_count];
+    // in_stack[n] is true while n is on the DFS stack (grey node).
+    let mut in_stack = vec![false; node_count];
+    // Stack entries: (node, parent_edge_idx, cursor into adj[node]).
+    let mut stack: Vec<(usize, usize, usize)> = Vec::new();
+
+    for start in 0..node_count {
+        if visited[start] || adj[start].is_empty() {
+            continue;
+        }
+        // Push the start node.
+        visited[start] = true;
+        in_stack[start] = true;
+        stack.push((start, usize::MAX, 0));
+
+        while let Some(frame) = stack.last_mut() {
+            let (node, parent_edge, cursor) = *frame;
+            let neighbours = &adj[node];
+            if cursor >= neighbours.len() {
+                // All neighbours exhausted — pop and un-grey.
+                in_stack[node] = false;
+                stack.pop();
+                continue;
+            }
+            // Advance cursor.
+            frame.2 += 1;
+            let (neighbour, edge) = neighbours[cursor];
+            // Skip the edge we arrived on (undirected DFS).
+            if edge == parent_edge {
+                continue;
+            }
+            if in_stack[neighbour] {
+                // Back-edge found — cycle detected.
+                return true;
+            }
+            if !visited[neighbour] {
+                visited[neighbour] = true;
+                in_stack[neighbour] = true;
+                stack.push((neighbour, edge, 0));
+            }
+        }
+    }
+    false
+}
 
 /// DC conductivity class of a single circuit element, per ADR-0009.
 ///
@@ -364,7 +642,180 @@ mod tests {
     use circuit_solver_types::flattened::ElementIncidence;
     use circuit_solver_types::{BranchId, ElementId};
 
-    // ---------- helpers ----------------------------------------------------
+    // ------------------------------------------------------------------
+    // validate_topology tests (US-008)
+    // ------------------------------------------------------------------
+
+    // Helper: build a CircuitGraph from (name, kind, nets) triples.
+    fn build_graph(
+        elements: &[(&str, ElementKind, Vec<&str>)],
+    ) -> crate::graph::CircuitGraph {
+        use crate::builder::CircuitBuilder;
+        let mut b = CircuitBuilder::new();
+        for (name, kind, nets) in elements {
+            let net_strings: Vec<String> = nets.iter().map(|s| (*s).to_owned()).collect();
+            b.add_element(*name, kind.clone(), net_strings, None).unwrap();
+        }
+        b.build().unwrap()
+    }
+
+    #[test]
+    fn simple_rc_returns_ok() {
+        // R1: n1—GND (always conductive), C1: n1—GND (never at DC).
+        // n1 is grounded through R1; no loops anywhere.
+        let g = build_graph(&[
+            (
+                "R1",
+                ElementKind::Resistor { resistance_ohms: 1e3 },
+                vec!["n1", "0"],
+            ),
+            (
+                "C1",
+                ElementKind::Capacitor { capacitance_farads: 1e-9 },
+                vec!["n1", "0"],
+            ),
+        ]);
+        assert_eq!(validate_topology(&g), Ok(()));
+    }
+
+    #[test]
+    fn series_voltage_source_loop_triggers_voltage_loop() {
+        // V1: n1—GND (1 V) and V2: GND—n1 (2 V) form a 2-node loop
+        // composed entirely of voltage sources.  Both nodes are
+        // hard-grounded (so no FloatingNode), but the loop is detected.
+        let g = build_graph(&[
+            (
+                "V1",
+                ElementKind::VoltageSource { voltage_volts: 1.0 },
+                vec!["n1", "0"],
+            ),
+            (
+                "V2",
+                ElementKind::VoltageSource { voltage_volts: 2.0 },
+                vec!["0", "n1"],
+            ),
+        ]);
+        assert_eq!(validate_topology(&g), Err(TopologyError::VoltageLoop));
+    }
+
+    #[test]
+    fn isolated_node_triggers_floating_node() {
+        // V1 connects n1 to GND.  n2 has no conductive path.
+        let g = build_graph(&[
+            (
+                "V1",
+                ElementKind::VoltageSource { voltage_volts: 1.0 },
+                vec!["n1", "0"],
+            ),
+            (
+                "C1",
+                ElementKind::Capacitor { capacitance_farads: 1e-9 },
+                vec!["n2", "0"],
+            ),
+        ]);
+        // n2 is connected only through a capacitor (Never at DC).
+        let err = validate_topology(&g).unwrap_err();
+        matches!(err, TopologyError::FloatingNode(_));
+    }
+
+    #[test]
+    fn inductor_loop_triggers_inductor_loop() {
+        // L1: n1—n2, L2: n2—n1.  This forms a 2-node loop of inductors.
+        // We also add R1—GND paths so no node is floating.
+        let g = build_graph(&[
+            (
+                "R1",
+                ElementKind::Resistor { resistance_ohms: 100.0 },
+                vec!["n1", "0"],
+            ),
+            (
+                "R2",
+                ElementKind::Resistor { resistance_ohms: 100.0 },
+                vec!["n2", "0"],
+            ),
+            (
+                "L1",
+                ElementKind::Inductor { inductance_henries: 1e-6 },
+                vec!["n1", "n2"],
+            ),
+            (
+                "L2",
+                ElementKind::Inductor { inductance_henries: 1e-6 },
+                vec!["n2", "n1"],
+            ),
+        ]);
+        assert_eq!(validate_topology(&g), Err(TopologyError::InductorLoop));
+    }
+
+    #[test]
+    fn voltage_source_with_series_resistor_is_ok() {
+        // V1: n1—GND, R1: n1—n2, R2: n2—GND.  Classic voltage divider;
+        // no loops in the V-source subgraph, no floating nodes.
+        let g = build_graph(&[
+            (
+                "V1",
+                ElementKind::VoltageSource { voltage_volts: 5.0 },
+                vec!["n1", "0"],
+            ),
+            (
+                "R1",
+                ElementKind::Resistor { resistance_ohms: 1e3 },
+                vec!["n1", "n2"],
+            ),
+            (
+                "R2",
+                ElementKind::Resistor { resistance_ohms: 1e3 },
+                vec!["n2", "0"],
+            ),
+        ]);
+        assert_eq!(validate_topology(&g), Ok(()));
+    }
+
+    #[test]
+    fn floating_node_error_lists_all_floating_nodes() {
+        // Three floating nodes: n1, n2, n3 (all capacitor-only paths).
+        let g = build_graph(&[
+            (
+                "C1",
+                ElementKind::Capacitor { capacitance_farads: 1e-9 },
+                vec!["n1", "0"],
+            ),
+            (
+                "C2",
+                ElementKind::Capacitor { capacitance_farads: 1e-9 },
+                vec!["n2", "0"],
+            ),
+            (
+                "C3",
+                ElementKind::Capacitor { capacitance_farads: 1e-9 },
+                vec!["n3", "0"],
+            ),
+        ]);
+        if let Err(TopologyError::FloatingNode(nodes)) = validate_topology(&g) {
+            assert_eq!(nodes.len(), 3);
+        } else {
+            panic!("expected FloatingNode");
+        }
+    }
+
+    #[test]
+    fn topology_error_display_is_human_readable() {
+        let e = TopologyError::FloatingNode(vec![NodeId::new(1), NodeId::new(3)]);
+        let s = format!("{e}");
+        assert!(s.contains("floating node"));
+        assert!(s.contains("node:1"));
+        assert!(s.contains("node:3"));
+
+        let s2 = format!("{}", TopologyError::VoltageLoop);
+        assert!(s2.contains("voltage-source loop"));
+
+        let s3 = format!("{}", TopologyError::InductorLoop);
+        assert!(s3.contains("inductor loop"));
+    }
+
+    // ------------------------------------------------------------------
+    // helpers for the check_topology / ConductivityClass tests below
+    // ------------------------------------------------------------------
 
     fn elem(i: u32) -> ElementId {
         ElementId::new(i)

@@ -53,6 +53,9 @@
 //! - [`NetlistGraphError`] — the closed enumeration of builder errors.
 //! - [`topology::check_topology`], [`topology::ConductivityClass`] —
 //!   Pass-1 floating-node detection (ADR-0009).
+//! - [`topology::validate_topology`], [`topology::TopologyError`] —
+//!   high-level circuit-graph topology validator (US-008): floating-node
+//!   detection plus KVL-loop detection for voltage-source and inductor loops.
 //!
 //! # Stability
 //!
