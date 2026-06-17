@@ -12,6 +12,7 @@ pub mod stamper;
 pub mod traits;
 pub mod transient;
 pub mod var_map;
+pub mod waveform_injector;
 
 pub use controlled_sources::{stamp_cccs, stamp_ccvs, stamp_vccs, stamp_vcvs};
 pub use diode::Diode;
@@ -28,3 +29,4 @@ pub use stamper::{
 };
 pub use traits::DeviceModel;
 pub use var_map::VarMap;
+pub use waveform_injector::WaveformInjector;
