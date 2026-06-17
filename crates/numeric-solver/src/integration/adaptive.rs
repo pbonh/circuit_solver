@@ -646,10 +646,9 @@ pub fn next_step_size(current_h: f64, worst_ratio: f64, order: u32, bounds: Step
     }
     let proportional = if worst_ratio > 0.0 {
         let exponent = -1.0_f64 / f64::from(order + 1);
-        let raw = current_h * bounds.safety_factor * worst_ratio.powf(exponent);
-        // raw could be +inf when worst_ratio ≪ 1; the rate-limit
-        // below clamps that case to current_h * max_grow_factor.
-        raw
+        // current_h * safety_factor * worst_ratio^exponent could be +inf
+        // when worst_ratio ≪ 1; the rate-limit below clamps that case.
+        current_h * bounds.safety_factor * worst_ratio.powf(exponent)
     } else {
         // ratio == 0.0 → grow as fast as allowed.
         current_h * bounds.max_grow_factor

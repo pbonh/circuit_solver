@@ -246,6 +246,40 @@ impl MnaSystem {
     pub fn rhs_entry(&self, r: u32) -> Option<f64> {
         self.b.get(r as usize).copied()
     }
+
+    /// Produce a new [`MnaSystem`] with the given pre-allocated
+    /// matrix and RHS, preserving the node/branch counts of
+    /// `self`.
+    ///
+    /// Intended for use by in-crate modules (e.g., `gmin_inserter`)
+    /// that need to return a modified copy without re-running the
+    /// full assembler.
+    ///
+    /// # Panics
+    ///
+    /// Panics in debug builds if `a.len() != (dim * dim)` or
+    /// `b.len() != dim`, where `dim = node_count + branch_count`.
+    /// In release builds the caller's invariant is assumed.
+    #[must_use]
+    pub(crate) fn clone_with_matrix(&self, a: Vec<f64>, b: Vec<f64>) -> Self {
+        let dim = self.dim() as usize;
+        debug_assert_eq!(
+            a.len(),
+            dim * dim,
+            "matrix slice length must be dim*dim = {dim}*{dim}"
+        );
+        debug_assert_eq!(
+            b.len(),
+            dim,
+            "rhs slice length must be dim = {dim}"
+        );
+        Self {
+            node_count: self.node_count,
+            branch_count: self.branch_count,
+            a,
+            b,
+        }
+    }
 }
 
 /// Errors raised by [`assemble`].

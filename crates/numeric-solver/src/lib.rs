@@ -64,6 +64,7 @@
 pub mod ac_sub_view;
 pub mod assemble;
 pub mod flatten;
+pub mod gmin_inserter;
 pub mod gmin_stepping;
 pub mod integration;
 pub mod linear_solver;
@@ -82,6 +83,9 @@ pub use circuit_solver_types::flattened::{
     ElementIncidence, FlattenedStructure, FlattenedStructureError, TopologyReport,
 };
 pub use flatten::{flatten, FlattenError};
+pub use gmin_inserter::{
+    GminInserter, GminInserterError, DEFAULT_GMIN_SIEMENS,
+};
 pub use gmin_stepping::{
     GminAugmentedSystem, GminSchedule, GminScheduleError, GminSteppingConfig, GminSteppingDriver,
     GminSteppingError, GminSteppingOutcome, HomotopyStatus,

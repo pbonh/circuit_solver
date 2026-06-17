@@ -70,3 +70,32 @@ during elimination, which is complex to implement correctly.
 `cargo clippy -p numeric-solver -- -D warnings` fails with a pre-existing warning in
 `crates/numeric-solver/src/integration/adaptive.rs:652`. This existed before US-018.
 `cargo check -p numeric-solver` passes with 0 warnings (no new issues introduced).
+This was fixed in US-020 by inlining the `raw` binding directly.
+
+## Gmin insertion diagonal shunting (US-020)
+
+### Pattern: GminInserter is a pure configuration value
+`GminInserter` holds `gmin_siemens: f64` (default 1e-12). Its `apply` method takes
+`(&MnaSystem, &FlattenedStructure, &CircuitGraph)` and returns a new `MnaSystem` —
+the original is **not modified**. This makes it safe to call multiple times per NR
+iteration without accumulating shunt.
+
+### Pattern: shunt target is ElementKind::Semiconductor only
+Only elements whose `ElementKind` is `Semiconductor` get the diagonal shunt. Linear
+passives already contribute finite diagonal conductance; only nonlinear devices produce
+near-zero diagonal entries that cause singular Jacobians.
+
+### Pattern: MnaSystem needs `clone_with_matrix` helper
+`GminInserter::apply` needs to produce a modified copy of the MnaSystem. Add a
+`pub(crate) fn clone_with_matrix(&self, a: Vec<f64>, b: Vec<f64>) -> Self` method to
+`assemble.rs` — debug_assert enforces `a.len() == dim*dim` and `b.len() == dim`.
+
+### Gotcha: usize→u32 casts trigger clippy::cast_possible_truncation
+Use `u32::try_from(x).expect("...")` or `u32::try_from(x).unwrap_or(u32::MAX)` instead
+of `x as u32`. The assembler uses `u32` ids (NodeId, ElementId), so conversion is
+needed when iterating over usize-indexed slices.
+
+### Gotcha: `# Panics` section required for functions that call `.expect()`
+Clippy pedantic (`missing_panics_doc`) requires a `# Panics` doc section for any
+`pub fn` that contains `.expect()`, `.unwrap()`, or `debug_assert!`. Add the section
+even for `expect` calls protected by a prior validation (clippy doesn't see the guard).
