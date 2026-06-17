@@ -237,3 +237,26 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   the node count (including ground).
 - Internal storage: `HashMap<String, usize>` for name→index; `Vec<String>` for
   index→name (dense; `Vec::insert` used when shifting branches).
+
+## US-029 patterns — Transient analysis verification tests
+
+- Verification tests live in `src/transient_verification.rs`; registered in `lib.rs`
+  as `pub mod transient_verification`. The `#[cfg(test)]` block houses the tests.
+- `IntegratorConfig::RadauIIA` variant added to `transient.rs`. Currently backed
+  by BDF2 internally (same code path as `IntegratorConfig::Bdf(BdfConfig::default())`).
+  The match arm in `TransientAnalysis::run` handles it via `Bdf::new(BdfConfig::default(), n)`.
+- **Stiff RC ladder circuit**: two timescales (tau_fast=1ns, tau_slow=1μs).
+  R_fast=1Ω, C_fast=1nF (tau_fast=1ns); R_slow=999Ω, C_slow=1nF (tau_slow≈1μs).
+  At t=5*tau_slow the slow-node approximation V_src*(1-exp(-t/tau_slow)) holds to
+  within 0.1% when h≤tau_fast/10 and the fast transient has died out.
+- **Accuracy test pattern**: set `rtol=0.5, atol=0.5` so the step-to-step BDF LTE proxy
+  (not a proper truncation error) doesn't reject valid charging steps. The 0.1%
+  accuracy criterion is on the physics, not the LTE.
+- **Integration failure test**: `rtol=0.0, atol=0.0` forces `tol=0`; any non-zero
+  LTE (starting at step 3 when BDF history is full) is rejected. After 5 consecutive
+  rejections the controller returns `Err(IntegrationError)`. First two steps accept
+  (lte=0 with empty history), so failure occurs early (t ≈ 2*h).
+- **Clippy collapsible_if fix**: `linear_elements.rs::Inductor::advance_state` nested
+  `if let Some(br) ... { if br > 0 { ... } }` collapsed to let-chain
+  `if let Some(br) = ... && br > 0 { ... }` (nightly let-chain syntax).
+  This was a pre-existing lint warning; fixed as part of US-029 work.
