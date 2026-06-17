@@ -196,3 +196,52 @@ For testing that all three strategies return ConvergenceError, use a system
 where `residue = iterate + constant` (never zero). `b = iterate` in linearize
 makes NR produce `Δx = 0` (stall) but residue stays at `constant ≠ 0`.
 With any finite tolerance `> 0`, NR stalls and so do both homotopies.
+
+## DC analysis integration tests (US-024)
+
+### Pattern: place tests in `src/dc_verification.rs` included from `lib.rs`
+Integration tests for `DcAnalysis::run` live in
+`src/dc_verification.rs` (gated by `#[cfg(test)]`) and included via:
+```rust
+#[cfg(test)]
+mod dc_verification;
+```
+
+### Pattern: NonlinearSystem layout for gmin-compatible test fixtures
+`GminAugmentedSystem` inserts `gmin` only into `0..node_count` rows, skipping
+`ground_node_index`. Test fixtures must:
+- Use `SparseLinearSystem::new(dim, node_count, branch_count, ...)` with the
+  correct split (e.g. `(3, 2, 1, ...)` for a 2-node, 1-branch system).
+- Include a "ground anchor" row at index 0 if the system is meant to receive
+  gmin at a non-ground node (e.g. `SparseTriplet { row:0, col:0, value:1.0 }`,
+  `rhs[0]=0.0`).
+
+### Gotcha: MNA companion RHS sign for KCL rows
+For a KCL equation `G*(v_j - v_k) + I_D(v_j) = 0` the Newton linearisation
+produces `RHS[j] = gd*v_j^0 − I_D(v_j^0)` (NOT `I_D − gd*v_j^0`). The sign
+matches `A*v_new = b` where `b = A*v^0 - F(v^0)`:
+```
+b[j] = (-G*v_j^0 + (G+gd)*v_j^0) - (G*v_j^0 - G*v_k^0 + I_D)
+      = gd*v_j^0 - I_D
+```
+
+### Gotcha: DcAnalysis warm-starts gmin from NR's last iterate
+`DcAnalysis::run` passes `nr_last_iterate` (the final NR iterate, even if
+diverged) as the initial iterate for gmin stepping. If NR diverges to a
+clamped-exponential region (v >> 40*Vt), gmin stepping also stalls.
+For integration tests where gmin recovery from v=0 is the goal, the test
+fixture must ensure NR returns `Diverged` (singular Jacobian) rather than
+`MaxIterationsExceeded` with a badly diverged iterate. Use a truncated-gd
+model (gd=0 below a threshold) to produce a structurally singular Jacobian.
+
+### Pattern: truncated-gd diode model for gmin-recovery tests
+To test the gmin fallback with a diode circuit starting from v=0:
+```rust
+fn shockley_gd_truncated(vd: f64) -> f64 {
+    const FORWARD_ONSET: f64 = 1e-3; // 1 mV
+    if vd < FORWARD_ONSET { 0.0 } else { shockley_gd(vd) }
+}
+```
+At v=0 this produces a zero Jacobian row → UMFPACK returns SingularMatrix →
+NR returns `Diverged` with the original iterate [0.0, 0.0] → gmin stepping
+starts from the zero initial guess and converges successfully.

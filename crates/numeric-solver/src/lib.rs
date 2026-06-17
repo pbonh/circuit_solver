@@ -79,6 +79,10 @@ pub mod sub_view;
 #[cfg(test)]
 mod mna_verification;
 
+// US-024 DC analysis integration tests.
+#[cfg(test)]
+mod dc_verification;
+
 pub use ac_sub_view::{AcSubView, AcSubViewBuilder, AcSubViewError};
 pub use assemble::{assemble, MnaAssemblyError, MnaSystem};
 pub use circuit_solver_types::flattened::{
