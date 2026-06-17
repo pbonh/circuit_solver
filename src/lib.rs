@@ -11,6 +11,7 @@ pub mod sparse_lu;
 pub mod stamper;
 pub mod traits;
 pub mod transient;
+pub mod transient_verification;
 pub mod var_map;
 
 pub use controlled_sources::{stamp_cccs, stamp_ccvs, stamp_vccs, stamp_vcvs};

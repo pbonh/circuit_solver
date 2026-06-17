@@ -212,10 +212,10 @@ impl DeviceModel for Inductor {
     }
 
     fn advance_state(&mut self, solution: &[f64], var_map: &VarMap) {
-        if let Some(br) = var_map.node_index(&self.branch_name) {
-            if br > 0 {
-                self.i_prev = solution.get(br - 1).copied().unwrap_or(0.0);
-            }
+        if let Some(br) = var_map.node_index(&self.branch_name)
+            && br > 0
+        {
+            self.i_prev = solution.get(br - 1).copied().unwrap_or(0.0);
         }
     }
 }
