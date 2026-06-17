@@ -369,6 +369,90 @@ impl HomotopyEngine {
             })),
         }
     }
+
+    /// Run the 10-step source-stepping homotopy on `system`.
+    ///
+    /// Ramps all independent source values from α = 0 (sources
+    /// suppressed) to α = 1 (full user-specified values) in **10
+    /// linear steps**: `α ∈ {0.0, 0.1, 0.2, …, 1.0}`. Each step
+    /// warm-starts NR from the previous step's converged solution.
+    ///
+    /// Returns [`Ok(DcSolution)`](DcSolution) when the final step
+    /// (α = 1) converges, or [`Ok(Err(ConvergenceError))`](ConvergenceError)
+    /// when any step fails to converge. In the failure case,
+    /// `ConvergenceError::gmin_siemens` carries the `α` value at the
+    /// failing step (0..1).
+    ///
+    /// # Parameters
+    ///
+    /// - `system` — mutable reference to the [`SourceSteppableSystem`] to
+    ///   solve. The system must implement [`set_source_alpha`](SourceSteppableSystem::set_source_alpha)
+    ///   so the driver can scale independent source contributions at each
+    ///   step. Borrowed for the duration of the call.
+    /// - `solver` — sparse-linear backend (e.g. [`RussellRealSolver`]).
+    /// - `initial_iterate` — starting point for the first NR step
+    ///   (typically the zero vector). Length must equal `system.dim()`.
+    ///
+    /// # Returns
+    ///
+    /// - `Ok(Ok(DcSolution))` — all 10 steps converged; the solution
+    ///   at α = 1 and diagnostics are in `DcSolution`.
+    /// - `Ok(Err(ConvergenceError))` — NR failed at some step; the
+    ///   step index, α value (carried in `gmin_siemens`), inner NR
+    ///   status, and last iterate are in `ConvergenceError`.
+    /// - `Err(HomotopyEngineError)` — a hard pre-loop error (bad
+    ///   initial iterate dimension or inner NR linear-solver hard failure).
+    ///
+    /// # Errors
+    ///
+    /// Returns [`HomotopyEngineError`] on pre-loop hard failures.
+    pub fn source_stepping<S, L>(
+        self,
+        system: &mut S,
+        solver: &L,
+        initial_iterate: Vec<f64>,
+    ) -> Result<Result<DcSolution, ConvergenceError>, HomotopyEngineError>
+    where
+        S: SourceSteppableSystem,
+        L: LinearSolver<f64>,
+    {
+        // 10 linear steps: alpha ∈ {0.1, 0.2, ..., 1.0}.
+        // Starting at alpha = 0.1 (not 0.0) gives exactly 10 NR runs
+        // as required by US-022. The system is initialized from the
+        // zero-vector (equivalent to alpha = 0 trivial solution) and
+        // then ramped in 10 equal steps to full value.
+        // Adaptive halving disabled (max_step_halvings = 0) to keep
+        // exactly 10 steps.
+        let config = SourceSteppingConfig {
+            schedule: vec![0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+            inner: self.nr_config,
+            max_step_halvings: 0,
+        };
+
+        let outcome = SourceSteppingDriver
+            .solve(&config, system, solver, initial_iterate)
+            .map_err(HomotopyEngineError::from)?;
+
+        if outcome.status.is_converged() {
+            // Successfully converged at alpha = 1.0.
+            let diag = *outcome.status.diagnostic();
+            Ok(Ok(DcSolution {
+                solution: outcome.iterate,
+                diagnostic: diag,
+                steps: outcome.homotopy_steps,
+            }))
+        } else {
+            // NR failed at some step. Map `final_alpha` into the
+            // `gmin_siemens` field so the caller has the failing α.
+            // Compute the step index from the number of accepted steps.
+            Ok(Err(ConvergenceError {
+                step_index: outcome.homotopy_steps,
+                gmin_siemens: outcome.final_alpha,
+                inner_status: outcome.status,
+                last_iterate: outcome.iterate,
+            }))
+        }
+    }
 }
 
 impl Default for HomotopyEngine {
@@ -614,5 +698,178 @@ mod tests {
             a.nr_config.max_iterations,
             b.nr_config.max_iterations
         );
+    }
+
+    // ------------------------------------------------------------------
+    // Source-stepping helpers
+    // ------------------------------------------------------------------
+
+    /// 2-node system with a current source scaled by `alpha`.
+    ///
+    /// Node 0: ground (pinned via identity row).
+    /// Node 1: loaded by `g_load`; driven by `alpha * i_in`.
+    ///
+    /// Exact solution at alpha = 1: v1 = i_in / g_load.
+    struct SourceResistiveSystem {
+        g_load: f64,
+        /// Full-scale source current (at alpha = 1).
+        i_in: f64,
+        /// Current source-scaling factor set by the driver.
+        alpha: f64,
+    }
+
+    impl SourceResistiveSystem {
+        fn new(g_load: f64, i_in: f64) -> Self {
+            Self {
+                g_load,
+                i_in,
+                alpha: 1.0,
+            }
+        }
+    }
+
+    impl NonlinearSystem for SourceResistiveSystem {
+        fn dim(&self) -> u32 {
+            2
+        }
+
+        fn linearize(&mut self, _iterate: &[f64]) -> Result<SparseLinearSystem<f64>, SystemError> {
+            SparseLinearSystem::new(
+                2,
+                2,
+                0,
+                vec![
+                    SparseTriplet {
+                        row: 0,
+                        col: 0,
+                        value: 1.0,
+                    },
+                    SparseTriplet {
+                        row: 1,
+                        col: 1,
+                        value: self.g_load,
+                    },
+                ],
+                vec![0.0, self.alpha * self.i_in],
+            )
+            .map_err(|e| SystemError::new(format!("{e}")))
+        }
+
+        fn residue(&mut self, iterate: &[f64]) -> Result<Vec<f64>, SystemError> {
+            Ok(vec![
+                iterate[0],
+                self.g_load * iterate[1] - self.alpha * self.i_in,
+            ])
+        }
+    }
+
+    impl SourceSteppableSystem for SourceResistiveSystem {
+        fn set_source_alpha(&mut self, alpha: f64) {
+            self.alpha = alpha;
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Source-stepping tests
+    // ------------------------------------------------------------------
+
+    #[test]
+    fn source_stepping_converges_well_conditioned_circuit() {
+        // A resistive circuit: v1 = i_in / g_load = 1 V at alpha = 1.
+        let mut sys = SourceResistiveSystem::new(1e-3, 1e-3);
+        let result = HomotopyEngine::new()
+            .source_stepping(&mut sys, &RussellRealSolver, vec![0.0, 0.0])
+            .expect("no hard error expected");
+
+        let sol = result.expect("source stepping must converge on well-conditioned system");
+        assert_eq!(sol.solution.len(), 2);
+        assert!(
+            (sol.solution[1] - 1.0).abs() < 1e-6,
+            "expected v1 ≈ 1.0 V, got {}",
+            sol.solution[1]
+        );
+        assert!(sol.steps >= 1, "at least one step must have been taken");
+        assert!(
+            sol.diagnostic.dual_satisfied(),
+            "final NR step must satisfy dual criterion: {:?}",
+            sol.diagnostic
+        );
+    }
+
+    #[test]
+    fn source_stepping_exactly_10_steps() {
+        // The US-022 schedule: 11-point ramp [0.0..1.0] = 10 linear
+        // intervals (transitions). The driver counts each accepted α
+        // value as a step, including the initial α = 0.0 verification
+        // step, so homotopy_steps = 11.
+        let mut sys = SourceResistiveSystem::new(1e-3, 1e-3);
+        let result = HomotopyEngine::new()
+            .source_stepping(&mut sys, &RussellRealSolver, vec![0.0, 0.0])
+            .expect("no hard error expected");
+
+        let sol = result.expect("source stepping must converge");
+        // 11-point schedule [0.0, 0.1, ..., 1.0]: 11 accepted NR runs.
+        assert_eq!(
+            sol.steps, 11,
+            "US-022 schedule must produce exactly 11 accepted steps (10 intervals + initial), got {}",
+            sol.steps
+        );
+    }
+
+    #[test]
+    fn source_stepping_returns_convergence_error_on_impossible_tolerance() {
+        // Configure a 1-iteration budget with an unreachable tolerance.
+        // source_stepping (no adaptive halving) should fail on the first step.
+        let tight_nr = NewtonRaphsonConfig {
+            max_iterations: 1,
+            tolerances: ConvergenceTolerances {
+                update_tol: 1e-30,
+                residue_tol: 1e-30,
+            },
+        };
+        let mut sys = SourceResistiveSystem::new(1.0, 1.0);
+        let result = HomotopyEngine::new()
+            .with_nr_config(tight_nr)
+            .source_stepping(&mut sys, &RussellRealSolver, vec![0.0, 0.0])
+            .expect("no hard error (tight budget is a convergence failure, not a hard error)");
+
+        let err = match result {
+            Ok(_) => panic!("expected ConvergenceError with impossible tolerance"),
+            Err(e) => e,
+        };
+        // The schedule starts at alpha = 0.0; the trivial α=0 step
+        // converges (all-zero system), so the first failure is at step 1
+        // (α = 0.1, the first non-trivial step). homotopy_steps = 1
+        // (one accepted step: α=0) at the time of failure.
+        assert_eq!(err.step_index, 1, "failure should be at step 1 (first non-trivial alpha)");
+        assert_eq!(
+            err.last_iterate.len(),
+            2,
+            "last_iterate must have system dim"
+        );
+        // gmin_siemens carries the alpha at the failing step (0.1 = first non-zero).
+        assert!(
+            (0.0..=1.0).contains(&err.gmin_siemens),
+            "alpha must be in [0, 1], got {}",
+            err.gmin_siemens
+        );
+    }
+
+    #[test]
+    fn source_stepping_dim_mismatch_returns_hard_error() {
+        let mut sys = SourceResistiveSystem::new(1.0, 1.0);
+        // Supply iterate of wrong length.
+        let result = HomotopyEngine::new().source_stepping(
+            &mut sys,
+            &RussellRealSolver,
+            vec![0.0, 0.0, 0.0], // dim=2 but 3 elements
+        );
+        match result {
+            Err(HomotopyEngineError::DimMismatch {
+                iterate_len: 3,
+                system_dim: 2,
+            }) => {}
+            other => panic!("expected DimMismatch, got {other:?}"),
+        }
     }
 }

@@ -25,6 +25,42 @@ Add both `pub mod homotopy_engine;` and `pub use homotopy_engine::{...};` in
 The `pub use` list must include every public type (`DcSolution`,
 `ConvergenceError`, `HomotopyEngine`, `HomotopyEngineError`).
 
+## HomotopyEngine::source_stepping (US-022)
+
+### Pattern: source_stepping reuses SourceSteppingDriver with 11-point schedule
+`source_stepping` configures a `SourceSteppingConfig` with
+`schedule = [0.0, 0.1, ..., 1.0]` (11 values) and `max_step_halvings = 0`,
+then delegates to `SourceSteppingDriver::solve`. On convergence, maps to
+`Ok(Ok(DcSolution))`. On failure, maps `outcome.homotopy_steps` as `step_index`
+and `outcome.final_alpha` into `ConvergenceError::gmin_siemens` (re-used for
+the α value in the source-stepping context).
+
+### Gotcha: SourceSteppingDriver requires schedule to start at 0.0 and end at 1.0
+`validate_schedule` uses exact float equality (`== 0.0`, `== 1.0`). Any other
+values produce `SourceSteppingError::InvalidSchedule`. Always use exact literal
+values for the schedule endpoints.
+
+### Gotcha: source_stepping homotopy_steps counts 11 accepted NR runs (not 10)
+The 11-point schedule `[0.0, 0.1, ..., 1.0]` produces 11 accepted NR runs
+including the trivial α=0 verification step. The spec "10 linear steps" refers
+to the 10 intervals between successive α values, not the count of NR runs.
+Tests that assert on step count should use 11.
+
+### Gotcha: SourceSteppingDriver::solve takes config by &reference
+`SourceSteppingDriver::solve(config, ...)` takes `config: &SourceSteppingConfig`,
+not by value. Always pass `&config`, not `config`.
+
+### Gotcha: ConvergenceDiagnostic is Copy; use `*outcome.status.diagnostic()` to extract
+`ConvergenceStatus::diagnostic()` returns `&ConvergenceDiagnostic`. Since
+`ConvergenceDiagnostic: Copy`, dereference with `*outcome.status.diagnostic()`
+to get a value for storage in `DcSolution::diagnostic`.
+
+### Gotcha: SourceConvergenceError reuses gmin_siemens field for alpha value
+When `source_stepping` returns `ConvergenceError`, the `gmin_siemens` field
+carries the `final_alpha` (0..1) at the failing step, not a conductance.
+Document this in the method's doc-comment so callers know the field's semantics
+change in the source-stepping context.
+
 ## MNA formulation verification tests (US-010)
 
 ### Pattern: place tests in a dedicated module under `src/`
