@@ -1,0 +1,18 @@
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "circuit-solver-delta-py"
+version = "0.1.0"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = ["numpy"]
+
+[tool.maturin]
+module-name = "circuit_solver_delta_py"
+manifest-path = "circuit_solver_delta_py/Cargo.toml"
+features = ["pyo3/extension-module"]

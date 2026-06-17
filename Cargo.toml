@@ -1,3 +1,7 @@
+[workspace]
+members = [".", "circuit_solver_delta_py"]
+resolver = "2"
+
 [package]
 name = "circuit_solver_delta"
 version = "0.1.0"
