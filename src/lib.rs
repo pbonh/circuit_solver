@@ -5,6 +5,8 @@ pub mod linear_elements;
 pub mod mna_matrix;
 pub mod mosfet_level1_device;
 pub mod netlist;
+pub mod newton_raphson;
+pub mod sparse_lu;
 pub mod stamper;
 pub mod traits;
 pub mod var_map;
@@ -16,6 +18,8 @@ pub use linear_elements::{Capacitor, Inductor, Resistor};
 pub use mna_matrix::{CsrMatrix, MnaMatrix};
 pub use mosfet_level1_device::{MosfetLevel1, MosType};
 pub use netlist::{tokenize, ModelCard, ModelRegistry, NetlistToken, ParseWarning};
+pub use newton_raphson::{ConvergenceError, NewtonRaphson};
+pub use sparse_lu::{SingularMatrix, SparseLU};
 pub use stamper::{
     stamp_capacitor, stamp_current_source, stamp_inductor, stamp_resistor,
     stamp_voltage_source,

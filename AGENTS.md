@@ -151,7 +151,35 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   now returns a 3-tuple `(tokens, warnings, models)`.  All 38 tests pass.
 
 
-## US-017 patterns — Device model verification tests
+## US-018 patterns — SparseLU
+
+- `SparseLU` lives in `src/sparse_lu.rs`; re-exported from `lib.rs` as `SparseLU`,
+  `SingularMatrix`.
+- `SparseLU::factorize(a: &CsrMatrix) -> Result<SparseLU, SingularMatrix>` — Doolittle
+  LU with Markowitz-threshold partial pivoting (threshold=0.1, SPICE conventional).
+- `SparseLU::solve(&self, rhs: &[f64]) -> Vec<f64>` — applies row permutation then
+  L (unit diagonal) forward + U back substitution.
+- Dense n×n working copy is appropriate for circuit sizes (up to ~few thousand nodes).
+- `perm` stores logical→physical row index; applied by copying `rhs[perm[i]]` before
+  forward substitution.
+- `#[allow(clippy::needless_range_loop)]` is required on the elimination inner loop
+  because `r` is used to index `perm` (not just as a range variable).
+
+## US-019 patterns — NewtonRaphson
+
+- `NewtonRaphson` lives in `src/newton_raphson.rs`; re-exported from `lib.rs` as
+  `NewtonRaphson`, `ConvergenceError`.
+- `NewtonRaphson::default()` → `i_tol=1e-9, v_tol=1e-6, max_iter=150`.
+- `NewtonRaphson::solve(n, devices, var_map) -> Result<Vec<f64>, ConvergenceError>`.
+  - `n = var_map.len() - 1` (exclude ground).
+  - Initialises x=0; each iteration assembles via `device.stamp_nonlinear`.
+  - Residual `f = G·x - b`; solves `G·Δx = -f` via SparseLU.
+  - Convergence: `||f||∞ < i_tol AND ||Δx||∞ < v_tol`.
+  - `ConvergenceError { iteration, residue_norm }` if not converged after `max_iter`.
+- `stamp_voltage_source` signature: `(matrix, n_pos, n_neg, branch_row, v_src)` —
+  `branch_row` is a `usize` (not `Option<usize>`), equal to `var_map.node_index("Vx") - 1`.
+  Ground n_neg = `None`.
+
 
 - `DeviceModel` trait lives in `src/traits.rs`; re-exported as `DeviceModel`.
   Methods: `terminals()`, `stamp_linear()`, `stamp_nonlinear()`, `is_smooth()`.
