@@ -1,5 +1,30 @@
 # numeric-solver — agent notes
 
+## HomotopyEngine façade (US-021)
+
+### Pattern: HomotopyEngine is a thin stateless wrapper over GminSteppingDriver
+`HomotopyEngine` holds only `nr_config` and `ground_node_index`; the schedule
+is a `const`. Each `gmin_stepping` call constructs a `GminSteppingConfig` on
+the fly, delegates to `GminSteppingDriver::solve`, then maps the typed
+`GminSteppingOutcome` into `Ok(DcSolution)` / `Ok(Err(ConvergenceError))` /
+`Err(HomotopyEngineError)`. Hard-error mapping uses a `From<GminSteppingError>`
+impl so new `GminSteppingError` variants are caught at compile time.
+
+### Gotcha: GminSchedule::steps() with max_steps controls total step count
+f64 arithmetic means `1e-3 / 10^9 > 1e-12` (not exactly equal), so the
+geometric walk pushes the f64-rounded value and then appends the exact
+`final_gmin = 1e-12` as a terminal step. To get exactly 10 steps for a
+1e-3 → 1e-12 ÷10 schedule, set `max_steps = 10`. The loop fills 9 slots
+(stopping one before the cap) then the terminal append adds slot 10 = exact
+`final_gmin`. Using `max_steps = 16` would yield 11 steps (9 geometric +
+1 float-rounded + 1 exact terminal).
+
+### Pattern: module re-exports in lib.rs
+Add both `pub mod homotopy_engine;` and `pub use homotopy_engine::{...};` in
+`lib.rs` so the types are accessible as `numeric_solver::HomotopyEngine`.
+The `pub use` list must include every public type (`DcSolution`,
+`ConvergenceError`, `HomotopyEngine`, `HomotopyEngineError`).
+
 ## MNA formulation verification tests (US-010)
 
 ### Pattern: place tests in a dedicated module under `src/`

@@ -66,6 +66,7 @@ pub mod assemble;
 pub mod flatten;
 pub mod gmin_inserter;
 pub mod gmin_stepping;
+pub mod homotopy_engine;
 pub mod integration;
 pub mod linear_solver;
 pub mod newton_raphson;
@@ -89,6 +90,9 @@ pub use gmin_inserter::{
 pub use gmin_stepping::{
     GminAugmentedSystem, GminSchedule, GminScheduleError, GminSteppingConfig, GminSteppingDriver,
     GminSteppingError, GminSteppingOutcome, HomotopyStatus,
+};
+pub use homotopy_engine::{
+    ConvergenceError, DcSolution, HomotopyEngine, HomotopyEngineError,
 };
 pub use integration::{
     advance_capacitor_history, advance_inductor_history, capacitor_companion, inductor_companion,
