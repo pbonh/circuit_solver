@@ -237,3 +237,27 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   the node count (including ground).
 - Internal storage: `HashMap<String, usize>` for name→index; `Vec<String>` for
   index→name (dense; `Vec::insert` used when shifting branches).
+
+## US-032 patterns — WaveformInjector (PWL digital sources)
+
+- `WaveformInjector` lives in `src/waveform_injector.rs`; exported from `lib.rs`
+  as `WaveformInjector`.
+- Holds a `Vec<(f64, f64)>` of `(time_s, voltage_V)` breakpoints plus `tr` (rise
+  time) and `tf` (fall time) in seconds.
+- `voltage_at(t)`: walks breakpoint pairs; within a transition window `[t0, t0+tr]`
+  or `[t0, t0+tf]`, linearly interpolates. Before first breakpoint returns v0;
+  after last settled value returns v_last.
+- `set_time(t)` stores `v_now = voltage_at(t)`. Call before stamping when the
+  transient driver needs to inject a time-varying value.
+- `DeviceModel::stamp_nonlinear` delegates to `stamp_linear`, which calls
+  `stamp_voltage_source(matrix, to_row(np), None, br-1, v_now)`.
+- **Node convention**: positive terminal `node_pos`, negative is ground. One
+  branch-current variable `branch` must be registered with `VarMap::add_branch`
+  before the simulation loop.
+- **Flat edges** (`v0 == v1`): `ramp = 0.0`; `t_end = t1_bp`; no interpolation,
+  voltage held at v0 through the segment.
+- Pre-existing `clippy::collapsible_if` in `linear_elements.rs::Inductor::advance_state`
+  fixed using nightly `let-chains`: `if let Some(br) = ... && br > 0 { ... }`.
+- Test `rising_edge_voltage_at_half_tr_within_1mv_of_linear`: key acceptance
+  criterion; tr=1ns, breakpoints `[(0,0),(1ns,3.3)]`; v(tr/2) must be within
+  1 mV of 1.65 V.
