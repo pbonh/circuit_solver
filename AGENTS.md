@@ -151,6 +151,22 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   now returns a 3-tuple `(tokens, warnings, models)`.  All 38 tests pass.
 
 
+## US-017 patterns — Device model verification tests
+
+- `DeviceModel` trait lives in `src/traits.rs`; re-exported as `DeviceModel`.
+  Methods: `terminals()`, `stamp_linear()`, `stamp_nonlinear()`, `is_smooth()`.
+- `Diode` (src/diode.rs): Shockley Is*(exp(V/Vt)-1); Is=1e-14 A, Vt=0.025852 V.
+  Forward clamping at 40*Vt prevents overflow. `is_smooth()` returns `false`.
+- `MosfetLevel1` (src/mosfet_level1_device.rs): SPICE Level 1 square-law.
+  Default k = Kp*W/L = 50e-6 A/V^2, Vth=0.7 V for NMOS.
+  Saturation: Id = k/2*(Vgs-Vth)^2. `is_smooth()` returns `false`.
+- `Resistor`, `Capacitor`, `Inductor` (src/linear_elements.rs): `is_smooth()`
+  returns `true`; `stamp_nonlinear` delegates to `stamp_linear`.
+- Node-index convention: VarMap index 0 = ground; convert to stamper `Option<usize>`
+  via `Some(0) | None => None, Some(i) => Some(i-1)`.
+- Norton companion stamp for nonlinear devices: stamp conductance (gd or gm/gds)
+  in four-quadrant pattern, then add I_eq = id - gd*v_d to RHS (with correct sign).
+
 ## US-009 patterns — VarMap
 
 - `VarMap` lives in `src/var_map.rs`; re-exported from `lib.rs` as `VarMap`.
