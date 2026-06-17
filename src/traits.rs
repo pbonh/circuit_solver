@@ -50,4 +50,20 @@ pub trait DeviceModel {
     /// are smooth.  Nonlinear elements with piecewise-linear clamping or
     /// discontinuous derivatives (Diode, MOSFET Level 1) return `false`.
     fn is_smooth(&self) -> bool;
+
+    /// Update the companion-model timestep `h` (seconds) before stamping.
+    ///
+    /// Called at the start of every transient timestep so reactive elements
+    /// (Capacitor, Inductor) can store the current `h` for use in
+    /// `stamp_linear` / `stamp_nonlinear`. Non-reactive elements use the
+    /// provided default no-op.
+    fn set_timestep(&mut self, _h: f64) {}
+
+    /// Advance the companion-model history state after an accepted timestep.
+    ///
+    /// Called after each accepted timestep. Reactive elements extract their
+    /// previous voltage (`Capacitor::v_prev`) or previous branch current
+    /// (`Inductor::i_prev`) from `solution` so the next step's companion stamp
+    /// is correct. Non-reactive elements use the provided default no-op.
+    fn advance_state(&mut self, _solution: &[f64], _var_map: &VarMap) {}
 }

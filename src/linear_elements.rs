@@ -116,6 +116,20 @@ impl DeviceModel for Capacitor {
     fn is_smooth(&self) -> bool {
         true
     }
+
+    fn set_timestep(&mut self, h: f64) {
+        self.timestep_s = h;
+    }
+
+    fn advance_state(&mut self, solution: &[f64], var_map: &VarMap) {
+        let p_raw = var_map.node_index(&self.n_pos);
+        let q_raw = var_map.node_index(&self.n_neg);
+        let voltage = |idx: Option<usize>| match idx {
+            Some(0) | None => 0.0,
+            Some(i) => solution.get(i - 1).copied().unwrap_or(0.0),
+        };
+        self.v_prev = voltage(p_raw) - voltage(q_raw);
+    }
 }
 
 // ── Inductor ─────────────────────────────────────────────────────────────────
@@ -191,6 +205,18 @@ impl DeviceModel for Inductor {
 
     fn is_smooth(&self) -> bool {
         true
+    }
+
+    fn set_timestep(&mut self, h: f64) {
+        self.timestep_s = h;
+    }
+
+    fn advance_state(&mut self, solution: &[f64], var_map: &VarMap) {
+        if let Some(br) = var_map.node_index(&self.branch_name) {
+            if br > 0 {
+                self.i_prev = solution.get(br - 1).copied().unwrap_or(0.0);
+            }
+        }
     }
 }
 

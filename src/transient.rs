@@ -99,7 +99,7 @@ impl Default for IntegratorConfig {
 /// ];
 ///
 /// // Pure resistive circuit (no energy storage): trivial transient.
-/// let analysis = TransientAnalysis::builder(0.0, 10e-9, &vm, &devices)
+/// let mut analysis = TransientAnalysis::builder(0.0, 10e-9, &vm, devices)
 ///     .h_initial(1e-9)
 ///     .h_max(1e-9)
 ///     .build();
@@ -111,7 +111,7 @@ pub struct TransientAnalysis<'a> {
     t_start: f64,
     t_stop: f64,
     var_map: &'a VarMap,
-    devices: &'a [Box<dyn DeviceModel>],
+    devices: Vec<Box<dyn DeviceModel>>,
     integrator_config: IntegratorConfig,
     controller_config: ControllerConfig,
 }
@@ -145,7 +145,7 @@ pub struct TransientAnalysisBuilder<'a> {
     t_start: f64,
     t_stop: f64,
     var_map: &'a VarMap,
-    devices: &'a [Box<dyn DeviceModel>],
+    devices: Vec<Box<dyn DeviceModel>>,
     integrator_config: IntegratorConfig,
     controller_config: ControllerConfig,
 }
@@ -160,6 +160,24 @@ impl<'a> TransientAnalysisBuilder<'a> {
     /// Set the maximum timestep.
     pub fn h_max(mut self, h: f64) -> Self {
         self.controller_config.h_max = h;
+        self
+    }
+
+    /// Set the relative LTE tolerance (default `1e-3`).
+    ///
+    /// A step is accepted when `lte < rtol * ‖x‖∞ + atol`.
+    /// Loosen this when the LTE estimator's step-to-step proxy is overly
+    /// conservative (e.g., strongly-varying transients at coarse h).
+    pub fn rtol(mut self, rtol: f64) -> Self {
+        self.controller_config.rtol = rtol;
+        self
+    }
+
+    /// Set the absolute LTE tolerance (default `1e-6`).
+    ///
+    /// A step is accepted when `lte < rtol * ‖x‖∞ + atol`.
+    pub fn atol(mut self, atol: f64) -> Self {
+        self.controller_config.atol = atol;
         self
     }
 
@@ -188,7 +206,7 @@ impl<'a> TransientAnalysis<'a> {
         t_start: f64,
         t_stop: f64,
         var_map: &'a VarMap,
-        devices: &'a [Box<dyn DeviceModel>],
+        devices: Vec<Box<dyn DeviceModel>>,
     ) -> TransientAnalysisBuilder<'a> {
         TransientAnalysisBuilder {
             t_start,
@@ -211,7 +229,7 @@ impl<'a> TransientAnalysis<'a> {
     ///
     /// Returns [`IntegrationError`] if the adaptive step controller exhausts
     /// its consecutive-rejection budget at any timepoint.
-    pub fn run(&self) -> Result<TransientSolution, IntegrationError> {
+    pub fn run(&mut self) -> Result<TransientSolution, IntegrationError> {
         let n = self.var_map.len() - 1; // exclude ground
         if n == 0 {
             // Empty circuit: return empty solution.
@@ -268,19 +286,15 @@ impl<'a> TransientAnalysis<'a> {
             // Clamp h so we don't overshoot t_stop.
             let h_try = h.min(self.t_stop - t);
 
+            // Propagate the current timestep into reactive companion models
+            // (Capacitor, Inductor) so G_eq = C/h and L/h use the actual h.
+            for device in &mut self.devices {
+                device.set_timestep(h_try);
+            }
+
             // Assemble the MNA for this step.
-            // Devices with backward-Euler companion models (Capacitor, Inductor)
-            // read their internal `timestep_s` and `v_prev` / `i_prev` fields.
-            // We expose a "with_timestep" path via the DeviceModel interface —
-            // but existing DeviceModel impls (Capacitor, Inductor) already hold
-            // those fields and stamp them when stamping. The caller is responsible
-            // for keeping those fields up to date between steps.
-            //
-            // For TransientAnalysis we use the raw stamp: devices provide their
-            // own h via their internal state.  To support variable h we rely on
-            // the stampable trait in the companion models that the devices carry.
             let mut matrix = MnaMatrix::new(n);
-            for device in self.devices {
+            for device in &self.devices {
                 device.stamp_nonlinear(&mut matrix, self.var_map, &x_current);
             }
             let csr = matrix.to_csr();
@@ -309,6 +323,12 @@ impl<'a> TransientAnalysis<'a> {
                     t += h_try;
                     h = h_next.min(self.t_stop - t).max(cc.h_min);
                     x_current.clone_from(&x_new);
+
+                    // Update companion-model history (v_prev, i_prev) so
+                    // the next step's RHS history current is correct.
+                    for device in &mut self.devices {
+                        device.advance_state(&x_new, self.var_map);
+                    }
 
                     times.push(t);
                     for idx in 1..self.var_map.len() {
@@ -362,7 +382,7 @@ fn csr_to_column_major(csr: &crate::CsrMatrix, n: usize) -> Vec<f64> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{linear_elements::Resistor, traits::DeviceModel};
+    use crate::{linear_elements::{Capacitor, Resistor}, traits::DeviceModel};
 
     /// Stamp a voltage source as a device model for test use.
     struct VSource {
@@ -408,7 +428,7 @@ mod tests {
             Box::new(Resistor::new("N1", "0", 1000.0)),
         ];
 
-        let analysis = TransientAnalysis::builder(0.0, 3e-9, &vm, &devices)
+        let mut analysis = TransientAnalysis::builder(0.0, 3e-9, &vm, devices)
             .h_initial(1e-9)
             .h_max(1e-9)
             .build();
@@ -450,7 +470,7 @@ mod tests {
         }
 
         let devices: Vec<Box<dyn DeviceModel>> = vec![Box::new(Open)];
-        let analysis = TransientAnalysis::builder(0.0, 1e-9, &vm, &devices)
+        let mut analysis = TransientAnalysis::builder(0.0, 1e-9, &vm, devices)
             .h_initial(1e-9)
             .h_max(1e-9)
             .build();
@@ -473,7 +493,7 @@ mod tests {
             Box::new(Resistor::new("N1", "0", 1000.0)),
         ];
 
-        let analysis = TransientAnalysis::builder(0.0, 2e-9, &vm, &devices)
+        let mut analysis = TransientAnalysis::builder(0.0, 2e-9, &vm, devices)
             .h_initial(1e-9)
             .h_max(1e-9)
             .build();
@@ -496,7 +516,7 @@ mod tests {
             Box::new(Resistor::new("N1", "0", 500.0)),
         ];
 
-        let analysis = TransientAnalysis::builder(0.0, 5e-9, &vm, &devices)
+        let mut analysis = TransientAnalysis::builder(0.0, 5e-9, &vm, devices)
             .h_initial(1e-9)
             .h_max(1e-9)
             .build();
@@ -519,11 +539,85 @@ mod tests {
     fn transient_empty_circuit_returns_empty_solution() {
         let vm = VarMap::new(); // only ground
         let devices: Vec<Box<dyn DeviceModel>> = vec![];
-        let analysis = TransientAnalysis::builder(0.0, 1e-9, &vm, &devices)
+        let mut analysis = TransientAnalysis::builder(0.0, 1e-9, &vm, devices)
             .h_initial(1e-9)
             .build();
         let sol = analysis.run().expect("empty circuit should not error");
         assert!(sol.times.is_empty());
         assert!(sol.waveforms.is_empty());
+    }
+
+    // ── RC charging: validates timestep_s and v_prev propagation ─────────
+
+    /// Series RC: V1=1V, R=1kΩ, C=1nF → tau = RC = 1μs.
+    ///
+    /// At t = tau the capacitor voltage should be approximately
+    /// V*(1 - e^-1) ≈ 0.632 V.  Backward Euler (10 steps per tau) gives
+    /// ~0.614 V; we accept the range 0.50–0.80 V.
+    ///
+    /// The BDF LTE proxy is ‖Δx‖∞ (step-to-step change), which scales as h
+    /// for a charging waveform and is not a proper truncation error.  We
+    /// therefore set loose `rtol`/`atol` (0.5 / 0.5) so the adaptive
+    /// controller does not reject valid physics steps.
+    ///
+    /// Regression guard:
+    /// - Without `set_timestep`: G_eq = C/1.0s ≈ 0 → capacitor looks open →
+    ///   V(N_CAP) ≈ 0 V at all times.
+    /// - Without `advance_state`: v_prev stays 0 → no history current →
+    ///   capacitor charges once per step only from the source, not from
+    ///   accumulated charge → voltage stays near 0.
+    #[test]
+    fn transient_rc_charging_validates_companion_propagation() {
+        // Circuit: V1 (1V) → N_SRC → R(1kΩ) → N_CAP → C(1nF) → ground
+        // tau = R*C = 1e3 * 1e-9 = 1 μs
+        let mut vm = VarMap::new();
+        vm.add_node("N_SRC");
+        vm.add_node("N_CAP");
+        vm.add_branch("V1");
+
+        let devices: Vec<Box<dyn DeviceModel>> = vec![
+            Box::new(VSource { node_pos: "N_SRC".into(), branch: "V1".into(), voltage: 1.0 }),
+            Box::new(Resistor::new("N_SRC", "N_CAP", 1000.0)),
+            Box::new(Capacitor::new("N_CAP", "0", 1e-9)),
+        ];
+
+        // h = tau/10 = 100 ns; run for 1 μs (10 steps = 1 tau).
+        // rtol/atol loosened: the BDF step-to-step Δx proxy is not a proper
+        // LTE and would otherwise reject every step of a charging waveform.
+        let h = 1e-7_f64; // 100 ns
+        let t_stop = 1e-6_f64; // 1 μs
+        let mut analysis = TransientAnalysis::builder(0.0, t_stop, &vm, devices)
+            .h_initial(h)
+            .h_max(h)
+            .rtol(0.5)
+            .atol(0.5)
+            .build();
+
+        let sol = analysis.run().expect("RC transient should succeed");
+        assert!(!sol.times.is_empty(), "should have at least one sample");
+
+        let v_cap = sol.waveforms.get("N_CAP").expect("N_CAP waveform missing");
+
+        // Capacitor must be charging (each sample > previous).
+        for w in v_cap.windows(2) {
+            assert!(
+                w[1] >= w[0],
+                "capacitor voltage must be non-decreasing; got {} then {}",
+                w[0], w[1]
+            );
+        }
+
+        // Final voltage (at t ≈ tau) should be in [0.55, 0.75].
+        // Exact BE value for 10 steps at h=tau/10: 1*(1 - (10/11)^10) ≈ 0.614.
+        let v_final = *v_cap.last().expect("at least one sample");
+        assert!(
+            v_final > 0.50,
+            "capacitor should have charged >0.50 V at t=tau; got {v_final:.6} \
+             (if near 0, timestep_s or v_prev is not being propagated)"
+        );
+        assert!(
+            v_final < 0.80,
+            "capacitor voltage {v_final:.6} exceeds expected range — companion model error"
+        );
     }
 }
