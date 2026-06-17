@@ -1,0 +1,829 @@
+{
+  "project": "Circuit Solver Delta",
+  "branchName": "ralph/circuit-solver-delta",
+  "description": "Implement a full SPICE-class circuit simulator in Rust: MNA matrix formulation, nonlinear device models (diode, MOSFET, BJT, Verilog-AMS), sparse direct LU solver, Newton-Raphson DC analysis, Radau IIA / BDF transient integrators, threshold-crossing mixed-signal bridge, and output writers (Nutmeg, VCD, Parquet, PyO3).",
+  "defaults": {
+    "board": "circuit-solver-delta",
+    "assignee": "circuit-solver-delta-dev",
+    "workspace": "worktree",
+    "goal": true,
+    "goalMaxTurns": 30,
+    "maxRetries": 2
+  },
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Define CircuitGraph IR and NodeId; seed ground node",
+      "description": "As a simulator core, I need a graph IR that represents circuit topology so all downstream analysis can traverse it uniformly.",
+      "acceptanceCriteria": [
+        "CircuitGraph struct with NodeId type alias defined in the crate",
+        "Ground node (index 0) seeded automatically on construction",
+        "NodeId is a newtype wrapping usize with From<usize> and Into<usize> impls",
+        "cargo check passes with no warnings"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "This is the foundational IR. Keep it minimal: nodes, edges, element handles. No analysis logic here."
+    },
+    {
+      "id": "US-002",
+      "title": "Implement SPICE netlist tokenizer for R/L/C/V/I/VCCS/VCVS/CCCS/CCVS",
+      "description": "As a simulator, I need to parse SPICE netlists so users can describe circuits in the standard format.",
+      "acceptanceCriteria": [
+        "Tokenizer handles R, L, C, V, I, E (VCVS), G (VCCS), H (CCVS), F (CCCS) element lines",
+        "Handles .subckt, .ends, .tran, .dc, .ac, .op directives",
+        "Returns structured token stream; unknown lines produce a ParseWarning, not a hard error",
+        "Unit test: parses a simple RC circuit netlist and produces expected element list",
+        "cargo test passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": [
+        "US-001"
+      ]
+    },
+    {
+      "id": "US-003",
+      "title": "Extend SPICE parser for MOSFET, diode, and BJT instance lines",
+      "description": "As a simulator, I need to extract semiconductor device instance lines with their parameter sets from netlists.",
+      "acceptanceCriteria": [
+        "M lines (MOSFET) parsed: drain, gate, source, bulk nodes plus MODEL W= L= AD= AS= parameters",
+        "D lines (diode) parsed: anode, cathode, MODEL, AREA= parameter",
+        "Q lines (BJT) parsed: collector, base, emitter, MODEL, AREA= parameter",
+        ".MODEL cards parsed and stored in a model registry keyed by name",
+        "Unit test: netlist with one of each device parses without error",
+        "cargo test passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "dependsOn": [
+        "US-002"
+      ]
+    },
+    {
+      "id": "US-004",
+      "title": "Implement Verilog-AMS .vams subset parser",
+      "description": "As a simulator, I need to read behavioral Verilog-AMS modules so mixed-signal designs can be described compactly.",
+      "acceptanceCriteria": [
+        "Parses module header: port list with input/output/inout directions and electrical/logic disciplines",
+        "Parses analog block: contribution statements V(a,b) <+ expr and I(a,b) <+ expr",
+        "Handles idt(x, ic) and ddt(x) operators in expressions",
+        "Handles transition(x, td, tr, tf) and slew(x, sr, sf) operators",
+        "Returns an AST; does not evaluate yet",
+        "Unit test: parse a behavioral resistor module and check port/body structure",
+        "cargo test passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "dependsOn": [
+        "US-001"
+      ]
+    },
+    {
+      "id": "US-005",
+      "title": "Implement MnaMatrix sparse data structure with stamp API",
+      "description": "As the MNA assembler, I need a sparse matrix structure that elements stamp into so memory stays proportional to circuit size.",
+      "acceptanceCriteria": [
+        "MnaMatrix struct backed by a COO accumulator (row, col, val triples) that converts to CSR on demand",
+        "stamp(row: usize, col: usize, val: f64) API adds to the existing entry (not overwrites)",
+        "stamp_rhs(row: usize, val: f64) for the right-hand-side vector",
+        "reset() clears accumulated values without reallocating structural data",
+        "Unit test: stamp a 2x2 resistor stamp, convert to CSR, verify entries",
+        "cargo test passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "dependsOn": [
+        "US-001"
+      ]
+    },
+    {
+      "id": "US-006",
+      "title": "Implement MNA stamping for linear elements",
+      "description": "As the MNA assembler, I need resistors, capacitors, inductors, and independent sources to correctly contribute their G/C/L stamps.",
+      "acceptanceCriteria": [
+        "Resistor: conductance G=1/R stamped at (n+,n+), (n-,n-), -(n+,n-), -(n-,n+)",
+        "Capacitor (transient, backward Euler): effective conductance G_eff=C/h stamped same pattern; charge term on RHS",
+        "Inductor: branch-current extension with extra KVL row; L/h on diagonal",
+        "Independent voltage source: KCL current variable branch extension",
+        "Independent current source: RHS stamp at affected nodes",
+        "Unit test: 2-node resistor divider MNA matches hand-computed 2x2 matrix",
+        "cargo test passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-005",
+        "US-002"
+      ]
+    },
+    {
+      "id": "US-007",
+      "title": "Implement MNA stamping for controlled sources (VCCS/VCVS/CCCS/CCVS)",
+      "description": "As the MNA assembler, I need controlled source Jacobian stubs so the nonlinear solver can stamp them during Newton-Raphson iterations.",
+      "acceptanceCriteria": [
+        "VCCS G_m: g_m stamped at output (n+,nc+) and (n-,nc-) cross-entries",
+        "VCVS E: branch current extension; controlling voltage enters via KVL row",
+        "CCCS F: branch current of sensing element scales output current contribution",
+        "CCVS H: combined branch current extension for sense and output",
+        "Unit test: VCCS stamp matrix entries match textbook Sedra-Smith example",
+        "cargo test passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-005"
+      ]
+    },
+    {
+      "id": "US-008",
+      "title": "Implement topology validator (floating nodes, V-source loops, inductor loops)",
+      "description": "As the simulator front end, I need early detection of unanalyzable topologies so users get actionable errors instead of a singular matrix.",
+      "acceptanceCriteria": [
+        "BFS from ground detects floating nodes; returns TopologyError::FloatingNode(Vec<NodeId>)",
+        "DFS on V-source and inductor subgraph detects KVL-violating loops; returns TopologyError::VoltageLoop / TopologyError::InductorLoop",
+        "Valid topologies return Ok(())",
+        "Unit test: series voltage source loop triggers TopologyError; simple RC returns Ok",
+        "cargo test passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "dependsOn": [
+        "US-002",
+        "US-003",
+        "US-004"
+      ]
+    },
+    {
+      "id": "US-009",
+      "title": "Implement VarMap: node names and branch-current variables to MNA indices",
+      "description": "As the MNA assembler, I need a bidirectional map from symbolic names to matrix row/column indices so elements and results can be looked up by name.",
+      "acceptanceCriteria": [
+        "VarMap assigns ground = index 0, then nets in encounter order",
+        "Branch-current variables (one per V-source/inductor) appended after last node index",
+        "node_index(name: &str) -> Option<usize> and var_name(index: usize) -> Option<&str>",
+        "Unit test: 3-node circuit with one V-source produces correct index mapping",
+        "cargo test passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "dependsOn": [
+        "US-001",
+        "US-005"
+      ]
+    },
+    {
+      "id": "US-010",
+      "title": "Write MNA formulation verification tests",
+      "description": "As a quality gate, I need integration tests that confirm the assembled MNA is correct before device models build on top of it.",
+      "acceptanceCriteria": [
+        "Resistor divider (10k/10k, V=5V): MNA assembled, solved via dense LU, output node = 2.5V within 1e-9",
+        "Voltage-source KVL loop: topology validator triggers TopologyError::VoltageLoop",
+        "Single floating node: topology validator triggers TopologyError::FloatingNode",
+        "All tests run under `cargo test --lib` with no failures",
+        "cargo check passes with no warnings"
+      ],
+      "priority": 5,
+      "passes": false,
+      "dependsOn": [
+        "US-006",
+        "US-007",
+        "US-008",
+        "US-009"
+      ]
+    },
+    {
+      "id": "US-011",
+      "title": "Define DeviceModel trait",
+      "description": "As the nonlinear solver, I need a common trait for all devices so Newton-Raphson can iterate uniformly over any mix of element types.",
+      "acceptanceCriteria": [
+        "DeviceModel trait with: terminals() -> &[NodeId], stamp_linear(&mut MnaMatrix, &VarMap), stamp_nonlinear(&mut MnaMatrix, &VarMap, &[f64]), is_smooth() -> bool",
+        "Trait object safe (dyn DeviceModel works)",
+        "cargo check passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "dependsOn": [
+        "US-010"
+      ]
+    },
+    {
+      "id": "US-012",
+      "title": "Implement Resistor, Capacitor, Inductor, VoltageSource, CurrentSource as DeviceModel",
+      "description": "As the simulator, I need the five fundamental linear elements wrapped in DeviceModel so they integrate with the nonlinear solver loop.",
+      "acceptanceCriteria": [
+        "Each struct implements DeviceModel; stamp_nonlinear delegates to stamp_linear for linear elements",
+        "is_smooth() returns true for all five",
+        "Unit test: each element stamps into MnaMatrix and produces expected non-zero pattern",
+        "cargo test passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "dependsOn": [
+        "US-011"
+      ]
+    },
+    {
+      "id": "US-013",
+      "title": "Implement Diode device model (Shockley, junction cap, series R)",
+      "description": "As the DC and transient solver, I need a physics-accurate diode model with tangent-line clamping so NR converges reliably.",
+      "acceptanceCriteria": [
+        "Shockley I = Is*(exp(V/Vt)-1); Is default 1e-14 A, Vt = 0.02585 V at 300K",
+        "Tangent-line clamping applied when V > 40*Vt (forward) or V < -5*Vt (reverse)",
+        "Junction capacitance Cj stamped as transient conductance",
+        "Series resistance Rs added as companion resistor",
+        "Unit test: forward-bias I at V=0.7V within 1% of hand-computed Shockley value",
+        "cargo test passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-011"
+      ]
+    },
+    {
+      "id": "US-014",
+      "title": "Implement MosfetLevel1 device model (SPICE Level 1, Meyer capacitance)",
+      "description": "As the DC and transient solver, I need a SPICE Level 1 MOSFET model for basic digital circuit simulation.",
+      "acceptanceCriteria": [
+        "Square-law I_D in saturation and linear regions; cutoff when Vgs < Vth",
+        "Correct sign conventions for NMOS and PMOS (type parameter)",
+        "Meyer gate capacitance model: Cgs, Cgd, Cgb stamped as transient conductances",
+        "Unit test: saturation region I_D matches Level 1 formula for a known Vgs/Vds pair within 0.1%",
+        "cargo test passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-011"
+      ]
+    },
+    {
+      "id": "US-015",
+      "title": "Implement BjtEbersMoll device model",
+      "description": "As the DC solver, I need BJT support for analog amplifier and switching circuit analysis.",
+      "acceptanceCriteria": [
+        "Forward and reverse regions handled via transport form Ebers-Moll",
+        "Base-emitter and base-collector junction currents modeled with Shockley equation",
+        "Correct NPN/PNP polarity (type parameter)",
+        "Unit test: forward-active region Ic matches Ebers-Moll formula for known Vbe/Vce",
+        "cargo test passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-011"
+      ]
+    },
+    {
+      "id": "US-016",
+      "title": "Implement VerilogAmsBlock behavioral model via idt/ddt trapezoidal approximation",
+      "description": "As the transient solver, I need to evaluate Verilog-AMS analog blocks and stamp the result so behavioral models participate in Newton-Raphson.",
+      "acceptanceCriteria": [
+        "Evaluates parsed Verilog-AMS AST at a given solution point and timestep",
+        "idt(x, ic) approximated with trapezoidal rule using previous state",
+        "ddt(x) approximated as (x - x_prev)/h",
+        "Result stamped as equivalent VCCS into MnaMatrix",
+        "Unit test: behavioral resistor module (V(a,b) <+ I(a,b)*R) stamps G=1/R correctly",
+        "cargo test passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-011",
+        "US-004"
+      ]
+    },
+    {
+      "id": "US-017",
+      "title": "Write device model verification tests",
+      "description": "As a quality gate, I need tests proving all device models produce physically correct I-V and capacitance results.",
+      "acceptanceCriteria": [
+        "Diode I-V: forward bias sweep 0.1V-0.8V; each point within 1% of Shockley",
+        "MOSFET: saturation region I_D at Vgs=1.5V, Vds=2V matches Level 1 formula",
+        "is_smooth() returns true for Resistor, Capacitor, Inductor; false for Diode, MosfetLevel1",
+        "All tests pass under cargo test"
+      ],
+      "priority": 8,
+      "passes": false,
+      "dependsOn": [
+        "US-012",
+        "US-013",
+        "US-014",
+        "US-015",
+        "US-016"
+      ]
+    },
+    {
+      "id": "US-018",
+      "title": "Implement SparseLU: Markowitz pivot selection and factorize/solve API",
+      "description": "As the Newton-Raphson solver, I need a sparse direct LU factorizer so large circuit matrices are solved in near-linear time.",
+      "acceptanceCriteria": [
+        "SparseLU::factorize(&mut self, a: &CsrMatrix) -> Result<(), SingularMatrix>",
+        "SparseLU::solve(&self, rhs: &[f64]) -> Vec<f64>",
+        "Markowitz pivot selection to minimize fill-in",
+        "Partial pivoting with threshold 0.1 for numerical stability",
+        "Unit test: factorize and solve a known 5x5 sparse system; solution within 1e-10 of exact",
+        "cargo test passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "dependsOn": [
+        "US-010"
+      ]
+    },
+    {
+      "id": "US-019",
+      "title": "Implement NewtonRaphson: Jacobian assembly and convergence check",
+      "description": "As the DC solver, I need Newton-Raphson iteration over device stamps so nonlinear circuits reach a consistent operating point.",
+      "acceptanceCriteria": [
+        "Assembles G (Jacobian) from all DeviceModel::stamp_nonlinear calls at current solution",
+        "Solves G\u00b7\u0394x = -f via SparseLU; applies update x += \u0394x",
+        "Convergence: ||G\u00b7x - b||\u221e < i_tol AND ||\u0394x||\u221e < v_tol (defaults: i_tol=1e-9, v_tol=1e-6)",
+        "Returns Ok(solution) or Err(ConvergenceError { iteration, residue_norm }) after max_iter (default 150)",
+        "cargo test passes"
+      ],
+      "priority": 9,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-017",
+        "US-018"
+      ]
+    },
+    {
+      "id": "US-020",
+      "title": "Implement Gmin insertion diagonal shunting",
+      "description": "As the DC convergence engine, I need Gmin shunting to regularize singular or ill-conditioned Jacobians.",
+      "acceptanceCriteria": [
+        "GminInserter adds Gmin (default 1e-12 S) to all nonlinear-device terminal diagonal entries in G",
+        "Gmin is additive and does not modify original element stamps",
+        "Unit test: Gmin-augmented matrix of a simple diode circuit is non-singular when plain NR would be singular",
+        "cargo test passes"
+      ],
+      "priority": 10,
+      "passes": false,
+      "dependsOn": [
+        "US-019"
+      ]
+    },
+    {
+      "id": "US-021",
+      "title": "Implement HomotopyEngine::gmin_stepping",
+      "description": "As the DC convergence engine, I need Gmin stepping as a robust fallback when plain NR fails.",
+      "acceptanceCriteria": [
+        "Ramps Gmin from 1e-3 S down to 1e-12 S in 10 log-spaced steps",
+        "Each step starts NR from the previous step's solution",
+        "Returns Ok(DcSolution) if final step converges; Err(ConvergenceError) otherwise",
+        "cargo test passes"
+      ],
+      "priority": 11,
+      "passes": false,
+      "dependsOn": [
+        "US-020"
+      ]
+    },
+    {
+      "id": "US-022",
+      "title": "Implement HomotopyEngine::source_stepping",
+      "description": "As the DC convergence engine, I need source ramping as a second fallback when Gmin stepping is insufficient.",
+      "acceptanceCriteria": [
+        "Ramps all V/I source values from 0 \u2192 full value in 10 linear steps",
+        "Each step NR-initialized from previous solution",
+        "Returns Ok(DcSolution) on final-step convergence; Err(ConvergenceError) otherwise",
+        "cargo test passes"
+      ],
+      "priority": 11,
+      "passes": false,
+      "dependsOn": [
+        "US-020"
+      ]
+    },
+    {
+      "id": "US-023",
+      "title": "Implement DcAnalysis::run orchestrating NR \u2192 Gmin \u2192 source stepping",
+      "description": "As the simulator, I need the full DC analysis driver that automatically falls through to homotopy when plain NR fails.",
+      "acceptanceCriteria": [
+        "Attempts plain NewtonRaphson first",
+        "On ConvergenceError falls through to gmin_stepping",
+        "On second ConvergenceError falls through to source_stepping",
+        "Returns DcSolution { node_voltages: Vec<f64>, branch_currents: Vec<f64> } or ConvergenceError",
+        "cargo test passes"
+      ],
+      "priority": 12,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-021",
+        "US-022"
+      ]
+    },
+    {
+      "id": "US-024",
+      "title": "Write DC analysis verification tests",
+      "description": "As a quality gate, I need DC analysis integration tests confirming convergence behaviour for canonical circuits.",
+      "acceptanceCriteria": [
+        "Resistor divider (1k/1k, V=10V): converges in \u22643 NR iterations, output = 5V within 1e-6",
+        "Diode+1k resistor (V=1V): DC solution within 1% of hand-computed iterative answer",
+        "Gmin stepping recovers a diode circuit where initial guess is 0V (plain NR diverges)",
+        "ConvergenceError carries residue_norm and iteration count",
+        "All tests pass under cargo test"
+      ],
+      "priority": 13,
+      "passes": false,
+      "dependsOn": [
+        "US-023"
+      ]
+    },
+    {
+      "id": "US-025",
+      "title": "Implement RadauIIA 3-stage order-5 integrator",
+      "description": "As the transient solver, I need Radau IIA to handle stiff DAE systems arising from circuits with widely separated time constants.",
+      "acceptanceCriteria": [
+        "Implements the Butcher tableau for 3-stage Radau IIA (coefficients from Hairer-Wanner)",
+        "Stage system assembled and solved via Newton iteration (reuse SparseLU)",
+        "Embedded error estimate (via difference of stage solutions) drives LTE computation",
+        "RadauIIA::step(t, h, x) -> (x_new, lte_estimate)",
+        "Unit test: integrate dx/dt = -1000x (stiff scalar) from t=0 to t=0.01 with h=0.001; error < 1e-8",
+        "cargo test passes"
+      ],
+      "priority": 14,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-024"
+      ]
+    },
+    {
+      "id": "US-026",
+      "title": "Implement BDF1 and BDF2 integrators with history buffer",
+      "description": "As the transient solver, I need BDF methods as an alternative stiff integrator with good phase accuracy for oscillatory circuits.",
+      "acceptanceCriteria": [
+        "BDF1 (backward Euler) and BDF2 coefficient tables implemented",
+        "History buffer stores previous two solution vectors",
+        "LTE estimate via Richardson extrapolation between BDF1 and BDF2",
+        "Bdf::step(t, h, x) -> (x_new, lte_estimate); BDF order selected via config",
+        "Unit test: BDF2 integrates the stiff RC example to within 0.1% of analytic solution",
+        "cargo test passes"
+      ],
+      "priority": 14,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-024"
+      ]
+    },
+    {
+      "id": "US-027",
+      "title": "Implement adaptive step controller (accept/reject, grow/shrink, h_min/h_max)",
+      "description": "As the transient engine, I need automatic timestep control so accuracy is maintained without excessive computation.",
+      "acceptanceCriteria": [
+        "Accept step when LTE < rtol*||x||\u221e + atol (defaults: rtol=1e-3, atol=1e-6)",
+        "Reject and halve h on LTE violation; grow by factor 1.5 when LTE < tol/10",
+        "h clamped to [h_min, h_max] at all times",
+        "After 5 consecutive rejections returns IntegrationError { t, lte, h }",
+        "Unit test: controller correctly accepts a step where LTE=tol/2 and rejects where LTE=2*tol",
+        "cargo test passes"
+      ],
+      "priority": 15,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-025",
+        "US-026"
+      ]
+    },
+    {
+      "id": "US-028",
+      "title": "Implement TransientAnalysis::run with waveform sampling",
+      "description": "As the simulator, I need the transient driver that steps from t_start to t_stop and collects node waveforms.",
+      "acceptanceCriteria": [
+        "Loops: assemble MNA, call configured integrator (RadauIIA or BDF), call adaptive controller",
+        "On accepted step: sample all node voltages and branch currents into waveform buffers",
+        "Returns TransientSolution { times: Vec<f64>, waveforms: HashMap<String, Vec<f64>> }",
+        "On IntegrationError, returns Err with the failing timepoint",
+        "cargo test passes"
+      ],
+      "priority": 16,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-027"
+      ]
+    },
+    {
+      "id": "US-029",
+      "title": "Write transient analysis verification tests",
+      "description": "As a quality gate, I need transient tests that confirm integrator accuracy and error handling on stiff circuits.",
+      "acceptanceCriteria": [
+        "Stiff RC ladder (tau_fast=1ns, tau_slow=1us) with RadauIIA: final voltage within 0.1% of V*(1-exp(-t/tau))",
+        "BDF2 config: same circuit produces consistent result",
+        "Integration failure test: deliberately set h_max too small, verify IntegrationError at the correct timepoint",
+        "All tests pass under cargo test"
+      ],
+      "priority": 17,
+      "passes": false,
+      "dependsOn": [
+        "US-028"
+      ]
+    },
+    {
+      "id": "US-030",
+      "title": "Implement ThresholdDetector with bisection refinement",
+      "description": "As the mixed-signal bridge, I need precise crossing times so digital events align with the analog waveform to sub-timestep accuracy.",
+      "acceptanceCriteria": [
+        "ThresholdDetector monitors x[node] after each accepted transient step",
+        "Bisection within accepted step interval when sign of (x - v_threshold) changes",
+        "Bisection terminates when interval < 1e-12 s or after 50 iterations",
+        "Emits DigitalEvent { time: f64, node: NodeId, state: Logic } on each crossing",
+        "Unit test: sinusoidal input crossing 0V threshold; detected crossing time within 1 ps of analytic zero",
+        "cargo test passes"
+      ],
+      "priority": 18,
+      "passes": false,
+      "dependsOn": [
+        "US-029"
+      ]
+    },
+    {
+      "id": "US-031",
+      "title": "Implement EventScheduler min-heap with next_event_time API",
+      "description": "As the transient driver, I need a priority queue of digital events so the timestep is capped before each digital boundary.",
+      "acceptanceCriteria": [
+        "EventScheduler backed by a BinaryHeap<Reverse<DigitalEvent>> ordered by time",
+        "push(event: DigitalEvent) inserts into heap",
+        "next_event_time() -> Option<f64> peeks without consuming",
+        "pop() -> Option<DigitalEvent> consumes the earliest event",
+        "TransientAnalysis caps h to reach next_event_time before it passes",
+        "Unit test: insert 3 events out-of-order; pop returns them in chronological order",
+        "cargo test passes"
+      ],
+      "priority": 19,
+      "passes": false,
+      "dependsOn": [
+        "US-030"
+      ]
+    },
+    {
+      "id": "US-032",
+      "title": "Implement WaveformInjector for piecewise-linear digital sources",
+      "description": "As the mixed-signal bridge, I need to drive analog nodes with digital waveforms (with finite rise/fall times) as time-varying voltage sources.",
+      "acceptanceCriteria": [
+        "WaveformInjector holds a sequence of (time, voltage) breakpoints with tr/tf parameters",
+        "At each transient timestep, computes PWL interpolated voltage from the breakpoint sequence",
+        "Stamps the result as a time-varying voltage source into MnaMatrix",
+        "Transition edges use linear interpolation over [t_event, t_event+tr] or [t_event, t_event+tf]",
+        "Unit test: PWL with one rising edge; voltage at t=tr/2 within 1 mV of linear interpolation",
+        "cargo test passes"
+      ],
+      "priority": 19,
+      "passes": false,
+      "dependsOn": [
+        "US-029"
+      ]
+    },
+    {
+      "id": "US-033",
+      "title": "Implement Verilog-AMS transition/slew operator semantics in VerilogAmsBlock",
+      "description": "As the mixed-signal model evaluator, I need transition and slew operators so behavioral models produce smooth digital-to-analog transitions.",
+      "acceptanceCriteria": [
+        "transition(expr, td, tr, tf): delays expr by td, then PWL rise/fall over tr/tf",
+        "slew(expr, sr, sf): rate-limits expr to sr V/s rising and sf V/s falling",
+        "Both operators carry internal state (previous value, transition start time) across timesteps",
+        "Unit test: transition of a 0\u21921 step with td=1ns, tr=100ps; output crosses 50% at td+tr/2 within 5 ps",
+        "cargo test passes"
+      ],
+      "priority": 19,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-016",
+        "US-029"
+      ]
+    },
+    {
+      "id": "US-034",
+      "title": "Write mixed-signal verification tests",
+      "description": "As a quality gate, I need tests that confirm the threshold detector, event scheduler, and waveform injector work together correctly.",
+      "acceptanceCriteria": [
+        "CMOS inverter (behavioral Level-1 MOSFET): threshold crossing detected within 1 ps of reference",
+        "EventScheduler caps timestep: analog grid has a point within 1 ps of each digital event",
+        "Digital PWM source (50% duty, 10 MHz) drives RC filter; output waveform peak within 1% of analytic steady-state",
+        "All tests pass under cargo test"
+      ],
+      "priority": 20,
+      "passes": false,
+      "dependsOn": [
+        "US-031",
+        "US-032",
+        "US-033"
+      ]
+    },
+    {
+      "id": "US-035",
+      "title": "Implement AcAnalysis::run (linearize at DC op, frequency sweep, complex SparseLU)",
+      "description": "As the simulator, I need AC small-signal analysis so users can compute frequency response (Bode plots) for analog circuits.",
+      "acceptanceCriteria": [
+        "Linearizes circuit at DC operating point via one NR evaluation",
+        "Sweeps frequency f_start to f_stop in N log-spaced points",
+        "Solves (G_0 + j*2\u03c0*f*C)*V = b_ac using complex SparseLU (real/imag interleaved 2Nx2N system)",
+        "Returns AcSolution { freqs: Vec<f64>, voltages: HashMap<String, Vec<Complex<f64>>> }",
+        "Unit test: RC low-pass filter; magnitude at f=1/(2\u03c0*RC) within 1 dB of -3 dB",
+        "cargo test passes"
+      ],
+      "priority": 14,
+      "passes": false,
+      "dependsOn": [
+        "US-024"
+      ]
+    },
+    {
+      "id": "US-036",
+      "title": "Implement FourierAnalysis: DFT with cubic spline resampling",
+      "description": "As the simulator, I need FFT-based spectral analysis of transient waveforms so users can examine harmonic content.",
+      "acceptanceCriteria": [
+        "Resamples waveform to N uniform points using monotone cubic spline interpolation",
+        "Computes DFT via the standard FFT algorithm (or calls ndarray-fft / rustfft)",
+        "Returns FourierSolution { freqs: Vec<f64>, magnitude: Vec<f64>, phase: Vec<f64> }",
+        "Unit test: 1 kHz sine from transient; DFT magnitude peak at 1 kHz bin within 0.1 dB",
+        "cargo test passes"
+      ],
+      "priority": 18,
+      "passes": false,
+      "dependsOn": [
+        "US-029"
+      ]
+    },
+    {
+      "id": "US-037",
+      "title": "Implement NutmegWriter (Nutmeg binary format, ngscope/WaveView compatible)",
+      "description": "As the analysis output layer, I need Nutmeg binary files so users can view waveforms in standard EDA viewers.",
+      "acceptanceCriteria": [
+        "Writes Nutmeg binary header: title, date, plotname, flags, no_vars, no_points, variables block",
+        "Writes binary waveform block: IEEE 754 doubles, row-major, real analysis",
+        "Output parsed by a reference Nutmeg reader (python-nutmeg or ngspice raw read) without error",
+        "Variable names match node names from VarMap",
+        "Unit test: write a 3-variable, 10-point waveform; re-read and compare values within f64 precision",
+        "cargo test passes"
+      ],
+      "priority": 21,
+      "passes": false,
+      "dependsOn": [
+        "US-035",
+        "US-036"
+      ]
+    },
+    {
+      "id": "US-038",
+      "title": "Implement VcdWriter (IEEE 1364 VCD for digital state traces)",
+      "description": "As the analysis output layer, I need VCD output so logic analyzers and waveform viewers can display digital events.",
+      "acceptanceCriteria": [
+        "Writes VCD header: $timescale, $var wire declarations for each digital node, $end",
+        "Writes $dumpvars initial state; then timestamped value changes from EventScheduler",
+        "Timescale set to 1 ps; times written as integer multiples",
+        "Unit test: 3-event VCD; re-read with a VCD parser (vcd crate or custom), verify event times and values",
+        "cargo test passes"
+      ],
+      "priority": 21,
+      "passes": false,
+      "dependsOn": [
+        "US-034"
+      ]
+    },
+    {
+      "id": "US-039",
+      "title": "Implement ParquetWriter: columnar Parquet with time index and node voltage columns",
+      "description": "As the analysis output layer, I need Parquet output so simulation data can be consumed by Python data science workflows.",
+      "acceptanceCriteria": [
+        "Writes a Parquet file with one row per timepoint",
+        "Column 'time' (Float64), then one column per node named by VarMap",
+        "Uses arrow2 or parquet2 crate; no Python dependency",
+        "Unit test: write 100-row, 4-column Parquet; re-read with the same crate, verify schema and row count",
+        "cargo test passes"
+      ],
+      "priority": 21,
+      "passes": false,
+      "dependsOn": [
+        "US-035",
+        "US-036"
+      ]
+    },
+    {
+      "id": "US-040",
+      "title": "Implement PyResult via PyO3 exposing SimResult to Python/NumPy",
+      "description": "As a Python user, I need to access simulation results as NumPy arrays so I can post-process them with SciPy and Matplotlib.",
+      "acceptanceCriteria": [
+        "PyO3 extension module circuit_solver_delta_py with PyResult class",
+        "PyResult.time() -> numpy.ndarray shape (n_timepoints,)",
+        "PyResult.voltage(node: str) -> numpy.ndarray shape (n_timepoints,)",
+        "PyResult.current(element: str) -> numpy.ndarray shape (n_timepoints,)",
+        "maturin build produces importable .so; import circuit_solver_delta_py succeeds in Python",
+        "Unit test (pytest): voltage('out').shape == (n_timepoints,) for a known simulation",
+        "cargo test and pytest pass"
+      ],
+      "priority": 21,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-035",
+        "US-036"
+      ]
+    },
+    {
+      "id": "US-041",
+      "title": "Write output format verification tests",
+      "description": "As a quality gate, I need tests confirming all output formats round-trip correctly.",
+      "acceptanceCriteria": [
+        "NutmegWriter: re-read with python-nutmeg; all variable values within f64 precision",
+        "ParquetWriter: re-read with parquet2/arrow2; column names match node names exactly",
+        "PyResult: voltage array shape == (n_timepoints,) and values match TransientSolution",
+        "All tests pass under cargo test (and pytest for the PyO3 test)"
+      ],
+      "priority": 22,
+      "passes": false,
+      "dependsOn": [
+        "US-037",
+        "US-038",
+        "US-039",
+        "US-040"
+      ]
+    },
+    {
+      "id": "US-042",
+      "title": "Implement circuit_solver_delta CLI",
+      "description": "As a user, I need a command-line tool so I can invoke the simulator without writing Rust code.",
+      "acceptanceCriteria": [
+        "Binary `circuit_solver_delta` with subcommand `solve <netlist>`",
+        "Flags: --analysis dc|ac|tran, --output <path>, --format nutmeg|vcd|parquet",
+        "--tran-stop, --tran-step, --ac-start, --ac-stop, --ac-points flags",
+        "Prints convergence status and elapsed time to stderr",
+        "cargo build --release produces the binary",
+        "smoke test: `circuit_solver_delta solve rc.sp --analysis dc --format nutmeg` exits 0"
+      ],
+      "priority": 23,
+      "passes": false,
+      "goalMaxTurns": 30,
+      "maxRetries": 3,
+      "dependsOn": [
+        "US-041",
+        "US-034"
+      ]
+    },
+    {
+      "id": "US-043",
+      "title": "Implement end-to-end RC transient integration test",
+      "description": "As a quality gate, I need a full-stack test that drives the CLI and verifies the transient output against an analytic solution.",
+      "acceptanceCriteria": [
+        "Netlist: RC series circuit R=1k\u03a9, C=1nF, V_pulse from 0\u21925V at t=0 with tr=1ns",
+        "Run transient from t=0 to t=10ns using CLI",
+        "Peak voltage at capacitor node within 1% of V*(1-exp(-t/RC)) at t=5*RC",
+        "Settling time (to within 5% of final value) within 1% of analytic 3*RC",
+        "Test implemented as a Rust integration test in tests/",
+        "cargo test --test integration passes"
+      ],
+      "priority": 24,
+      "passes": false,
+      "dependsOn": [
+        "US-042"
+      ]
+    },
+    {
+      "id": "US-044",
+      "title": "Implement end-to-end mixed-signal CMOS inverter chain test",
+      "description": "As a quality gate, I need a full mixed-signal integration test confirming digital transitions propagate correctly through behavioral MOSFETs.",
+      "acceptanceCriteria": [
+        "Netlist: 3-stage CMOS inverter chain using behavioral MosfetLevel1; VDD=1.8V, input PWL 0\u21921.8V",
+        "Run transient 0\u219210ns; output digital transitions captured by ThresholdDetector",
+        "Each stage transition within 10 ps of reference timing (computed from MOSFET Tau = C*Vdd/(2*Id_sat))",
+        "VCD output written and parseable",
+        "Test implemented as a Rust integration test in tests/",
+        "cargo test --test integration passes"
+      ],
+      "priority": 25,
+      "passes": false,
+      "dependsOn": [
+        "US-042"
+      ]
+    }
+  ]
+}
