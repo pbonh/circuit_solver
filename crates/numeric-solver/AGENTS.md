@@ -160,3 +160,39 @@ needed when iterating over usize-indexed slices.
 Clippy pedantic (`missing_panics_doc`) requires a `# Panics` doc section for any
 `pub fn` that contains `.expect()`, `.unwrap()`, or `debug_assert!`. Add the section
 even for `expect` calls protected by a prior validation (clippy doesn't see the guard).
+
+## DcAnalysis orchestration driver (US-023)
+
+### Pattern: DcAnalysis is a thin stateless driver over NewtonRaphsonDriver + HomotopyEngine
+`DcAnalysis` holds `nr_config` and `ground_node_index`. Its `run` method:
+1. Calls `NewtonRaphsonDriver::solve` on the raw system.
+2. On non-convergence, calls `HomotopyEngine::gmin_stepping`.
+3. On second non-convergence, calls `HomotopyEngine::source_stepping`.
+Returns `Ok(Ok(DcSolution))` on any success, `Ok(Err(ConvergenceError))` when
+all three fail, or `Err(DcAnalysisError)` on hard pre-loop failures.
+
+### Pattern: DcSolution::steps comes from ConvergenceDiagnostic::iterations
+When plain NR converges, build `DcSolution { solution: nr_outcome.iterate,
+diagnostic: *nr_outcome.status.diagnostic(), steps: diagnostic.iterations }`.
+The `diagnostic()` method returns `&ConvergenceDiagnostic` — dereference with
+`*nr_outcome.status.diagnostic()` since `ConvergenceDiagnostic: Copy`.
+
+### Gotcha: `run` signature uses `&[f64]` not `Vec<f64>` for initial_iterate
+Clippy `needless_pass_by_value` fires if `initial_iterate: Vec<f64>` is used
+but not consumed in the function body (it gets cloned for NR and warm-starts).
+Use `initial_iterate: &[f64]` and call `.to_owned()` / `.to_vec()` at each
+hand-off site. Test call sites need explicit `&[0.0; 2]` or
+`vec![0.0; 2].as_slice()` — Rust does NOT auto-coerce `vec![]` to `&[f64]`
+in method-call position.
+
+### Gotcha: `run` bound requires both NonlinearSystem + SourceSteppableSystem
+`HomotopyEngine::source_stepping` requires `S: SourceSteppableSystem`. Since
+`DcAnalysis::run` chains all three strategies, its `S` bound must be
+`S: NonlinearSystem + SourceSteppableSystem`. Test fixtures must implement both
+traits (add a no-op `SourceSteppableSystem` impl to every test system).
+
+### Pattern: AlwaysDivergingSystem test fixture for guaranteed-fail path
+For testing that all three strategies return ConvergenceError, use a system
+where `residue = iterate + constant` (never zero). `b = iterate` in linearize
+makes NR produce `Δx = 0` (stall) but residue stays at `constant ≠ 0`.
+With any finite tolerance `> 0`, NR stalls and so do both homotopies.

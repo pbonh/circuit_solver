@@ -63,6 +63,7 @@
 
 pub mod ac_sub_view;
 pub mod assemble;
+pub mod dc_analysis;
 pub mod flatten;
 pub mod gmin_inserter;
 pub mod gmin_stepping;
@@ -94,6 +95,7 @@ pub use gmin_stepping::{
 pub use homotopy_engine::{
     ConvergenceError, DcSolution, HomotopyEngine, HomotopyEngineError,
 };
+pub use dc_analysis::{DcAnalysis, DcAnalysisError};
 pub use integration::{
     advance_capacitor_history, advance_inductor_history, capacitor_companion, inductor_companion,
     next_step_size, step_decision, AdaptiveError, CapacitorHistory, CompanionInputError,
