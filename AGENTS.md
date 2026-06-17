@@ -195,6 +195,32 @@ For this project the branch name is `ralph/circuit-solver-delta`.
 - Norton companion stamp for nonlinear devices: stamp conductance (gd or gm/gds)
   in four-quadrant pattern, then add I_eq = id - gd*v_d to RHS (with correct sign).
 
+## US-028 patterns — TransientAnalysis
+
+- `TransientAnalysis` lives in `src/transient.rs`; uses builder pattern:
+  `TransientAnalysis::builder(t_start, t_stop, &vm, &devices).h_initial(h).h_max(h).build()`.
+- `TransientSolution { times: Vec<f64>, waveforms: HashMap<String, Vec<f64>> }`.
+  Node voltages keyed by node name; branch currents keyed as `"I(<branch_name>)"`.
+- `IntegrationError { t, lte, h }` in `src/integration/mod.rs` — returned
+  when adaptive controller exhausts consecutive rejection budget (default 5).
+- `AdaptiveStepController` in `src/integration/adaptive.rs` — stateful;
+  `evaluate(t, lte, x_inf_norm)` returns `Accept(next_h)`, `Reject(next_h)`,
+  or `Err(IntegrationError)`.  NaN lte → always reject.
+- `Bdf` in `src/integration/bdf.rs` — BDF1/BDF2 via `BdfConfig { order }`.
+  `step(_t, _h, jacobian, rhs)` takes column-major dense Jacobian (n×n) and
+  returns `(x_new, lte_estimate)`.  LTE = 0.0 on first two steps; thereafter
+  uses Richardson step-to-step norm as proxy.
+- `IntegratorConfig` enum in `transient.rs` selects between integrators.
+  Only `Bdf` variant implemented; `RadauIIA` placeholder deferred.
+- Column-major dense→CSR conversion: `csr_to_column_major` helper extracts
+  via `csr.get(row, col)` (O(row_width) per cell, fine for small circuits).
+- BDF history buffer is `[Option<Vec<f64>>; 2]`; resets cleanly on `Bdf::reset()`.
+  Call `reset()` at the start of each new transient run to avoid stale history.
+- `h_min` clamped via `(h_next).max(cc.h_min)` in accept path to avoid
+  driving h below floor after t_stop correction.
+- Branch variable detection: `idx >= var_map.node_count()` → branch current key.
+- n=0 edge case (empty VarMap): returns empty `TransientSolution` immediately.
+
 ## US-009 patterns — VarMap
 
 - `VarMap` lives in `src/var_map.rs`; re-exported from `lib.rs` as `VarMap`.

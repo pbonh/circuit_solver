@@ -1,6 +1,7 @@
 pub mod controlled_sources;
 pub mod diode;
 pub mod graph;
+pub mod integration;
 pub mod linear_elements;
 pub mod mna_matrix;
 pub mod mosfet_level1_device;
@@ -9,6 +10,7 @@ pub mod newton_raphson;
 pub mod sparse_lu;
 pub mod stamper;
 pub mod traits;
+pub mod transient;
 pub mod var_map;
 
 pub use controlled_sources::{stamp_cccs, stamp_ccvs, stamp_vccs, stamp_vcvs};
