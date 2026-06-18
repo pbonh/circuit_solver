@@ -1,3 +1,4 @@
+pub mod ac;
 pub mod controlled_sources;
 pub mod diode;
 pub mod graph;
@@ -13,6 +14,7 @@ pub mod traits;
 pub mod transient;
 pub mod var_map;
 
+pub use ac::{AcAnalysis, AcSolution};
 pub use controlled_sources::{stamp_cccs, stamp_ccvs, stamp_vccs, stamp_vcvs};
 pub use diode::Diode;
 pub use graph::{CircuitGraph, NodeId};

@@ -237,3 +237,26 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   the node count (including ground).
 - Internal storage: `HashMap<String, usize>` for name→index; `Vec<String>` for
   index→name (dense; `Vec::insert` used when shifting branches).
+
+## US-035 patterns — AcAnalysis::run (flat src/ layout)
+
+- `AcAnalysis` lives in `src/ac.rs`, exported from `src/lib.rs` as `pub use ac::{AcAnalysis, AcSolution}`.
+- `run()` takes `&mut self` because it calls `device.set_timestep(h)` on the device
+  list to isolate G and C contributions.
+- **G / C matrix separation trick**: stamp all devices twice —
+  - h=1e30  →  `G_only_mat` (capacitor G_eff = C/1e30 ≈ 0)
+  - h=1.0   →  `GC_mat` (capacitor G_eff = C/1 = C)
+  - `C_mat = GC_mat - G_only_mat`; `G_mat = G_only_mat`.
+- **2N×2N real system** for complex solve at each frequency ω = 2πf:
+  ```
+  [ G    -ωC ] [ Vr ]   [ br ]
+  [ ωC    G  ] [ Vi ] = [  0 ]
+  ```
+  Built via `MnaMatrix::new(2*n)` and stamped using the dense G/C arrays.
+- Log-spaced frequencies: `10^(log_start + t*(log_stop - log_start))` for `t = i/(n-1)`.
+- Node names extracted from `var_map.var_name(idx)` for `idx` in `1..=n`.
+- `AcSolution.voltages` is `HashMap<String, Vec<(f64, f64)>>` — one `(real, imag)`
+  pair per frequency per non-ground node (includes branch-current rows too).
+- Pre-existing `linear_elements.rs` clippy warning (`collapsible_if` in
+  `Inductor::advance_state`) fixed with nightly let-chain syntax.
+
