@@ -34,3 +34,6 @@ pub use stamper::{
 };
 pub use traits::DeviceModel;
 pub use var_map::VarMap;
+
+pub mod event_scheduler;
+pub use event_scheduler::{DigitalEvent, EventScheduler};
