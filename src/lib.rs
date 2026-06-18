@@ -37,3 +37,5 @@ pub use var_map::VarMap;
 
 pub mod event_scheduler;
 pub use event_scheduler::{DigitalEvent, EventScheduler};
+pub mod waveform_injector;
+pub use waveform_injector::WaveformInjector;
