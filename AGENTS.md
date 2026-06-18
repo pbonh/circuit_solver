@@ -295,3 +295,49 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   3 ns (T_STOP = 3ns).  Larger C (e.g., 1 pF) makes transitions too slow for ns-scale
   simulations; smaller C makes Tau comparable to h and timing tolerance becomes trivial.
 
+
+## US-029 patterns — Transient analysis verification tests
+
+- Verification tests live in `src/transient_verification.rs`; registered in `lib.rs`
+  as `pub mod transient_verification`. The `#[cfg(test)]` block houses the tests.
+- `IntegratorConfig::RadauIIA` variant added to `transient.rs`. Currently backed
+  by BDF2 internally (same code path as `IntegratorConfig::Bdf(BdfConfig::default())`).
+  The match arm in `TransientAnalysis::run` handles it via `Bdf::new(BdfConfig::default(), n)`.
+- **Stiff RC ladder circuit**: two timescales (tau_fast=1ns, tau_slow=1μs).
+  R_fast=1Ω, C_fast=1nF (tau_fast=1ns); R_slow=999Ω, C_slow=1nF (tau_slow≈1μs).
+  At t=5*tau_slow the slow-node approximation V_src*(1-exp(-t/tau_slow)) holds to
+  within 0.1% when h≤tau_fast/10 and the fast transient has died out.
+- **Accuracy test pattern**: set `rtol=0.5, atol=0.5` so the step-to-step BDF LTE proxy
+  (not a proper truncation error) doesn't reject valid charging steps. The 0.1%
+  accuracy criterion is on the physics, not the LTE.
+- **Integration failure test**: `rtol=0.0, atol=0.0` forces `tol=0`; any non-zero
+  LTE (starting at step 3 when BDF history is full) is rejected. After 5 consecutive
+  rejections the controller returns `Err(IntegrationError)`. First two steps accept
+  (lte=0 with empty history), so failure occurs early (t ≈ 2*h).
+- **Clippy collapsible_if fix**: `linear_elements.rs::Inductor::advance_state` nested
+  `if let Some(br) ... { if br > 0 { ... } }` collapsed to let-chain
+  `if let Some(br) = ... && br > 0 { ... }` (nightly let-chain syntax).
+  This was a pre-existing lint warning; fixed as part of US-029 work.
+
+## US-036 patterns — FourierAnalysis (FFT with monotone cubic spline)
+
+- `FourierAnalysis` lives in `src/fourier.rs`; re-exported from `lib.rs` as
+  `FourierAnalysis`, `FourierSolution`, `FourierError`.
+- **Resampling**: monotone cubic spline (Fritsch-Carlson slope limiting) via
+  `monotone_cubic_resample()`.  Handles non-uniform transient output correctly.
+  Two tangent passes: (1) average neighbouring secants, (2) limit slopes so the
+  interpolant is monotone in each sub-interval.
+- **FFT**: pure-Rust radix-2 Cooley-Tukey DIT (`fft_radix2()`).  Input length
+  is silently rounded up to next power of two via `next_pow2()`.
+- **Output**: positive half-spectrum only (`k = 0..n_fft/2`).  Magnitude is
+  `|X[k]| / N` (one-sided, not doubled).  Phase is `atan2(Im, Re)` in radians.
+- **0.1 dB magnitude test**: requires the signal frequency to land on an exact
+  FFT bin to avoid spectral leakage.  For a 1 kHz sine at N=1024 points:
+  choose `fs = 102_400 Hz` so `f_sig * N / fs = 1000 * 1024 / 102400 = 10.0`
+  (integer → no leakage).  At 100 kHz the ratio is 10.24 (non-integer) and
+  leakage reduces the peak to ~0.453, failing the 0.1 dB gate.
+- **Clippy patterns**: use `&mut [[f64; 2]]` not `&mut Vec<[f64; 2]>` for the
+  FFT slice (clippy `ptr_arg`).  Use `.iter().enumerate().take(half)` instead
+  of `for k in 0..half` when indexing via `k` (clippy `needless_range_loop`).
+- **No external dependencies**: the FFT and spline are implemented from scratch
+  in stable + nightly Rust with no additional `[dependencies]` in `Cargo.toml`.
