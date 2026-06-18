@@ -408,3 +408,27 @@ For this project the branch name is `ralph/circuit-solver-delta`.
 - Pre-existing `linear_elements.rs` clippy warning (`collapsible_if` in
   `Inductor::advance_state`) fixed with nightly let-chain syntax.
 
+
+## US-040 patterns — PyO3 Python bindings (circuit_solver_delta_py)
+
+- The Python extension lives in `circuit_solver_delta_py/` (a separate Cargo
+  crate added as a workspace member).  The root `Cargo.toml` was converted to
+  a workspace with `members = [".", "circuit_solver_delta_py"]`.
+- `pyproject.toml` at the repo root configures maturin; `tool.maturin.manifest-path`
+  points to `circuit_solver_delta_py/Cargo.toml`.
+- **Name collision pitfall**: our struct was named `PyResult` which clashes with
+  pyo3's `type PyResult<T> = Result<T, PyErr>` alias.  Use a Rust-side name like
+  `SimResult` and set `#[pyclass(name = "PyResult")]` so Python sees "PyResult".
+- `maturin develop --manifest-path circuit_solver_delta_py/Cargo.toml` installs
+  the editable extension into the active Python venv (hermes venv here).
+- `maturin build` produces a wheel at `target/wheels/`.
+- `numpy` crate version must match pyo3 version: pyo3 0.25 → numpy 0.25.
+- Run pytest with the venv python that has the extension installed:
+  `/Users/phillipbonhomme/.hermes/hermes-agent/venv/bin/python3 -m pytest tests/`.
+- Test file lives in `tests/test_py_result.py`; uses `run_rc_transient()` helper
+  exposed from the module to produce a `PyResult` without needing a Python-side
+  circuit builder.
+- `cargo clippy --workspace -- -D warnings` must include the py crate;
+  `--exclude circuit_solver_delta_py` is needed for `cargo test` because the cdylib
+  crate has no unit tests of its own.
+
