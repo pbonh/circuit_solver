@@ -260,3 +260,38 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   - `vcd`: VCD with `$var real 64` declarations; real-valued signals at ps timestamps.
 - Convergence status and elapsed time are always printed to **stderr** (not stdout).
 - Smoke test: `circuit_solver_delta solve rc.sp --analysis dc --format nutmeg` exits 0.
+
+## US-044 patterns — mixed-signal CMOS inverter chain integration test
+
+- `PwlVoltageSource` lives in `src/pwl_source.rs` — a piecewise-linear voltage source
+  that implements `DeviceModel`.  Its `current_time` field is updated via
+  `DeviceModel::set_time(t)`, which the transient driver now calls before each MNA
+  assembly.  `voltage_at(t)` evaluates the PWL breakpoints via linear interpolation.
+- `ThresholdDetector` lives in `src/threshold_detector.rs` — scans `(times, values)`
+  for VDD/2 crossings.  Returns `Vec<Edge>` where each `Edge { time, kind }` has
+  the interpolated crossing time and `EdgeKind::Rising` or `EdgeKind::Falling`.
+- `VcdWriter` lives in `src/vcd_writer.rs` — `write_vcd(path, &TransientSolution)`
+  writes IEEE 1364-style VCD with `$var real 64` declarations and ps-resolution
+  timestamps.  Tests can verify the file via `std::fs::read_to_string`.
+- `DeviceModel::set_time(&mut self, t: f64)` added to `src/traits.rs` (default no-op)
+  and called by `TransientAnalysis::run()` alongside `set_timestep` at each step.
+  Non-time-varying devices ignore it.
+- Integration tests live under `tests/` (not in `src/`); run with `cargo test --test integration`.
+- **DC operating point initialization**: capacitors start with `v_prev = 0.0` (default).
+  For circuits where a node should start at VDD or an intermediate voltage, set
+  `cap.v_prev = initial_voltage` BEFORE passing the capacitor to the device list.
+  Without this, the backward-Euler companion model clamps the node near 0V for many
+  nanoseconds (because G_eff = C/h is large compared to MOSFET drive current).
+- **Cascaded inverter timing**: the Tau = C·VDD/(2·Id_sat) formula gives exact delay
+  only when the stage gate sees a near-step input (T_ramp << Tau).  For cascaded
+  stages where each stage drives the next, the actual delay can be 1.5–3× Tau due
+  to the slow-ramp effect.  Stage-1 timing can be verified within 10 ps of the
+  formula with T_RAMP ≈ H_MAX = 10 ps.  Stages 2+ are verified within a [Tau, 5·Tau]
+  range instead of the 10 ps tolerance.
+- **Input PWL ramp duration**: T_RAMP = 1ps causes LTE rejection (step too large for
+  BDF integrator with h_max=1ps); use T_RAMP ≥ 10ps = H_MAX for stable operation.
+- **Capacitor sizing**: with C_LOAD = 10 fF and default MOSFET params,
+  Tau_n ≈ 298 ps and Tau_p ≈ 595 ps; all three stage transitions complete within
+  3 ns (T_STOP = 3ns).  Larger C (e.g., 1 pF) makes transitions too slow for ns-scale
+  simulations; smaller C makes Tau comparable to h and timing tolerance becomes trivial.
+
