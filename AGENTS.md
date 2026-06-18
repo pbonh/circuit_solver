@@ -237,3 +237,23 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   the node count (including ground).
 - Internal storage: `HashMap<String, usize>` for name→index; `Vec<String>` for
   index→name (dense; `Vec::insert` used when shifting branches).
+
+## US-031 patterns — EventScheduler min-heap
+
+- `EventScheduler` lives in `src/event_scheduler.rs`; re-exported from
+  `lib.rs` as `DigitalEvent` and `EventScheduler`.
+- Backed by `BinaryHeap<Reverse<DigitalEvent>>`.  Rust's `BinaryHeap` is a
+  max-heap; wrapping events in `Reverse<T>` flips the ordering so the earliest
+  time is always on top.
+- `DigitalEvent` must implement `Eq + Ord`.  Since `f64` is not `Ord`, use
+  `f64::total_cmp` inside the `Ord` impl — this gives a complete ordering for
+  all finite simulation times (NaN-safe but NaN inputs are invalid by contract).
+- Three public methods: `push(event)`, `next_event_time() -> Option<f64>`
+  (peek, non-consuming), `pop() -> Option<DigitalEvent>` (consume earliest).
+- `TransientAnalysis` carries an `EventScheduler` field (default: empty).
+  The builder exposes `.event_scheduler(sched)` to attach one.
+- In the stepping loop, cap `h_try` with `h_try.min(t_event - t)` before each
+  step so the integrator lands exactly on the boundary, not over it.
+- After an accepted step, drain all events whose `time <= t` with a `while` loop
+  so stale events don't re-cap future steps.
+

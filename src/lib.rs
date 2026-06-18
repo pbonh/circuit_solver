@@ -1,5 +1,6 @@
 pub mod controlled_sources;
 pub mod diode;
+pub mod event_scheduler;
 pub mod graph;
 pub mod integration;
 pub mod linear_elements;
@@ -15,6 +16,7 @@ pub mod var_map;
 
 pub use controlled_sources::{stamp_cccs, stamp_ccvs, stamp_vccs, stamp_vcvs};
 pub use diode::Diode;
+pub use event_scheduler::{DigitalEvent, EventScheduler};
 pub use graph::{CircuitGraph, NodeId};
 pub use linear_elements::{Capacitor, Inductor, Resistor};
 pub use mna_matrix::{CsrMatrix, MnaMatrix};

@@ -37,6 +37,7 @@
 use std::collections::HashMap;
 
 use crate::{
+    event_scheduler::EventScheduler,
     integration::{
         adaptive::AdaptiveStepController,
         bdf::{Bdf, BdfConfig},
@@ -114,6 +115,7 @@ pub struct TransientAnalysis<'a> {
     devices: Vec<Box<dyn DeviceModel>>,
     integrator_config: IntegratorConfig,
     controller_config: ControllerConfig,
+    event_scheduler: EventScheduler,
 }
 
 /// Parameters for the adaptive step controller.
@@ -148,6 +150,7 @@ pub struct TransientAnalysisBuilder<'a> {
     devices: Vec<Box<dyn DeviceModel>>,
     integrator_config: IntegratorConfig,
     controller_config: ControllerConfig,
+    event_scheduler: EventScheduler,
 }
 
 impl<'a> TransientAnalysisBuilder<'a> {
@@ -187,6 +190,13 @@ impl<'a> TransientAnalysisBuilder<'a> {
         self
     }
 
+    /// Attach an [`EventScheduler`] so the transient driver caps `h` at each
+    /// upcoming digital boundary.
+    pub fn event_scheduler(mut self, sched: EventScheduler) -> Self {
+        self.event_scheduler = sched;
+        self
+    }
+
     /// Finish building.
     pub fn build(self) -> TransientAnalysis<'a> {
         TransientAnalysis {
@@ -196,6 +206,7 @@ impl<'a> TransientAnalysisBuilder<'a> {
             devices: self.devices,
             integrator_config: self.integrator_config,
             controller_config: self.controller_config,
+            event_scheduler: self.event_scheduler,
         }
     }
 }
@@ -215,6 +226,7 @@ impl<'a> TransientAnalysis<'a> {
             devices,
             integrator_config: IntegratorConfig::default(),
             controller_config: ControllerConfig::default(),
+            event_scheduler: EventScheduler::new(),
         }
     }
 
@@ -284,7 +296,15 @@ impl<'a> TransientAnalysis<'a> {
         // Main stepping loop.
         while t < self.t_stop {
             // Clamp h so we don't overshoot t_stop.
-            let h_try = h.min(self.t_stop - t);
+            let mut h_try = h.min(self.t_stop - t);
+
+            // Cap h to land exactly on the next digital event boundary,
+            // so the integrator doesn't step over a signal transition.
+            if let Some(t_event) = self.event_scheduler.next_event_time() {
+                if t_event > t {
+                    h_try = h_try.min(t_event - t);
+                }
+            }
 
             // Propagate the current timestep into reactive companion models
             // (Capacitor, Inductor) so G_eq = C/h and L/h use the actual h.
@@ -328,6 +348,15 @@ impl<'a> TransientAnalysis<'a> {
                     // the next step's RHS history current is correct.
                     for device in &mut self.devices {
                         device.advance_state(&x_new, self.var_map);
+                    }
+
+                    // Consume any digital events whose time we just reached.
+                    while self
+                        .event_scheduler
+                        .next_event_time()
+                        .map_or(false, |t_ev| t_ev <= t)
+                    {
+                        self.event_scheduler.pop();
                     }
 
                     times.push(t);
