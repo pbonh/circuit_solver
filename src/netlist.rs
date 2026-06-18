@@ -1,0 +1,851 @@
+//! SPICE netlist tokenizer.
+//!
+//! Parses a SPICE netlist string into a sequence of [`NetlistToken`]s.
+//! Unknown or unsupported lines emit a [`ParseWarning`] and are skipped rather
+//! than causing a hard error.
+//!
+//! A [`ModelRegistry`] maps model names to their parsed [`ModelCard`]s and is
+//! populated by the `.MODEL` directive.
+
+use std::collections::HashMap;
+
+/// A model card parsed from a `.MODEL` directive.
+///
+/// The `params` map holds key=value pairs that follow the model type keyword.
+#[derive(Debug, Clone, PartialEq)]
+pub struct ModelCard {
+    /// Model name (as written in the netlist).
+    pub name: String,
+    /// Model type keyword (e.g. `NMOS`, `PMOS`, `NPN`, `PNP`, `D`).
+    pub model_type: String,
+    /// Additional key=value parameters (e.g. `TOX`, `VTH0`, …).
+    pub params: HashMap<String, String>,
+}
+
+/// Registry of all `.MODEL` definitions keyed by model name (lower-cased).
+pub type ModelRegistry = HashMap<String, ModelCard>;
+
+/// A parsed SPICE element or directive.
+#[derive(Debug, Clone, PartialEq)]
+pub enum NetlistToken {
+    // ── Passive / source elements ────────────────────────────────────────────
+    /// Resistor: `R<name> <n+> <n-> <value>`
+    Resistor { name: String, n_pos: String, n_neg: String, value: String },
+    /// Inductor: `L<name> <n+> <n-> <value>`
+    Inductor { name: String, n_pos: String, n_neg: String, value: String },
+    /// Capacitor: `C<name> <n+> <n-> <value>`
+    Capacitor { name: String, n_pos: String, n_neg: String, value: String },
+    /// Independent voltage source: `V<name> <n+> <n-> <value>`
+    VoltageSource { name: String, n_pos: String, n_neg: String, value: String },
+    /// Independent current source: `I<name> <n+> <n-> <value>`
+    CurrentSource { name: String, n_pos: String, n_neg: String, value: String },
+
+    // ── Controlled sources ───────────────────────────────────────────────────
+    /// Voltage-Controlled Voltage Source (VCVS): `E<name> <n+> <n-> <nc+> <nc-> <gain>`
+    Vcvs {
+        name: String,
+        n_pos: String,
+        n_neg: String,
+        nc_pos: String,
+        nc_neg: String,
+        gain: String,
+    },
+    /// Voltage-Controlled Current Source (VCCS): `G<name> <n+> <n-> <nc+> <nc-> <transconductance>`
+    Vccs {
+        name: String,
+        n_pos: String,
+        n_neg: String,
+        nc_pos: String,
+        nc_neg: String,
+        transconductance: String,
+    },
+    /// Current-Controlled Voltage Source (CCVS): `H<name> <n+> <n-> <vname> <transresistance>`
+    Ccvs {
+        name: String,
+        n_pos: String,
+        n_neg: String,
+        vname: String,
+        transresistance: String,
+    },
+    /// Current-Controlled Current Source (CCCS): `F<name> <n+> <n-> <vname> <gain>`
+    Cccs {
+        name: String,
+        n_pos: String,
+        n_neg: String,
+        vname: String,
+        gain: String,
+    },
+
+    // ── Semiconductor devices ────────────────────────────────────────────────
+    /// MOSFET: `M<name> <drain> <gate> <source> <bulk> <model> [W=… L=… AD=… AS=…]`
+    Mosfet {
+        name: String,
+        drain: String,
+        gate: String,
+        source: String,
+        bulk: String,
+        model: String,
+        /// Key-value parameters (W, L, AD, AS, etc.) in declaration order.
+        params: Vec<(String, String)>,
+    },
+    /// Diode: `D<name> <anode> <cathode> <model> [AREA=…]`
+    Diode {
+        name: String,
+        anode: String,
+        cathode: String,
+        model: String,
+        /// Key-value parameters (AREA, etc.) in declaration order.
+        params: Vec<(String, String)>,
+    },
+    /// BJT: `Q<name> <collector> <base> <emitter> <model> [AREA=…]`
+    Bjt {
+        name: String,
+        collector: String,
+        base: String,
+        emitter: String,
+        model: String,
+        /// Key-value parameters (AREA, etc.) in declaration order.
+        params: Vec<(String, String)>,
+    },
+
+    // ── Directives ───────────────────────────────────────────────────────────
+    /// `.subckt <name> <node>*`
+    Subckt { name: String, nodes: Vec<String> },
+    /// `.ends [name]`
+    Ends { name: Option<String> },
+    /// `.tran <tstep> <tstop> [<tstart> [<tmax>]]`
+    Tran { args: Vec<String> },
+    /// `.dc <srcname> <start> <stop> <step>`
+    Dc { args: Vec<String> },
+    /// `.ac <variation> <n> <fstart> <fstop>`
+    Ac { args: Vec<String> },
+    /// `.op`
+    Op,
+    /// `.model <name> <type> [key=val …]`
+    Model(ModelCard),
+}
+
+/// A non-fatal warning produced when the tokenizer encounters a line it does
+/// not recognise or cannot fully parse.
+#[derive(Debug, Clone, PartialEq)]
+pub struct ParseWarning {
+    /// 1-based line number in the original netlist.
+    pub line: usize,
+    /// Raw text of the offending line.
+    pub text: String,
+    /// Human-readable reason.
+    pub reason: String,
+}
+
+/// Tokenize a SPICE netlist.
+///
+/// Returns all recognised tokens and any warnings for lines that were skipped.
+/// The title line (first line) is silently ignored per SPICE convention.
+///
+/// `.MODEL` cards appear both in the token stream (as [`NetlistToken::Model`])
+/// and in the returned [`ModelRegistry`].
+pub fn tokenize(netlist: &str) -> (Vec<NetlistToken>, Vec<ParseWarning>, ModelRegistry) {
+    let mut tokens = Vec::new();
+    let mut warnings = Vec::new();
+    let mut models = ModelRegistry::new();
+
+    // Join continuation lines ('+' as first non-whitespace char).
+    let joined = join_continuation_lines(netlist);
+
+    for (line_no, raw) in joined.iter().enumerate() {
+        let line_no = line_no + 1; // 1-based
+
+        // SPICE convention: first line is always the title and is ignored.
+        if line_no == 1 {
+            continue;
+        }
+
+        // Blank lines and comment lines (starting with '*') are ignored.
+        let trimmed = raw.trim();
+        if trimmed.is_empty() || trimmed.starts_with('*') {
+            continue;
+        }
+
+        match parse_line(trimmed) {
+            Ok(Some(tok)) => {
+                // Intercept Model tokens to populate the registry.
+                if let NetlistToken::Model(ref card) = tok {
+                    models.insert(card.name.to_ascii_lowercase(), card.clone());
+                }
+                tokens.push(tok);
+            }
+            Ok(None) => {} // intentionally skipped (title, blank, etc.)
+            Err(reason) => warnings.push(ParseWarning {
+                line: line_no,
+                text: raw.clone(),
+                reason,
+            }),
+        }
+    }
+
+    (tokens, warnings, models)
+}
+
+// ── Internal helpers ─────────────────────────────────────────────────────────
+
+/// Join lines that begin with '+' (SPICE line-continuation marker) to the
+/// previous line so that each entry in the returned vec is a complete
+/// logical line.
+fn join_continuation_lines(netlist: &str) -> Vec<String> {
+    let mut result: Vec<String> = Vec::new();
+    for line in netlist.lines() {
+        if line.trim_start().starts_with('+')
+            && let Some(last) = result.last_mut()
+        {
+            last.push(' ');
+            last.push_str(line.trim_start().trim_start_matches('+').trim());
+            continue;
+        }
+        result.push(line.to_string());
+    }
+    result
+}
+
+/// Parse a single logical line.  Returns `Ok(None)` for lines that should be
+/// silently skipped (title line handling is done in `tokenize` at the
+/// call-site level).
+fn parse_line(line: &str) -> Result<Option<NetlistToken>, String> {
+    let parts: Vec<&str> = line.split_whitespace().collect();
+    if parts.is_empty() {
+        return Ok(None);
+    }
+
+    let first = parts[0];
+
+    // Directive lines start with '.'
+    if let Some(directive) = first.strip_prefix('.') {
+        return parse_directive(directive, &parts[1..]);
+    }
+
+    // Element lines: first char is the element type letter
+    let type_char = first.chars().next().unwrap().to_ascii_uppercase();
+    let elem_name = &first[1..]; // everything after the type char
+
+    match type_char {
+        'R' => parse_two_terminal("R", elem_name, &parts[1..], |name, n_pos, n_neg, value| {
+            Ok(Some(NetlistToken::Resistor { name, n_pos, n_neg, value }))
+        }),
+        'L' => parse_two_terminal("L", elem_name, &parts[1..], |name, n_pos, n_neg, value| {
+            Ok(Some(NetlistToken::Inductor { name, n_pos, n_neg, value }))
+        }),
+        'C' => parse_two_terminal("C", elem_name, &parts[1..], |name, n_pos, n_neg, value| {
+            Ok(Some(NetlistToken::Capacitor { name, n_pos, n_neg, value }))
+        }),
+        'V' => parse_two_terminal("V", elem_name, &parts[1..], |name, n_pos, n_neg, value| {
+            Ok(Some(NetlistToken::VoltageSource { name, n_pos, n_neg, value }))
+        }),
+        'I' => parse_two_terminal("I", elem_name, &parts[1..], |name, n_pos, n_neg, value| {
+            Ok(Some(NetlistToken::CurrentSource { name, n_pos, n_neg, value }))
+        }),
+        'E' => parse_four_terminal("E", elem_name, &parts[1..], |name, n_pos, n_neg, nc_pos, nc_neg, val| {
+            Ok(Some(NetlistToken::Vcvs { name, n_pos, n_neg, nc_pos, nc_neg, gain: val }))
+        }),
+        'G' => parse_four_terminal("G", elem_name, &parts[1..], |name, n_pos, n_neg, nc_pos, nc_neg, val| {
+            Ok(Some(NetlistToken::Vccs { name, n_pos, n_neg, nc_pos, nc_neg, transconductance: val }))
+        }),
+        'H' => parse_current_controlled("H", elem_name, &parts[1..], |name, n_pos, n_neg, vname, val| {
+            Ok(Some(NetlistToken::Ccvs { name, n_pos, n_neg, vname, transresistance: val }))
+        }),
+        'F' => parse_current_controlled("F", elem_name, &parts[1..], |name, n_pos, n_neg, vname, val| {
+            Ok(Some(NetlistToken::Cccs { name, n_pos, n_neg, vname, gain: val }))
+        }),
+        'M' => parse_mosfet(elem_name, &parts[1..]),
+        'D' => parse_diode(elem_name, &parts[1..]),
+        'Q' => parse_bjt(elem_name, &parts[1..]),
+        _ => Err(format!("unknown element type '{type_char}' in line: {line}")),
+    }
+}
+
+fn parse_two_terminal<F>(
+    _type_char: &str,
+    elem_name: &str,
+    rest: &[&str],
+    build: F,
+) -> Result<Option<NetlistToken>, String>
+where
+    F: FnOnce(String, String, String, String) -> Result<Option<NetlistToken>, String>,
+{
+    if rest.len() < 3 {
+        return Err(format!(
+            "expected at least 3 fields (n+, n-, value) but got {}",
+            rest.len()
+        ));
+    }
+    build(
+        elem_name.to_string(),
+        rest[0].to_string(),
+        rest[1].to_string(),
+        rest[2].to_string(),
+    )
+}
+
+fn parse_four_terminal<F>(
+    _type_char: &str,
+    elem_name: &str,
+    rest: &[&str],
+    build: F,
+) -> Result<Option<NetlistToken>, String>
+where
+    F: FnOnce(String, String, String, String, String, String) -> Result<Option<NetlistToken>, String>,
+{
+    if rest.len() < 5 {
+        return Err(format!(
+            "expected at least 5 fields (n+, n-, nc+, nc-, value) but got {}",
+            rest.len()
+        ));
+    }
+    build(
+        elem_name.to_string(),
+        rest[0].to_string(),
+        rest[1].to_string(),
+        rest[2].to_string(),
+        rest[3].to_string(),
+        rest[4].to_string(),
+    )
+}
+
+fn parse_current_controlled<F>(
+    _type_char: &str,
+    elem_name: &str,
+    rest: &[&str],
+    build: F,
+) -> Result<Option<NetlistToken>, String>
+where
+    F: FnOnce(String, String, String, String, String) -> Result<Option<NetlistToken>, String>,
+{
+    if rest.len() < 4 {
+        return Err(format!(
+            "expected at least 4 fields (n+, n-, vname, value) but got {}",
+            rest.len()
+        ));
+    }
+    build(
+        elem_name.to_string(),
+        rest[0].to_string(),
+        rest[1].to_string(),
+        rest[2].to_string(),
+        rest[3].to_string(),
+    )
+}
+
+/// Parse a key=value parameter token (e.g. `W=2u`, `AREA=1.5`).
+/// Returns `None` if the token is not in `key=value` form.
+fn parse_kv(token: &str) -> Option<(String, String)> {
+    let mut split = token.splitn(2, '=');
+    let key = split.next()?.trim();
+    let val = split.next()?.trim();
+    if key.is_empty() || val.is_empty() {
+        return None;
+    }
+    Some((key.to_ascii_uppercase(), val.to_string()))
+}
+
+/// Collect all remaining `key=value` tokens from `rest` into a Vec.
+fn collect_params(rest: &[&str]) -> Vec<(String, String)> {
+    rest.iter().filter_map(|t| parse_kv(t)).collect()
+}
+
+/// MOSFET: `M<name> <drain> <gate> <source> <bulk> <model> [W=… L=… AD=… AS=…]`
+fn parse_mosfet(elem_name: &str, rest: &[&str]) -> Result<Option<NetlistToken>, String> {
+    if rest.len() < 5 {
+        return Err(format!(
+            "MOSFET 'M{elem_name}' requires drain gate source bulk model (got {})",
+            rest.len()
+        ));
+    }
+    Ok(Some(NetlistToken::Mosfet {
+        name: elem_name.to_string(),
+        drain: rest[0].to_string(),
+        gate: rest[1].to_string(),
+        source: rest[2].to_string(),
+        bulk: rest[3].to_string(),
+        model: rest[4].to_string(),
+        params: collect_params(&rest[5..]),
+    }))
+}
+
+/// Diode: `D<name> <anode> <cathode> <model> [AREA=…]`
+fn parse_diode(elem_name: &str, rest: &[&str]) -> Result<Option<NetlistToken>, String> {
+    if rest.len() < 3 {
+        return Err(format!(
+            "Diode 'D{elem_name}' requires anode cathode model (got {})",
+            rest.len()
+        ));
+    }
+    Ok(Some(NetlistToken::Diode {
+        name: elem_name.to_string(),
+        anode: rest[0].to_string(),
+        cathode: rest[1].to_string(),
+        model: rest[2].to_string(),
+        params: collect_params(&rest[3..]),
+    }))
+}
+
+/// BJT: `Q<name> <collector> <base> <emitter> <model> [AREA=…]`
+fn parse_bjt(elem_name: &str, rest: &[&str]) -> Result<Option<NetlistToken>, String> {
+    if rest.len() < 4 {
+        return Err(format!(
+            "BJT 'Q{elem_name}' requires collector base emitter model (got {})",
+            rest.len()
+        ));
+    }
+    Ok(Some(NetlistToken::Bjt {
+        name: elem_name.to_string(),
+        collector: rest[0].to_string(),
+        base: rest[1].to_string(),
+        emitter: rest[2].to_string(),
+        model: rest[3].to_string(),
+        params: collect_params(&rest[4..]),
+    }))
+}
+
+fn parse_directive(directive: &str, args: &[&str]) -> Result<Option<NetlistToken>, String> {
+    match directive.to_ascii_lowercase().as_str() {
+        "subckt" => {
+            if args.is_empty() {
+                return Err(".subckt requires at least a name".to_string());
+            }
+            Ok(Some(NetlistToken::Subckt {
+                name: args[0].to_string(),
+                nodes: args[1..].iter().map(|s| s.to_string()).collect(),
+            }))
+        }
+        "ends" => Ok(Some(NetlistToken::Ends {
+            name: args.first().map(|s| s.to_string()),
+        })),
+        "tran" => Ok(Some(NetlistToken::Tran {
+            args: args.iter().map(|s| s.to_string()).collect(),
+        })),
+        "dc" => Ok(Some(NetlistToken::Dc {
+            args: args.iter().map(|s| s.to_string()).collect(),
+        })),
+        "ac" => Ok(Some(NetlistToken::Ac {
+            args: args.iter().map(|s| s.to_string()).collect(),
+        })),
+        "op" => Ok(Some(NetlistToken::Op)),
+        "model" => {
+            // `.model <name> <type> [key=val …]`
+            if args.len() < 2 {
+                return Err(".model requires name and type keyword".to_string());
+            }
+            let name = args[0].to_string();
+            let model_type = args[1].to_ascii_uppercase();
+            let params: HashMap<String, String> = args[2..].iter()
+                .filter_map(|t| parse_kv(t))
+                .collect();
+            Ok(Some(NetlistToken::Model(ModelCard { name, model_type, params })))
+        }
+        other => Err(format!("unknown directive '.{other}'")),
+    }
+}
+
+// ── Tests ─────────────────────────────────────────────────────────────────────
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Helper: assert no warnings were produced.
+    fn no_warnings(warnings: &[ParseWarning]) {
+        assert!(
+            warnings.is_empty(),
+            "unexpected warnings: {warnings:?}"
+        );
+    }
+
+    // ── Simple RC circuit ────────────────────────────────────────────────────
+
+    #[test]
+    fn parse_simple_rc_circuit() {
+        let netlist = "\
+Simple RC low-pass filter
+V1 in 0 DC 5
+R1 in out 1k
+C1 out 0 1u
+.tran 1n 1m
+.op
+";
+        let (tokens, warnings, _models) = tokenize(netlist);
+        no_warnings(&warnings);
+
+        assert_eq!(tokens.len(), 5);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::VoltageSource {
+                name: "1".into(),
+                n_pos: "in".into(),
+                n_neg: "0".into(),
+                value: "DC".into(),
+            }
+        );
+        assert_eq!(
+            tokens[1],
+            NetlistToken::Resistor {
+                name: "1".into(),
+                n_pos: "in".into(),
+                n_neg: "out".into(),
+                value: "1k".into(),
+            }
+        );
+        assert_eq!(
+            tokens[2],
+            NetlistToken::Capacitor {
+                name: "1".into(),
+                n_pos: "out".into(),
+                n_neg: "0".into(),
+                value: "1u".into(),
+            }
+        );
+        assert_eq!(
+            tokens[3],
+            NetlistToken::Tran { args: vec!["1n".into(), "1m".into()] }
+        );
+        assert_eq!(tokens[4], NetlistToken::Op);
+    }
+
+    // ── Individual element types ──────────────────────────────────────────────
+
+    #[test]
+    fn parse_resistor() {
+        let (tokens, warnings, _) = tokenize("RC filter\nR1 a b 100");
+        no_warnings(&warnings);
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Resistor {
+                name: "1".into(),
+                n_pos: "a".into(),
+                n_neg: "b".into(),
+                value: "100".into(),
+            }
+        );
+    }
+
+    #[test]
+    fn parse_inductor() {
+        let (tokens, warnings, _) = tokenize("LC\nL1 a b 10mH");
+        no_warnings(&warnings);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Inductor {
+                name: "1".into(),
+                n_pos: "a".into(),
+                n_neg: "b".into(),
+                value: "10mH".into(),
+            }
+        );
+    }
+
+    #[test]
+    fn parse_capacitor() {
+        let (tokens, warnings, _) = tokenize("cap\nC2 n1 0 100n");
+        no_warnings(&warnings);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Capacitor {
+                name: "2".into(),
+                n_pos: "n1".into(),
+                n_neg: "0".into(),
+                value: "100n".into(),
+            }
+        );
+    }
+
+    #[test]
+    fn parse_voltage_source() {
+        let (tokens, warnings, _) = tokenize("vs\nVcc vdd 0 3.3");
+        no_warnings(&warnings);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::VoltageSource {
+                name: "cc".into(),
+                n_pos: "vdd".into(),
+                n_neg: "0".into(),
+                value: "3.3".into(),
+            }
+        );
+    }
+
+    #[test]
+    fn parse_current_source() {
+        let (tokens, warnings, _) = tokenize("is\nI1 in 0 1m");
+        no_warnings(&warnings);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::CurrentSource {
+                name: "1".into(),
+                n_pos: "in".into(),
+                n_neg: "0".into(),
+                value: "1m".into(),
+            }
+        );
+    }
+
+    // ── Controlled sources ────────────────────────────────────────────────────
+
+    #[test]
+    fn parse_vcvs() {
+        let (tokens, warnings, _) = tokenize("vcvs\nE1 out 0 in 0 10");
+        no_warnings(&warnings);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Vcvs {
+                name: "1".into(),
+                n_pos: "out".into(),
+                n_neg: "0".into(),
+                nc_pos: "in".into(),
+                nc_neg: "0".into(),
+                gain: "10".into(),
+            }
+        );
+    }
+
+    #[test]
+    fn parse_vccs() {
+        let (tokens, warnings, _) = tokenize("vccs\nG1 out 0 in 0 0.01");
+        no_warnings(&warnings);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Vccs {
+                name: "1".into(),
+                n_pos: "out".into(),
+                n_neg: "0".into(),
+                nc_pos: "in".into(),
+                nc_neg: "0".into(),
+                transconductance: "0.01".into(),
+            }
+        );
+    }
+
+    #[test]
+    fn parse_ccvs() {
+        let (tokens, warnings, _) = tokenize("ccvs\nH1 out 0 Vmeas 100");
+        no_warnings(&warnings);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Ccvs {
+                name: "1".into(),
+                n_pos: "out".into(),
+                n_neg: "0".into(),
+                vname: "Vmeas".into(),
+                transresistance: "100".into(),
+            }
+        );
+    }
+
+    #[test]
+    fn parse_cccs() {
+        let (tokens, warnings, _) = tokenize("cccs\nF1 out 0 Vctrl 5");
+        no_warnings(&warnings);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Cccs {
+                name: "1".into(),
+                n_pos: "out".into(),
+                n_neg: "0".into(),
+                vname: "Vctrl".into(),
+                gain: "5".into(),
+            }
+        );
+    }
+
+    // ── Directives ────────────────────────────────────────────────────────────
+
+    #[test]
+    fn parse_subckt_and_ends() {
+        let netlist = "sub\n.subckt lowpass in out\nR1 in out 1k\n.ends lowpass\n";
+        let (tokens, warnings, _models) = tokenize(netlist);
+        no_warnings(&warnings);
+        assert_eq!(tokens.len(), 3);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Subckt {
+                name: "lowpass".into(),
+                nodes: vec!["in".into(), "out".into()],
+            }
+        );
+        assert_eq!(
+            tokens[2],
+            NetlistToken::Ends { name: Some("lowpass".into()) }
+        );
+    }
+
+    #[test]
+    fn parse_dc_directive() {
+        let (tokens, warnings, _) = tokenize("dc\n.dc V1 0 5 0.1");
+        no_warnings(&warnings);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Dc {
+                args: vec!["V1".into(), "0".into(), "5".into(), "0.1".into()],
+            }
+        );
+    }
+
+    #[test]
+    fn parse_ac_directive() {
+        let (tokens, warnings, _) = tokenize("ac\n.ac DEC 10 1 1MEG");
+        no_warnings(&warnings);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Ac {
+                args: vec!["DEC".into(), "10".into(), "1".into(), "1MEG".into()],
+            }
+        );
+    }
+
+    // ── Warning / error paths ─────────────────────────────────────────────────
+
+    #[test]
+    fn unknown_element_produces_warning_not_error() {
+        // 'X' (subcircuit instance) is not yet supported — should warn, not error.
+        let netlist = "test\nX1 a b mysubckt\nR1 a b 1k";
+        let (tokens, warnings, _models) = tokenize(netlist);
+        assert_eq!(tokens.len(), 1, "only R1 should be parsed");
+        assert_eq!(warnings.len(), 1);
+        assert_eq!(warnings[0].line, 2);
+        assert!(warnings[0].text.contains("X1"));
+    }
+
+    #[test]
+    fn unknown_directive_produces_warning() {
+        let netlist = "test\n.unknown foo bar\nR1 a b 1k";
+        let (tokens, warnings, _models) = tokenize(netlist);
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(warnings.len(), 1);
+        assert!(warnings[0].reason.contains("unknown"));
+    }
+
+    #[test]
+    fn comment_lines_are_ignored() {
+        let netlist = "test\n* this is a comment\nR1 a b 1k";
+        let (tokens, warnings, _models) = tokenize(netlist);
+        no_warnings(&warnings);
+        assert_eq!(tokens.len(), 1);
+    }
+
+    #[test]
+    fn continuation_lines_are_joined() {
+        // The '+' continuation joins to the previous line
+        let netlist = "test\n.tran 1n\n+ 1m";
+        let (tokens, warnings, _models) = tokenize(netlist);
+        no_warnings(&warnings);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Tran { args: vec!["1n".into(), "1m".into()] }
+        );
+    }
+
+    // ── US-003: Semiconductor devices ────────────────────────────────────────
+
+    #[test]
+    fn parse_mosfet() {
+        let netlist = "mosfet test\nM1 drain gate source bulk NMOS W=2u L=180n AD=4e-13 AS=4e-13";
+        let (tokens, warnings, _) = tokenize(netlist);
+        no_warnings(&warnings);
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Mosfet {
+                name: "1".into(),
+                drain: "drain".into(),
+                gate: "gate".into(),
+                source: "source".into(),
+                bulk: "bulk".into(),
+                model: "NMOS".into(),
+                params: vec![
+                    ("W".into(), "2u".into()),
+                    ("L".into(), "180n".into()),
+                    ("AD".into(), "4e-13".into()),
+                    ("AS".into(), "4e-13".into()),
+                ],
+            }
+        );
+    }
+
+    #[test]
+    fn parse_diode() {
+        let netlist = "diode test\nD1 anode cathode D1N4148 AREA=2.0";
+        let (tokens, warnings, _) = tokenize(netlist);
+        no_warnings(&warnings);
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Diode {
+                name: "1".into(),
+                anode: "anode".into(),
+                cathode: "cathode".into(),
+                model: "D1N4148".into(),
+                params: vec![("AREA".into(), "2.0".into())],
+            }
+        );
+    }
+
+    #[test]
+    fn parse_bjt() {
+        let netlist = "bjt test\nQ1 collector base emitter 2N3904 AREA=1.5";
+        let (tokens, warnings, _) = tokenize(netlist);
+        no_warnings(&warnings);
+        assert_eq!(tokens.len(), 1);
+        assert_eq!(
+            tokens[0],
+            NetlistToken::Bjt {
+                name: "1".into(),
+                collector: "collector".into(),
+                base: "base".into(),
+                emitter: "emitter".into(),
+                model: "2N3904".into(),
+                params: vec![("AREA".into(), "1.5".into())],
+            }
+        );
+    }
+
+    #[test]
+    fn parse_model_directive() {
+        let netlist = "model test\n.model NMOS NMOS TOX=7n VTH0=0.4\n.model D1N4148 D IS=2.52e-9";
+        let (tokens, warnings, models) = tokenize(netlist);
+        no_warnings(&warnings);
+        assert_eq!(tokens.len(), 2);
+
+        // Token stream contains Model variants
+        assert!(matches!(&tokens[0], NetlistToken::Model(c) if c.name == "NMOS" && c.model_type == "NMOS"));
+        assert!(matches!(&tokens[1], NetlistToken::Model(c) if c.name == "D1N4148" && c.model_type == "D"));
+
+        // Registry keyed by lower-cased name
+        assert!(models.contains_key("nmos"));
+        assert!(models.contains_key("d1n4148"));
+        assert_eq!(models["nmos"].params.get("TOX").map(|s| s.as_str()), Some("7n"));
+        assert_eq!(models["d1n4148"].params.get("IS").map(|s| s.as_str()), Some("2.52e-9"));
+    }
+
+    #[test]
+    fn parse_netlist_with_one_of_each_semiconductor() {
+        // US-003 acceptance: one MOSFET, one diode, one BJT, all three .MODEL cards,
+        // plus an RC load — no warnings expected.
+        let netlist = "\
+Mixed semiconductor netlist
+.model NMOS NMOS W=2u L=180n
+.model D1N4148 D IS=2.52e-9
+.model 2N3904 NPN IS=1e-14
+M1 vd vg vs 0 NMOS W=2u L=180n
+D1 anode cathode D1N4148 AREA=1.0
+Q1 vc vb ve 2N3904 AREA=1.0
+R1 vd vcc 1k
+";
+        let (tokens, warnings, models) = tokenize(netlist);
+        no_warnings(&warnings);
+
+        // 3 .model + 3 devices + 1 resistor = 7 tokens
+        assert_eq!(tokens.len(), 7);
+
+        // All three model names are registered
+        assert!(models.contains_key("nmos"));
+        assert!(models.contains_key("d1n4148"));
+        assert!(models.contains_key("2n3904"));
+    }
+}
