@@ -66,4 +66,11 @@ pub trait DeviceModel {
     /// (`Inductor::i_prev`) from `solution` so the next step's companion stamp
     /// is correct. Non-reactive elements use the provided default no-op.
     fn advance_state(&mut self, _solution: &[f64], _var_map: &VarMap) {}
+
+    /// Set the current simulation time `t` (seconds) before each MNA assembly.
+    ///
+    /// Called by the transient driver at the start of each step so time-varying
+    /// sources (e.g. PWL voltage sources) can evaluate their waveform at `t`.
+    /// Non-time-varying elements use the provided default no-op.
+    fn set_time(&mut self, _t: f64) {}
 }

@@ -288,8 +288,10 @@ impl<'a> TransientAnalysis<'a> {
 
             // Propagate the current timestep into reactive companion models
             // (Capacitor, Inductor) so G_eq = C/h and L/h use the actual h.
+            // Also notify time-varying sources (PWL) of the current time t.
             for device in &mut self.devices {
                 device.set_timestep(h_try);
+                device.set_time(t);
             }
 
             // Assemble the MNA for this step.

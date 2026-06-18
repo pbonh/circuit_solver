@@ -7,11 +7,14 @@ pub mod mna_matrix;
 pub mod mosfet_level1_device;
 pub mod netlist;
 pub mod newton_raphson;
+pub mod pwl_source;
 pub mod sparse_lu;
 pub mod stamper;
+pub mod threshold_detector;
 pub mod traits;
 pub mod transient;
 pub mod var_map;
+pub mod vcd_writer;
 
 pub use controlled_sources::{stamp_cccs, stamp_ccvs, stamp_vccs, stamp_vcvs};
 pub use diode::Diode;
