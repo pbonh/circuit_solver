@@ -1,11 +1,12 @@
-//! Linear device models: Resistor, Capacitor, Inductor.
+//! Linear device models: Resistor, Capacitor, Inductor, VoltageSource, CurrentSource.
 //!
-//! All three are smooth (analytic I-V), so `is_smooth()` returns `true`.
+//! All are smooth (analytic I-V), so `is_smooth()` returns `true`.
 //! `stamp_nonlinear` simply delegates to `stamp_linear` because there is no
 //! operating-point dependency.
 
 use crate::{
-    stamp_capacitor, stamp_inductor, stamp_resistor, traits::DeviceModel, MnaMatrix, VarMap,
+    stamp_capacitor, stamp_current_source, stamp_inductor, stamp_resistor, stamp_voltage_source,
+    traits::DeviceModel, MnaMatrix, VarMap,
 };
 
 // ── Resistor ─────────────────────────────────────────────────────────────────
@@ -212,11 +213,116 @@ impl DeviceModel for Inductor {
     }
 
     fn advance_state(&mut self, solution: &[f64], var_map: &VarMap) {
-        if let Some(br) = var_map.node_index(&self.branch_name) {
-            if br > 0 {
-                self.i_prev = solution.get(br - 1).copied().unwrap_or(0.0);
-            }
+        if let Some(br) = var_map.node_index(&self.branch_name)
+            && br > 0
+        {
+            self.i_prev = solution.get(br - 1).copied().unwrap_or(0.0);
         }
+    }
+}
+
+// ── VoltageSource ─────────────────────────────────────────────────────────────
+
+/// An ideal DC voltage source between two nets.
+///
+/// Introduces one branch-current unknown named `branch_name` (e.g. `"V1"`).
+#[derive(Debug, Clone)]
+pub struct VoltageSource {
+    /// Positive terminal net name.
+    pub n_pos: String,
+    /// Negative terminal net name.
+    pub n_neg: String,
+    /// Branch-current variable name (must be registered in `VarMap`).
+    pub branch_name: String,
+    /// DC voltage (volts).
+    pub voltage: f64,
+}
+
+impl VoltageSource {
+    pub fn new(
+        n_pos: impl Into<String>,
+        n_neg: impl Into<String>,
+        branch_name: impl Into<String>,
+        voltage: f64,
+    ) -> Self {
+        VoltageSource {
+            n_pos: n_pos.into(),
+            n_neg: n_neg.into(),
+            branch_name: branch_name.into(),
+            voltage,
+        }
+    }
+}
+
+impl DeviceModel for VoltageSource {
+    fn terminals(&self) -> Vec<String> {
+        vec![self.n_pos.clone(), self.n_neg.clone()]
+    }
+
+    fn stamp_linear(&self, matrix: &mut MnaMatrix, var_map: &VarMap) {
+        let to_opt = |idx: Option<usize>| match idx {
+            Some(0) | None => None,
+            Some(i) => Some(i - 1),
+        };
+        let p = to_opt(var_map.node_index(&self.n_pos));
+        let q = to_opt(var_map.node_index(&self.n_neg));
+        if let Some(br_idx) = var_map.node_index(&self.branch_name) {
+            let br = br_idx - 1; // convert to 0-based MNA row (ground excluded)
+            stamp_voltage_source(matrix, p, q, br, self.voltage);
+        }
+    }
+
+    fn stamp_nonlinear(&self, matrix: &mut MnaMatrix, var_map: &VarMap, _solution: &[f64]) {
+        self.stamp_linear(matrix, var_map);
+    }
+
+    fn is_smooth(&self) -> bool {
+        true
+    }
+}
+
+// ── CurrentSource ─────────────────────────────────────────────────────────────
+
+/// An ideal DC current source between two nets.
+///
+/// Current flows from `n_neg` to `n_pos` (into `n_pos`).
+#[derive(Debug, Clone)]
+pub struct CurrentSource {
+    /// Positive terminal net name (current flows in here).
+    pub n_pos: String,
+    /// Negative terminal net name.
+    pub n_neg: String,
+    /// DC current (amperes).
+    pub current: f64,
+}
+
+impl CurrentSource {
+    pub fn new(n_pos: impl Into<String>, n_neg: impl Into<String>, current: f64) -> Self {
+        CurrentSource { n_pos: n_pos.into(), n_neg: n_neg.into(), current }
+    }
+}
+
+impl DeviceModel for CurrentSource {
+    fn terminals(&self) -> Vec<String> {
+        vec![self.n_pos.clone(), self.n_neg.clone()]
+    }
+
+    fn stamp_linear(&self, matrix: &mut MnaMatrix, var_map: &VarMap) {
+        let to_opt = |idx: Option<usize>| match idx {
+            Some(0) | None => None,
+            Some(i) => Some(i - 1),
+        };
+        let p = to_opt(var_map.node_index(&self.n_pos));
+        let q = to_opt(var_map.node_index(&self.n_neg));
+        stamp_current_source(matrix, p, q, self.current);
+    }
+
+    fn stamp_nonlinear(&self, matrix: &mut MnaMatrix, var_map: &VarMap, _solution: &[f64]) {
+        self.stamp_linear(matrix, var_map);
+    }
+
+    fn is_smooth(&self) -> bool {
+        true
     }
 }
 

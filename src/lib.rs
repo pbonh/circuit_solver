@@ -16,7 +16,7 @@ pub mod var_map;
 pub use controlled_sources::{stamp_cccs, stamp_ccvs, stamp_vccs, stamp_vcvs};
 pub use diode::Diode;
 pub use graph::{CircuitGraph, NodeId};
-pub use linear_elements::{Capacitor, Inductor, Resistor};
+pub use linear_elements::{Capacitor, CurrentSource, Inductor, Resistor, VoltageSource};
 pub use mna_matrix::{CsrMatrix, MnaMatrix};
 pub use mosfet_level1_device::{MosfetLevel1, MosType};
 pub use netlist::{tokenize, ModelCard, ModelRegistry, NetlistToken, ParseWarning};

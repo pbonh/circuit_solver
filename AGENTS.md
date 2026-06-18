@@ -237,3 +237,26 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   the node count (including ground).
 - Internal storage: `HashMap<String, usize>` for name→index; `Vec<String>` for
   index→name (dense; `Vec::insert` used when shifting branches).
+
+## US-042 patterns — circuit_solver_delta CLI
+
+- `src/main.rs` adds a `clap`-based CLI binary: `circuit_solver_delta solve <netlist> [OPTIONS]`.
+- `VoltageSource` and `CurrentSource` are now proper `DeviceModel` implementations
+  in `src/linear_elements.rs` and re-exported from `lib.rs`.  These were previously
+  only defined inline in tests.
+- `parse_spice_value(s)` parses SPICE-style suffixes: `k`=1e3, `m`=1e-3, `u`=1e-6,
+  `n`=1e-9, `p`=1e-12, `f`=1e-15, `MEG`=1e6, `G`=1e9, `T`=1e12.  Returns `f64`.
+- Two-pass circuit builder: pass 1 registers all nodes + branches in `VarMap`;
+  pass 2 constructs device objects.  Order matters: all nodes must be added before
+  branches for stable VarMap indices.
+- DC analysis uses `NewtonRaphson::default().solve(n, &devices, &vm)`.
+  Result vector has `n = vm.len()-1` entries (ground excluded); prepend `0.0` to
+  get an `(n+1)`-element vector aligned with VarMap indices 0..n.
+- Transient uses `TransientAnalysis::builder(0.0, t_stop, &vm, devices).h_initial(h).h_max(h).build()`.
+  For CLI use, `rtol=1e-3` / `atol=1e-6` are reasonable defaults.
+- Output formats (all stdout via file):
+  - `nutmeg`: SPICE raw ASCII (`.raw`); parseable by ngspice/Python `spicelib`.
+  - `parquet`: CSV with header (`.csv`); real Parquet requires `arrow2`/`parquet2` deps.
+  - `vcd`: VCD with `$var real 64` declarations; real-valued signals at ps timestamps.
+- Convergence status and elapsed time are always printed to **stderr** (not stdout).
+- Smoke test: `circuit_solver_delta solve rc.sp --analysis dc --format nutmeg` exits 0.
