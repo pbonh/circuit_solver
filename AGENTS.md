@@ -34,6 +34,26 @@ For this project the branch name is `ralph/circuit-solver-delta`.
   that want a properly-seeded graph must use `::new()`.
 - Ground node index is always 0; exposed via `CircuitGraph::ground() -> NodeId`.
 
+## US-004 patterns — VamsParser
+
+- `src/vams_parser.rs` is a hand-rolled lexer + recursive-descent parser.
+  No external parser-combinator crates are used; all deps remain zero.
+- The lexer runs in a single pass at `Parser::new()`, collecting all tokens
+  into a `Vec<Token>`.  This trades a small up-front allocation for a much
+  simpler borrow-checker story (no lifetime dance between Lexer and Parser).
+- `expect()` uses `std::mem::discriminant` for structural token matching,
+  which avoids having to match on contained values when checking for brackets,
+  operators, and keywords.  Only call it for tokens with no payload you care
+  about; for idents use `expect_ident()`.
+- Operator precedence: `parse_add_sub` → `parse_mul_div` → `parse_unary` →
+  `parse_primary`.  Standard Pratt/precedence-climbing pattern, two levels.
+- AMS operator keywords (`idt`, `ddt`, `transition`, `slew`) are dispatched
+  in `parse_primary`; they each consume `( arg, arg, … )` inline.
+- If port declarations (`input`/`output`/`inout`) are absent but a port-name
+  list is present in the module header, the parser fabricates `Inout`/`None`
+  entries so `module.ports` is always populated.
+- Public re-export in `lib.rs`: `pub use vams_parser::parse_module;`
+
 ## Gotchas
 
 - Do not implement `Into` manually — Rust provides a blanket `impl<T, U: From<T>>

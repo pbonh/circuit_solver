@@ -41,3 +41,5 @@ pub mod waveform_injector;
 pub use waveform_injector::WaveformInjector;
 pub mod ac;
 pub use ac::{AcAnalysis, AcSolution};
+pub mod vams_parser;
+pub use vams_parser::parse_module;
